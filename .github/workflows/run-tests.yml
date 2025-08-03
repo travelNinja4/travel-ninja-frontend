@@ -2,11 +2,16 @@ name: Run Tests on PR
 
 on:
   pull_request:
-    branches: [main] # or your default branch like 'develop'
+    branches: [main] # or your default branch
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20] # add more version if needed
+        pnpm-version: [10] # add more version if needed
 
     steps:
       - name: Checkout code
@@ -15,15 +20,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # adjust if you're using a different version
+          node-version: ${{ matrix.node-version }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 10 # or your current pnpm version
+          version: ${{ matrix.pnpm-version }}
 
-      - name: Install dependencies using pnpm
+      - name: Install dependencies
         run: pnpm install
 
-      - name: Run tests using pnpm
+      - name: Run tests
         run: pnpm test
