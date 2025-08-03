@@ -21,7 +21,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm' # Enables pnpm cache
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -29,7 +28,7 @@ jobs:
           version: ${{ matrix.pnpm-version }}
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Run tests
         run: pnpm test
