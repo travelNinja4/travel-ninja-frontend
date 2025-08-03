@@ -22,7 +22,7 @@ interface ButtonProps {
 
 export default function Button({ label = 'label' }: ButtonProps) {
   return (
-    <div data-testid='ButtonTest' className={styles.wrapper}>
+    <div className={styles.wrapper}>
       Button component - {label}
     </div>
   );
