@@ -3,8 +3,10 @@
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "skipLibCheck": true,
+    "checkJs": true,
     "strict": true,
+    "outDir": "./dist",
+    "skipLibCheck": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -22,6 +24,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "generators/index.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "generators/index.js", "src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]
 }
