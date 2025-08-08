@@ -9,6 +9,8 @@
     "lint": "next lint --quiet --fix",
     "prettier": "prettier --write .",
     "generate": "plop --plopfile generators/index.js",
+    "docs": "jsdoc -c jsdoc.json",
+    "docs:serve": "npm run docs && start docs/index.html",
     "test": "jest",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
@@ -26,6 +28,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.27.1",
     "@chromatic-com/storybook": "^4.1.0",
     "@eslint/eslintrc": "^3",
     "@eslint/js": "^9.32.0",
@@ -54,6 +57,8 @@
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "jiti": "^2.5.1",
+    "jsdoc": "^4.0.4",
+    "jsdoc-babel": "^0.5.0",
     "lint-staged": "^16.1.2",
     "next": "15.4.4",
     "playwright": "^1.54.2",
