@@ -10,6 +10,7 @@
     "prettier": "prettier --write .",
     "generate": "plop --plopfile generators/index.js",
     "docs": "jsdoc -c jsdoc.json",
+    "docs:serve": "npm run docs && start docs/index.html",
     "test": "jest",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
