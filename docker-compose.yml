@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nextjs_dev
+    ports:
+      - "3000:3000"
+    volumes:
+      # Mount code for live-reload
+      - .:/app
+      # Avoid overwriting container node_modules with empty host folder
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
