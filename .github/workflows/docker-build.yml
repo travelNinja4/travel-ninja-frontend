@@ -26,10 +26,10 @@ jobs:
       - name: Build Docker image with multiple tags
         run: |
           docker build \
-            -t myorg/my-next-app:latest \
-            -t myorg/my-next-app:${{ env.SHA_SHORT }} .
+            -t weekendcoders4/travel-ninja-frontend:latest \
+            -t weekendcoders4/travel-ninja-frontend:${{ env.SHA_SHORT }} .
 
       - name: Push both tags
         run: |
-          docker push myorg/my-next-app:latest
-          docker push myorg/my-next-app:${{ env.SHA_SHORT }}
+          docker push weekendcoders4/travel-ninja-frontend:latest
+          docker push weekendcoders4/travel-ninja-frontend:${{ env.SHA_SHORT }}
