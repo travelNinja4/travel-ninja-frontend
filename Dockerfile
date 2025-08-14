@@ -2,7 +2,7 @@
 FROM node:20-alpine
 
 # Install Git
-RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache git
 
 # Set working directory inside the container
 WORKDIR /app
