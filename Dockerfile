@@ -1,6 +1,9 @@
 # Use official Node.js image
 FROM node:20-alpine
 
+# Install Git
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+
 # Set working directory inside the container
 WORKDIR /app
 
@@ -19,4 +22,4 @@ COPY . .
 EXPOSE 3000
 
 # Start Next.js in development mode
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "run", "dev"]

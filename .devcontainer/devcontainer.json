@@ -1,0 +1,38 @@
+{
+  "name": "travel-ninja-frontend",
+  "image": "weekendcoders4/travel-ninja-frontend:latest",
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "files.eol": "\n",
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "eamodio.gitlens",
+        "ms-azuretools.vscode-docker",
+        "naumovs.color-highlight",
+        "streetsidesoftware.code-spell-checker"
+      ]
+    }
+  },
+
+  "postStartCommand": "bash .devcontainer/checkout-main.sh",
+
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Next.js App",
+      "onAutoForward": "openBrowser"
+    }
+  },
+
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ],
+
+  "remoteUser": "node"
+}
