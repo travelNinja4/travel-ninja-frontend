@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Home matches snapshot 1`] = `
+<DocumentFragment>
+  <p
+    class="typography p align-left"
+    data-testid="TypographyTest"
+  >
+    Typography Test
+  </p>
+</DocumentFragment>
+`;
