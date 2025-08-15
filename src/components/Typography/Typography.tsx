@@ -18,15 +18,15 @@ import styles from './Typography.module.scss';
 /**
  * Define the props available for the Typography component.
  */
-export interface TypographyProps {
-  tag: Tags;
+export type TypographyProps<T extends Tags = Tags> = {
+  tag: T;
   as?: ElementType;
   children?: ReactNode;
   className?: string;
   align?: TextAlign;
   transform?: TextTransform;
   truncation?: Truncation;
-}
+} & React.ComponentPropsWithoutRef<(typeof TagsMapping)[T]>;
 
 type TextTransform = 'uppercase' | 'lowercase' | 'capitalize' | 'none';
 
@@ -34,7 +34,7 @@ type Truncation = 'ellipsis' | 'noWrap' | `lineClamp-${number}`;
 
 type TextAlign = 'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent';
 
-type Tags = 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'h6' | 'span';
+type Tags = 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'h6' | 'span' | 'label';
 
 const TagsMapping: Record<Tags, keyof JSX.IntrinsicElements> = {
   h1: 'h1',
@@ -44,9 +44,10 @@ const TagsMapping: Record<Tags, keyof JSX.IntrinsicElements> = {
   h6: 'h6',
   p: 'p',
   span: 'span',
+  label: 'label',
 };
 
-export default function Typography({
+export default function Typography<T extends Tags>({
   tag,
   as,
   children,
@@ -54,7 +55,8 @@ export default function Typography({
   align = 'left',
   transform = 'none',
   truncation,
-}: TypographyProps) {
+  ...rest
+}: TypographyProps<T>) {
   const Component = as || TagsMapping[tag] || 'p';
   return (
     <Component
@@ -67,6 +69,7 @@ export default function Typography({
         truncation && styles[truncation],
         className,
       )}
+      {...rest}
     >
       {children}
     </Component>
