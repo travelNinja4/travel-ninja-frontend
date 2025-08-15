@@ -38,5 +38,9 @@
     "source=pnpm-store,target=/home/node/.pnpm-store,type=volume"
   ],
 
+  "containerEnv": {
+    "PNPM_STORE_DIR": "/home/node/.pnpm-store"
+  },
+
   "remoteUser": "node"
 }
