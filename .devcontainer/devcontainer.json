@@ -1,6 +1,9 @@
 {
   "name": "travel-ninja-frontend",
-  "image": "weekendcoders4/travel-ninja-frontend:latest",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": ".."
+  },
 
   "customizations": {
     "vscode": {
@@ -34,6 +37,10 @@
     "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
     "source=pnpm-store,target=/home/node/.pnpm-store,type=volume"
   ],
+
+  "containerEnv": {
+    "PNPM_STORE_DIR": "/home/node/.pnpm-store"
+  },
 
   "remoteUser": "node"
 }
