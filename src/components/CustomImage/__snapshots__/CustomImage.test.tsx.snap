@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Home matches snapshot 1`] = `
+<DocumentFragment>
+  <img
+    alt="CustomImage Test"
+    blurdataurl="https://res.cloudinary.com/dyci0wg0i/image/upload/fallbackImg.png"
+    data-testid="CustomImageTest"
+    height="200"
+    loading="lazy"
+    placeholder="blur"
+    src="https://res.cloudinary.com/dyci0wg0i/image/upload/fallbackImg.png"
+    width="200"
+  />
+</DocumentFragment>
+`;
