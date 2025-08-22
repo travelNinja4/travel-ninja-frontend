@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Home matches snapshot 1`] = `
+<DocumentFragment>
+  <a
+    data-testid="AppLinkTest"
+    href="/test"
+  >
+    <span>
+      AppLink Test
+    </span>
+  </a>
+</DocumentFragment>
+`;
