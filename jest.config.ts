@@ -9,7 +9,7 @@ import type { Config } from 'jest';
 const createJestConfig = nextJest({
   // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
   dir: './',
-})
+});
 
 // Your custom Jest config
 const customJestConfig: Config = {
@@ -21,6 +21,7 @@ const customJestConfig: Config = {
   moduleNameMapper: {
     '^@/components/(.*)$': '<rootDir>/components/$1',
     '\\.(scss|sass|css)$': 'identity-obj-proxy',
+    '^next/image$': '<rootDir>/__mocks__/next/image.tsx',
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   testEnvironment: 'jest-environment-jsdom',
