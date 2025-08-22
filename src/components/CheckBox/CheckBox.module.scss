@@ -1,0 +1,53 @@
+/**
+------------------------------------------------------
+styles specific to the CheckBox component
+------------------------------------------------------
+**/
+
+.checkBoxContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  input[type='checkbox'] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+
+    &:checked {
+      background-color: #667eea;
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.3);
+    }
+
+    &:checked::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      width: 6px;
+      height: 11px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      background-color: #f5f5f5;
+      border-color: #ddd;
+      opacity: 0.6;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.4);
+    }
+  }
+}
