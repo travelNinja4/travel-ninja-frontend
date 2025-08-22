@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Home matches snapshot 1`] = `
+<DocumentFragment>
+  <label
+    class="checkBoxContainer"
+    data-testid="CheckBoxTest"
+    for="checkboxTest"
+  >
+    <input
+      class="checkbox"
+      id="checkboxTest"
+      name="checkboxTest"
+      type="checkbox"
+    />
+    <span
+      class="typography span align-left"
+      data-testid="TypographyTest"
+    >
+      CheckBox Test
+    </span>
+  </label>
+</DocumentFragment>
+`;
