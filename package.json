@@ -18,11 +18,14 @@
     "lint:prettier:fix": "pnpm prettier && pnpm lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.539.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "sass": "^1.89.2"
+    "react-hook-form": "^7.62.0",
+    "sass": "^1.89.2",
+    "zod": "^4.0.17"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

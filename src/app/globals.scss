@@ -153,19 +153,3 @@ h3 {
 p {
   font-size: 1rem;
 }
-
-/* -----------------------------
-  Breakpoints
------------------------------ */
-$breakpoint-sm: 576px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 992px;
-$breakpoint-xl: 1200px;
-
-/* Example usage:
-@media (min-width: $breakpoint-md) {
-  body {
-    font-size: 18px;
-  }
-}
-*/

@@ -1,0 +1,44 @@
+/**
+------------------------------------------------------
+styles specific to the DynamicForm component
+------------------------------------------------------
+**/
+
+@import '../../styles/mixins';
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+
+  &--full {
+    flex: 0 0 100%;
+  }
+
+  &--half {
+    flex: 0 0 48%;
+  }
+
+  &--third {
+    flex: 0 0 30%;
+  }
+
+  @include respond-to(md) {
+    &--half,
+    &--third {
+      flex: 0 0 100%;
+    }
+  }
+
+  @include respond-to(lg) {
+    &--third {
+      flex: 0 0 48%;
+    }
+  }
+}
