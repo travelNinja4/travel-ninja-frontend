@@ -13,13 +13,16 @@
 'use client';
 
 import React, { ReactNode } from 'react';
-import { useForm, SubmitHandler, FieldValues, Resolver } from 'react-hook-form';
+import { useForm, SubmitHandler, FieldValues, Resolver, Path, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodSchema } from 'zod';
 import styles from './DynamicForm.module.scss';
 import Typography from '../Typography';
 import { Tags } from '../Typography/Typography';
 import TextField from '../TextField';
+import PasswordFeedback from '../PasswordFeedback';
+import { PasswordHint } from '../PasswordFeedback/PasswordFeedback';
+import CheckBox from '../CheckBox';
 
 /**
  * Define the props available for the DynamicForm component.
@@ -27,6 +30,7 @@ import TextField from '../TextField';
 interface DynamicFormProps<T extends FieldValues = FieldValues> {
   fields: FieldConfig[];
   schema: ZodSchema<T>;
+  className: string;
   onSubmit: SubmitHandler<T>;
 }
 
@@ -49,6 +53,7 @@ export interface FieldConfig {
   children?: ReactNode;
   width?: FieldWidth;
   required?: boolean;
+  validationHints: PasswordHint[];
 }
 
 type FieldType =
@@ -65,11 +70,14 @@ type FieldType =
 export default function DynamicForm<T extends FieldValues>({
   fields,
   schema,
+  className,
   onSubmit,
 }: DynamicFormProps<T>) {
   const {
     register,
     handleSubmit,
+    watch,
+    control,
     formState: { errors },
   } = useForm<T>({
     resolver: zodResolver(schema) as unknown as Resolver<T>,
@@ -78,6 +86,7 @@ export default function DynamicForm<T extends FieldValues>({
   });
 
   const renderField = (field: FieldConfig) => {
+    const value = watch(field.name as Path<T>) || '';
     const commonProps = {
       ...field,
       ...register(field.name as any),
@@ -85,10 +94,38 @@ export default function DynamicForm<T extends FieldValues>({
     };
     switch (field.type) {
       case 'label':
-        return <Typography tag={field.tag || 'p'}>{field.label || field.children}</Typography>;
+        return (
+          <Typography tag={field.tag || 'p'} className={field.className}>
+            {field.label || field.children}
+          </Typography>
+        );
 
       case 'input':
-        return <TextField {...commonProps} />;
+        return <TextField {...commonProps} className={field.className} />;
+
+      case 'password':
+        return (
+          <>
+            <TextField {...commonProps} className={field.className} />
+            <PasswordFeedback value={value} hints={field.validationHints} />
+          </>
+        );
+
+      case 'checkbox':
+        return (
+          <Controller
+            name={field.name as Path<T>}
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <CheckBox
+                label={field.label as ReactNode}
+                checked={!!value}
+                onChange={(checked: boolean) => onChange(checked)}
+                className={field.className}
+              />
+            )}
+          />
+        );
 
       default:
         null;
@@ -96,11 +133,11 @@ export default function DynamicForm<T extends FieldValues>({
   };
 
   return (
-    <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
+    <form className={className} onSubmit={handleSubmit(onSubmit)}>
       {fields.map((field) => (
         <div
           key={field.name}
-          className={`${styles.field} ${styles[`field--${field.width || FieldWidth.FULL}`]}`}
+          className={`${className}__field ${className}__field--${field.width || FieldWidth.FULL}`}
         >
           {renderField(field)}
         </div>

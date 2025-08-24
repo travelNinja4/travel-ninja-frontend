@@ -124,6 +124,7 @@ export default function CheckBox({
   checked,
   defaultChecked,
   disabled,
+  className,
   onChange,
   style,
 }: CheckBoxProps) {
@@ -154,7 +155,7 @@ export default function CheckBox({
     <label
       data-testid="CheckBoxTest"
       htmlFor={checkboxId}
-      className={styles.checkBoxContainer}
+      className={(styles.checkBoxContainer, className)}
       style={style}
     >
       <input

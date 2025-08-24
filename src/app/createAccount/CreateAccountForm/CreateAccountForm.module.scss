@@ -1,0 +1,77 @@
+@import '../../../styles/mixins';
+
+.createAccountContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 100%;
+    min-width: 0;
+    width: 100%;
+
+    .title {
+      font-size: 1.3rem;
+      text-align: center;
+    }
+
+    .subTitle {
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    .termStatusCheckbox {
+      display: flex;
+      flex: 1;
+      align-items: flex-start;
+      font-size: 0.85rem;
+    }
+
+    // 👉 At tablet size
+    @include respond-to(md) {
+      &--half {
+        flex: 0 0 calc(50% - 0.5rem);
+      }
+      &--third {
+        flex: 0 0 calc((100% - 2rem) / 3);
+      }
+
+      .title {
+        font-size: 1.5rem;
+        text-align: center;
+      }
+
+      .subTitle {
+        font-size: 0.85rem;
+        text-align: center;
+      }
+
+      .termStatusCheckbox {
+        align-items: flex-start;
+        font-size: 0.9rem;
+      }
+    }
+
+    // 👉 At desktop size
+    @include respond-to(lg) {
+      &__field--half {
+        flex: 1 1 calc(50% - 1rem);
+        max-width: calc(50% - 1rem);
+      }
+
+      &__field--third {
+        flex: 1 1 calc(33.333% - 1rem);
+        max-width: calc(33.333% - 1rem);
+      }
+
+      .termStatusCheckbox {
+        align-items: flex-start;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

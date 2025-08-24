@@ -63,6 +63,7 @@ export type TypographyProps<T extends Tags = Tags> = {
    * @example 'lineClamp-2'
    */
   truncation?: Truncation;
+  color?: string;
 } & React.ComponentPropsWithoutRef<(typeof TagsMapping)[T]>;
 
 type TextTransform = 'uppercase' | 'lowercase' | 'capitalize' | 'none';
@@ -71,7 +72,7 @@ type Truncation = 'ellipsis' | 'noWrap' | `lineClamp-${number}`;
 
 type TextAlign = 'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent';
 
-export type Tags = 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'h6' | 'span' | 'label';
+export type Tags = 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'h6' | 'li' | 'span' | 'label';
 
 const TagsMapping: Record<Tags, keyof JSX.IntrinsicElements> = {
   h1: 'h1',
@@ -80,6 +81,7 @@ const TagsMapping: Record<Tags, keyof JSX.IntrinsicElements> = {
   h4: 'h4',
   h6: 'h6',
   p: 'p',
+  li: 'li',
   span: 'span',
   label: 'label',
 };
@@ -92,6 +94,7 @@ export default function Typography<T extends Tags>({
   align = 'left',
   transform = 'none',
   truncation,
+  color,
   ...rest
 }: TypographyProps<T>) {
   const Component = as || TagsMapping[tag] || 'p';
@@ -106,6 +109,7 @@ export default function Typography<T extends Tags>({
         truncation && styles[truncation],
         className,
       )}
+      style={{ color }}
       {...rest}
     >
       {children}

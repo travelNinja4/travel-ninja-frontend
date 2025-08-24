@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const registrationSchema = z
+export const createAccountSchema = z
   .object({
     fullName: z.string().min(1, 'Full name is required').max(50),
     agencyName: z.string().optional(),

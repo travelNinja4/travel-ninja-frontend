@@ -17,13 +17,14 @@
  */
 import Image from 'next/image';
 import { IMAGES } from '@/constants/images';
+import type { ImageProps } from 'next/image';
 import { buildCloudinaryUrl } from '@/utils/imageHelper';
 import styles from './CustomImage.module.scss';
 
 /**
  * Define the props available for the CustomImage component.
  */
-interface CustomImageProps {
+interface CustomImageProps extends Omit<ImageProps, 'src' | 'alt'> {
   /**
    * The source of the image.
    *
@@ -130,7 +131,7 @@ export default function CustomImage({
       {...(fill && { fill })}
       style={style}
       className={className}
-      loading={loading}
+      {...(!priority && { loading })}
       priority={priority}
       placeholder="blur"
       blurDataURL={buildCloudinaryUrl(IMAGES.FALLBACK_IMG)}
