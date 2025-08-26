@@ -10,6 +10,8 @@ styles specific to the AuthSideBanner component
   height: 100%;
   display: flex;
   flex: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 .imgContainer {
@@ -27,8 +29,6 @@ styles specific to the AuthSideBanner component
 
 .headerContainer {
   position: relative;
-  align-items: center;
-  justify-content: center;
   z-index: 2;
   text-align: center;
   color: white;

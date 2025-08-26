@@ -27,7 +27,8 @@
 'use client';
 
 import React, { useEffect, useRef, ReactNode } from 'react';
-import Typography, { Tags } from '@/components/Typography';
+import Typography from '@/components/Typography';
+import { Tags } from '../Typography/Typography';
 import styles from './CheckBox.module.scss';
 
 /**

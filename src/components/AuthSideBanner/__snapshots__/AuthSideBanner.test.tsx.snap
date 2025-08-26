@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Home matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="container"
+    data-testid="AuthSideBannerTest"
+  >
+    <img
+      alt="authImg"
+      blurdataurl="https://res.cloudinary.com/dyci0wg0i/image/upload/fallbackImg.png"
+      class="imgContainer"
+      data-testid="CustomImageTest"
+      placeholder="blur"
+      src="https://picsum.photos/1920/1080?random=1"
+    />
+    <div
+      class="overlay"
+    />
+    <div
+      class="headerContainer"
+    >
+      <h1
+        class="typography h1 align-center header"
+        data-testid="TypographyTest"
+        style="color: rgb(255, 255, 255);"
+      >
+        TravelNinja
+      </h1>
+      <p
+        class="typography p align-center subHeader"
+        data-testid="TypographyTest"
+        style="color: rgb(255, 255, 255);"
+      >
+        Transform your tour business with our powerful platform
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;

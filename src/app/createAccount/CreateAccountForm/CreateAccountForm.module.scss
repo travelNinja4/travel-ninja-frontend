@@ -29,6 +29,11 @@
       flex: 1;
       align-items: flex-start;
       font-size: 0.85rem;
+      gap: 6;
+    }
+
+    .termsPolicy {
+      color: #667eea;
     }
 
     // 👉 At tablet size
@@ -68,10 +73,26 @@
         max-width: calc(33.333% - 1rem);
       }
 
+      .title {
+        font-size: 32px;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .subTitle {
+        font-size: 20px;
+        text-align: center;
+      }
+
       .termStatusCheckbox {
-        align-items: flex-start;
-        font-size: 0.9rem;
+        align-items: center;
+        font-size: 16px;
+        gap: 10;
       }
     }
+  }
+
+  @include respond-to(lg) {
+    padding: 2rem;
   }
 }

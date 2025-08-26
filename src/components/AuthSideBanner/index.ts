@@ -1,3 +1,3 @@
-import AuthSideBanner from './AuthSideBanner'
+import AuthSideBanner from './AuthSideBanner';
 
-export default AuthSideBanner
+export default AuthSideBanner;

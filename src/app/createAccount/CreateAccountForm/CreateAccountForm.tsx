@@ -119,8 +119,14 @@ export const createAccountFormConfig: FieldConfig[] = [
     name: 'termStatus',
     label: (
       <>
-        I agree to the <AppLink href="/terms">Terms of Service</AppLink> and{' '}
-        <AppLink href="/privacy">Privacy Policy</AppLink>
+        I agree to the{' '}
+        <AppLink href="/terms" className={styles.termsPolicy}>
+          Terms of Service
+        </AppLink>{' '}
+        and{' '}
+        <AppLink href="/privacy" className={styles.termsPolicy}>
+          Privacy Policy
+        </AppLink>
       </>
     ),
     type: 'checkbox',

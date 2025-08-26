@@ -3,7 +3,6 @@
 exports[`Home matches snapshot 1`] = `
 <DocumentFragment>
   <label
-    class="checkBoxContainer"
     data-testid="CheckBoxTest"
     for="checkboxTest"
   >

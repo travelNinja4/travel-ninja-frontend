@@ -1,3 +1,3 @@
-import PasswordFeedback from './PasswordFeedback'
+import PasswordFeedback from './PasswordFeedback';
 
-export default PasswordFeedback
+export default PasswordFeedback;

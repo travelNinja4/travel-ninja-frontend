@@ -56,21 +56,25 @@ describe('Home', () => {
 
   it('renders valid hints correctly', () => {
     render(<PasswordFeedback value="Password1" hints={hints} />);
-
-    const firstHint = screen.getByText('At least 8 characters');
-    const secondHint = screen.getByText('Contains a number');
-
-    expect(firstHint).toHaveClass('valid');
-    expect(secondHint).toHaveClass('valid');
+    expect(screen.getByTestId('check-icon-0')).toBeInTheDocument();
+    expect(screen.getByTestId('check-icon-1')).toBeInTheDocument();
   });
 
   it('renders invalid hints correctly', () => {
     render(<PasswordFeedback value="short" hints={hints} />);
+    expect(screen.getByTestId('dot-icon-0')).toBeInTheDocument();
+    expect(screen.getByTestId('dot-icon-1')).toBeInTheDocument();
+  });
 
-    const firstHint = screen.getByText('At least 8 characters');
-    const secondHint = screen.getByText('Contains a number');
+  it('shows gray dot when no value is entered', () => {
+    render(<PasswordFeedback value="" hints={hints} />);
+    const dot = screen.getByTestId('dot-icon-0');
+    expect(dot).toHaveAttribute('stroke', '#666666');
+  });
 
-    expect(firstHint).toHaveClass('invalid');
-    expect(secondHint).toHaveClass('invalid');
+  it('shows red dot when value entered but invalid', () => {
+    render(<PasswordFeedback value="short" hints={hints} />);
+    const dot = screen.getByTestId('dot-icon-0');
+    expect(dot).toHaveAttribute('stroke', '#dc3545');
   });
 });

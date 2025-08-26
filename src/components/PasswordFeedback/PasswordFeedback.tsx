@@ -38,9 +38,18 @@ export default function PasswordFeedback({ value, hints }: PasswordFeedbackProps
         return (
           <div className={styles.subContainer}>
             {valid ? (
-              <Check color="#28a745" size={20} className={styles.valid} />
+              <Check
+                data-testid={`check-icon-${idx}`}
+                color="#28a745"
+                size={20}
+                className={styles.valid}
+              />
             ) : (
-              <Dot color={hasValue ? '#dc3545' : '#666666'} size={30} />
+              <Dot
+                data-testid={`dot-icon-${idx}`}
+                color={hasValue ? '#dc3545' : '#666666'}
+                size={30}
+              />
             )}
             <Typography key={idx} tag="li">
               {hint.label}

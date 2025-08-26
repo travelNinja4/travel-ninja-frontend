@@ -18,13 +18,11 @@ import styles from './AuthSideBanner.module.scss';
 /**
  * Define the props available for the AuthSideBanner component.
  */
-interface AuthSideBannerProps {
-  label?: string;
-}
+interface AuthSideBannerProps {}
 
-export default function AuthSideBanner({ label = 'label' }: AuthSideBannerProps) {
+export default function AuthSideBanner({}: AuthSideBannerProps) {
   return (
-    <div className={styles.container}>
+    <div data-testid="AuthSideBannerTest" className={styles.container}>
       <CustomImage
         isUrl
         src="https://picsum.photos/1920/1080?random=1"
@@ -36,10 +34,10 @@ export default function AuthSideBanner({ label = 'label' }: AuthSideBannerProps)
       />
       <div className={styles.overlay}></div>
       <div className={styles.headerContainer}>
-        <Typography tag="h1" className={styles.header} color="#ffffff">
+        <Typography tag="h1" className={styles.header} color="#ffffff" align="center">
           TravelNinja
         </Typography>
-        <Typography tag="p" className={styles.subHeader} color="#ffffff">
+        <Typography tag="p" className={styles.subHeader} color="#ffffff" align="center">
           Transform your tour business with our powerful platform
         </Typography>
       </div>

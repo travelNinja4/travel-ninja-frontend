@@ -1,8 +1,11 @@
+@import '../../styles/mixins';
+
 .container {
   position: relative;
   display: flex;
   min-height: 100vh;
   overflow: hidden;
+  padding: 1rem;
 
   .bgImg {
     object-fit: cover;
@@ -34,19 +37,41 @@
       flex: 1;
       background-color: pink;
 
+      flex-direction: column;
+
       .imageContainer {
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
         flex: 0.5;
-        min-height: 600px;
+        min-height: auto;
       }
 
       .formContainer {
         display: flex;
         flex: 0.5;
         background-color: white;
+      }
+
+      @include respond-to(md) {
+        .imageContainer {
+          min-height: 100%;
+          height: auto;
+        }
+      }
+
+      @include respond-to(lg) {
+        flex-direction: row;
+
+        .imageContainer {
+          flex: 0.5;
+          min-height: 600px;
+        }
+
+        .formContainer {
+          flex: 0.5;
+        }
       }
     }
   }

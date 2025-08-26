@@ -106,4 +106,16 @@ describe('Home', () => {
     render(<CheckBox name="noLabel" onChange={jest.fn()} label={null} />);
     expect(screen.queryByText('CheckBox Test')).not.toBeInTheDocument();
   });
+
+  it('does not throw when clicked without onChange handler', () => {
+    render(<CheckBox name="noOnChange" label="No OnChange" />);
+    fireEvent.click(screen.getByRole('checkbox'));
+    expect(screen.getByRole('checkbox')).toBeChecked();
+  });
+
+  it('renders empty Typography when label is non-string and non-element', () => {
+    render(<CheckBox name="badLabel" label={123} />);
+    const typography = screen.getByText('', { exact: true });
+    expect(typography).toBeInTheDocument();
+  });
 });
