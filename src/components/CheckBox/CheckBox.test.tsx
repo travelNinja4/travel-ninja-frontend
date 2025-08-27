@@ -115,7 +115,46 @@ describe('Home', () => {
 
   it('renders empty Typography when label is non-string and non-element', () => {
     render(<CheckBox name="badLabel" label={123} />);
-    const typography = screen.getByText('', { exact: true });
+    const typography = screen.getByTestId('TypographyTest');
     expect(typography).toBeInTheDocument();
+    expect(typography).toBeEmptyDOMElement();
+  });
+
+  it('calls onChange when not disabled', () => {
+    const handleChange = jest.fn();
+    render(<CheckBox name="test" label="Accept" onChange={handleChange} />);
+    const input = screen.getByRole('checkbox');
+    fireEvent.click(input);
+    expect(handleChange).toHaveBeenCalledWith(true);
+  });
+
+  it('does not call onChange when disabled', () => {
+    const handleChange = jest.fn();
+    render(<CheckBox name="test" label="Disabled" disabled onChange={handleChange} />);
+    const input = screen.getByRole('checkbox');
+    fireEvent.click(input);
+    expect(handleChange).not.toHaveBeenCalled();
+  });
+
+  it('renders string label', () => {
+    render(<CheckBox name="test" label="StringLabel" />);
+    expect(screen.getByText('StringLabel')).toBeInTheDocument();
+  });
+
+  it('renders React element label', () => {
+    render(<CheckBox name="test" label={<span>ElementLabel</span>} />);
+    expect(screen.getByText('ElementLabel')).toBeInTheDocument();
+  });
+
+  it('does not render Typography when label is falsy', () => {
+    render(<CheckBox name="test" label={null} />);
+    expect(screen.queryByTestId('TypographyTest')).not.toBeInTheDocument();
+  });
+
+  it('handles invalid label type gracefully (number)', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    render(<CheckBox name="test" label={123 as any} />);
+    const typography = screen.getByTestId('TypographyTest');
+    expect(typography).toBeEmptyDOMElement();
   });
 });

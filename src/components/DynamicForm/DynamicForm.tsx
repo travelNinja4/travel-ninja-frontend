@@ -23,6 +23,8 @@ import PasswordFeedback from '../PasswordFeedback';
 import { PasswordHint } from '../PasswordFeedback/PasswordFeedback';
 import CheckBox from '../CheckBox';
 import styles from './DynamicForm.module.scss';
+import Button from '../Button';
+import { LucideIcon } from 'lucide-react';
 
 /**
  * Define the props available for the DynamicForm component.
@@ -53,7 +55,11 @@ export interface FieldConfig {
   children?: ReactNode;
   width?: FieldWidth;
   required?: boolean;
-  validationHints: PasswordHint[];
+  validationHints?: PasswordHint[];
+  buttonType?: 'button' | 'submit' | 'reset';
+  startIcon?: LucideIcon;
+  endIcon?: LucideIcon;
+  iconColor?: string;
 }
 
 type FieldType =
@@ -109,7 +115,7 @@ export default function DynamicForm<T extends FieldValues>({
         return (
           <>
             <TextField {...commonProps} className={field.className} />
-            <PasswordFeedback value={value} hints={field.validationHints} />
+            <PasswordFeedback value={value} hints={field.validationHints ?? []} />
           </>
         );
 
@@ -129,13 +135,27 @@ export default function DynamicForm<T extends FieldValues>({
           />
         );
 
+      case 'button':
+        return (
+          <Button
+            key={field.name}
+            type={field.buttonType || 'submit'}
+            className={field.className}
+            startIcon={field.startIcon}
+            endIcon={field.endIcon}
+            iconColor={field.iconColor}
+          >
+            {field.label}
+          </Button>
+        );
+
       default:
         null;
     }
   };
 
   return (
-    <form className={className} onSubmit={handleSubmit(onSubmit)}>
+    <form data-testid="DynamicFormTest" className={className} onSubmit={handleSubmit(onSubmit)}>
       {fields.map((field) => (
         <div
           key={field.name}

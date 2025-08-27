@@ -4,7 +4,13 @@ import Button from './Button';
 
 describe('Home', () => {
   /** Base props for Button **/
-  const baseProps = {};
+  const baseProps = {
+    children: 'ButtonTest',
+    onClick: jest.fn(),
+    type: 'button' as const,
+    disabled: false,
+    className: 'test-class',
+  };
 
   /**
    * @test

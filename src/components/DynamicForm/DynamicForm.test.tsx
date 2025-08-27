@@ -1,10 +1,38 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import DynamicForm from './DynamicForm';
+import { z } from 'zod';
+import DynamicForm, { FieldConfig, FieldWidth } from './DynamicForm';
+
+const mockFields: FieldConfig[] = [
+  {
+    name: 'username',
+    label: 'Username',
+    type: 'input',
+    placeholder: 'Enter username',
+    width: FieldWidth.FULL,
+  },
+  {
+    name: 'password',
+    label: 'Password',
+    type: 'password',
+    placeholder: 'Enter password',
+    validationHints: [],
+  },
+];
+
+const mockSchema = z.object({
+  username: z.string().min(1, 'Username is required'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+});
 
 describe('Home', () => {
   /** Base props for DynamicForm **/
-  const baseProps = {};
+  const baseProps = {
+    fields: mockFields,
+    schema: mockSchema,
+    className: 'dynamic-form',
+    onSubmit: jest.fn(),
+  };
 
   /**
    * @test

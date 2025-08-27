@@ -2,6 +2,7 @@ import DynamicForm, { FieldConfig, FieldWidth } from '@/components/DynamicForm/D
 import { createAccountSchema } from './CreateAccountSchema';
 import styles from './CreateAccountForm.module.scss';
 import AppLink from '@/components/AppLink';
+import { UserPlus } from 'lucide-react';
 
 export const createAccountFormConfig: FieldConfig[] = [
   {
@@ -133,6 +134,15 @@ export const createAccountFormConfig: FieldConfig[] = [
     required: true,
     validationHints: [],
     className: styles.termStatusCheckbox,
+  },
+  {
+    name: 'submit',
+    label: 'Create Account',
+    type: 'button',
+    buttonType: 'submit',
+    className: styles.submitButton,
+    startIcon: UserPlus,
+    iconColor: 'var(--color-white)',
   },
 ];
 

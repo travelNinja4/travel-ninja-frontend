@@ -2,11 +2,17 @@
 
 exports[`Home matches snapshot 1`] = `
 <DocumentFragment>
-  <div
-    class="wrapper"
+  <button
+    class="button test-class"
     data-testid="ButtonTest"
+    type="button"
   >
-    Button component - label
-  </div>
+    <span
+      class="typography span align-left test-class"
+      data-testid="TypographyTest"
+    >
+      ButtonTest
+    </span>
+  </button>
 </DocumentFragment>
 `;

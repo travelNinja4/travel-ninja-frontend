@@ -36,6 +36,10 @@
       color: var(--color-indigo);
     }
 
+    .submitButton {
+      color: var(--color-white);
+    }
+
     // 👉 At tablet size
     @include respond-to(md) {
       &--half {
