@@ -22,7 +22,7 @@ styles specific to the AuthSideBanner component
 .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--color-indigo) 0%, var(--color-purple) 100%);
   opacity: 0.6;
   z-index: 1;
 }
@@ -31,13 +31,13 @@ styles specific to the AuthSideBanner component
   position: relative;
   z-index: 2;
   text-align: center;
-  color: white;
+  color: var(--color-white);
 
   &.header {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 4px 8px var(--color-black-alpha-30);
   }
 
   &.subHeader {

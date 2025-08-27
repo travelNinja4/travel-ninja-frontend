@@ -16,13 +16,13 @@ import React, { ReactNode } from 'react';
 import { useForm, SubmitHandler, FieldValues, Resolver, Path, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodSchema } from 'zod';
-import styles from './DynamicForm.module.scss';
 import Typography from '../Typography';
 import { Tags } from '../Typography/Typography';
 import TextField from '../TextField';
 import PasswordFeedback from '../PasswordFeedback';
 import { PasswordHint } from '../PasswordFeedback/PasswordFeedback';
 import CheckBox from '../CheckBox';
+import styles from './DynamicForm.module.scss';
 
 /**
  * Define the props available for the DynamicForm component.
@@ -45,7 +45,7 @@ export enum FieldWidth {
 
 export interface FieldConfig {
   name: string;
-  label?: string;
+  label?: string | ReactNode;
   type?: FieldType;
   placeholder?: string;
   tag?: Tags;
@@ -80,7 +80,8 @@ export default function DynamicForm<T extends FieldValues>({
     control,
     formState: { errors },
   } = useForm<T>({
-    resolver: zodResolver(schema) as unknown as Resolver<T>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: zodResolver(schema as any) as unknown as Resolver<T>,
     mode: 'all',
     reValidateMode: 'onChange',
   });
@@ -89,6 +90,7 @@ export default function DynamicForm<T extends FieldValues>({
     const value = watch(field.name as Path<T>) || '';
     const commonProps = {
       ...field,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ...register(field.name as any),
       error: errors[field.name]?.message as string,
     };

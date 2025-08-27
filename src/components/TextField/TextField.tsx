@@ -43,7 +43,7 @@ interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
    * The text label displayed alongside the input.
    * Helps describe the purpose of the input for users and accessibility tools.
    */
-  label?: string;
+  label?: string | React.ReactNode;
 
   /**
    * The type of input (e.g., "text", "password", "email").

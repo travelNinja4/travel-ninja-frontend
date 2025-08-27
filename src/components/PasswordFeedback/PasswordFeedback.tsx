@@ -6,7 +6,7 @@
  * import PasswordFeedback from '@src/components/PasswordFeedback'
  *
  * export default function PasswordFeedback() {
- *   return <PasswordFeedback label="Hello" />;
+ *   return<PasswordFeedback value={password} hints={passwordHints} />;
  * }
  * ```
  */
@@ -19,7 +19,16 @@ import styles from './PasswordFeedback.module.scss';
  * Define the props available for the PasswordFeedback component.
  */
 interface PasswordFeedbackProps {
+  /**
+   * The current password value entered by the user.
+   * Used to test against the provided password hints.
+   */
   value: string;
+
+  /**
+   * An array of password requirements (hints).
+   * Each hint includes a `label` describing the rule and a `regex` to validate against.
+   */
   hints: PasswordHint[];
 }
 
@@ -34,9 +43,8 @@ export default function PasswordFeedback({ value, hints }: PasswordFeedbackProps
     <ul data-testid="PasswordFeedbackTest" className={styles.container} aria-live="polite">
       {hints.map((hint, idx) => {
         const valid = hint.regex.test(value || '');
-        console.log('valid>>>', valid);
         return (
-          <div className={styles.subContainer}>
+          <div key={idx} className={styles.subContainer}>
             {valid ? (
               <Check
                 data-testid={`check-icon-${idx}`}
@@ -51,9 +59,7 @@ export default function PasswordFeedback({ value, hints }: PasswordFeedbackProps
                 size={30}
               />
             )}
-            <Typography key={idx} tag="li">
-              {hint.label}
-            </Typography>
+            <Typography tag="li">{hint.label}</Typography>
           </div>
         );
       })}

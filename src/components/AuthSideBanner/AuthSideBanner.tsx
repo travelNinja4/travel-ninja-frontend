@@ -11,16 +11,12 @@
  * ```
  */
 
+import { STRINGS } from '@/constants/strings';
 import CustomImage from '../CustomImage';
 import Typography from '../Typography';
 import styles from './AuthSideBanner.module.scss';
 
-/**
- * Define the props available for the AuthSideBanner component.
- */
-interface AuthSideBannerProps {}
-
-export default function AuthSideBanner({}: AuthSideBannerProps) {
+export default function AuthSideBanner() {
   return (
     <div data-testid="AuthSideBannerTest" className={styles.container}>
       <CustomImage
@@ -35,10 +31,10 @@ export default function AuthSideBanner({}: AuthSideBannerProps) {
       <div className={styles.overlay}></div>
       <div className={styles.headerContainer}>
         <Typography tag="h1" className={styles.header} color="#ffffff" align="center">
-          TravelNinja
+          {STRINGS.APP_NAME}
         </Typography>
         <Typography tag="p" className={styles.subHeader} color="#ffffff" align="center">
-          Transform your tour business with our powerful platform
+          {STRINGS.APP_TAG_LINE}
         </Typography>
       </div>
     </div>
