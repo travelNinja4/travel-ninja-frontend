@@ -1,0 +1,77 @@
+@import '../../styles/mixins';
+
+.container {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 1rem;
+
+  .bgImg {
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    z-index: 1;
+    opacity: 0.8;
+  }
+
+  .subContainer {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    min-height: 600px;
+    max-width: 1000px;
+    margin: 0 auto;
+    height: auto;
+    position: relative;
+    z-index: 1;
+
+    .mainContainer {
+      display: flex;
+      flex: 1;
+
+      flex-direction: column;
+
+      .imageContainer {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0.5;
+        min-height: auto;
+      }
+
+      .formContainer {
+        display: flex;
+        flex: 0.5;
+        background-color: white;
+      }
+
+      @include respond-to(md) {
+        .imageContainer {
+          min-height: 100%;
+          height: auto;
+        }
+      }
+
+      @include respond-to(lg) {
+        flex-direction: row;
+
+        .imageContainer {
+          flex: 0.5;
+          min-height: 600px;
+        }
+
+        .formContainer {
+          flex: 0.5;
+        }
+      }
+    }
+  }
+}

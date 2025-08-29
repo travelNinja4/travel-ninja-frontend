@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Home matches snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="dynamic-form"
+    data-testid="DynamicFormTest"
+  >
+    <div
+      class="dynamic-form__field dynamic-form__field--full"
+    >
+      <div
+        class="container"
+        data-testid="TextFieldTest"
+      >
+        <label
+          class="typography label align-left label"
+          data-testid="TypographyTest"
+        >
+          Username 
+        </label>
+        <input
+          class="inputField"
+          name="username"
+          placeholder="Enter username"
+          type="input"
+          width="full"
+        />
+      </div>
+    </div>
+    <div
+      class="dynamic-form__field dynamic-form__field--full"
+    >
+      <div
+        class="container"
+        data-testid="TextFieldTest"
+      >
+        <label
+          class="typography label align-left label"
+          data-testid="TypographyTest"
+        >
+          Password 
+        </label>
+        <input
+          class="inputField"
+          name="password"
+          placeholder="Enter password"
+          type="password"
+          validationhints=""
+        />
+      </div>
+      <ul
+        aria-live="polite"
+        class="container"
+        data-testid="PasswordFeedbackTest"
+      />
+    </div>
+  </form>
+</DocumentFragment>
+`;

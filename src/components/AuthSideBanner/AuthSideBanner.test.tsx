@@ -1,49 +1,45 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import Button from './Button';
+import AuthSideBanner from './AuthSideBanner';
 
 describe('Home', () => {
-  /** Base props for Button **/
+  /** Base props for AuthSideBanner **/
   const baseProps = {
-    children: 'ButtonTest',
-    onClick: jest.fn(),
-    type: 'button' as const,
-    disabled: false,
-    className: 'test-class',
+    label: 'AuthSideBanner Test',
   };
 
   /**
    * @test
-   * Renders the Button component without throwing an error
-   * and checks if the ButtonTest text is present in the document.
+   * Renders the AuthSideBanner component without throwing an error
+   * and checks if the AuthSideBannerTest text is present in the document.
    *
    * This ensures that the component loads correctly with the base props.
    */
   it('renders without crashing', () => {
-    render(<Button {...baseProps} />);
-    expect(screen.getByTestId('ButtonTest')).toBeInTheDocument();
+    render(<AuthSideBanner {...baseProps} />);
+    expect(screen.getByTestId('AuthSideBannerTest')).toBeInTheDocument();
   });
 
   /**
    * @test
-   * Ensures that the Button component renders without throwing any runtime errors.
+   * Ensures that the AuthSideBanner component renders without throwing any runtime errors.
    *
    * This is a safety check to confirm that the component can mount successfully
    * with the provided base props, even if it does not render any visible content.
    */
   it('renders without throwing', () => {
-    expect(() => render(<Button {...baseProps} />)).not.toThrow();
+    expect(() => render(<AuthSideBanner {...baseProps} />)).not.toThrow();
   });
 
   /**
    * @test
-   * Captures a snapshot of the Button component with base props
+   * Captures a snapshot of the AuthSideBanner component with base props
    * and ensures it matches the previously stored snapshot.
    *
    * This helps detect any unexpected UI changes.
    */
   it('matches snapshot', () => {
-    const { asFragment } = render(<Button {...baseProps} />);
+    const { asFragment } = render(<AuthSideBanner {...baseProps} />);
     expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -27,7 +27,8 @@
 'use client';
 
 import React, { useEffect, useRef, ReactNode } from 'react';
-import Typography, { Tags } from '@/components/Typography';
+import Typography from '@/components/Typography';
+import { Tags } from '../Typography/Typography';
 import styles from './CheckBox.module.scss';
 
 /**
@@ -124,6 +125,7 @@ export default function CheckBox({
   checked,
   defaultChecked,
   disabled,
+  className,
   onChange,
   style,
 }: CheckBoxProps) {
@@ -154,7 +156,7 @@ export default function CheckBox({
     <label
       data-testid="CheckBoxTest"
       htmlFor={checkboxId}
-      className={styles.checkBoxContainer}
+      className={(styles.checkBoxContainer, className)}
       style={style}
     >
       <input
