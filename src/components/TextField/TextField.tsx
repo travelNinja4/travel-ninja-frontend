@@ -20,6 +20,7 @@
  * ```
  */
 
+import clsx from 'clsx';
 import Typography from '../Typography';
 import styles from './TextField.module.scss';
 
@@ -151,7 +152,7 @@ export default function TextField({
         name={name}
         placeholder={placeholder}
         value={value}
-        className={styles.inputField}
+        className={clsx(styles.inputField, className)}
         disabled={disabled}
         defaultValue={defaultValue}
         required={required}

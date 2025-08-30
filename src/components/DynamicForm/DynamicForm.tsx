@@ -17,7 +17,7 @@ import { useForm, SubmitHandler, FieldValues, Resolver, Path, Controller } from 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodSchema } from 'zod';
 import Typography from '../Typography';
-import { Tags } from '../Typography/Typography';
+import { Tags, TextAlign } from '../Typography/Typography';
 import TextField from '../TextField';
 import PasswordFeedback from '../PasswordFeedback';
 import { PasswordHint } from '../PasswordFeedback/PasswordFeedback';
@@ -60,6 +60,7 @@ export interface FieldConfig {
   startIcon?: LucideIcon;
   endIcon?: LucideIcon;
   iconColor?: string;
+  textAlign?: TextAlign;
 }
 
 type FieldType =
@@ -103,7 +104,7 @@ export default function DynamicForm<T extends FieldValues>({
     switch (field.type) {
       case 'label':
         return (
-          <Typography tag={field.tag || 'p'} className={field.className}>
+          <Typography tag={field.tag || 'p'} className={field.className} align={field.textAlign}>
             {field.label || field.children}
           </Typography>
         );

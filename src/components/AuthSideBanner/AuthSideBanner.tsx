@@ -16,7 +16,11 @@ import CustomImage from '../CustomImage';
 import Typography from '../Typography';
 import styles from './AuthSideBanner.module.scss';
 
-export default function AuthSideBanner() {
+interface AuthSideBannerProps {
+  appTagLine: string;
+}
+
+export default function AuthSideBanner({ appTagLine }: AuthSideBannerProps) {
   return (
     <div data-testid="AuthSideBannerTest" className={styles.container}>
       <CustomImage
@@ -34,7 +38,7 @@ export default function AuthSideBanner() {
           {STRINGS.APP_NAME}
         </Typography>
         <Typography tag="p" className={styles.subHeader} color="#ffffff" align="center">
-          {STRINGS.APP_TAG_LINE}
+          {appTagLine}
         </Typography>
       </div>
     </div>
