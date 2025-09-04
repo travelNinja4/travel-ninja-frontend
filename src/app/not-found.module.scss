@@ -1,0 +1,287 @@
+@use 'sass:math';
+
+.pageBg {
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.floatingElements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floatingElement {
+  position: absolute;
+  opacity: 0.1;
+  animation: float 8s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+.errorContainer {
+  text-align: center;
+  color: white;
+  max-width: 600px;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
+  margin: 0 auto;
+}
+
+.errorIllustration {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+.errorNumber {
+  font-size: 12rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #ffffff, #f8f9ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+  animation: float 6s ease-in-out infinite;
+}
+
+.errorTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.errorMessage {
+  font-size: 1.2rem;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.errorDescription {
+  font-size: 1rem;
+  margin-bottom: 3rem;
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+.searchContainer {
+  margin-bottom: 2rem;
+}
+
+.searchBox {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  padding: 0.75rem 1.5rem;
+  color: white;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 2rem;
+  backdrop-filter: blur(10px);
+  font-size: 1rem;
+}
+
+.searchBox::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.btnPrimary {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btnPrimary:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.btnSecondary {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btnSecondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.quickLinks {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.quickLink {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  display: inline-flex;
+  align-items: center;
+}
+
+.quickLink:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.contactSupport {
+  margin-top: 3rem;
+  opacity: 0.7;
+}
+
+.contactLink {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .errorContainer {
+    padding: 1.5rem;
+  }
+  .errorNumber {
+    font-size: 8rem;
+  }
+  .errorTitle {
+    font-size: 2rem;
+  }
+  .errorMessage {
+    font-size: 1.1rem;
+  }
+  .actionButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+  .btnPrimary,
+  .btnSecondary {
+    width: 100%;
+    max-width: 300px;
+  }
+  .quickLinks {
+    gap: 1rem;
+  }
+  .floatingElement {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .errorNumber {
+    font-size: 6rem;
+  }
+  .errorTitle {
+    font-size: 1.5rem;
+  }
+  .errorMessage {
+    font-size: 1rem;
+  }
+  .errorDescription {
+    font-size: 0.9rem;
+  }
+  .searchBox {
+    max-width: 300px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .pageBg {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  }
+}
+
+.btnPrimary:focus,
+.btnSecondary:focus,
+.searchBox:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
