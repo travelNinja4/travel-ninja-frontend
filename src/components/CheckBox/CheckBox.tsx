@@ -113,6 +113,11 @@ interface CheckBoxProps {
    * Inline CSS styles to apply to the root label element.
    */
   style?: React.CSSProperties;
+
+  /**
+   * error message to display below the checkbox.
+   */
+  error?: string;
 }
 
 export default function CheckBox({
@@ -128,6 +133,7 @@ export default function CheckBox({
   className,
   onChange,
   style,
+  error,
 }: CheckBoxProps) {
   const checkboxId = name || `checkbox-${Math.random()}`;
   const inputRef = useRef<HTMLInputElement>(null);
@@ -153,26 +159,29 @@ export default function CheckBox({
   };
 
   return (
-    <label
-      data-testid="CheckBoxTest"
-      htmlFor={checkboxId}
-      className={(styles.checkBoxContainer, className)}
-      style={style}
-    >
-      <input
-        ref={inputRef}
-        type="checkbox"
-        id={checkboxId}
-        name={name}
-        value={value}
-        required={required}
-        checked={checked}
-        defaultChecked={defaultChecked}
-        disabled={disabled}
-        onChange={handleChange}
-        className={styles.checkbox}
-      />
-      {label && <Typography tag={tag}>{getLabelContent()}</Typography>}
-    </label>
+    <>
+      <label
+        data-testid="CheckBoxTest"
+        htmlFor={checkboxId}
+        className={(styles.checkBoxContainer, className)}
+        style={style}
+      >
+        <input
+          ref={inputRef}
+          type="checkbox"
+          id={checkboxId}
+          name={name}
+          value={value}
+          required={required}
+          checked={checked}
+          defaultChecked={defaultChecked}
+          disabled={disabled}
+          onChange={handleChange}
+          className={styles.checkbox}
+        />
+        {label && <Typography tag={tag}>{getLabelContent()}</Typography>}
+      </label>
+      {error && <p className={styles.errorText}>{error}</p>}
+    </>
   );
 }

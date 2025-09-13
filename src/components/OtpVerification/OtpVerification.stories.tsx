@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 /**
 import { fn } from 'storybook/test';
 */
-import OtpVerification from './OtpVerification'
+import OtpVerification from './OtpVerification';
 
 const meta = {
   title: 'components/OtpVerification',
@@ -11,16 +11,13 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {
-    label: { 
-        control: 'text', 
-        description: 'Sample label for the component' 
-        },
-  },
-  args: { 
+  argTypes: {},
+  args: {
     /** onClick: fn() **/
-    },
+  },
 } satisfies Meta<typeof OtpVerification>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};

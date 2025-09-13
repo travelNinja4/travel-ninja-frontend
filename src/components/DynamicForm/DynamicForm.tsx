@@ -22,17 +22,32 @@ import TextField from '../TextField';
 import PasswordFeedback from '../PasswordFeedback';
 import { PasswordHint } from '../PasswordFeedback/PasswordFeedback';
 import CheckBox from '../CheckBox';
-import styles from './DynamicForm.module.scss';
 import Button from '../Button';
 import { LucideIcon } from 'lucide-react';
+import styles from './DynamicForm.module.scss';
 
 /**
  * Define the props available for the DynamicForm component.
  */
 interface DynamicFormProps<T extends FieldValues = FieldValues> {
+  /**
+   *
+   */
   fields: FieldConfig[];
+
+  /**
+   *
+   */
   schema: ZodSchema<T>;
+
+  /**
+   *
+   */
   className: string;
+
+  /**
+   *
+   */
   onSubmit: SubmitHandler<T>;
 }
 
@@ -61,6 +76,7 @@ export interface FieldConfig {
   endIcon?: LucideIcon;
   iconColor?: string;
   textAlign?: TextAlign;
+  maxLength?: number;
 }
 
 type FieldType =
@@ -110,12 +126,14 @@ export default function DynamicForm<T extends FieldValues>({
         );
 
       case 'input':
-        return <TextField {...commonProps} className={field.className} />;
+        return (
+          <TextField {...commonProps} className={field.className} maxLength={field.maxLength} />
+        );
 
       case 'password':
         return (
           <>
-            <TextField {...commonProps} className={field.className} />
+            <TextField {...commonProps} className={field.className} maxLength={field.maxLength} />
             <PasswordFeedback value={value} hints={field.validationHints ?? []} />
           </>
         );
@@ -131,6 +149,7 @@ export default function DynamicForm<T extends FieldValues>({
                 checked={!!value}
                 onChange={(checked: boolean) => onChange(checked)}
                 className={field.className}
+                error={errors[field.name]?.message as string}
               />
             )}
           />

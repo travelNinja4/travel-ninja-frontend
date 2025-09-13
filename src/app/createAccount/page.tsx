@@ -11,7 +11,7 @@ export default function CreateAccount() {
     <div className={styles.container}>
       <CustomImage
         isUrl
-        src="https://picsum.photos/1920/1080?random=1"
+        src={process.env.NEXT_PUBLIC_PLACEHOLDER_BG_URL as string}
         fill
         priority
         alt="BackgroundImg"

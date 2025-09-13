@@ -69,12 +69,12 @@ describe('Home', () => {
   it('shows gray dot when no value is entered', () => {
     render(<PasswordFeedback value="" hints={hints} />);
     const dot = screen.getByTestId('dot-icon-0');
-    expect(dot).toHaveAttribute('stroke', '#666666');
+    expect(dot).toHaveAttribute('stroke', 'var(--color-gray-600)');
   });
 
   it('shows red dot when value entered but invalid', () => {
     render(<PasswordFeedback value="short" hints={hints} />);
     const dot = screen.getByTestId('dot-icon-0');
-    expect(dot).toHaveAttribute('stroke', '#dc3545');
+    expect(dot).toHaveAttribute('stroke', 'var(--color-red-500)');
   });
 });

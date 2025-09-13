@@ -67,7 +67,7 @@ export const loginFormConfig: FieldConfig[] = [
     name: 'signUpText',
     label: (
       <>
-        Don't have an account?{' '}
+        Don&apos;t have an account?{' '}
         <AppLink href="/terms" className={styles.signUpText}>
           Sign up here
         </AppLink>

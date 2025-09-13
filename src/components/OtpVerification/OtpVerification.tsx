@@ -22,26 +22,9 @@ import { Mail, Phone, Check, RotateCw } from 'lucide-react';
 import styles from './OtpVerification.module.scss';
 import { useEffect, useState } from 'react';
 
-/**
- * Define the props available for the OtpVerification component.
- */
-interface OtpVerificationProps {
-  type: 'email' | 'mobile';
-  value?: string;
-  verifyApi?: (payload: { type: 'email' | 'mobile'; value: string; code: string }) => Promise<void>;
-  resendApi?: (payload: { type: 'email' | 'mobile'; value: string }) => Promise<void>;
-  onSuccess?: () => void;
-  onError?: (error: string) => void;
-}
-
-export default function OtpVerification({
-  type,
-  value,
-  verifyApi,
-  resendApi,
-  onSuccess,
-  onError,
-}: OtpVerificationProps) {
+export default function OtpVerification() {
+  const [type, setType] = useState<'email' | 'mobile'>('email');
+  const [value, setValue] = useState('');
   const [timer, setTimer] = useState(0);
 
   useEffect(() => {
@@ -57,11 +40,26 @@ export default function OtpVerification({
   const handleResend = () => {
     setTimer(60);
   };
+
+  const handleOnChange = (val: string) => {
+    setValue(val);
+  };
+
+  const handleCodeVerify = () => {
+    if (!value) {
+      return false;
+    }
+    if (type === STRINGS.EMAIL) {
+      setType('mobile');
+      setValue('');
+    }
+  };
+
   return (
-    <div className={styles.container}>
+    <div data-testid="OtpVerificationTest" className={styles.container}>
       <CustomImage
         isUrl
-        src="https://picsum.photos/1920/1080?random=1"
+        src={process.env.NEXT_PUBLIC_PLACEHOLDER_BG_URL as string}
         fill
         priority
         alt="BackgroundImg"
@@ -77,41 +75,50 @@ export default function OtpVerification({
           </div>
           <div className={styles.otpContainer}>
             <Typography tag="h2" align="center" className={styles.otpHeader}>
-              {type === 'email' ? 'Email Verification' : 'Mobile Number Verification'}
+              {type === STRINGS.EMAIL
+                ? STRINGS.EMAIL_VERIFICATION
+                : STRINGS.MOBILE_NUMBER_VERIFICATION}
             </Typography>
             <Typography tag="p" align="center" className={styles.otpSubHeader}>
-              {type === 'email'
-                ? `We've sent a verification code to your email`
-                : `We've sent a verification code to your mobile number`}
+              {type === STRINGS.EMAIL ? STRINGS.EMAIL_SENT : STRINGS.MOBILE_SENT}
             </Typography>
             <div className={styles.userData}>
-              {type === 'email' ? <Mail color="#000000" /> : <Phone color="#000000" />}
-              <Typography tag="span" align="center" color="#667eea" className={styles.userEmail}>
-                {type === 'email' ? 'user@gmail.com' : '4658265937'}
+              {type === STRINGS.EMAIL ? (
+                <Mail color="var(--color-black)" />
+              ) : (
+                <Phone color="var(--color-black)" />
+              )}
+              <Typography
+                tag="span"
+                align="center"
+                color="var(--color-indigo)"
+                className={styles.userEmail}
+              >
+                {type === STRINGS.EMAIL ? 'user@gmail.com' : '4658265937'}
               </Typography>
             </div>
             <div className={styles.verificationWrapper}>
               <TextField
-                label="Enter Verification Code"
+                label={STRINGS.ENTER_VERIFICATION_CODE}
                 placeholder="000000"
+                value={value}
                 maxLength={6}
                 className={styles.verificationTextField}
+                onChange={(e) => handleOnChange(e.target.value)}
               />
               <Typography tag="label" align="center" className={styles.otpSubHeader}>
-                {type === 'email'
-                  ? 'Enter the 6-digit code sent to your email'
-                  : 'Enter the 6-digit code sent to your mobile number'}
+                {type === STRINGS.EMAIL ? STRINGS.EMAIL_CODE_HINT : STRINGS.MOBILE_CODE_HINT}
               </Typography>
             </div>
-            <Button className={styles.button} startIcon={Check}>
-              {type === 'email' ? 'Verify Email' : 'Verify Mobile Number'}
+            <Button className={styles.button} startIcon={Check} onClick={handleCodeVerify}>
+              {type === STRINGS.EMAIL ? STRINGS.VERIFY_EMAIL : STRINGS.VERIFY_MOBILE_NUMBER}
             </Button>
             <div className={styles.resendWrapper}>
               {timer > 0 ? (
-                <Typography tag="span">{`Resend code in ${timer} seconds`}</Typography>
+                <Typography tag="span">{`${STRINGS.RESEND_CODE} ${timer} ${STRINGS.SECONDS}`}</Typography>
               ) : (
                 <>
-                  <RotateCw color="#667eea" />
+                  <RotateCw color="var(--color-indigo)" />
                   <Typography tag="span" className={styles.resendText} onClick={handleResend}>
                     Resend Code
                   </Typography>
