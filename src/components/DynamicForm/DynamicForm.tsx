@@ -32,22 +32,22 @@ import clsx from 'clsx';
  */
 interface DynamicFormProps<T extends FieldValues = FieldValues> {
   /**
-   *
+   * Array of field configurations used to dynamically render form fields.
    */
   fields: FieldConfig[];
 
   /**
-   *
+   * Zod schema used for form validation.
    */
   schema: ZodSchema<T>;
 
   /**
-   *
+   * CSS class name applied to the form container.
    */
   className: string;
 
   /**
-   *
+   * Callback function executed when the form is submitted.
    */
   onSubmit: SubmitHandler<T>;
 }
