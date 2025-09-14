@@ -28,6 +28,8 @@ export default function OtpVerification() {
   const [timer, setTimer] = useState(0);
 
   useEffect(() => {
+    if (timer === 0) return;
+
     let interval: NodeJS.Timeout | null = null;
     if (timer > 0) {
       interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
@@ -52,6 +54,7 @@ export default function OtpVerification() {
     if (type === STRINGS.EMAIL) {
       setType('mobile');
       setValue('');
+      setTimer(0);
     }
   };
 

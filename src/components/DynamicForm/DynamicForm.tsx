@@ -25,6 +25,7 @@ import CheckBox from '../CheckBox';
 import Button from '../Button';
 import { LucideIcon } from 'lucide-react';
 import styles from './DynamicForm.module.scss';
+import clsx from 'clsx';
 
 /**
  * Define the props available for the DynamicForm component.
@@ -179,7 +180,7 @@ export default function DynamicForm<T extends FieldValues>({
       {fields.map((field) => (
         <div
           key={field.name}
-          className={`${className}__field ${className}__field--${field.width || FieldWidth.FULL}`}
+          className={clsx(styles.field, styles[`field--${field.width || FieldWidth.FULL}`])}
         >
           {renderField(field)}
         </div>

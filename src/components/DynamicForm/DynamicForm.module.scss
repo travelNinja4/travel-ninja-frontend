@@ -6,5 +6,49 @@ styles specific to the DynamicForm component
 
 @import '../../styles/mixins';
 
-.container {
+.field {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 100%;
+  min-width: 0;
+  width: 100%;
+}
+
+.field--full {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.field--half {
+  flex: 0 0 100%;
+}
+
+.field--third {
+  flex: 0 0 100%;
+}
+
+/* 👉 At tablet size */
+@include respond-to(md) {
+  .field--half {
+    flex: 0 0 calc(50% - 0.5rem);
+    max-width: calc(50% - 0.5rem);
+  }
+
+  .field--third {
+    flex: 0 0 calc((100% - 2rem) / 3);
+    max-width: calc((100% - 2rem) / 3);
+  }
+}
+
+/* 👉 At desktop size */
+@include respond-to(lg) {
+  .field--half {
+    flex: 1 1 calc(50% - 1rem);
+    max-width: calc(50% - 1rem);
+  }
+
+  .field--third {
+    flex: 1 1 calc(33.333% - 1rem);
+    max-width: calc(33.333% - 1rem);
+  }
 }

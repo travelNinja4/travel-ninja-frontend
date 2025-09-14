@@ -7,96 +7,82 @@
   padding: 1rem;
   width: 100%;
 
+  // Base styles for labels & elements
+  .title {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .subTitle {
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .termStatusCheckbox {
+    display: flex;
+    flex: 1;
+    align-items: flex-start;
+    font-size: 0.85rem;
+    gap: 6px;
+  }
+
+  .termsPolicy {
+    color: var(--color-indigo);
+  }
+
+  .submitButton {
+    color: var(--color-white);
+  }
+
   &__field {
     display: flex;
     flex-direction: column;
     flex: 0 0 100%;
     min-width: 0;
     width: 100%;
+  }
 
+  // Tablet styles
+  @include respond-to(md) {
     .title {
-      font-size: 1.3rem;
-      text-align: center;
+      font-size: 1.5rem;
     }
 
     .subTitle {
-      font-size: 0.85rem;
-      text-align: center;
+      font-size: 0.9rem;
     }
 
     .termStatusCheckbox {
-      display: flex;
-      flex: 1;
+      font-size: 0.9rem;
       align-items: flex-start;
-      font-size: 0.85rem;
-      gap: 6;
     }
 
-    .termsPolicy {
-      color: var(--color-indigo);
+    &__field--half {
+      flex: 0 0 calc(50% - 0.5rem);
     }
 
-    .submitButton {
-      color: var(--color-white);
-    }
-
-    // 👉 At tablet size
-    @include respond-to(md) {
-      &--half {
-        flex: 0 0 calc(50% - 0.5rem);
-      }
-      &--third {
-        flex: 0 0 calc((100% - 2rem) / 3);
-      }
-
-      .title {
-        font-size: 1.5rem;
-        text-align: center;
-      }
-
-      .subTitle {
-        font-size: 0.85rem;
-        text-align: center;
-      }
-
-      .termStatusCheckbox {
-        align-items: flex-start;
-        font-size: 0.9rem;
-      }
-    }
-
-    // 👉 At desktop size
-    @include respond-to(lg) {
-      &__field--half {
-        flex: 1 1 calc(50% - 1rem);
-        max-width: calc(50% - 1rem);
-      }
-
-      &__field--third {
-        flex: 1 1 calc(33.333% - 1rem);
-        max-width: calc(33.333% - 1rem);
-      }
-
-      .title {
-        font-size: 32px;
-        text-align: center;
-        font-weight: 700;
-      }
-
-      .subTitle {
-        font-size: 20px;
-        text-align: center;
-      }
-
-      .termStatusCheckbox {
-        align-items: center;
-        font-size: 16px;
-        gap: 10;
-      }
+    &__field--third {
+      flex: 0 0 calc((100% - 2rem) / 3);
     }
   }
 
+  // Desktop styles
   @include respond-to(lg) {
     padding: 2rem;
+
+    .title {
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .subTitle {
+      font-size: 20px;
+    }
+
+    .termStatusCheckbox {
+      font-size: 16px;
+      gap: 10px;
+      align-items: center;
+    }
   }
 }
