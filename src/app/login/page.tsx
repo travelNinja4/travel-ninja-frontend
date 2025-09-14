@@ -1,17 +1,17 @@
 'use client';
 
 import CustomImage from '@/components/CustomImage';
-import CreateAccountForm from './CreateAccountForm/CreateAccountForm';
+import LoginForm from './LoginForm/LoginForm';
 import styles from './page.module.scss';
 import AuthSideBanner from '@/components/AuthSideBanner';
 import { STRINGS } from '@/constants/strings';
 
-export default function CreateAccount() {
+export default function Login() {
   return (
     <div className={styles.container}>
       <CustomImage
         isUrl
-        src={process.env.NEXT_PUBLIC_PLACEHOLDER_BG_URL as string}
+        src="https://picsum.photos/1920/1080?random=1"
         fill
         priority
         alt="BackgroundImg"
@@ -23,10 +23,10 @@ export default function CreateAccount() {
       <div className={styles.subContainer}>
         <div className={styles.mainContainer}>
           <div className={styles.imageContainer}>
-            <AuthSideBanner appTagLine={STRINGS.CREATE_ACCOUNT_APP_TAG_LINE} />
+            <AuthSideBanner appTagLine={STRINGS.LOGIN_APP_TAG_LINE} />
           </div>
           <div className={styles.formContainer}>
-            <CreateAccountForm />
+            <LoginForm />
           </div>
         </div>
       </div>

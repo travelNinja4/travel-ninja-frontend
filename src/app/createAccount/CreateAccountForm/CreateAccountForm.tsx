@@ -1,8 +1,10 @@
 import DynamicForm, { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
 import { createAccountSchema } from './CreateAccountSchema';
-import styles from './CreateAccountForm.module.scss';
 import AppLink from '@/components/AppLink';
 import { UserPlus } from 'lucide-react';
+import { redirect } from 'next/navigation';
+import { ROUTES } from '@/constants/strings';
+import styles from './CreateAccountForm.module.scss';
 
 export const createAccountFormConfig: FieldConfig[] = [
   {
@@ -28,6 +30,7 @@ export const createAccountFormConfig: FieldConfig[] = [
     type: 'input',
     placeholder: 'Enter full name',
     required: true,
+    maxLength: 50,
     width: FieldWidth.HALF,
     validationHints: [],
   },
@@ -45,6 +48,7 @@ export const createAccountFormConfig: FieldConfig[] = [
     type: 'input',
     required: true,
     placeholder: 'Enter email address',
+    maxLength: 50,
     width: FieldWidth.HALF,
     validationHints: [],
   },
@@ -62,6 +66,7 @@ export const createAccountFormConfig: FieldConfig[] = [
     type: 'input',
     placeholder: 'Enter full address',
     required: true,
+    maxLength: 200,
     width: FieldWidth.FULL,
     validationHints: [],
   },
@@ -71,25 +76,38 @@ export const createAccountFormConfig: FieldConfig[] = [
     type: 'input',
     placeholder: 'Enter city',
     required: true,
-    width: FieldWidth.THIRD,
+    maxLength: 20,
+    width: FieldWidth.HALF,
     validationHints: [],
   },
   {
     name: 'state',
     label: 'State',
     type: 'input',
-    placeholder: 'Enter State',
+    placeholder: 'Enter state',
     required: true,
-    width: FieldWidth.THIRD,
+    maxLength: 20,
+    width: FieldWidth.HALF,
     validationHints: [],
   },
   {
-    name: 'postCode',
+    name: 'pincode',
     label: 'Post Code',
     type: 'input',
     placeholder: 'Enter post code',
     required: true,
-    width: FieldWidth.THIRD,
+    maxLength: 6,
+    width: FieldWidth.HALF,
+    validationHints: [],
+  },
+  {
+    name: 'phoneNumber',
+    label: 'Mobile Number',
+    type: 'input',
+    placeholder: 'Enter mobile number',
+    required: true,
+    maxLength: 10,
+    width: FieldWidth.HALF,
     validationHints: [],
   },
   {
@@ -98,7 +116,8 @@ export const createAccountFormConfig: FieldConfig[] = [
     type: 'password',
     placeholder: 'Create a password',
     required: true,
-    width: FieldWidth.HALF,
+    maxLength: 12,
+    width: FieldWidth.FULL,
     validationHints: [
       { label: 'At least 8 characters', regex: /^.{8,}$/ },
       { label: 'One uppercase letter', regex: /[A-Z]/ },
@@ -106,15 +125,6 @@ export const createAccountFormConfig: FieldConfig[] = [
       { label: 'One number', regex: /\d/ },
       { label: 'One special character', regex: /[@$!%*?&]/ },
     ],
-  },
-  {
-    name: 'confirmPassword',
-    label: 'Confirm Password',
-    type: 'input',
-    placeholder: 'Confirm your password',
-    required: true,
-    width: FieldWidth.HALF,
-    validationHints: [],
   },
   {
     name: 'termStatus',
@@ -147,11 +157,15 @@ export const createAccountFormConfig: FieldConfig[] = [
 ];
 
 export default function CreateAccountForm() {
+  const handleSubmit = () => {
+    redirect(ROUTES.VERIFY);
+  };
+
   return (
     <DynamicForm
       fields={createAccountFormConfig}
       schema={createAccountSchema}
-      onSubmit={() => {}}
+      onSubmit={handleSubmit}
       className={styles.createAccountContainer}
     />
   );

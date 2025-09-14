@@ -6,7 +6,9 @@
  * import Button from '@src/components/Button'
  *
  * export default function Button() {
- *   return <Button label="Hello" />;
+ *   <Button startIcon={Plus} endIcon={ArrowRight} iconSize={18} iconColor="#333">
+ *      Hello
+ *    </Button>
  * }
  * ```
  */

@@ -6,6 +6,8 @@
   min-height: 100vh;
   overflow: hidden;
   padding: 1rem;
+  align-items: center;
+  justify-content: center;
 
   .bgImg {
     object-fit: cover;
@@ -15,15 +17,15 @@
   .overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, var(--color-indigo) 0%, var(--color-purple) 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     z-index: 1;
     opacity: 0.8;
   }
 
   .subContainer {
-    background: var(--color-white);
+    background: white;
     border-radius: 20px;
-    box-shadow: 0 20px 40px var(--color-black-alpha-10);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     min-height: 600px;
     max-width: 1000px;
@@ -50,7 +52,7 @@
       .formContainer {
         display: flex;
         flex: 0.5;
-        background-color: var(--color-white);
+        background-color: white;
       }
 
       @include respond-to(md) {
@@ -61,6 +63,7 @@
       }
 
       @include respond-to(lg) {
+        height: 600px;
         flex-direction: row;
 
         .imageContainer {

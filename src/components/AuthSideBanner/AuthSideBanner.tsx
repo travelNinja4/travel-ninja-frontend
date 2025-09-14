@@ -6,7 +6,7 @@
  * import AuthSideBanner from '@src/components/AuthSideBanner'
  *
  * export default function AuthSideBanner() {
- *   return <AuthSideBanner label="Hello" />;
+ *   return <AuthSideBanner appTagLine="Hello" />;
  * }
  * ```
  */
@@ -16,7 +16,11 @@ import CustomImage from '../CustomImage';
 import Typography from '../Typography';
 import styles from './AuthSideBanner.module.scss';
 
-export default function AuthSideBanner() {
+interface AuthSideBannerProps {
+  appTagLine: string;
+}
+
+export default function AuthSideBanner({ appTagLine }: AuthSideBannerProps) {
   return (
     <div data-testid="AuthSideBannerTest" className={styles.container}>
       <CustomImage
@@ -30,11 +34,11 @@ export default function AuthSideBanner() {
       />
       <div className={styles.overlay}></div>
       <div className={styles.headerContainer}>
-        <Typography tag="h1" className={styles.header} color="#ffffff" align="center">
+        <Typography tag="h1" className={styles.header} color="var(--color-white)" align="center">
           {STRINGS.APP_NAME}
         </Typography>
-        <Typography tag="p" className={styles.subHeader} color="#ffffff" align="center">
-          {STRINGS.APP_TAG_LINE}
+        <Typography tag="p" className={styles.subHeader} color="var(--color-white)" align="center">
+          {appTagLine}
         </Typography>
       </div>
     </div>

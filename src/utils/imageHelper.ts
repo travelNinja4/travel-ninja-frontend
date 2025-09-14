@@ -4,4 +4,4 @@
  */
 
 export const buildCloudinaryUrl = (imageName: string) =>
-  `https://res.cloudinary.com/dyci0wg0i/image/upload/${imageName}`;
+  `${process.env.NEXT_PUBLIC_CLOUDINARY_URL}${imageName}`;

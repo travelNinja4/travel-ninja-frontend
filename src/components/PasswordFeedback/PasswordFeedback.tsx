@@ -48,14 +48,14 @@ export default function PasswordFeedback({ value, hints }: PasswordFeedbackProps
             {valid ? (
               <Check
                 data-testid={`check-icon-${idx}`}
-                color="#28a745"
+                color="var(--color-green-500)"
                 size={20}
                 className={styles.valid}
               />
             ) : (
               <Dot
                 data-testid={`dot-icon-${idx}`}
-                color={hasValue ? '#dc3545' : '#666666'}
+                color={hasValue ? 'var(--color-red-500)' : 'var(--color-gray-600)'}
                 size={30}
               />
             )}

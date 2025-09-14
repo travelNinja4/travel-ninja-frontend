@@ -70,7 +70,7 @@ type TextTransform = 'uppercase' | 'lowercase' | 'capitalize' | 'none';
 
 type Truncation = 'ellipsis' | 'noWrap' | `lineClamp-${number}`;
 
-type TextAlign = 'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent';
+export type TextAlign = 'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent';
 
 export type Tags = 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'h6' | 'li' | 'span' | 'label';
 

@@ -23,17 +23,15 @@ exports[`Home matches snapshot 1`] = `
       <h1
         class="typography h1 align-center header"
         data-testid="TypographyTest"
-        style="color: rgb(255, 255, 255);"
+        style="color: var(--color-white);"
       >
         TravelNinja
       </h1>
       <p
         class="typography p align-center subHeader"
         data-testid="TypographyTest"
-        style="color: rgb(255, 255, 255);"
-      >
-        Transform your tour business with our powerful platform
-      </p>
+        style="color: var(--color-white);"
+      />
     </div>
   </div>
 </DocumentFragment>

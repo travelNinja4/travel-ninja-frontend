@@ -7,7 +7,7 @@ exports[`Home matches snapshot 1`] = `
     data-testid="DynamicFormTest"
   >
     <div
-      class="dynamic-form__field dynamic-form__field--full"
+      class="field field--full"
     >
       <div
         class="container"
@@ -29,7 +29,7 @@ exports[`Home matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="dynamic-form__field dynamic-form__field--full"
+      class="field field--full"
     >
       <div
         class="container"

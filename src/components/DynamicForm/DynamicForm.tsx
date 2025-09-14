@@ -17,22 +17,38 @@ import { useForm, SubmitHandler, FieldValues, Resolver, Path, Controller } from 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodSchema } from 'zod';
 import Typography from '../Typography';
-import { Tags } from '../Typography/Typography';
+import { Tags, TextAlign } from '../Typography/Typography';
 import TextField from '../TextField';
 import PasswordFeedback from '../PasswordFeedback';
 import { PasswordHint } from '../PasswordFeedback/PasswordFeedback';
 import CheckBox from '../CheckBox';
-import styles from './DynamicForm.module.scss';
 import Button from '../Button';
 import { LucideIcon } from 'lucide-react';
+import styles from './DynamicForm.module.scss';
+import clsx from 'clsx';
 
 /**
  * Define the props available for the DynamicForm component.
  */
 interface DynamicFormProps<T extends FieldValues = FieldValues> {
+  /**
+   * Array of field configurations used to dynamically render form fields.
+   */
   fields: FieldConfig[];
+
+  /**
+   * Zod schema used for form validation.
+   */
   schema: ZodSchema<T>;
+
+  /**
+   * CSS class name applied to the form container.
+   */
   className: string;
+
+  /**
+   * Callback function executed when the form is submitted.
+   */
   onSubmit: SubmitHandler<T>;
 }
 
@@ -60,6 +76,8 @@ export interface FieldConfig {
   startIcon?: LucideIcon;
   endIcon?: LucideIcon;
   iconColor?: string;
+  textAlign?: TextAlign;
+  maxLength?: number;
 }
 
 type FieldType =
@@ -103,18 +121,20 @@ export default function DynamicForm<T extends FieldValues>({
     switch (field.type) {
       case 'label':
         return (
-          <Typography tag={field.tag || 'p'} className={field.className}>
+          <Typography tag={field.tag || 'p'} className={field.className} align={field.textAlign}>
             {field.label || field.children}
           </Typography>
         );
 
       case 'input':
-        return <TextField {...commonProps} className={field.className} />;
+        return (
+          <TextField {...commonProps} className={field.className} maxLength={field.maxLength} />
+        );
 
       case 'password':
         return (
           <>
-            <TextField {...commonProps} className={field.className} />
+            <TextField {...commonProps} className={field.className} maxLength={field.maxLength} />
             <PasswordFeedback value={value} hints={field.validationHints ?? []} />
           </>
         );
@@ -130,6 +150,7 @@ export default function DynamicForm<T extends FieldValues>({
                 checked={!!value}
                 onChange={(checked: boolean) => onChange(checked)}
                 className={field.className}
+                error={errors[field.name]?.message as string}
               />
             )}
           />
@@ -159,7 +180,7 @@ export default function DynamicForm<T extends FieldValues>({
       {fields.map((field) => (
         <div
           key={field.name}
-          className={`${className}__field ${className}__field--${field.width || FieldWidth.FULL}`}
+          className={clsx(styles.field, styles[`field--${field.width || FieldWidth.FULL}`])}
         >
           {renderField(field)}
         </div>
