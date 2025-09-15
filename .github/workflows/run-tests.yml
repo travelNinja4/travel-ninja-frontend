@@ -13,10 +13,6 @@ on:
 jobs:
   run-tests:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        branch: [main, develop]
-
     env:
       NEXT_PUBLIC_CLOUDINARY_URL: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_URL }}
       NEXT_PUBLIC_PLACEHOLDER_BG_URL: ${{ secrets.NEXT_PUBLIC_PLACEHOLDER_BG_URL }}
@@ -36,5 +32,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run tests (update snapshots)
-        run: pnpm test -- -u
+      - name: Run tests on main
+        if: github.ref == 'refs/heads/main' || github.base_ref == 'main'
+        run: pnpm test
+
+      - name: Run tests on develop
+        if: github.ref == 'refs/heads/develop' || github.base_ref == 'develop'
+        run: pnpm test
