@@ -12,6 +12,7 @@
  */
 'use client';
 
+import { useEffect, useState } from 'react';
 import { STRINGS } from '@/constants/strings';
 import AuthSideBanner from '../AuthSideBanner';
 import Button from '../Button';
@@ -19,10 +20,11 @@ import TextField from '../TextField';
 import Typography from '../Typography';
 import CustomImage from '../CustomImage';
 import { Mail, Phone, Check, RotateCw } from 'lucide-react';
+import { useAuthStore } from '@/store/auth';
 import styles from './OtpVerification.module.scss';
-import { useEffect, useState } from 'react';
 
 export default function OtpVerification() {
+  const accountData = useAuthStore((store) => store.accountData);
   const [type, setType] = useState<'email' | 'mobile'>('email');
   const [value, setValue] = useState('');
   const [timer, setTimer] = useState(0);
@@ -97,7 +99,7 @@ export default function OtpVerification() {
                 color="var(--color-indigo)"
                 className={styles.userEmail}
               >
-                {type === STRINGS.EMAIL ? 'user@gmail.com' : '4658265937'}
+                {type === STRINGS.EMAIL ? accountData?.email : accountData?.phoneNumber}
               </Typography>
             </div>
             <div className={styles.verificationWrapper}>

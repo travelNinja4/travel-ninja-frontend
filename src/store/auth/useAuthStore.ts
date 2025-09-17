@@ -1,11 +1,12 @@
-import { create } from "zustand"
-import { AuthState } from "./types"
+import { create } from 'zustand';
+import { AccountData, AuthState } from './types';
 
 const initialState = {
-  // default values here
-}
+  accountData: null,
+};
 
 export const useAuthStore = create<AuthState>((set) => ({
   ...initialState,
-  // actions here
-}))
+  setAccountData: (data: AccountData) => set({ accountData: data }),
+  clearAccountData: () => set({ accountData: null }),
+}));
