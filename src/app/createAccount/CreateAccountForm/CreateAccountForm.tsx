@@ -4,6 +4,7 @@ import AppLink from '@/components/AppLink';
 import { UserPlus } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { ROUTES } from '@/constants/strings';
+import { AccountData, useAuthStore } from '@/store/auth';
 import styles from './CreateAccountForm.module.scss';
 
 export const createAccountFormConfig: FieldConfig[] = [
@@ -157,7 +158,9 @@ export const createAccountFormConfig: FieldConfig[] = [
 ];
 
 export default function CreateAccountForm() {
-  const handleSubmit = () => {
+  const setAccountData = useAuthStore((store) => store.setAccountData);
+  const handleSubmit = (formData: AccountData) => {
+    setAccountData(formData);
     redirect(ROUTES.VERIFY);
   };
 

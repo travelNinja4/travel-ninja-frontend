@@ -25,7 +25,8 @@
     "react-dom": "19.1.0",
     "react-hook-form": "^7.62.0",
     "sass": "^1.89.2",
-    "zod": "^4.0.17"
+    "zod": "^4.0.17",
+    "zustand": "^5.0.8"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
