@@ -13,7 +13,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { STRINGS } from '@/constants/strings';
+import { ROUTES, STRINGS } from '@/constants/strings';
 import AuthSideBanner from '../AuthSideBanner';
 import Button from '../Button';
 import TextField from '../TextField';
@@ -21,13 +21,17 @@ import Typography from '../Typography';
 import CustomImage from '../CustomImage';
 import { Mail, Phone, Check, RotateCw } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
+import { useRouter } from 'next/navigation';
+import { authService } from '@/services/authService';
 import styles from './OtpVerification.module.scss';
 
 export default function OtpVerification() {
+  const router = useRouter();
   const accountData = useAuthStore((store) => store.accountData);
   const [type, setType] = useState<'email' | 'mobile'>('email');
   const [value, setValue] = useState('');
   const [timer, setTimer] = useState(0);
+  const [verifyLoading, setVerifyLoading] = useState(false);
 
   useEffect(() => {
     if (timer === 0) return;
@@ -41,22 +45,50 @@ export default function OtpVerification() {
     };
   }, [timer]);
 
-  const handleResend = () => {
-    setTimer(60);
+  const handleResend = async () => {
+    try {
+      const requestParams =
+        type === STRINGS.EMAIL
+          ? { email: accountData?.email }
+          : { phoneNumber: `+91${accountData?.phoneNumber}` };
+      console.log('requestParams>>>', requestParams);
+      const response = await authService.sendOtp(requestParams);
+      console.log('Otp sent successfully:', response);
+      setTimer(60);
+    } catch (err: unknown) {
+      console.log('error>>>', err);
+    }
   };
 
   const handleOnChange = (val: string) => {
     setValue(val);
   };
 
-  const handleCodeVerify = () => {
+  const handleCodeVerify = async () => {
     if (!value) {
       return false;
     }
-    if (type === STRINGS.EMAIL) {
-      setType('mobile');
-      setValue('');
-      setTimer(0);
+
+    try {
+      const requestParams =
+        type === STRINGS.EMAIL
+          ? { email: accountData?.email, otpCode: value }
+          : { phoneNumber: `+91${accountData?.phoneNumber}`, otpCode: value };
+      console.log('requestParams>>>', requestParams);
+      setVerifyLoading(true);
+      const response = await authService.verifyOtp(requestParams);
+      console.log('Otp sent successfully:', response);
+      if (type === STRINGS.EMAIL) {
+        setType('mobile');
+        setValue('');
+        setTimer(0);
+      } else {
+        router.push(ROUTES.LOGIN);
+      }
+    } catch (err: unknown) {
+      console.log('error>>>', err);
+    } finally {
+      setVerifyLoading(false);
     }
   };
 
@@ -115,17 +147,23 @@ export default function OtpVerification() {
                 {type === STRINGS.EMAIL ? STRINGS.EMAIL_CODE_HINT : STRINGS.MOBILE_CODE_HINT}
               </Typography>
             </div>
-            <Button className={styles.button} startIcon={Check} onClick={handleCodeVerify}>
+            <Button
+              className={styles.button}
+              startIcon={Check}
+              onClick={handleCodeVerify}
+              disabled={verifyLoading}
+              loading={verifyLoading}
+            >
               {type === STRINGS.EMAIL ? STRINGS.VERIFY_EMAIL : STRINGS.VERIFY_MOBILE_NUMBER}
             </Button>
             <div className={styles.resendWrapper}>
               {timer > 0 ? (
-                <Typography tag="span">{`${STRINGS.RESEND_CODE} ${timer} ${STRINGS.SECONDS}`}</Typography>
+                <Typography tag="span">{`${STRINGS.RESEND_CODE_IN} ${timer} ${STRINGS.SECONDS}`}</Typography>
               ) : (
                 <>
                   <RotateCw color="var(--color-indigo)" />
                   <Typography tag="span" className={styles.resendText} onClick={handleResend}>
-                    Resend Code
+                    {STRINGS.RESEND_CODE}
                   </Typography>
                 </>
               )}

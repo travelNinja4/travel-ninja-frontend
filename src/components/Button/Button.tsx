@@ -79,6 +79,12 @@ interface ButtonProps {
    * Useful for applying variant-specific styles.
    */
   className?: string;
+
+  /**
+   * If `true`, shows a loading spinner inside the button
+   * and disables interaction.
+   */
+  loading?: boolean;
 }
 
 export default function Button({
@@ -91,6 +97,7 @@ export default function Button({
   iconSize,
   iconColor,
   className,
+  loading = false,
   ...rest
 }: ButtonProps) {
   return (
@@ -102,18 +109,29 @@ export default function Button({
       className={clsx(styles.button, className)}
       {...rest}
     >
-      {StartIcon && (
-        <span className={styles.icon}>
-          <StartIcon size={iconSize} color={iconColor} />
-        </span>
-      )}
-      <Typography tag="span" className={className}>
-        {children}
-      </Typography>
-      {EndIcon && (
-        <span className={styles.icon}>
-          <EndIcon size={iconSize} color={iconColor} />
-        </span>
+      {loading ? (
+        <>
+          <span className={styles.loader} />
+          <Typography tag="span" className={className}>
+            {children}
+          </Typography>
+        </>
+      ) : (
+        <>
+          {StartIcon && (
+            <span className={styles.icon}>
+              <StartIcon size={iconSize} color={iconColor} />
+            </span>
+          )}
+          <Typography tag="span" className={className}>
+            {children}
+          </Typography>
+          {EndIcon && (
+            <span className={styles.icon}>
+              <EndIcon size={iconSize} color={iconColor} />
+            </span>
+          )}
+        </>
       )}
     </button>
   );

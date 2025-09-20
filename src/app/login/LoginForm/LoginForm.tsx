@@ -3,6 +3,7 @@ import { loginSchema } from './LoginSchema';
 import styles from './LoginForm.module.scss';
 import AppLink from '@/components/AppLink';
 import { LogIn } from 'lucide-react';
+import { ROUTES } from '@/constants/strings';
 
 export const loginFormConfig: FieldConfig[] = [
   {
@@ -11,6 +12,7 @@ export const loginFormConfig: FieldConfig[] = [
     type: 'label',
     tag: 'h2',
     children: null,
+    textAlign: 'center',
     validationHints: [],
     className: styles.title,
   },
@@ -19,6 +21,7 @@ export const loginFormConfig: FieldConfig[] = [
     label: 'Sign in to your agency account',
     type: 'label',
     tag: 'h3',
+    textAlign: 'center',
     validationHints: [],
     className: styles.subTitle,
   },
@@ -68,8 +71,8 @@ export const loginFormConfig: FieldConfig[] = [
     label: (
       <>
         Don&apos;t have an account?{' '}
-        <AppLink href="/terms" className={styles.signUpText}>
-          Sign up here
+        <AppLink href={ROUTES.CREATE_ACCOUNT} className={styles.signUpText}>
+          Create a new account
         </AppLink>
       </>
     ),

@@ -1,3 +1,5 @@
+import { useApiStatusStore } from '@/store/apiStatus';
+
 export class ApiClient {
   private baseUrl: string;
   private defaultHeaders: HeadersInit;
@@ -8,27 +10,33 @@ export class ApiClient {
   }
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-    const res = await fetch(`${this.baseUrl}${endpoint}`, {
-      ...options,
-      headers: {
-        ...this.defaultHeaders,
-        ...(options.headers || {}),
-      },
-      credentials: 'include', // for cookies if using auth
-    });
+    const { startLoading, stopLoading } = useApiStatusStore.getState();
 
-    if (!res.ok) {
-      let errorMsg = `API error: ${res.status}`;
-      try {
-        const errData = await res.json();
-        errorMsg = errData.message || errorMsg;
-      } catch {
-        // ignore if response is not JSON
+    try {
+      startLoading();
+
+      const res = await fetch(`${this.baseUrl}${endpoint}`, {
+        ...options,
+        headers: {
+          ...this.defaultHeaders,
+          ...(options.headers || {}),
+        },
+        credentials: 'include',
+      });
+
+      if (!res.ok) {
+        let errorMsg = `API error: ${res.status}`;
+        try {
+          const errData = await res.json();
+          errorMsg = errData.message || errorMsg;
+        } catch {}
+        throw new Error(errorMsg);
       }
-      throw new Error(errorMsg);
-    }
 
-    return res.json();
+      return res.json();
+    } finally {
+      stopLoading();
+    }
   }
 
   get<T>(endpoint: string, options?: RequestInit) {
@@ -56,4 +64,4 @@ export class ApiClient {
   }
 }
 
-export const apiClient = new ApiClient(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000');
+export const apiClient = new ApiClient(process.env.NEXT_PUBLIC_API_BASE_URL || '');
