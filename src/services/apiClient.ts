@@ -82,8 +82,8 @@ export class ApiClient {
         }
 
         // Safely extract message
-        const message = (error.response?.data as { message?: string })?.message || error.message;
-        return Promise.reject(new Error(message));
+        const message = (error.response?.data as any)?.detail || error?.message;
+        return Promise.reject(message);
       },
     );
   }

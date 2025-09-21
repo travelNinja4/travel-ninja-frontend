@@ -8,6 +8,7 @@ import { AccountData, useAuthStore } from '@/store/auth';
 import { useApiStatusStore } from '@/store/apiStatus';
 import { authService } from '@/services/authService';
 import { useNotification } from '@/providers/NotificationProvider';
+import { errorHandler } from '@/utils/errorHandler';
 import styles from './CreateAccountForm.module.scss';
 
 export const createAccountFormConfig: FieldConfig[] = [
@@ -178,7 +179,6 @@ export default function CreateAccountForm() {
   const { showNotification } = useNotification();
   const setAccountData = useAuthStore((store) => store.setAccountData);
   const isLoading = useApiStatusStore((store) => store.isLoading);
-  console.log('isLoading>>>', isLoading);
 
   const handleSubmit = async (formData: AccountData) => {
     try {
@@ -189,18 +189,15 @@ export default function CreateAccountForm() {
       };
       console.log('requestParams>>>', requestParams);
       const response = await authService.register(requestParams);
-      console.log('User registered successfully:', response);
       setAccountData(formData);
       router.push(ROUTES.VERIFY);
     } catch (err: unknown) {
-      console.log('error>>>', err);
+      const messages = errorHandler(err);
+      messages.forEach((errMsg) => {
+        showNotification('Error!', errMsg, 'error');
+      });
     }
   };
-
-  // const handleSubmit = () => {
-  //   console.log('inside handle submit>>>');
-  //   showNotification('Hello!', 'This is a test', 'success', 5000, 'top-right', true);
-  // };
 
   return (
     <DynamicForm
