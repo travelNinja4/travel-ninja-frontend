@@ -23,10 +23,12 @@ import { Mail, Phone, Check, RotateCw } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
 import { useRouter } from 'next/navigation';
 import { authService } from '@/services/authService';
+import { useNotification } from '@/providers/NotificationProvider';
 import styles from './OtpVerification.module.scss';
 
 export default function OtpVerification() {
   const router = useRouter();
+  const { showNotification } = useNotification();
   const accountData = useAuthStore((store) => store.accountData);
   const [type, setType] = useState<'email' | 'mobile'>('email');
   const [value, setValue] = useState('');
@@ -83,6 +85,7 @@ export default function OtpVerification() {
         setValue('');
         setTimer(0);
       } else {
+        showNotification('Success!', 'Account created successfully', 'success');
         router.push(ROUTES.LOGIN);
       }
     } catch (err: unknown) {
@@ -160,12 +163,12 @@ export default function OtpVerification() {
               {timer > 0 ? (
                 <Typography tag="span">{`${STRINGS.RESEND_CODE_IN} ${timer} ${STRINGS.SECONDS}`}</Typography>
               ) : (
-                <>
+                <div onClick={handleResend} className={styles.resendTextContainer}>
                   <RotateCw color="var(--color-indigo)" />
-                  <Typography tag="span" className={styles.resendText} onClick={handleResend}>
+                  <Typography tag="span" className={styles.resendText}>
                     {STRINGS.RESEND_CODE}
                   </Typography>
-                </>
+                </div>
               )}
             </div>
           </div>

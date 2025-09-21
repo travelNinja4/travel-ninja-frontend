@@ -102,12 +102,19 @@ styles specific to the OtpVerification component
         justify-content: center;
       }
 
+      .resendTextContainer {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        cursor: pointer;
+      }
+
       .resendText {
-        color: var(--color-indigo);
         font-size: 16px;
         font-weight: 500;
-        cursor: pointer;
-        padding-left: 6px;
+        color: var(--color-indigo);
       }
 
       @include respond-to(md) {

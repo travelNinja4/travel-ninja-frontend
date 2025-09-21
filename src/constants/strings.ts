@@ -24,3 +24,10 @@ export const ROUTES = {
   CREATE_ACCOUNT: '/createAccount',
   VERIFY: '/verify',
 } as const;
+
+export const NOTIFICATION_TYPES = {
+  SUCCESS: 'success',
+  ERROR: 'error',
+  WARNING: 'warning',
+  INFO: 'info',
+};

@@ -5,9 +5,10 @@ import { UserPlus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/constants/strings';
 import { AccountData, useAuthStore } from '@/store/auth';
-import styles from './CreateAccountForm.module.scss';
 import { useApiStatusStore } from '@/store/apiStatus';
 import { authService } from '@/services/authService';
+import { useNotification } from '@/providers/NotificationProvider';
+import styles from './CreateAccountForm.module.scss';
 
 export const createAccountFormConfig: FieldConfig[] = [
   {
@@ -174,6 +175,7 @@ export const createAccountFormConfig: FieldConfig[] = [
 
 export default function CreateAccountForm() {
   const router = useRouter();
+  const { showNotification } = useNotification();
   const setAccountData = useAuthStore((store) => store.setAccountData);
   const isLoading = useApiStatusStore((store) => store.isLoading);
   console.log('isLoading>>>', isLoading);
@@ -194,6 +196,11 @@ export default function CreateAccountForm() {
       console.log('error>>>', err);
     }
   };
+
+  // const handleSubmit = () => {
+  //   console.log('inside handle submit>>>');
+  //   showNotification('Hello!', 'This is a test', 'success', 5000, 'top-right', true);
+  // };
 
   return (
     <DynamicForm

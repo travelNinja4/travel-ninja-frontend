@@ -31,23 +31,23 @@ export type LoginPayload = {
 };
 
 export const authService = {
-  async register(data: RegisterPayload) {
+  register(data: RegisterPayload) {
     return apiClient.post('/auth/register', data);
   },
 
-  async sendOtp(data: SendOtp) {
+  sendOtp(data: SendOtp) {
     return apiClient.post('/auth/send-otp', data);
   },
 
-  async verifyOtp(data: VerifyOtp) {
+  verifyOtp(data: VerifyOtp) {
     return apiClient.post('/auth/verify-otp', data);
   },
 
-  async login(data: LoginPayload) {
+  login(data: LoginPayload) {
     return apiClient.post('/auth/login', data);
   },
 
-  async logout() {
+  logout() {
     return apiClient.post('/auth/logout', {});
   },
 };
