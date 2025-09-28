@@ -8,7 +8,6 @@ export type RegisterPayload = {
   address: string;
   city: string;
   state: string;
-  pincode: string;
   phoneNumber: string;
   password: string;
   termStatus: boolean;
@@ -30,9 +29,19 @@ export type LoginPayload = {
   password: string;
 };
 
+export interface Country {
+  name: string;
+  code: string;
+  length: number;
+}
+
 export const authService = {
   register(data: RegisterPayload) {
     return apiClient.post('/auth/register', data);
+  },
+
+  getCountryCode(): Promise<Country[]> {
+    return apiClient.get<Country[]>('/api/countries').then((res: any) => res?.data);
   },
 
   sendOtp(data: SendOtp) {

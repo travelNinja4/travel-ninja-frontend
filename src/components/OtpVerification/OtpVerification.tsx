@@ -34,6 +34,8 @@ export default function OtpVerification() {
   const [value, setValue] = useState('');
   const [timer, setTimer] = useState(0);
   const [verifyLoading, setVerifyLoading] = useState(false);
+  const rawCountry = accountData?.phoneNumber.country ?? '';
+  const countryCode = rawCountry.split('(')[0].trim();
 
   useEffect(() => {
     if (timer === 0) return;
@@ -52,7 +54,7 @@ export default function OtpVerification() {
       const requestParams =
         type === STRINGS.EMAIL
           ? { email: accountData?.email }
-          : { phoneNumber: `+91${accountData?.phoneNumber}` };
+          : { phoneNumber: `${countryCode}-${accountData?.phoneNumber?.number}` };
       console.log('requestParams>>>', requestParams);
       const response = await authService.sendOtp(requestParams);
       console.log('Otp sent successfully:', response);
@@ -75,7 +77,7 @@ export default function OtpVerification() {
       const requestParams =
         type === STRINGS.EMAIL
           ? { email: accountData?.email, otpCode: value }
-          : { phoneNumber: `+91${accountData?.phoneNumber}`, otpCode: value };
+          : { phoneNumber: `${countryCode}-${accountData?.phoneNumber?.number}`, otpCode: value };
       console.log('requestParams>>>', requestParams);
       setVerifyLoading(true);
       const response = await authService.verifyOtp(requestParams);
@@ -134,7 +136,9 @@ export default function OtpVerification() {
                 color="var(--color-indigo)"
                 className={styles.userEmail}
               >
-                {type === STRINGS.EMAIL ? accountData?.email : accountData?.phoneNumber}
+                {type === STRINGS.EMAIL
+                  ? accountData?.email
+                  : `${countryCode}-${accountData?.phoneNumber?.number}`}
               </Typography>
             </div>
             <div className={styles.verificationWrapper}>
@@ -143,7 +147,7 @@ export default function OtpVerification() {
                 placeholder="000000"
                 value={value}
                 maxLength={6}
-                className={styles.verificationTextField}
+                inputClassName={styles.verificationTextField}
                 onChange={(e) => handleOnChange(e.target.value)}
               />
               <Typography tag="label" align="center" className={styles.otpSubHeader}>

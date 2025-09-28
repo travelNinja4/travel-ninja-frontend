@@ -12,8 +12,10 @@ export interface AccountData {
   address: string;
   city: string;
   state: string;
-  pincode: string;
-  phoneNumber: string;
+  phoneNumber: {
+    country: string;
+    number: string;
+  };
   password: string;
   termStatus: boolean;
 }
