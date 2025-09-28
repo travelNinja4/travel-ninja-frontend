@@ -7,7 +7,6 @@
   padding: 1rem;
   width: 100%;
 
-  // Base styles for labels & elements
   .title {
     font-size: 1.3rem;
     text-align: center;
@@ -34,14 +33,6 @@
     color: var(--color-white);
   }
 
-  &__field {
-    display: flex;
-    flex-direction: column;
-    flex: 0 0 100%;
-    min-width: 0;
-    width: 100%;
-  }
-
   // Tablet styles
   @include respond-to(md) {
     .title {
@@ -55,14 +46,6 @@
     .termStatusCheckbox {
       font-size: 0.9rem;
       align-items: flex-start;
-    }
-
-    &__field--half {
-      flex: 0 0 calc(50% - 0.5rem);
-    }
-
-    &__field--third {
-      flex: 0 0 calc((100% - 2rem) / 3);
     }
   }
 

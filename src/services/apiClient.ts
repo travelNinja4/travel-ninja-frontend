@@ -1,59 +1,108 @@
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
+import { useApiStatusStore } from '@/store/apiStatus';
+
+interface RetryAxiosRequestConfig extends AxiosRequestConfig {
+  _retry?: boolean;
+}
+
 export class ApiClient {
-  private baseUrl: string;
-  private defaultHeaders: HeadersInit;
+  private axiosInstance: AxiosInstance;
+  private isRefreshing = false;
+  private failedQueue: Array<{ resolve: (value?: any) => void; reject: (error: any) => void }> = [];
 
-  constructor(baseUrl: string) {
-    this.baseUrl = baseUrl;
-    this.defaultHeaders = { 'Content-Type': 'application/json' };
-  }
+  constructor(baseURL: string) {
+    this.axiosInstance = axios.create({
+      baseURL,
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
 
-  private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-    const res = await fetch(`${this.baseUrl}${endpoint}`, {
-      ...options,
-      headers: {
-        ...this.defaultHeaders,
-        ...(options.headers || {}),
+    // Request interceptor: loader + token
+    this.axiosInstance.interceptors.request.use((config) => {
+      useApiStatusStore.getState().startLoading();
+      const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
+      if (token && config.headers) config.headers['Authorization'] = `Bearer ${token}`;
+      return config;
+    });
+
+    // Response interceptor: loader + retry logic
+    this.axiosInstance.interceptors.response.use(
+      (response) => {
+        useApiStatusStore.getState().stopLoading();
+        return response;
       },
-      credentials: 'include', // for cookies if using auth
-    });
+      async (error: AxiosError) => {
+        useApiStatusStore.getState().stopLoading();
+        const originalRequest = error.config as RetryAxiosRequestConfig | undefined;
 
-    if (!res.ok) {
-      let errorMsg = `API error: ${res.status}`;
-      try {
-        const errData = await res.json();
-        errorMsg = errData.message || errorMsg;
-      } catch {
-        // ignore if response is not JSON
-      }
-      throw new Error(errorMsg);
-    }
+        if (!originalRequest) return Promise.reject(error);
 
-    return res.json();
+        // Skip retry for auth endpoints
+        const isAuthRoute = originalRequest.url?.includes('/auth/');
+
+        // If 401, try refreshing token
+        if (error.response?.status === 401 && !originalRequest._retry && !isAuthRoute) {
+          originalRequest._retry = true;
+
+          if (this.isRefreshing) {
+            return new Promise((resolve, reject) => {
+              this.failedQueue.push({ resolve, reject });
+            })
+              .then((token) => {
+                if (originalRequest.headers)
+                  originalRequest.headers['Authorization'] = `Bearer ${token}`;
+                return this.axiosInstance(originalRequest);
+              })
+              .catch((err) => Promise.reject(err));
+          }
+
+          this.isRefreshing = true;
+          try {
+            const refreshToken = localStorage.getItem('refreshToken');
+            const response = await axios.post(
+              `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/refresh-token`,
+              { token: refreshToken },
+            );
+            const newToken = response.data.accessToken;
+
+            localStorage.setItem('accessToken', newToken);
+            if (originalRequest.headers)
+              originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
+
+            this.failedQueue.forEach((p) => p.resolve(newToken));
+            this.failedQueue = [];
+            return this.axiosInstance(originalRequest);
+          } catch (err) {
+            this.failedQueue.forEach((p) => p.reject(err));
+            this.failedQueue = [];
+            return Promise.reject(err);
+          } finally {
+            this.isRefreshing = false;
+          }
+        }
+
+        // Safely extract message
+        const message = (error.response?.data as any)?.detail || error?.message;
+        return Promise.reject(message);
+      },
+    );
   }
 
-  get<T>(endpoint: string, options?: RequestInit) {
-    return this.request<T>(endpoint, { ...options, method: 'GET' });
+  get<T>(url: string, config?: AxiosRequestConfig) {
+    return this.axiosInstance.get<T>(url, config).then((res) => res.data);
   }
 
-  post<T, B = unknown>(endpoint: string, body: B, options?: RequestInit) {
-    return this.request<T>(endpoint, {
-      ...options,
-      method: 'POST',
-      body: JSON.stringify(body),
-    });
+  post<T, B = unknown>(url: string, body: B, config?: AxiosRequestConfig) {
+    return this.axiosInstance.post<T>(url, body, config).then((res) => res.data);
   }
 
-  put<T, B = unknown>(endpoint: string, body: B, options?: RequestInit) {
-    return this.request<T>(endpoint, {
-      ...options,
-      method: 'PUT',
-      body: JSON.stringify(body),
-    });
+  put<T, B = unknown>(url: string, body: B, config?: AxiosRequestConfig) {
+    return this.axiosInstance.put<T>(url, body, config).then((res) => res.data);
   }
 
-  delete<T>(endpoint: string, options?: RequestInit) {
-    return this.request<T>(endpoint, { ...options, method: 'DELETE' });
+  delete<T>(url: string, config?: AxiosRequestConfig) {
+    return this.axiosInstance.delete<T>(url, config).then((res) => res.data);
   }
 }
 
-export const apiClient = new ApiClient(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000');
+export const apiClient = new ApiClient(process.env.NEXT_PUBLIC_API_BASE_URL || '');

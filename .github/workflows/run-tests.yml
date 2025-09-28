@@ -1,34 +1,41 @@
 name: Run Tests on PR
 
 on:
+  push:
+    branches:
+      - main
+      - develop
   pull_request:
-    branches: [main] # or your default branch
+    branches:
+      - main
+      - develop
 
 jobs:
-  test:
+  run-tests:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [20] # add more version if needed
-        pnpm-version: [10] # add more version if needed
+    env:
+      NEXT_PUBLIC_CLOUDINARY_URL: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_URL }}
+      NEXT_PUBLIC_PLACEHOLDER_BG_URL: ${{ secrets.NEXT_PUBLIC_PLACEHOLDER_BG_URL }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: ${{ matrix.pnpm-version }}
+      - name: Install pnpm
+        run: npm install -g pnpm@10
 
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run tests
+      - name: Run tests on main
+        if: github.ref == 'refs/heads/main' || github.base_ref == 'main'
+        run: pnpm test
+
+      - name: Run tests on develop
+        if: github.ref == 'refs/heads/develop' || github.base_ref == 'develop'
         run: pnpm test

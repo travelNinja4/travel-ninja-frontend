@@ -11,21 +11,21 @@ if [ -d ".git" ]; then
         exit 0
     fi
 
-    git fetch origin main
+    git fetch origin develop
 
     # Get current branch
     current_branch=$(git rev-parse --abbrev-ref HEAD)
 
-    if [ "$current_branch" != "main" ]; then
-        echo "🔄 Switching to main branch..."
-        git checkout main || echo "❌ Could not checkout main, please check manually."
+    if [ "$current_branch" != "develop" ]; then
+        echo "🔄 Switching to develop branch..."
+        git checkout develop || echo "❌ Could not checkout develop, please check manually."
     else
-        echo "✅ Already on main branch."
+        echo "✅ Already on develop branch."
     fi
 
     # Pull latest changes
-    echo "⬇️ Pulling latest changes from main..."
-    git pull origin main || echo "❌ Could not pull from main, check your network or permissions."
+    echo "⬇️ Pulling latest changes from develop..."
+    git pull origin develop || echo "❌ Could not pull from develop, check your network or permissions."
 else
     echo "❌ No .git directory found. Please clone the repo before opening devcontainer."
 fi

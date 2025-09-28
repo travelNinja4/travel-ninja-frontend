@@ -2,8 +2,14 @@ import DynamicForm, { FieldConfig, FieldWidth } from '@/components/DynamicForm/D
 import { createAccountSchema } from './CreateAccountSchema';
 import AppLink from '@/components/AppLink';
 import { UserPlus } from 'lucide-react';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/constants/strings';
+import { AccountData, useAuthStore } from '@/store/auth';
+import { useApiStatusStore } from '@/store/apiStatus';
+import { authService } from '@/services/authService';
+import { useNotification } from '@/providers/NotificationProvider';
+import { errorHandler } from '@/utils/errorHandler';
+import { useCommonStore } from '@/store/common';
 import styles from './CreateAccountForm.module.scss';
 
 export const createAccountFormConfig: FieldConfig[] = [
@@ -12,6 +18,7 @@ export const createAccountFormConfig: FieldConfig[] = [
     label: 'Create Your Agency Account',
     type: 'label',
     tag: 'h2',
+    textAlign: 'center',
     children: null,
     validationHints: [],
     className: styles.title,
@@ -21,6 +28,7 @@ export const createAccountFormConfig: FieldConfig[] = [
     label: 'Start your journey with TravelNinja today',
     type: 'label',
     tag: 'h3',
+    textAlign: 'center',
     validationHints: [],
     className: styles.subTitle,
   },
@@ -39,6 +47,7 @@ export const createAccountFormConfig: FieldConfig[] = [
     label: 'Agency Name',
     type: 'input',
     placeholder: 'Enter agency name',
+    required: true,
     width: FieldWidth.HALF,
     validationHints: [],
   },
@@ -61,6 +70,16 @@ export const createAccountFormConfig: FieldConfig[] = [
     validationHints: [],
   },
   {
+    name: 'phoneNumber',
+    label: 'Mobile Number',
+    type: 'MobileNumberInput',
+    placeholder: 'Enter mobile number',
+    required: true,
+    maxLength: 10,
+    width: FieldWidth.FULL,
+    validationHints: [],
+  },
+  {
     name: 'address',
     label: 'Address',
     type: 'input',
@@ -77,7 +96,7 @@ export const createAccountFormConfig: FieldConfig[] = [
     placeholder: 'Enter city',
     required: true,
     maxLength: 20,
-    width: FieldWidth.HALF,
+    width: FieldWidth.THIRD,
     validationHints: [],
   },
   {
@@ -87,27 +106,17 @@ export const createAccountFormConfig: FieldConfig[] = [
     placeholder: 'Enter state',
     required: true,
     maxLength: 20,
-    width: FieldWidth.HALF,
+    width: FieldWidth.THIRD,
     validationHints: [],
   },
   {
-    name: 'pincode',
-    label: 'Post Code',
+    name: 'country',
+    label: 'Country',
     type: 'input',
-    placeholder: 'Enter post code',
+    placeholder: 'Enter Country',
     required: true,
-    maxLength: 6,
-    width: FieldWidth.HALF,
-    validationHints: [],
-  },
-  {
-    name: 'phoneNumber',
-    label: 'Mobile Number',
-    type: 'input',
-    placeholder: 'Enter mobile number',
-    required: true,
-    maxLength: 10,
-    width: FieldWidth.HALF,
+    maxLength: 20,
+    width: FieldWidth.THIRD,
     validationHints: [],
   },
   {
@@ -157,16 +166,40 @@ export const createAccountFormConfig: FieldConfig[] = [
 ];
 
 export default function CreateAccountForm() {
-  const handleSubmit = () => {
-    redirect(ROUTES.VERIFY);
+  const router = useRouter();
+  const { showNotification } = useNotification();
+  const setAccountData = useAuthStore((store) => store.setAccountData);
+  const isLoading = useApiStatusStore((store) => store.isLoading);
+  const countries = useCommonStore((state) => state.countries);
+  const schema = createAccountSchema(countries);
+
+  const handleSubmit = async (formData: AccountData) => {
+    try {
+      const rawCountry = formData.phoneNumber?.country ?? '';
+      const countryCode = rawCountry.split('(')[0].trim();
+      const requestParams = {
+        ...formData,
+        phoneNumber: `${countryCode}-${formData.phoneNumber?.number}`,
+        role: 'agency',
+      };
+      const response = await authService.register(requestParams);
+      setAccountData(formData);
+      router.push(ROUTES.VERIFY);
+    } catch (err: unknown) {
+      const messages = errorHandler(err);
+      messages.forEach((errMsg) => {
+        showNotification('Error!', errMsg, 'error');
+      });
+    }
   };
 
   return (
     <DynamicForm
       fields={createAccountFormConfig}
-      schema={createAccountSchema}
-      onSubmit={handleSubmit}
+      schema={schema}
       className={styles.createAccountContainer}
+      loading={isLoading}
+      onSubmit={handleSubmit}
     />
   );
 }

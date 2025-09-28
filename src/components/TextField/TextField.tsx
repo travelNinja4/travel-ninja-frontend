@@ -82,6 +82,11 @@ interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
 
   /**
+   *
+   */
+  inputClassName?: string;
+
+  /**
    * The default value of the input (uncontrolled component).
    * Use `value` instead for controlled components.
    */
@@ -126,6 +131,7 @@ export default function TextField({
   value,
   disabled = false,
   className,
+  inputClassName,
   defaultValue,
   required = false,
   maxLength,
@@ -135,7 +141,7 @@ export default function TextField({
   ...rest
 }: TextFieldProps) {
   return (
-    <div data-testid="TextFieldTest" className={styles.container}>
+    <div data-testid="TextFieldTest" className={clsx(styles.container, className)}>
       {label && (
         <Typography tag="label" htmlFor={id} className={styles.label}>
           {label}{' '}
@@ -152,7 +158,7 @@ export default function TextField({
         name={name}
         placeholder={placeholder}
         value={value}
-        className={clsx(styles.inputField, className)}
+        className={clsx(styles.inputField, inputClassName)}
         disabled={disabled}
         defaultValue={defaultValue}
         required={required}

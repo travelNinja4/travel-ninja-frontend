@@ -12,20 +12,30 @@
  */
 'use client';
 
-import { STRINGS } from '@/constants/strings';
+import { useEffect, useState } from 'react';
+import { ROUTES, STRINGS } from '@/constants/strings';
 import AuthSideBanner from '../AuthSideBanner';
 import Button from '../Button';
 import TextField from '../TextField';
 import Typography from '../Typography';
 import CustomImage from '../CustomImage';
 import { Mail, Phone, Check, RotateCw } from 'lucide-react';
+import { useAuthStore } from '@/store/auth';
+import { useRouter } from 'next/navigation';
+import { authService } from '@/services/authService';
+import { useNotification } from '@/providers/NotificationProvider';
 import styles from './OtpVerification.module.scss';
-import { useEffect, useState } from 'react';
 
 export default function OtpVerification() {
+  const router = useRouter();
+  const { showNotification } = useNotification();
+  const accountData = useAuthStore((store) => store.accountData);
   const [type, setType] = useState<'email' | 'mobile'>('email');
   const [value, setValue] = useState('');
   const [timer, setTimer] = useState(0);
+  const [verifyLoading, setVerifyLoading] = useState(false);
+  const rawCountry = accountData?.phoneNumber.country ?? '';
+  const countryCode = rawCountry.split('(')[0].trim();
 
   useEffect(() => {
     if (timer === 0) return;
@@ -39,22 +49,51 @@ export default function OtpVerification() {
     };
   }, [timer]);
 
-  const handleResend = () => {
-    setTimer(60);
+  const handleResend = async () => {
+    try {
+      const requestParams =
+        type === STRINGS.EMAIL
+          ? { email: accountData?.email }
+          : { phoneNumber: `${countryCode}-${accountData?.phoneNumber?.number}` };
+      console.log('requestParams>>>', requestParams);
+      const response = await authService.sendOtp(requestParams);
+      console.log('Otp sent successfully:', response);
+      setTimer(60);
+    } catch (err: unknown) {
+      console.log('error>>>', err);
+    }
   };
 
   const handleOnChange = (val: string) => {
     setValue(val);
   };
 
-  const handleCodeVerify = () => {
+  const handleCodeVerify = async () => {
     if (!value) {
       return false;
     }
-    if (type === STRINGS.EMAIL) {
-      setType('mobile');
-      setValue('');
-      setTimer(0);
+
+    try {
+      const requestParams =
+        type === STRINGS.EMAIL
+          ? { email: accountData?.email, otpCode: value }
+          : { phoneNumber: `${countryCode}-${accountData?.phoneNumber?.number}`, otpCode: value };
+      console.log('requestParams>>>', requestParams);
+      setVerifyLoading(true);
+      const response = await authService.verifyOtp(requestParams);
+      console.log('Otp sent successfully:', response);
+      if (type === STRINGS.EMAIL) {
+        setType('mobile');
+        setValue('');
+        setTimer(0);
+      } else {
+        showNotification('Success!', 'Account created successfully', 'success');
+        router.push(ROUTES.LOGIN);
+      }
+    } catch (err: unknown) {
+      console.log('error>>>', err);
+    } finally {
+      setVerifyLoading(false);
     }
   };
 
@@ -97,7 +136,9 @@ export default function OtpVerification() {
                 color="var(--color-indigo)"
                 className={styles.userEmail}
               >
-                {type === STRINGS.EMAIL ? 'user@gmail.com' : '4658265937'}
+                {type === STRINGS.EMAIL
+                  ? accountData?.email
+                  : `${countryCode}-${accountData?.phoneNumber?.number}`}
               </Typography>
             </div>
             <div className={styles.verificationWrapper}>
@@ -106,26 +147,32 @@ export default function OtpVerification() {
                 placeholder="000000"
                 value={value}
                 maxLength={6}
-                className={styles.verificationTextField}
+                inputClassName={styles.verificationTextField}
                 onChange={(e) => handleOnChange(e.target.value)}
               />
               <Typography tag="label" align="center" className={styles.otpSubHeader}>
                 {type === STRINGS.EMAIL ? STRINGS.EMAIL_CODE_HINT : STRINGS.MOBILE_CODE_HINT}
               </Typography>
             </div>
-            <Button className={styles.button} startIcon={Check} onClick={handleCodeVerify}>
+            <Button
+              className={styles.button}
+              startIcon={Check}
+              onClick={handleCodeVerify}
+              disabled={verifyLoading}
+              loading={verifyLoading}
+            >
               {type === STRINGS.EMAIL ? STRINGS.VERIFY_EMAIL : STRINGS.VERIFY_MOBILE_NUMBER}
             </Button>
             <div className={styles.resendWrapper}>
               {timer > 0 ? (
-                <Typography tag="span">{`${STRINGS.RESEND_CODE} ${timer} ${STRINGS.SECONDS}`}</Typography>
+                <Typography tag="span">{`${STRINGS.RESEND_CODE_IN} ${timer} ${STRINGS.SECONDS}`}</Typography>
               ) : (
-                <>
+                <div onClick={handleResend} className={styles.resendTextContainer}>
                   <RotateCw color="var(--color-indigo)" />
-                  <Typography tag="span" className={styles.resendText} onClick={handleResend}>
-                    Resend Code
+                  <Typography tag="span" className={styles.resendText}>
+                    {STRINGS.RESEND_CODE}
                   </Typography>
-                </>
+                </div>
               )}
             </div>
           </div>

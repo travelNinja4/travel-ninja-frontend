@@ -13,8 +13,9 @@ export const STRINGS = {
   VERIFY_EMAIL: 'Verify Email',
   VERIFY_MOBILE_NUMBER: 'Verify Mobile Number',
   ENTER_VERIFICATION_CODE: 'Enter Verification Code',
-  RESEND_CODE: 'Resend code in',
+  RESEND_CODE_IN: 'Resend code in',
   SECONDS: 'seconds',
+  RESEND_CODE: 'Resend Code',
 };
 
 export const ROUTES = {
@@ -23,3 +24,10 @@ export const ROUTES = {
   CREATE_ACCOUNT: '/createAccount',
   VERIFY: '/verify',
 } as const;
+
+export const NOTIFICATION_TYPES = {
+  SUCCESS: 'success',
+  ERROR: 'error',
+  WARNING: 'warning',
+  INFO: 'info',
+};

@@ -24,8 +24,9 @@ import { PasswordHint } from '../PasswordFeedback/PasswordFeedback';
 import CheckBox from '../CheckBox';
 import Button from '../Button';
 import { LucideIcon } from 'lucide-react';
-import styles from './DynamicForm.module.scss';
+import MobileNumberInput from '../MobileNumberInput';
 import clsx from 'clsx';
+import styles from './DynamicForm.module.scss';
 
 /**
  * Define the props available for the DynamicForm component.
@@ -50,6 +51,11 @@ interface DynamicFormProps<T extends FieldValues = FieldValues> {
    * Callback function executed when the form is submitted.
    */
   onSubmit: SubmitHandler<T>;
+
+  /**
+   *
+   */
+  loading?: boolean;
 }
 
 /**
@@ -89,12 +95,14 @@ type FieldType =
   | 'textarea'
   | 'checkbox'
   | 'select'
-  | 'button';
+  | 'button'
+  | 'MobileNumberInput';
 
 export default function DynamicForm<T extends FieldValues>({
   fields,
   schema,
   className,
+  loading,
   onSubmit,
 }: DynamicFormProps<T>) {
   const {
@@ -165,9 +173,40 @@ export default function DynamicForm<T extends FieldValues>({
             startIcon={field.startIcon}
             endIcon={field.endIcon}
             iconColor={field.iconColor}
+            disabled={loading}
+            loading={loading}
           >
             {field.label}
           </Button>
+        );
+
+      case 'MobileNumberInput':
+        return (
+          <>
+            {field.label && (
+              <Typography tag="label" className={styles.label}>
+                {field.label}{' '}
+                {field.required && (
+                  <Typography tag="span" className={styles.label}>
+                    *
+                  </Typography>
+                )}
+              </Typography>
+            )}
+            <Controller
+              name={field.name as Path<T>}
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <MobileNumberInput
+                  value={value ?? { country: '+91 (IN)', number: '' }}
+                  onChange={onChange}
+                  maxLength={field.maxLength}
+                  error={errors[field.name]?.number?.message as string}
+                  countryError={errors[field.name]?.country?.message as string}
+                />
+              )}
+            />
+          </>
         );
 
       default:

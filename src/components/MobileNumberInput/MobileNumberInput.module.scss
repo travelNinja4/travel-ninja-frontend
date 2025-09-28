@@ -1,0 +1,53 @@
+/**
+------------------------------------------------------
+styles specific to the MobileNumberInput component
+------------------------------------------------------
+**/
+
+.container {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-gray-800);
+  margin-bottom: 0.5rem;
+}
+
+.dropdownWrapper {
+  position: relative;
+  width: 6rem;
+  border-right: 1px solid var(--color-gray-300);
+}
+
+.dropdown {
+  border-right: 1px solid var(--color-gray-300);
+  width: 6rem;
+  border-radius: 0;
+}
+
+.dropdownText {
+  border-radius: 8px;
+  border: 0;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  border-radius: 8px;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.errorText {
+  color: var(--color-red-500);
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
