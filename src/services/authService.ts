@@ -1,9 +1,28 @@
 import { apiClient } from './apiClient';
 
 export type RegisterPayload = {
-  name: string;
+  fullName: string;
+  agencyName?: string;
   email: string;
+  website?: string;
+  address: string;
+  city: string;
+  state: string;
+  pincode: string;
+  phoneNumber: string;
   password: string;
+  termStatus: boolean;
+  role: string;
+};
+
+export type SendOtp = {
+  email?: string;
+  phoneNumber?: string;
+};
+
+export type VerifyOtp = {
+  email?: string;
+  phoneNumber?: string;
 };
 
 export type LoginPayload = {
@@ -12,19 +31,23 @@ export type LoginPayload = {
 };
 
 export const authService = {
-  async register(data: RegisterPayload) {
+  register(data: RegisterPayload) {
     return apiClient.post('/auth/register', data);
   },
 
-  async login(data: LoginPayload) {
+  sendOtp(data: SendOtp) {
+    return apiClient.post('/auth/send-otp', data);
+  },
+
+  verifyOtp(data: VerifyOtp) {
+    return apiClient.post('/auth/verify-otp', data);
+  },
+
+  login(data: LoginPayload) {
     return apiClient.post('/auth/login', data);
   },
 
-  async me() {
-    return apiClient.get('/auth/me');
-  },
-
-  async logout() {
+  logout() {
     return apiClient.post('/auth/logout', {});
   },
 };

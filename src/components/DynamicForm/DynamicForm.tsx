@@ -50,6 +50,11 @@ interface DynamicFormProps<T extends FieldValues = FieldValues> {
    * Callback function executed when the form is submitted.
    */
   onSubmit: SubmitHandler<T>;
+
+  /**
+   *
+   */
+  loading?: boolean;
 }
 
 /**
@@ -95,6 +100,7 @@ export default function DynamicForm<T extends FieldValues>({
   fields,
   schema,
   className,
+  loading,
   onSubmit,
 }: DynamicFormProps<T>) {
   const {
@@ -165,6 +171,8 @@ export default function DynamicForm<T extends FieldValues>({
             startIcon={field.startIcon}
             endIcon={field.endIcon}
             iconColor={field.iconColor}
+            disabled={loading}
+            loading={loading}
           >
             {field.label}
           </Button>

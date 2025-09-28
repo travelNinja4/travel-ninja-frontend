@@ -2,9 +2,13 @@ import DynamicForm, { FieldConfig, FieldWidth } from '@/components/DynamicForm/D
 import { createAccountSchema } from './CreateAccountSchema';
 import AppLink from '@/components/AppLink';
 import { UserPlus } from 'lucide-react';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/constants/strings';
 import { AccountData, useAuthStore } from '@/store/auth';
+import { useApiStatusStore } from '@/store/apiStatus';
+import { authService } from '@/services/authService';
+import { useNotification } from '@/providers/NotificationProvider';
+import { errorHandler } from '@/utils/errorHandler';
 import styles from './CreateAccountForm.module.scss';
 
 export const createAccountFormConfig: FieldConfig[] = [
@@ -13,6 +17,7 @@ export const createAccountFormConfig: FieldConfig[] = [
     label: 'Create Your Agency Account',
     type: 'label',
     tag: 'h2',
+    textAlign: 'center',
     children: null,
     validationHints: [],
     className: styles.title,
@@ -22,6 +27,7 @@ export const createAccountFormConfig: FieldConfig[] = [
     label: 'Start your journey with TravelNinja today',
     type: 'label',
     tag: 'h3',
+    textAlign: 'center',
     validationHints: [],
     className: styles.subTitle,
   },
@@ -40,6 +46,7 @@ export const createAccountFormConfig: FieldConfig[] = [
     label: 'Agency Name',
     type: 'input',
     placeholder: 'Enter agency name',
+    required: true,
     width: FieldWidth.HALF,
     validationHints: [],
   },
@@ -78,7 +85,7 @@ export const createAccountFormConfig: FieldConfig[] = [
     placeholder: 'Enter city',
     required: true,
     maxLength: 20,
-    width: FieldWidth.HALF,
+    width: FieldWidth.THIRD,
     validationHints: [],
   },
   {
@@ -88,7 +95,7 @@ export const createAccountFormConfig: FieldConfig[] = [
     placeholder: 'Enter state',
     required: true,
     maxLength: 20,
-    width: FieldWidth.HALF,
+    width: FieldWidth.THIRD,
     validationHints: [],
   },
   {
@@ -98,6 +105,16 @@ export const createAccountFormConfig: FieldConfig[] = [
     placeholder: 'Enter post code',
     required: true,
     maxLength: 6,
+    width: FieldWidth.THIRD,
+    validationHints: [],
+  },
+  {
+    name: 'country',
+    label: 'Country',
+    type: 'input',
+    placeholder: 'Enter Country',
+    required: true,
+    maxLength: 20,
     width: FieldWidth.HALF,
     validationHints: [],
   },
@@ -158,18 +175,37 @@ export const createAccountFormConfig: FieldConfig[] = [
 ];
 
 export default function CreateAccountForm() {
+  const router = useRouter();
+  const { showNotification } = useNotification();
   const setAccountData = useAuthStore((store) => store.setAccountData);
-  const handleSubmit = (formData: AccountData) => {
-    setAccountData(formData);
-    redirect(ROUTES.VERIFY);
+  const isLoading = useApiStatusStore((store) => store.isLoading);
+
+  const handleSubmit = async (formData: AccountData) => {
+    try {
+      const requestParams = {
+        ...formData,
+        phoneNumber: `+91${formData?.phoneNumber}`,
+        role: 'agency',
+      };
+      console.log('requestParams>>>', requestParams);
+      const response = await authService.register(requestParams);
+      setAccountData(formData);
+      router.push(ROUTES.VERIFY);
+    } catch (err: unknown) {
+      const messages = errorHandler(err);
+      messages.forEach((errMsg) => {
+        showNotification('Error!', errMsg, 'error');
+      });
+    }
   };
 
   return (
     <DynamicForm
       fields={createAccountFormConfig}
       schema={createAccountSchema}
-      onSubmit={handleSubmit}
       className={styles.createAccountContainer}
+      loading={isLoading}
+      onSubmit={handleSubmit}
     />
   );
 }

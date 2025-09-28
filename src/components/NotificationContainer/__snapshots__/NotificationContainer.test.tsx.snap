@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Home matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    data-testid="NotificationContainerTest"
+  >
+    <div
+      class="notificationWrapper top-right"
+    >
+      <div
+        class="notification success show"
+      >
+        <div
+          class="notificationIcon"
+        >
+          <svg
+            aria-hidden="true"
+            class="lucide lucide-circle-check"
+            fill="none"
+            height="24"
+            stroke="var(--notification-success-icon)"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="10"
+            />
+            <path
+              d="m9 12 2 2 4-4"
+            />
+          </svg>
+        </div>
+        <div
+          class="notificationText"
+        >
+          <h4
+            class="typography h4 align-left notificationTitle successTitle"
+            data-testid="TypographyTest"
+          >
+            Test Notification
+          </h4>
+          <p
+            class="typography p align-left notificationMessage successNotificationMessage"
+            data-testid="TypographyTest"
+          >
+            This is a test notification
+          </p>
+        </div>
+        <div
+          class="notificationClose"
+          data-testid="notification-close-btn"
+        >
+          <svg
+            aria-hidden="true"
+            class="lucide lucide-x"
+            fill="none"
+            height="24"
+            stroke="var(--notification-close-icon)"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18 6 6 18"
+            />
+            <path
+              d="m6 6 12 12"
+            />
+          </svg>
+        </div>
+        <div
+          class="notificationProgress"
+        >
+          <div
+            class="notificationProgressBar"
+            style="animation-duration: 3000ms;"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="notificationWrapper top-left"
+    />
+    <div
+      class="notificationWrapper bottom-right"
+    />
+    <div
+      class="notificationWrapper bottom-left"
+    />
+    <div
+      class="notificationWrapper top-center"
+    />
+  </div>
+</DocumentFragment>
+`;

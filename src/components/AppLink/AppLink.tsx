@@ -12,14 +12,14 @@
  */
 'use client';
 
-import { ReactNode } from 'react';
-import Link from 'next/link';
+import { AnchorHTMLAttributes, ReactNode } from 'react';
+import Link, { LinkProps } from 'next/link';
 import styles from './AppLink.module.scss';
 
 /**
  * Define the props available for the AppLink component.
  */
-interface AppLinkProps {
+interface AppLinkProps extends LinkProps, Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
   /**
    * The destination URL of the link.
    *

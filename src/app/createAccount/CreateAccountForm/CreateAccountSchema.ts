@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const createAccountSchema = z.object({
   fullName: z.string().min(1, 'Full name is required').max(50),
-  agencyName: z.string().optional(),
+  agencyName: z.string().min(1, 'Agency name is required').max(50),
   email: z
     .string()
     .min(1, 'Email is required')
@@ -16,6 +16,7 @@ export const createAccountSchema = z.object({
     .string()
     .length(6, 'Post code must be exactly 6 digits')
     .regex(/^\d+$/, 'Post code must contain only numbers'),
+  country: z.string().min(1, 'Country is required').max(20),
   phoneNumber: z
     .string()
     .length(10, 'Mobile number must be exactly 10 digits')
