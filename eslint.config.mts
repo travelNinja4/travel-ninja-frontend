@@ -19,6 +19,7 @@ export default defineConfig([
     rules: {
       'no-console': 2, //to enable console error use 1 to disable 0
       '@next/next/no-page-custom-font': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
 ]);
