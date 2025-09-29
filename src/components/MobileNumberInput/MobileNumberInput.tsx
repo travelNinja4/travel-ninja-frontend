@@ -104,7 +104,7 @@ export default function MobileNumberInput({
     onChange?.({ country: selected.code, number: '' });
   };
 
-  const handleSearch = (val: any) => {
+  const handleSearch = (val: string) => {
     setSearch(val);
     if (!val) {
       setCountry('');
@@ -113,7 +113,7 @@ export default function MobileNumberInput({
 
   return (
     <>
-      <div className={styles.container}>
+      <div data-testid="MobileNumberInputTest" className={styles.container}>
         <div className={styles.dropdownWrapper}>
           <Autocomplete
             options={filteredCountries?.map((c) => ({ value: c, label: c.code }))}
