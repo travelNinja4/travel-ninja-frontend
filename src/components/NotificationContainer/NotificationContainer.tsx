@@ -61,6 +61,19 @@ export default function NotificationContainer({
     setActiveNotifications(notifications);
   }, [notifications]);
 
+  useEffect(() => {
+    const timers = notifications.map((n) => {
+      if (n.duration) {
+        return setTimeout(() => removeNotification(n.id), n.duration);
+      }
+      return null;
+    });
+
+    return () => {
+      timers.forEach((t) => t && clearTimeout(t));
+    };
+  }, [notifications, removeNotification]);
+
   // Group by position
   const positions = ['top-right', 'top-left', 'bottom-right', 'bottom-left', 'top-center'];
 
@@ -125,6 +138,7 @@ export default function NotificationContainer({
                     <div className={styles.notificationProgress}>
                       <div
                         className={styles.notificationProgressBar}
+                        data-testid="progress-bar"
                         style={{ animationDuration: `${n.duration}ms` }}
                       />
                     </div>

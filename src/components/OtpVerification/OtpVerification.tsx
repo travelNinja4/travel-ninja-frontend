@@ -34,7 +34,7 @@ export default function OtpVerification() {
   const [value, setValue] = useState('');
   const [timer, setTimer] = useState(0);
   const [verifyLoading, setVerifyLoading] = useState(false);
-  const rawCountry = accountData?.phoneNumber.country ?? '';
+  const rawCountry = accountData?.phoneNumber?.country ?? '';
   const countryCode = rawCountry.split('(')[0].trim();
 
   useEffect(() => {

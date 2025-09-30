@@ -83,6 +83,7 @@ exports[`Home matches snapshot 1`] = `
         >
           <div
             class="notificationProgressBar"
+            data-testid="progress-bar"
             style="animation-duration: 3000ms;"
           />
         </div>
