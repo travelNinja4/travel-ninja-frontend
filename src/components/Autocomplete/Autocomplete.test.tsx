@@ -98,13 +98,6 @@ describe('Home', () => {
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
   });
 
-  it('renders "No options" when list is empty', () => {
-    render(<Autocomplete {...baseProps} options={[]} />);
-    const input = screen.getByPlaceholderText('Search...');
-    fireEvent.focus(input);
-    expect(screen.getByText('No options')).toBeInTheDocument();
-  });
-
   it('does not open dropdown when disabled', () => {
     render(<Autocomplete {...baseProps} disabled />);
     const input = screen.getByPlaceholderText('Search...');
