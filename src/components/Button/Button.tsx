@@ -104,7 +104,7 @@ export default function Button({
     <button
       data-testid="ButtonTest"
       type={type}
-      disabled={disabled}
+      disabled={disabled || loading}
       onClick={onClick}
       className={clsx(styles.button, className)}
       {...rest}

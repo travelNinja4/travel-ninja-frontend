@@ -73,7 +73,7 @@ export default function AppLink({
     );
   }
   return (
-    <Link href={href} replace={replace} className={className} data-testid="AppLinkTest">
+    <Link data-testid="AppLinkTest" href={href} replace={replace} className={className}>
       {children}
     </Link>
   );
