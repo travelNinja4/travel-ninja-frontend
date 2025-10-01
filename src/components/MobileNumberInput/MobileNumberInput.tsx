@@ -6,7 +6,19 @@
  * import MobileNumberInput from '@src/components/MobileNumberInput'
  *
  * export default function MobileNumberInput() {
- *   return <MobileNumberInput label="Hello" />;
+ *  const [mobile, setMobile] = useState<{ country: string; number: string }>({
+ *     country: 'IN',
+ *     number: '',
+ *   });
+ *
+ *   return (
+ *     <MobileNumberInput
+ *       value={mobile}
+ *       onChange={setMobile}
+ *       maxLength={10}
+ *       error={mobile.number.length > 0 && mobile.number.length < 10 ? "Number too short" : ""}
+ *       countryError={!mobile.country ? "Please select a country" : ""}
+ *     />
  * }
  * ```
  */
@@ -26,10 +38,53 @@ import { useCommonStore } from '@/store/common';
  * Define the props available for the MobileNumberInput component.
  */
 interface MobileNumberInputProps {
+  /**
+   * The current value of the input.
+   *
+   * Consists of a `country` (ISO code or dialing code)
+   * and the mobile `number`.
+   *
+   * @example
+   * ```ts
+   * { country: "IN", number: "9876543210" }
+   * ```
+   */
   value?: { country: string; number: string };
+
+  /**
+   * Callback fired when the user changes either the country code or the mobile number.
+   *
+   * Receives the updated `{ country, number }` object.
+   *
+   * @param val - Updated mobile number state.
+   */
   onChange?: (val: { country: string; number: string }) => void;
+
+  /**
+   * The maximum length allowed for the mobile number input.
+   *
+   * If the selected country provides its own `length`,
+   * that will override this value.
+   *
+   * @default undefined
+   */
   maxLength?: number;
+
+  /**
+   * Error message to display below the mobile number field.
+   *
+   * Useful for number-specific validation errors.
+   *
+   * @example "Invalid mobile number"
+   */
   error?: string;
+
+  /**
+   * Error message to display below the country code selector.
+   *
+   * Useful when the user must select a valid country code but hasn’t done so.
+   * @example "Please select a country"
+   */
   countryError?: string;
 }
 

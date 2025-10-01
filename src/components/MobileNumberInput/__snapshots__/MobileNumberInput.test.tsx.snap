@@ -11,6 +11,7 @@ exports[`Home matches snapshot 1`] = `
     >
       <div
         class="dropdown dropdown"
+        data-testid="AutocompleteTest"
       >
         <div
           class="inputWrapper"

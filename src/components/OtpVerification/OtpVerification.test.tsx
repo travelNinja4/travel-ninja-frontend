@@ -1,11 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import { STRINGS } from '@/constants/strings';
-import OtpVerification from './OtpVerification';
-import { useRouter } from 'next/navigation';
 import { authService } from '../../services/authService';
-import { useAuthStore } from '../../store/auth';
-import { useNotification } from '../../providers/NotificationProvider';
+import OtpVerification from './OtpVerification';
 
 describe('Home', () => {
   /** Base props for OtpVerification **/
@@ -80,14 +76,12 @@ describe('Home', () => {
   it('verifies mobile OTP and navigates to login', async () => {
     (authService.verifyOtp as jest.Mock).mockResolvedValue({});
 
-    // Spy on hooks to access the internal mock functions
     const showNotificationSpy = jest.spyOn(
       require('../../providers/NotificationProvider'),
       'useNotification',
     );
     const pushSpy = jest.spyOn(require('next/navigation'), 'useRouter');
 
-    // Make sure the spies return the same mocks used in the component
     const mockShowNotification = jest.fn();
     const mockPush = jest.fn();
 
@@ -96,12 +90,10 @@ describe('Home', () => {
 
     render(<OtpVerification />);
 
-    // Step 1: verify email to switch to mobile
     const emailInput = screen.getByPlaceholderText('000000');
     fireEvent.change(emailInput, { target: { value: '123456' } });
     await act(async () => fireEvent.click(screen.getByText(/VERIFY EMAIL/i)));
 
-    // Step 2: verify mobile OTP
     const mobileInput = screen.getByPlaceholderText('000000');
     fireEvent.change(mobileInput, { target: { value: '654321' } });
     await act(async () => fireEvent.click(screen.getByText(/VERIFY MOBILE NUMBER/i)));
