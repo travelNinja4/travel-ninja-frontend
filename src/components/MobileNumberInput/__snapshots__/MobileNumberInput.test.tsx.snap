@@ -18,7 +18,7 @@ exports[`Home matches snapshot 1`] = `
         >
           <input
             class="input dropdownText"
-            placeholder="Search..."
+            placeholder="Country code"
             type="text"
             value=""
           />
