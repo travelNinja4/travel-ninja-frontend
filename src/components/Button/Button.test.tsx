@@ -46,4 +46,22 @@ describe('Home', () => {
     const { asFragment } = render(<Button {...baseProps} />);
     expect(asFragment()).toMatchSnapshot();
   });
+
+  it('renders loading state with loader', () => {
+    render(<Button {...baseProps} loading />);
+    expect(screen.getByTestId('ButtonTest')).toBeDisabled();
+    expect(screen.getByText('ButtonTest')).toBeInTheDocument();
+    expect(screen.getByText('ButtonTest').previousSibling).toHaveClass('loader');
+  });
+
+  it('renders as disabled', () => {
+    render(<Button {...baseProps} disabled />);
+    expect(screen.getByTestId('ButtonTest')).toBeDisabled();
+  });
+
+  it('triggers onClick when clicked', () => {
+    render(<Button {...baseProps} />);
+    screen.getByTestId('ButtonTest').click();
+    expect(baseProps.onClick).toHaveBeenCalled();
+  });
 });

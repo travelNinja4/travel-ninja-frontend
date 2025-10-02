@@ -6,7 +6,19 @@
  * import MobileNumberInput from '@src/components/MobileNumberInput'
  *
  * export default function MobileNumberInput() {
- *   return <MobileNumberInput label="Hello" />;
+ *  const [mobile, setMobile] = useState<{ country: string; number: string }>({
+ *     country: 'IN',
+ *     number: '',
+ *   });
+ *
+ *   return (
+ *     <MobileNumberInput
+ *       value={mobile}
+ *       onChange={setMobile}
+ *       maxLength={10}
+ *       error={mobile.number.length > 0 && mobile.number.length < 10 ? "Number too short" : ""}
+ *       countryError={!mobile.country ? "Please select a country" : ""}
+ *     />
  * }
  * ```
  */
@@ -17,19 +29,64 @@ import TextField from '../TextField';
 import Autocomplete from '../Autocomplete';
 import { useNotification } from '@/providers/NotificationProvider';
 import { errorHandler } from '@/utils/errorHandler';
-import clsx from 'clsx';
-import styles from './MobileNumberInput.module.scss';
 import { authService } from '@/services/authService';
 import { useCommonStore } from '@/store/common';
+import { useApiStatusStore } from '@/store/apiStatus';
+import { STRINGS } from '@/constants/strings';
+import clsx from 'clsx';
+import styles from './MobileNumberInput.module.scss';
 
 /**
  * Define the props available for the MobileNumberInput component.
  */
 interface MobileNumberInputProps {
+  /**
+   * The current value of the input.
+   *
+   * Consists of a `country` (ISO code or dialing code)
+   * and the mobile `number`.
+   *
+   * @example
+   * ```ts
+   * { country: "IN", number: "9876543210" }
+   * ```
+   */
   value?: { country: string; number: string };
+
+  /**
+   * Callback fired when the user changes either the country code or the mobile number.
+   *
+   * Receives the updated `{ country, number }` object.
+   *
+   * @param val - Updated mobile number state.
+   */
   onChange?: (val: { country: string; number: string }) => void;
+
+  /**
+   * The maximum length allowed for the mobile number input.
+   *
+   * If the selected country provides its own `length`,
+   * that will override this value.
+   *
+   * @default undefined
+   */
   maxLength?: number;
+
+  /**
+   * Error message to display below the mobile number field.
+   *
+   * Useful for number-specific validation errors.
+   *
+   * @example "Invalid mobile number"
+   */
   error?: string;
+
+  /**
+   * Error message to display below the country code selector.
+   *
+   * Useful when the user must select a valid country code but hasn’t done so.
+   * @example "Please select a country"
+   */
   countryError?: string;
 }
 
@@ -42,6 +99,7 @@ export default function MobileNumberInput({
 }: MobileNumberInputProps) {
   const { showNotification } = useNotification();
   const { countries, setCountries } = useCommonStore();
+  const isLoading = useApiStatusStore((store) => store.isLoading);
   const [country, setCountry] = useState('');
   const [search, setSearch] = useState('');
   const [number, setNumber] = useState(value?.number ?? '');
@@ -104,7 +162,7 @@ export default function MobileNumberInput({
     onChange?.({ country: selected.code, number: '' });
   };
 
-  const handleSearch = (val: any) => {
+  const handleSearch = (val: string) => {
     setSearch(val);
     if (!val) {
       setCountry('');
@@ -113,12 +171,14 @@ export default function MobileNumberInput({
 
   return (
     <>
-      <div className={styles.container}>
+      <div data-testid="MobileNumberInputTest" className={styles.container}>
         <div className={styles.dropdownWrapper}>
           <Autocomplete
             options={filteredCountries?.map((c) => ({ value: c, label: c.code }))}
+            placeholder={STRINGS.COUNTRY_CODE}
             value={country}
             searchValue={search}
+            isLoading={isLoading}
             onSearchChange={(val) => handleSearch(val)}
             onChange={handleSelect}
             dropdownContainerClassName={clsx(styles.dropdown)}
@@ -127,7 +187,7 @@ export default function MobileNumberInput({
         </div>
 
         <TextField
-          placeholder="Enter mobile number"
+          placeholder={STRINGS.ENTER_MOBILE_NUMBER}
           className={clsx(styles.input)}
           value={number}
           maxLength={length || maxLength}

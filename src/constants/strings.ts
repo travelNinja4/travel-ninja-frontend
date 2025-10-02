@@ -16,6 +16,9 @@ export const STRINGS = {
   RESEND_CODE_IN: 'Resend code in',
   SECONDS: 'seconds',
   RESEND_CODE: 'Resend Code',
+  NO_OPTIONS_FOUND: 'No options found',
+  COUNTRY_CODE: 'Country code',
+  ENTER_MOBILE_NUMBER: 'Enter mobile number',
 };
 
 export const ROUTES = {

@@ -92,12 +92,10 @@ describe('Home', () => {
   });
 
   it('renders progress bar only if showProgress is true', () => {
-    // With progress
     renderContainer();
     expect(screen.getByTestId('progress-bar')).toBeInTheDocument();
     cleanup();
 
-    // Without progress
     renderContainer([{ ...baseNotification, showProgress: false }]);
     expect(screen.queryByTestId('progress-bar')).not.toBeInTheDocument();
   });

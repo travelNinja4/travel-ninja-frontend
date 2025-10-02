@@ -6,7 +6,25 @@
  * import Autocomplete from '@src/components/Autocomplete'
  *
  * export default function Autocomplete() {
- *   return <Autocomplete label="Hello" />;
+ *   const [value, setValue] = useState<string>('');
+ *   const [search, setSearch] = useState<string>('');
+ *
+ *   const options: AutocompleteOption<string>[] = [
+ *     { value: 'apple', label: 'Apple' },
+ *     { value: 'banana', label: 'Banana' },
+ *     { value: 'cherry', label: 'Cherry' },
+ *   ];
+ *
+ *   return (
+ *     <Autocomplete
+ *       options={options}
+ *       value={value}
+ *       onChange={setValue}
+ *       searchValue={search}
+ *       onSearchChange={setSearch}
+ *       placeholder="Search fruits..."
+ *     />
+ *   );
  * }
  * ```
  */
@@ -15,6 +33,7 @@
 import { useState, useRef, useEffect, KeyboardEvent, ChangeEvent } from 'react';
 import clsx from 'clsx';
 import styles from './Autocomplete.module.scss';
+import { STRINGS } from '@/constants/strings';
 
 export type AutocompleteOption<T> = {
   value: T;
@@ -25,15 +44,74 @@ export type AutocompleteOption<T> = {
  * Define the props available for the Autocomplete component.
  */
 interface AutocompleteProps<T> {
+  /**
+   * List of options to display in the dropdown.
+   *
+   * Each option must have a `label` (string shown to the user)
+   * and a `value` (the underlying data of generic type `T`).
+   */
   options: AutocompleteOption<T>[];
+
+  /**
+   * The currently selected value.
+   *
+   * Can be a string or of type `T`. Useful for controlled components
+   * where the parent manages the selected state.
+   */
   value?: T | string;
+
+  /**
+   * Callback fired when an option is selected.
+   *
+   * @param value The selected value of type `T` or string.
+   * If cleared, it may be `undefined`.
+   */
   onChange?: (value: T | string | undefined) => void;
+
+  /**
+   * The current value of the search input field.
+   *
+   * Useful when controlling the search text externally.
+   */
   searchValue?: string;
+
+  /**
+   * Callback fired when the search input changes.
+   *
+   * @param value - The updated search text.
+   */
   onSearchChange?: (value: string) => void;
+
+  /**
+   * Placeholder text for the search input field.
+   *
+   * @default "Search..."
+   */
   placeholder?: string;
+
+  /**
+   * Additional class name(s) applied to the dropdown container.
+   * Allows custom styling.
+   */
   dropdownContainerClassName?: string;
+
+  /**
+   * Additional class name(s) applied to the text input container.
+   * Allows custom styling.
+   */
   dropdownTextContainerClassName?: string;
+
+  /**
+   * If true, disables the input and dropdown interaction.
+   *
+   * @default false
+   */
   disabled?: boolean;
+
+  /**
+   * If true, shows loading state in the dropdown options.
+   */
+  isLoading?: boolean;
 }
 
 export default function Autocomplete<T>({
@@ -46,6 +124,7 @@ export default function Autocomplete<T>({
   dropdownContainerClassName,
   dropdownTextContainerClassName,
   disabled = false,
+  isLoading,
 }: AutocompleteProps<T>) {
   const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -84,7 +163,11 @@ export default function Autocomplete<T>({
   };
 
   return (
-    <div ref={dropdownRef} className={clsx(styles.dropdown, dropdownContainerClassName)}>
+    <div
+      data-testid="AutocompleteTest"
+      ref={dropdownRef}
+      className={clsx(styles.dropdown, dropdownContainerClassName)}
+    >
       <div className={styles.inputWrapper}>
         <input
           type="text"
@@ -102,31 +185,39 @@ export default function Autocomplete<T>({
         />
       </div>
 
-      {isOpen && options.length > 0 && (
+      {isOpen && (
         <ul role="listbox" tabIndex={-1} onKeyDown={handleKeyDown} className={styles.list}>
-          {options.map((option, idx) => {
-            const isHighlighted = idx === highlightedIndex;
-            return (
-              <li
-                key={idx}
-                role="option"
-                className={clsx(styles.option, { [styles.highlighted]: isHighlighted })}
-                onMouseEnter={() => setHighlightedIndex(idx)}
-                onClick={() => {
-                  onChange?.(option.value);
-                  setIsOpen(false);
-                }}
-              >
-                {option.label}
+          {isLoading ? (
+            // Loading State
+            <li className={styles.loading}>
+              <li className={styles.loading}>
+                <span className={styles.spinner}></span>
+                Loading...
               </li>
-            );
-          })}
-        </ul>
-      )}
-
-      {isOpen && options.length === 0 && (
-        <ul className={styles.list}>
-          <li className={styles.noOptions}>No options</li>
+            </li>
+          ) : options.length > 0 ? (
+            // Normal options
+            options.map((option, idx) => {
+              const isHighlighted = idx === highlightedIndex;
+              return (
+                <li
+                  key={idx}
+                  role="option"
+                  className={clsx(styles.option, { [styles.highlighted]: isHighlighted })}
+                  onMouseEnter={() => setHighlightedIndex(idx)}
+                  onClick={() => {
+                    onChange?.(option.value);
+                    setIsOpen(false);
+                  }}
+                >
+                  {option.label}
+                </li>
+              );
+            })
+          ) : (
+            // No options fallback
+            <li className={styles.noOptions}>{STRINGS.NO_OPTIONS_FOUND}</li>
+          )}
         </ul>
       )}
     </div>

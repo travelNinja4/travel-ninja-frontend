@@ -29,11 +29,6 @@
     "zod": "^4.0.17",
     "zustand": "^5.0.8"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "pnpm lint:prettier:fix"
-    ]
-  },
   "devDependencies": {
     "@babel/preset-typescript": "^7.27.1",
     "@chromatic-com/storybook": "^4.1.0",

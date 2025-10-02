@@ -6,7 +6,26 @@
  * import NotificationContainer from '@src/components/NotificationContainer'
  *
  * export default function NotificationContainer() {
- *   return <NotificationContainer label="Hello" />;
+ * const [notifications, setNotifications] = useState<Notification[]>([
+ *     {
+ *       id: 1,
+ *       type: 'success',
+ *       title: 'Success!',
+ *       message: 'Your action was completed successfully.',
+ *       duration: 3000,
+ *       showProgress: true,
+ *       position: 'top-right',
+ *     },
+ *   ]);
+ *
+ *   const removeNotification = (id: number) => {
+ *     setNotifications((prev) => prev.filter((n) => n.id !== id));
+ *   };
+ *   return (
+ *     <NotificationContainer
+ *       notifications={notifications}
+ *       removeNotification={removeNotification}
+ *     />
  * }
  * ```
  */
@@ -23,7 +42,22 @@ import styles from './NotificationContainer.module.scss';
  * Define the props available for the NotificationContainer component.
  */
 interface NotificationContainerProps {
+  /**
+   * The list of notifications to be displayed.
+   *
+   * Each notification contains metadata such as `id`, `type`,
+   * `title`, `message`, optional `duration`, progress bar visibility, and position.
+   */
   notifications: Notification[];
+
+  /**
+   * A callback function to remove a notification.
+   *
+   * Called when the user closes a notification manually
+   * or when the notification auto-dismisses after its `duration`.
+   *
+   * @param id The unique identifier of the notification to remove.
+   */
   removeNotification: (id: number) => void;
 }
 
@@ -60,6 +94,19 @@ export default function NotificationContainer({
   useEffect(() => {
     setActiveNotifications(notifications);
   }, [notifications]);
+
+  useEffect(() => {
+    const timers = notifications.map((n) => {
+      if (n.duration) {
+        return setTimeout(() => removeNotification(n.id), n.duration);
+      }
+      return null;
+    });
+
+    return () => {
+      timers.forEach((t) => t && clearTimeout(t));
+    };
+  }, [notifications, removeNotification]);
 
   // Group by position
   const positions = ['top-right', 'top-left', 'bottom-right', 'bottom-left', 'top-center'];
@@ -125,6 +172,7 @@ export default function NotificationContainer({
                     <div className={styles.notificationProgress}>
                       <div
                         className={styles.notificationProgressBar}
+                        data-testid="progress-bar"
                         style={{ animationDuration: `${n.duration}ms` }}
                       />
                     </div>

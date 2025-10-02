@@ -15,6 +15,7 @@
  *  }
  * ```
  */
+
 import Image from 'next/image';
 import { IMAGES } from '@/constants/images';
 import type { ImageProps } from 'next/image';

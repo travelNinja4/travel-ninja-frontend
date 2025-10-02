@@ -105,4 +105,5 @@ export class ApiClient {
   }
 }
 
-export const apiClient = new ApiClient(process.env.NEXT_PUBLIC_API_BASE_URL || '');
+/** this line calls the proxy api and hides the real api in client side */
+export const apiClient = new ApiClient('/api/proxy');

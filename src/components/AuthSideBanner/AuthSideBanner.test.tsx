@@ -5,7 +5,7 @@ import AuthSideBanner from './AuthSideBanner';
 describe('Home', () => {
   /** Base props for AuthSideBanner **/
   const baseProps = {
-    label: 'AuthSideBanner Test',
+    appTagLine: 'AuthSideBanner Test',
   };
 
   /**

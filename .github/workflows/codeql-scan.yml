@@ -1,0 +1,51 @@
+name: "CodeQL Security Scan"
+
+on:
+  push:
+    branches: []  # Optional: skip push scans
+  pull_request:
+    branches: [ "develop", "main" ]
+  schedule:
+    - cron: '0 0 * * 0'
+      branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  security-events: write
+  contents: read
+
+jobs:
+  codeql:
+    name: CodeQL Scan
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        language: [ "javascript" ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - run: npm install -g pnpm
+
+      - uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - run: pnpm install --frozen-lockfile
+
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-and-quality
+
+      - run: pnpm build
+
+      - uses: github/codeql-action/analyze@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}

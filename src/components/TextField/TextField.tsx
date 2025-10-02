@@ -82,7 +82,7 @@ interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
 
   /**
-   *
+   * Additional CSS class names for custom styling the input.
    */
   inputClassName?: string;
 

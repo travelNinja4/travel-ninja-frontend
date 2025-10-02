@@ -63,6 +63,10 @@ export type TypographyProps<T extends Tags = Tags> = {
    * @example 'lineClamp-2'
    */
   truncation?: Truncation;
+
+  /**
+   * to handle the color of the text.
+   */
   color?: string;
 } & React.ComponentPropsWithoutRef<(typeof TagsMapping)[T]>;
 

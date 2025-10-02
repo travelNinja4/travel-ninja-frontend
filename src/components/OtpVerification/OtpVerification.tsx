@@ -34,7 +34,7 @@ export default function OtpVerification() {
   const [value, setValue] = useState('');
   const [timer, setTimer] = useState(0);
   const [verifyLoading, setVerifyLoading] = useState(false);
-  const rawCountry = accountData?.phoneNumber.country ?? '';
+  const rawCountry = accountData?.phoneNumber?.country ?? '';
   const countryCode = rawCountry.split('(')[0].trim();
 
   useEffect(() => {
@@ -55,9 +55,7 @@ export default function OtpVerification() {
         type === STRINGS.EMAIL
           ? { email: accountData?.email }
           : { phoneNumber: `${countryCode}-${accountData?.phoneNumber?.number}` };
-      console.log('requestParams>>>', requestParams);
       const response = await authService.sendOtp(requestParams);
-      console.log('Otp sent successfully:', response);
       setTimer(60);
     } catch (err: unknown) {
       console.log('error>>>', err);

@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Home matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="container"
+    data-testid="MobileNumberInputTest"
+  >
+    <div
+      class="dropdownWrapper"
+    >
+      <div
+        class="dropdown dropdown"
+        data-testid="AutocompleteTest"
+      >
+        <div
+          class="inputWrapper"
+        >
+          <input
+            class="input dropdownText"
+            placeholder="Country code"
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="container input"
+      data-testid="TextFieldTest"
+    >
+      <input
+        class="inputField"
+        maxlength="10"
+        placeholder="Enter mobile number"
+        type="text"
+        value="1234567890"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
