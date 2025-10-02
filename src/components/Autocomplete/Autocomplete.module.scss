@@ -23,6 +23,9 @@ styles specific to the Autocomplete component
   border-radius: 6px;
   background: var(--color-white);
   font-size: 1rem;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  color-scheme: light;
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
@@ -64,7 +67,7 @@ styles specific to the Autocomplete component
   padding: 0.5rem 0.75rem;
   cursor: pointer;
   font-size: 0.95rem;
-  color: #374151;
+  color: var(--color-gray-700);
   transition:
     background 0.2s ease,
     color 0.2s ease;
@@ -86,6 +89,32 @@ styles specific to the Autocomplete component
   font-size: 0.9rem;
   color: var(--color-gray-350);
   text-align: center;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-gray-320);
+  font-size: 0.875rem;
+  height: 45px;
+  .spinner {
+    height: 1rem;
+    width: 1rem;
+    border: 2px solid var(--icon-color-info);
+    border-top-color: transparent;
+    border-radius: 9999px;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes fadeIn {

@@ -29,10 +29,12 @@ import TextField from '../TextField';
 import Autocomplete from '../Autocomplete';
 import { useNotification } from '@/providers/NotificationProvider';
 import { errorHandler } from '@/utils/errorHandler';
-import clsx from 'clsx';
-import styles from './MobileNumberInput.module.scss';
 import { authService } from '@/services/authService';
 import { useCommonStore } from '@/store/common';
+import { useApiStatusStore } from '@/store/apiStatus';
+import { STRINGS } from '@/constants/strings';
+import clsx from 'clsx';
+import styles from './MobileNumberInput.module.scss';
 
 /**
  * Define the props available for the MobileNumberInput component.
@@ -97,6 +99,7 @@ export default function MobileNumberInput({
 }: MobileNumberInputProps) {
   const { showNotification } = useNotification();
   const { countries, setCountries } = useCommonStore();
+  const isLoading = useApiStatusStore((store) => store.isLoading);
   const [country, setCountry] = useState('');
   const [search, setSearch] = useState('');
   const [number, setNumber] = useState(value?.number ?? '');
@@ -172,8 +175,10 @@ export default function MobileNumberInput({
         <div className={styles.dropdownWrapper}>
           <Autocomplete
             options={filteredCountries?.map((c) => ({ value: c, label: c.code }))}
+            placeholder={STRINGS.COUNTRY_CODE}
             value={country}
             searchValue={search}
+            isLoading={isLoading}
             onSearchChange={(val) => handleSearch(val)}
             onChange={handleSelect}
             dropdownContainerClassName={clsx(styles.dropdown)}
@@ -182,7 +187,7 @@ export default function MobileNumberInput({
         </div>
 
         <TextField
-          placeholder="Enter mobile number"
+          placeholder={STRINGS.ENTER_MOBILE_NUMBER}
           className={clsx(styles.input)}
           value={number}
           maxLength={length || maxLength}
