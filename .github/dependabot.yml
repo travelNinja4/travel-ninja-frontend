@@ -1,0 +1,56 @@
+version: 2
+updates:
+  # Keep npm/pnpm dependencies up to date
+  - package-ecosystem: "npm" # use "npm" even if you use pnpm/yarn
+    directory: "/" # root folder of your project
+    schedule:
+      interval: "weekly"
+    versioning-strategy: increase
+    allow:
+      - dependency-type: "all"   # include both dependencies + devDependencies
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    rebase-strategy: auto
+    labels:
+      - "dependencies"
+      - "security"
+    reviewers:
+      - "your-github-username"
+
+    # Grouping rules to reduce PR spam
+    groups:
+      nextjs:
+        patterns:
+          - "next"
+          - "react"
+          - "react-dom"
+          - "eslint-config-next"
+      linting:
+        patterns:
+          - "eslint*"
+          - "prettier"
+          - "stylelint*"
+      testing:
+        patterns:
+          - "jest*"
+          - "@testing-library/*"
+      types:
+        patterns:
+          - "@types/*"
+      minor-patch-deps:
+        update-types:
+          - "minor"
+          - "patch"
+
+  # Keep GitHub Actions workflows updated
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    labels:
+      - "ci"
+      - "dependencies"
