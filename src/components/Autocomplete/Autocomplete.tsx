@@ -107,6 +107,11 @@ interface AutocompleteProps<T> {
    * @default false
    */
   disabled?: boolean;
+
+  /**
+   * If true, shows loading state in the dropdown options.
+   */
+  isLoading?: boolean;
 }
 
 export default function Autocomplete<T>({
@@ -119,6 +124,7 @@ export default function Autocomplete<T>({
   dropdownContainerClassName,
   dropdownTextContainerClassName,
   disabled = false,
+  isLoading,
 }: AutocompleteProps<T>) {
   const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -179,31 +185,39 @@ export default function Autocomplete<T>({
         />
       </div>
 
-      {isOpen && options.length > 0 && (
+      {isOpen && (
         <ul role="listbox" tabIndex={-1} onKeyDown={handleKeyDown} className={styles.list}>
-          {options.map((option, idx) => {
-            const isHighlighted = idx === highlightedIndex;
-            return (
-              <li
-                key={idx}
-                role="option"
-                className={clsx(styles.option, { [styles.highlighted]: isHighlighted })}
-                onMouseEnter={() => setHighlightedIndex(idx)}
-                onClick={() => {
-                  onChange?.(option.value);
-                  setIsOpen(false);
-                }}
-              >
-                {option.label}
+          {isLoading ? (
+            // Loading State
+            <li className={styles.loading}>
+              <li className={styles.loading}>
+                <span className={styles.spinner}></span>
+                Loading...
               </li>
-            );
-          })}
-        </ul>
-      )}
-
-      {isOpen && options.length === 0 && (
-        <ul className={styles.list}>
-          <li className={styles.noOptions}>{STRINGS.NO_OPTIONS_FOUND}</li>
+            </li>
+          ) : options.length > 0 ? (
+            // Normal options
+            options.map((option, idx) => {
+              const isHighlighted = idx === highlightedIndex;
+              return (
+                <li
+                  key={idx}
+                  role="option"
+                  className={clsx(styles.option, { [styles.highlighted]: isHighlighted })}
+                  onMouseEnter={() => setHighlightedIndex(idx)}
+                  onClick={() => {
+                    onChange?.(option.value);
+                    setIsOpen(false);
+                  }}
+                >
+                  {option.label}
+                </li>
+              );
+            })
+          ) : (
+            // No options fallback
+            <li className={styles.noOptions}>{STRINGS.NO_OPTIONS_FOUND}</li>
+          )}
         </ul>
       )}
     </div>
