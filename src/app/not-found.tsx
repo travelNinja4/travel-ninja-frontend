@@ -83,7 +83,7 @@ export default function NotFound() {
           <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>
             Still can&apos;t find what you&apos;re looking for?
           </p>
-          <a href="mailto:support@travelninja.com" className={styles.contactLink}>
+          <a href="mailto:weekendcoders4@gmail.com" className={styles.contactLink}>
             <Mail size={16} style={{ marginRight: 4 }} />
             Contact Support
           </a>
