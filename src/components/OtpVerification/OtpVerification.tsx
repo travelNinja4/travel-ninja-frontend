@@ -24,6 +24,7 @@ import { useAuthStore } from '@/store/auth';
 import { useRouter } from 'next/navigation';
 import { authService } from '@/services/authService';
 import { useNotification } from '@/providers/NotificationProvider';
+import { errorHandler } from '@/utils/errorHandler';
 import styles from './OtpVerification.module.scss';
 
 export default function OtpVerification() {
@@ -58,7 +59,10 @@ export default function OtpVerification() {
       const response = await authService.sendOtp(requestParams);
       setTimer(60);
     } catch (err: unknown) {
-      console.log('error>>>', err);
+      const messages = errorHandler(err);
+      messages.forEach((errMsg) => {
+        showNotification('Error!', errMsg, 'error');
+      });
     }
   };
 
@@ -79,7 +83,6 @@ export default function OtpVerification() {
       console.log('requestParams>>>', requestParams);
       setVerifyLoading(true);
       const response = await authService.verifyOtp(requestParams);
-      console.log('Otp sent successfully:', response);
       if (type === STRINGS.EMAIL) {
         setType('mobile');
         setValue('');
@@ -89,7 +92,10 @@ export default function OtpVerification() {
         router.push(ROUTES.LOGIN);
       }
     } catch (err: unknown) {
-      console.log('error>>>', err);
+      const messages = errorHandler(err);
+      messages.forEach((errMsg) => {
+        showNotification('Error!', errMsg, 'error');
+      });
     } finally {
       setVerifyLoading(false);
     }

@@ -1,3 +1,5 @@
+'use client';
+
 import DynamicForm, { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
 import { loginSchema } from './LoginSchema';
 import styles from './LoginForm.module.scss';
