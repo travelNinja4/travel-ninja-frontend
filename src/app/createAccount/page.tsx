@@ -1,5 +1,3 @@
-'use client';
-
 import CustomImage from '@/components/CustomImage';
 import CreateAccountForm from './CreateAccountForm/CreateAccountForm';
 import styles from './page.module.scss';

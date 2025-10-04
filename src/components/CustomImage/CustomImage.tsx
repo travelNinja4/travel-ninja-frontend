@@ -15,6 +15,7 @@
  *  }
  * ```
  */
+'use client';
 
 import Image from 'next/image';
 import { IMAGES } from '@/constants/images';

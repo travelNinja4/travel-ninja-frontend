@@ -188,7 +188,8 @@ export default function MobileNumberInput({
 
         <TextField
           placeholder={STRINGS.ENTER_MOBILE_NUMBER}
-          className={clsx(styles.input)}
+          className={clsx(styles.inputContainer)}
+          inputClassName={styles.inputField}
           value={number}
           maxLength={length || maxLength}
           onChange={(e) => {
