@@ -27,13 +27,20 @@ export const STRINGS = {
   EMAIL_ADDRESS: 'Email Address',
   ENTER_EMAIL_ADDRESS: 'Enter your email address',
   BACK_TO_LOGIN: 'Back to Login',
+  CHANGE_YOUR_PASSWORD: 'Change your password',
+  CHANGE_YOUR_PASSWORD_INSTRUCTION: 'Enter a new password below to change your password.',
+  NEW_PASSWORD: 'New password',
+  CONFIRM_PASSWORD: 'Confirm password',
+  ENTER_NEW_PASSWORD: 'Enter your new password',
+  RE_ENTER_NEW_PASSWORD: 'Re-enter your new password',
+  RESET_PASSWORD: 'Reset password',
 };
 
 export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
-  CREATE_ACCOUNT: '/createAccount',
-  VERIFY: '/verify',
+  CREATE_ACCOUNT: '/create-account',
+  VERIFY: '/create-account/verify',
 } as const;
 
 export const NOTIFICATION_TYPES = {

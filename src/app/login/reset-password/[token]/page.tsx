@@ -1,7 +1,7 @@
 import CustomImage from '@/components/CustomImage';
-import ForgotPasswordForm from '../ForgotPasswordForm/ForgotPasswordForm';
 import AuthSideBanner from '@/components/AuthSideBanner';
 import { STRINGS } from '@/constants/strings';
+import ResetPasswordForm from '../../ResetPasswordForm/ResetPasswordForm';
 import styles from './page.module.scss';
 
 export default function ForgotPassword() {
@@ -25,7 +25,7 @@ export default function ForgotPassword() {
           </div>
 
           <div className={styles.formContainer}>
-            <ForgotPasswordForm />
+            <ResetPasswordForm />
           </div>
         </div>
       </div>
