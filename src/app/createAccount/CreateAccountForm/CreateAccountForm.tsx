@@ -186,7 +186,7 @@ export default function CreateAccountForm() {
         role: 'agency',
       };
       const encryptedBody = encryptObject(requestParams, ['password']);
-      const response = await authService.register(encryptedBody);
+      await authService.register(encryptedBody);
       setAccountData(formData);
       router.push(ROUTES.VERIFY);
     } catch (err: unknown) {
