@@ -49,7 +49,7 @@ export const loginFormConfig: FieldConfig[] = [
     name: 'forgotPassword',
     label: (
       <>
-        <AppLink href="/terms" className={styles.forgotPassword}>
+        <AppLink href="/login/forgot-password" className={styles.forgotPassword}>
           Forgot password?
         </AppLink>
       </>
@@ -91,7 +91,7 @@ export default function LoginForm() {
       fields={loginFormConfig}
       schema={loginSchema}
       onSubmit={() => {}}
-      className={styles.createAccountContainer}
+      className={styles.loginContainer}
     />
   );
 }
