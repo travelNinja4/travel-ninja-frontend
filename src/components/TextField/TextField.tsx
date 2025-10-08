@@ -19,9 +19,12 @@
  * }
  * ```
  */
+'use client';
 
-import clsx from 'clsx';
+import { useState } from 'react';
 import Typography from '../Typography';
+import { EyeOff, Eye } from 'lucide-react';
+import clsx from 'clsx';
 import styles from './TextField.module.scss';
 
 /**
@@ -140,6 +143,13 @@ export default function TextField({
   onChange,
   ...rest
 }: TextFieldProps) {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const isPasswordType = type === 'password';
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible((prev) => !prev);
+  };
+
   return (
     <div data-testid="TextFieldTest" className={clsx(styles.container, className)}>
       {label && (
@@ -152,22 +162,32 @@ export default function TextField({
           )}
         </Typography>
       )}
-      <input
-        type={type}
-        id={id}
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        className={clsx(styles.inputField, inputClassName)}
-        disabled={disabled}
-        defaultValue={defaultValue}
-        required={required}
-        maxLength={maxLength}
-        minLength={minLength}
-        autoCapitalize={autoCapitalize}
-        onChange={onChange}
-        {...rest}
-      />
+      <div className={styles.inputWrapper}>
+        <input
+          type={isPasswordType && isPasswordVisible ? 'text' : type}
+          id={id}
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          className={clsx(styles.inputField, inputClassName, {
+            [styles.inputWithIcon]: isPasswordType,
+          })}
+          disabled={disabled}
+          defaultValue={defaultValue}
+          required={required}
+          maxLength={maxLength}
+          minLength={minLength}
+          autoCapitalize={autoCapitalize}
+          onChange={onChange}
+          {...rest}
+        />
+        {isPasswordType && (
+          <div className={styles.iconButton} onClick={togglePasswordVisibility}>
+            {isPasswordVisible ? <EyeOff /> : <Eye />}
+          </div>
+        )}
+      </div>
+
       {error && <p className={styles.errorText}>{error}</p>}
     </div>
   );

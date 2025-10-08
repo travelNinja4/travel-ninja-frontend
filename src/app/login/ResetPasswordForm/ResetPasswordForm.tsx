@@ -31,7 +31,7 @@ export const resetPasswordFormConfig: FieldConfig[] = [
   {
     name: 'password',
     label: STRINGS.NEW_PASSWORD,
-    type: 'input',
+    type: 'password',
     required: true,
     placeholder: STRINGS.ENTER_NEW_PASSWORD,
     maxLength: 12,
@@ -41,7 +41,7 @@ export const resetPasswordFormConfig: FieldConfig[] = [
   {
     name: 'confirmPassword',
     label: STRINGS.CONFIRM_PASSWORD,
-    type: 'input',
+    type: 'password',
     required: true,
     placeholder: STRINGS.RE_ENTER_NEW_PASSWORD,
     maxLength: 12,

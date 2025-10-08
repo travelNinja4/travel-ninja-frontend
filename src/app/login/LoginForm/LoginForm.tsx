@@ -39,7 +39,7 @@ export const loginFormConfig: FieldConfig[] = [
   {
     name: 'password',
     label: 'Password',
-    type: 'input',
+    type: 'password',
     placeholder: 'Enter your password',
     required: true,
     width: FieldWidth.FULL,
