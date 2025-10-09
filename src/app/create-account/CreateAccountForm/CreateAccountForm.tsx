@@ -1,3 +1,5 @@
+'use client';
+
 import DynamicForm, { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
 import { createAccountSchema } from './CreateAccountSchema';
 import AppLink from '@/components/AppLink';
@@ -10,6 +12,7 @@ import { authService } from '@/services/authService';
 import { useNotification } from '@/providers/NotificationProvider';
 import { errorHandler } from '@/utils/errorHandler';
 import { useCommonStore } from '@/store/common';
+import { encryptObject } from '@/utils/encryptor';
 import styles from './CreateAccountForm.module.scss';
 
 export const createAccountFormConfig: FieldConfig[] = [
@@ -182,7 +185,8 @@ export default function CreateAccountForm() {
         phoneNumber: `${countryCode}-${formData.phoneNumber?.number}`,
         role: 'agency',
       };
-      const response = await authService.register(requestParams);
+      // const encryptedBody = encryptObject(requestParams, ['password']);
+      await authService.register(requestParams);
       setAccountData(formData);
       router.push(ROUTES.VERIFY);
     } catch (err: unknown) {

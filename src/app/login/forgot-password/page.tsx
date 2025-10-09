@@ -1,10 +1,10 @@
 import CustomImage from '@/components/CustomImage';
-import LoginForm from './LoginForm/LoginForm';
-import styles from './page.module.scss';
+import ForgotPasswordForm from '../ForgotPasswordForm/ForgotPasswordForm';
 import AuthSideBanner from '@/components/AuthSideBanner';
 import { STRINGS } from '@/constants/strings';
+import styles from './page.module.scss';
 
-export default function Login() {
+export default function ForgotPassword() {
   return (
     <div className={styles.container}>
       <CustomImage
@@ -18,13 +18,14 @@ export default function Login() {
       />
       <div className={styles.overlay}></div>
 
-      <div className={styles.subContainer}>
-        <div className={styles.mainContainer}>
+      <div className={styles.contentWrapper}>
+        <div className={styles.content}>
           <div className={styles.imageContainer}>
-            <AuthSideBanner appTagLine={STRINGS.LOGIN_APP_TAG_LINE} />
+            <AuthSideBanner appTagLine={STRINGS.RESET_PASSWORD_TAG_LINE} />
           </div>
+
           <div className={styles.formContainer}>
-            <LoginForm />
+            <ForgotPasswordForm />
           </div>
         </div>
       </div>

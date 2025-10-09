@@ -10,14 +10,16 @@ const axiosMethodMap: Record<string, string> = {
   DELETE: 'delete',
 };
 
-export async function handler(req: NextRequest, { params }: { params: { path: string[] } }) {
-  const path = params.path.join('/');
-  const url = `${API_BASE_URL}/${path}`;
+export async function handler(req: NextRequest, context: { params: Promise<{ path: string[] }> }) {
+  const { path } = await context.params;
+  const url = `${API_BASE_URL}/${path.join('/')}`;
 
   try {
     const method = req.method?.toUpperCase() || 'GET';
     const axiosMethod = axiosMethodMap[method];
-    if (!axiosMethod) return NextResponse.json({ error: 'Unsupported method' }, { status: 405 });
+    if (!axiosMethod) {
+      return NextResponse.json({ error: 'Unsupported method' }, { status: 405 });
+    }
 
     // Forward headers except host
     const headers: Record<string, string> = {};
@@ -25,7 +27,7 @@ export async function handler(req: NextRequest, { params }: { params: { path: st
       if (key.toLowerCase() !== 'host') headers[key] = value;
     });
 
-    // Handle body only for POST/PUT
+    // Handle body only for POST/PUT/PATCH
     const body = ['POST', 'PUT', 'PATCH'].includes(method)
       ? await req.json().catch(() => ({}))
       : undefined;

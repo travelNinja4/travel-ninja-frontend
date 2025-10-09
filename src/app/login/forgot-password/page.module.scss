@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@import '../../../styles/mixins';
 
 .container {
   position: relative;
@@ -22,7 +22,7 @@
     opacity: 0.8;
   }
 
-  .subContainer {
+  .contentWrapper {
     background: var(--color-white);
     border-radius: 20px;
     box-shadow: 0 20px 40px var(--color-black-alpha-10);
@@ -33,7 +33,7 @@
     z-index: 1;
     animation: slideInUp 0.8s ease-out;
 
-    .mainContainer {
+    .content {
       display: flex;
       flex: 1;
       align-items: center;
