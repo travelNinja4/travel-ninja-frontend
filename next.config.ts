@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
         hostname: 'picsum.photos',
       },
     ],
+    domains: ['i.pravatar.cc'],
   },
   eslint: {
     ignoreDuringBuilds: true,

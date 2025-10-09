@@ -1,0 +1,161 @@
+/**
+------------------------------------------------------
+styles specific to the BookingTable component
+------------------------------------------------------
+**/
+
+.card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+
+  &Header {
+    background-color: #fff;
+    border-bottom: 1px solid #dee2e6;
+    padding: 0.5rem 0.8rem;
+
+    &Flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &Title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0;
+        color: #1a202c;
+      }
+
+      .cardHeaderLink {
+        text-decoration: none;
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #667eea;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: darken(#667eea, 10%);
+        }
+      }
+    }
+  }
+
+  &Body {
+    padding: 0;
+
+    &Responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    &Table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 0;
+
+      thead {
+        background-color: #f8f9fa;
+
+        th {
+          border: none;
+          padding: 0.75rem 1rem;
+          font-weight: 600;
+          font-size: 0.95rem;
+          color: #495057;
+          text-align: left;
+        }
+      }
+
+      tbody {
+        tr {
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background-color: #f9fafb;
+          }
+
+          td {
+            padding: 0.75rem 1rem;
+            border-top: 1px solid #f1f1f1;
+            font-size: 0.95rem;
+            color: #374151;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+}
+
+.tableRow {
+  td {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+  }
+
+  .subContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+
+    .customerAvatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: #e1e5e9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #666;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .fwMedium {
+    font-weight: 500;
+  }
+
+  .textMuted {
+    color: #6c757d;
+  }
+
+  .smallText {
+    font-size: 0.875rem;
+  }
+
+  // Booking Status Badges
+  .statusBadge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: inline-block;
+  }
+
+  .statusConfirmed {
+    background: #c6f6d5;
+    color: #22543d;
+  }
+
+  .statusPending {
+    background: #fef5e7;
+    color: #744210;
+  }
+
+  .statusCancelled {
+    background: #fed7d7;
+    color: #742a2a;
+  }
+}
