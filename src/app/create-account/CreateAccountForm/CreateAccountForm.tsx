@@ -185,8 +185,8 @@ export default function CreateAccountForm() {
         phoneNumber: `${countryCode}-${formData.phoneNumber?.number}`,
         role: 'agency',
       };
-      const encryptedBody = encryptObject(requestParams, ['password']);
-      await authService.register(encryptedBody);
+      // const encryptedBody = encryptObject(requestParams, ['password']);
+      await authService.register(requestParams);
       setAccountData(formData);
       router.push(ROUTES.VERIFY);
     } catch (err: unknown) {
