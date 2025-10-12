@@ -276,3 +276,87 @@ styles specific to the BookingTable component
     }
   }
 }
+
+.paginationNav {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+
+  .paginationList {
+    display: flex;
+    list-style: none;
+    gap: 0.25rem;
+    padding: 0;
+    margin: 0;
+
+    .pageItem {
+      button {
+        padding: 0.25rem 0.5rem; // mobile-first
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        background: white;
+        color: #212529;
+        cursor: pointer;
+        min-width: 30px;
+        text-align: center;
+        font-size: 0.8rem;
+        transition: all 0.2s ease;
+
+        &:hover:not(:disabled) {
+          background-color: #f8f9fa;
+        }
+      }
+
+      &.active button {
+        background-color: #667eea;
+        color: white;
+        border-color: #667eea;
+      }
+
+      &.disabled button {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  // 👉 Tablet adjustments
+  @include respond-to(md) {
+    .paginationList {
+      gap: 0.25rem;
+      flex-wrap: wrap;
+
+      .pageItem button {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        min-width: 36px;
+      }
+    }
+  }
+
+  // 👉 Desktop adjustments
+  @include respond-to(lg) {
+    .paginationList .pageItem button {
+      padding: 0.5rem 0.875rem;
+      font-size: 0.9rem;
+      min-width: 40px;
+    }
+  }
+}
+
+.fadeIn {
+  opacity: 0;
+  transform: translateY(4px);
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
