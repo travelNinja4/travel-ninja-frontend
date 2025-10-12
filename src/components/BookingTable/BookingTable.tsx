@@ -31,6 +31,7 @@ export default function BookingTable({ label = 'label' }: BookingTableProps) {
         id: 'BKG-001',
         customerName: 'John Smith',
         customerEmail: 'john@email.com',
+        mobileNumber: '+1 (555) 123-4567',
         customerAvatar: 'https://i.pravatar.cc/100?img=2',
         tour: 'Mountain Adventure',
         date: 'Dec 15, 2024',
@@ -42,6 +43,7 @@ export default function BookingTable({ label = 'label' }: BookingTableProps) {
         id: 'BKG-002',
         customerName: 'Maria Johnson',
         customerEmail: 'maria@email.com',
+        mobileNumber: '+1 (555) 987-6543',
         customerAvatar: 'https://i.pravatar.cc/100?img=3',
         tour: 'City Explorer',
         date: 'Dec 18, 2024',
@@ -53,6 +55,7 @@ export default function BookingTable({ label = 'label' }: BookingTableProps) {
         id: 'BKG-003',
         customerName: 'Robert Davis',
         customerEmail: 'robert@email.com',
+        mobileNumber: '+1 (555) 456-7890',
         customerAvatar: 'https://i.pravatar.cc/100?img=4',
         tour: 'Beach Paradise',
         date: 'Dec 20, 2024',
@@ -64,6 +67,7 @@ export default function BookingTable({ label = 'label' }: BookingTableProps) {
         id: 'BKG-004',
         customerName: 'Lisa Wilson',
         customerEmail: 'lisa@email.com',
+        mobileNumber: '+1 (555) 321-0987',
         customerAvatar: 'https://i.pravatar.cc/100?img=5',
         tour: 'Cultural Heritage',
         date: 'Dec 22, 2024',
@@ -73,11 +77,12 @@ export default function BookingTable({ label = 'label' }: BookingTableProps) {
       },
       {
         id: 'BKG-005',
-        customerName: 'John Smith',
-        customerEmail: 'john@email.com',
+        customerName: 'Alex Thompson',
+        customerEmail: 'alex@email.com',
+        mobileNumber: '+1 (555) 654-3210',
         customerAvatar: 'https://i.pravatar.cc/100?img=2',
-        tour: 'Mountain Adventure',
-        date: 'Dec 15, 2024',
+        tour: 'Wildlife Safari',
+        date: 'Jan 15, 2025',
         slots: '2 slots',
         status: 'Confirmed',
         amount: '$1,200',
@@ -114,7 +119,7 @@ export default function BookingTable({ label = 'label' }: BookingTableProps) {
             <tbody>
               {tableData.tableRows.map((row) => (
                 <tr key={row.id} className={styles.tableRow}>
-                  <td>{row.id}</td>
+                  <td className={styles.bookingID}>{row.id}</td>
 
                   <td>
                     <div className={styles.subContainer}>
@@ -124,13 +129,14 @@ export default function BookingTable({ label = 'label' }: BookingTableProps) {
                       <div>
                         <div className={styles.fwMedium}>{row.customerName}</div>
                         <div className={styles.textMuted}>{row.customerEmail}</div>
+                        <div className={styles.textMuted}>{row.mobileNumber}</div>
                       </div>
                     </div>
                   </td>
 
-                  <td>{row.tour}</td>
-                  <td>{row.date}</td>
-                  <td>{row.slots}</td>
+                  <td className={styles.fwMedium}>{row.tour}</td>
+                  <td className={styles.fwMedium}>{row.date}</td>
+                  <td className={styles.fwMedium}>{row.slots}</td>
 
                   <td>
                     <span
@@ -146,7 +152,7 @@ export default function BookingTable({ label = 'label' }: BookingTableProps) {
                     </span>
                   </td>
 
-                  <td>{row.amount}</td>
+                  <td className={styles.fwMedium}>{row.amount}</td>
                 </tr>
               ))}
             </tbody>
