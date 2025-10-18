@@ -1,0 +1,55 @@
+/**
+------------------------------------------------------
+styles specific to the Bookings component
+------------------------------------------------------
+**/
+
+@import '../../styles/mixins';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  word-wrap: break-word;
+  background-clip: border-box;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  background-color: #ffffff;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  row-gap: 1rem;
+  column-gap: 1rem;
+
+  .statusDropdown {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  // 👉 Tablet adjustments
+  @include respond-to(md) {
+    flex-direction: row;
+    .statusDropdown {
+      flex: 0 0 auto;
+      width: 25%;
+    }
+  }
+
+  // 👉 Desktop adjustments
+  @include respond-to(lg) {
+    flex-direction: row;
+    .statusDropdown {
+      flex: 0 0 auto;
+      width: 25%;
+    }
+  }
+}

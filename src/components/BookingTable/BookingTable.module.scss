@@ -6,11 +6,12 @@ styles specific to the BookingTable component
 @import '../../styles/mixins';
 
 .card {
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
   overflow: hidden;
-  margin-bottom: 1.25rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  margin: 1rem 0;
 
   &Header {
     background-color: #fff;
@@ -22,11 +23,13 @@ styles specific to the BookingTable component
       justify-content: space-between;
       align-items: center;
 
-      &Title {
-        font-size: 1rem;
-        font-weight: 700;
-        margin-bottom: 0;
+      .Title {
         color: #1a202c;
+
+        font-size: 1.25rem; /* h5 size */
+        font-weight: 700; /* bold */
+        line-height: 1.2; /* h5 default */
+        margin-bottom: 0;
       }
 
       .cardHeaderLink {
@@ -278,7 +281,7 @@ styles specific to the BookingTable component
 }
 
 .paginationNav {
-  margin-top: 1rem;
+  // margin-top: 1rem;
   display: flex;
   justify-content: center;
 
@@ -301,10 +304,6 @@ styles specific to the BookingTable component
         text-align: center;
         font-size: 0.8rem;
         transition: all 0.2s ease;
-
-        &:hover:not(:disabled) {
-          background-color: #f8f9fa;
-        }
       }
 
       &.active button {
@@ -342,6 +341,19 @@ styles specific to the BookingTable component
       min-width: 40px;
     }
   }
+}
+
+.desktopOnly {
+  display: inline-block;
+
+  @include respond-to(lg) {
+    display: inline-block;
+  }
+}
+
+.ellipsis {
+  pointer-events: none;
+  color: #999;
 }
 
 .fadeIn {
