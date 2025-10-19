@@ -23,7 +23,7 @@
 
 import { useState } from 'react';
 import Typography from '../Typography';
-import { EyeOff, Eye } from 'lucide-react';
+import { EyeOff, Eye, Calendar } from 'lucide-react';
 import clsx from 'clsx';
 import styles from './TextField.module.scss';
 
@@ -118,6 +118,11 @@ interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   autoCapitalize?: string;
 
   /**
+   *
+   */
+  isCalender?: boolean;
+
+  /**
    * Event handler triggered when the input value changes.
    * @param event - The change event containing the updated value.
    */
@@ -140,6 +145,7 @@ export default function TextField({
   maxLength,
   minLength,
   autoCapitalize,
+  isCalender,
   onChange,
   ...rest
 }: TextFieldProps) {
@@ -184,6 +190,11 @@ export default function TextField({
         {isPasswordType && (
           <div className={styles.iconButton} onClick={togglePasswordVisibility}>
             {isPasswordVisible ? <EyeOff /> : <Eye />}
+          </div>
+        )}
+        {isCalender && (
+          <div className={styles.iconButton} onClick={togglePasswordVisibility}>
+            <Calendar size={16} />
           </div>
         )}
       </div>

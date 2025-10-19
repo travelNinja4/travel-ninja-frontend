@@ -12,6 +12,7 @@
  */
 
 import BookingTable from '../BookingTable';
+import DatePicker from '../DatePicker';
 import Dropdown from '../Dropdown';
 import TextField from '../TextField';
 import styles from './Bookings.module.scss';
@@ -39,16 +40,45 @@ export default function Bookings({ label = 'label' }: BookingsProps) {
     { value: 'Cultural Heritage', label: 'Cultural Heritage' },
   ];
 
+  const quickDateFilter = [
+    { value: 'Today', label: 'Today' },
+    { value: 'This Week', label: 'This Week' },
+    { value: 'This Month', label: 'This Month' },
+    { value: 'Last 3 Months', label: 'Last 3 Months' },
+  ];
+
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <Dropdown
-          label="Status"
-          options={status}
-          dropdownContainerClassName={styles.statusDropdown}
-        />
-        <Dropdown label="Tour" options={tour} dropdownContainerClassName={styles.statusDropdown} />
-        <TextField label="Search" placeholder="Search bookings..." />
+        <div className={styles.textCard}>
+          <TextField label="Search" placeholder="Search bookings..." />
+        </div>
+        <div className={styles.filterCard}>
+          <Dropdown
+            label="Status"
+            options={status}
+            dropdownContainerClassName={styles.statusDropdown}
+          />
+          <Dropdown
+            label="Tour"
+            options={tour}
+            dropdownContainerClassName={styles.statusDropdown}
+          />
+          <Dropdown
+            label="Quick Date Filter"
+            placeholder="Select preset"
+            options={quickDateFilter}
+            dropdownContainerClassName={styles.statusDropdown}
+          />
+          <DatePicker
+            label="Date Range"
+            mode="range"
+            min={1}
+            max={6}
+            displayMode="modal"
+            // inputClassName={styles.statusDropdown}
+          />
+        </div>
       </div>
       <BookingTable header="All Bookings (24)" />
     </div>
