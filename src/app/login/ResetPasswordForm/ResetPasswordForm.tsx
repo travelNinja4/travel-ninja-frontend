@@ -2,7 +2,7 @@
 
 import DynamicForm from '@/components/DynamicForm';
 import { KeyRound } from 'lucide-react';
-import { ROUTES, STRINGS } from '@/constants/strings';
+import { NOTIFICATION_TYPES, ROUTES, STRINGS } from '@/constants/strings';
 import { resetPasswordSchema } from './ResetPasswordSchema';
 import { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
 import { authService, resetPassword } from '@/services/authService';
@@ -90,11 +90,12 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       // const encryptedBody = encryptObject(requestParams, ['password']);
       await authService.resetPassword(requestParams);
       clearResetPasswordToken();
+      showNotification(STRINGS.SUCCESS, STRINGS.PASSWORD_RESET_SUCCESS, NOTIFICATION_TYPES.SUCCESS);
       router.push(ROUTES.LOGIN);
     } catch (err: unknown) {
       const messages = errorHandler(err);
       messages.forEach((errMsg) => {
-        showNotification('Error!', errMsg, 'error');
+        showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
       });
     }
   };

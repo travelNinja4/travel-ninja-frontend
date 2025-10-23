@@ -40,7 +40,6 @@ export type forgotPassword = {
 };
 
 export type resetPassword = {
-  token: string;
   newPassword: string;
   confirmPassword: string;
 };

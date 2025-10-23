@@ -44,6 +44,7 @@
      Transparent / Alpha Variants
   ========================== */
   --color-black-alpha-10: rgba(0, 0, 0, 0.1);
+  --color-black-alpha-20: rgba(0, 0, 0, 0.2);
   --color-black-alpha-30: rgba(0, 0, 0, 0.3);
   --color-indigo-alpha-30: rgba(102, 126, 234, 0.3);
   --color-indigo-alpha-40: rgba(102, 126, 234, 0.4);

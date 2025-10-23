@@ -4,7 +4,7 @@ import DynamicForm from '@/components/DynamicForm';
 import { forgotPasswordSchema } from './ForgotPasswordSchema';
 import { Send, ArrowLeft } from 'lucide-react';
 import AppLink from '@/components/AppLink';
-import { ROUTES, STRINGS } from '@/constants/strings';
+import { NOTIFICATION_TYPES, ROUTES, STRINGS } from '@/constants/strings';
 import { authService, forgotPassword } from '@/services/authService';
 import { errorHandler } from '@/utils/errorHandler';
 import { useNotification } from '@/providers/NotificationProvider';
@@ -85,15 +85,15 @@ export default function ForgotPasswordForm() {
     try {
       await authService.forgotPassword(formData);
       showNotification(
-        'Success!',
-        'Reset link sent! Check your email for instructions.',
-        'success',
+        STRINGS.SUCCESS,
+        STRINGS.RESET_LINK_INSTRUCTIONS,
+        NOTIFICATION_TYPES.SUCCESS,
       );
       router.push(ROUTES.LOGIN);
     } catch (err: unknown) {
       const messages = errorHandler(err);
       messages.forEach((errMsg) => {
-        showNotification('Error!', errMsg, 'error');
+        showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
       });
     }
   };

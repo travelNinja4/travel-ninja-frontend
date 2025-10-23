@@ -8,7 +8,7 @@ exports[`Home matches snapshot 1`] = `
     type="button"
   >
     <span
-      class="typography span align-left test-class"
+      class="typography span align-center test-class"
       data-testid="TypographyTest"
     >
       ButtonTest

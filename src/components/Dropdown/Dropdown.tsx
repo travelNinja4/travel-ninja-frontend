@@ -12,7 +12,7 @@
  */
 'use client';
 
-import { useState, useRef, useEffect, KeyboardEvent, ChangeEvent } from 'react';
+import { useState, useRef, useEffect, KeyboardEvent } from 'react';
 import { STRINGS } from '@/constants/strings';
 import Typography from '../Typography';
 import TextField from '../TextField';
