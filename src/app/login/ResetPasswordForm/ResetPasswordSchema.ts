@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const resetPasswordSchema = z
   .object({
-    password: z
+    newPassword: z
       .string()
       .min(8, 'Password must be at least 8 characters')
       .max(12, 'Password cannot exceed 12 characters')
@@ -24,7 +24,7 @@ export const resetPasswordSchema = z
     }
 
     // check if passwords match
-    if (data.password !== data.confirmPassword) {
+    if (data.newPassword !== data.confirmPassword) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Passwords don't match",

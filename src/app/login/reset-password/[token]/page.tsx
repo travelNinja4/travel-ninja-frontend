@@ -1,10 +1,17 @@
 import CustomImage from '@/components/CustomImage';
 import AuthSideBanner from '@/components/AuthSideBanner';
 import { STRINGS } from '@/constants/strings';
+import { authService } from '@/services/authService';
 import ResetPasswordForm from '../../ResetPasswordForm/ResetPasswordForm';
 import styles from './page.module.scss';
 
-export default function ForgotPassword() {
+export default async function ForgotPassword({ params: { token } }: { params: { token: string } }) {
+  try {
+    await authService.validateResetPassword(token);
+  } catch (err: unknown) {
+    throw new Error('INVALID_OR_EXPIRED_TOKEN');
+  }
+
   return (
     <div className={styles.container}>
       <CustomImage
@@ -25,7 +32,7 @@ export default function ForgotPassword() {
           </div>
 
           <div className={styles.formContainer}>
-            <ResetPasswordForm />
+            <ResetPasswordForm token={token} />
           </div>
         </div>
       </div>

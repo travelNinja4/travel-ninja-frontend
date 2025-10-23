@@ -123,7 +123,7 @@ export default function Button({
               <StartIcon size={iconSize} color={iconColor} />
             </span>
           )}
-          <Typography tag="span" className={className}>
+          <Typography tag="span" className={className} align="center">
             {children}
           </Typography>
           {EndIcon && (

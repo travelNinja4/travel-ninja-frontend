@@ -29,11 +29,21 @@ export type LoginPayload = {
   password: string;
 };
 
-export interface Country {
+export type Country = {
   name: string;
   code: string;
   length: number;
-}
+};
+
+export type forgotPassword = {
+  email: string;
+};
+
+export type resetPassword = {
+  token: string;
+  newPassword: string;
+  confirmPassword: string;
+};
 
 export const authService = {
   register(data: RegisterPayload) {
@@ -50,6 +60,18 @@ export const authService = {
 
   verifyOtp(data: VerifyOtp) {
     return apiClient.post('/auth/verify-otp', data);
+  },
+
+  forgotPassword(data: forgotPassword) {
+    return apiClient.post('/auth/forgot-password', data);
+  },
+
+  validateResetPassword(token: string) {
+    return apiClient.get(`/auth/forgot-password/${token}`);
+  },
+
+  resetPassword(data: resetPassword) {
+    return apiClient.post('/auth/reset-password', data);
   },
 
   login(data: LoginPayload) {

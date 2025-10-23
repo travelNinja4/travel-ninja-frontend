@@ -5,6 +5,11 @@ import { forgotPasswordSchema } from './ForgotPasswordSchema';
 import { Send, ArrowLeft } from 'lucide-react';
 import AppLink from '@/components/AppLink';
 import { ROUTES, STRINGS } from '@/constants/strings';
+import { authService, forgotPassword } from '@/services/authService';
+import { errorHandler } from '@/utils/errorHandler';
+import { useNotification } from '@/providers/NotificationProvider';
+import { useRouter } from 'next/navigation';
+import { useApiStatusStore } from '@/store/apiStatus';
 import { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
 import styles from './ForgotPassword.module.scss';
 
@@ -72,13 +77,34 @@ export const forgotPasswordFormConfig: FieldConfig[] = [
 ];
 
 export default function ForgotPasswordForm() {
+  const { showNotification } = useNotification();
+  const isLoading = useApiStatusStore((store) => store.isLoading);
+  const router = useRouter();
+
+  const handleResetLink = async (formData: forgotPassword) => {
+    try {
+      await authService.forgotPassword(formData);
+      showNotification(
+        'Success!',
+        'Reset link sent! Check your email for instructions.',
+        'success',
+      );
+      router.push(ROUTES.LOGIN);
+    } catch (err: unknown) {
+      const messages = errorHandler(err);
+      messages.forEach((errMsg) => {
+        showNotification('Error!', errMsg, 'error');
+      });
+    }
+  };
+
   return (
     <DynamicForm
       fields={forgotPasswordFormConfig}
       schema={forgotPasswordSchema}
       className={styles.forgotPasswordContainer}
-      //   loading={isLoading}
-      onSubmit={() => {}}
+      loading={isLoading}
+      onSubmit={handleResetLink}
     />
   );
 }
