@@ -44,6 +44,9 @@ export const STRINGS = {
   BACK_TO_LOG_IN: 'Back to log in',
   PASSWORD_RESET_SUCCESS: 'Password reset successful',
   LINK_EXPIRED: 'Link Expired',
+  YOUR_OFFLINE: 'You’re offline!',
+  WAITING_FOR_CONNECTION: 'Waiting for connection...',
+  PLEASE_CONNECT_TO_INTERNET: 'Please reconnect to the internet to continue.',
 };
 
 export const ROUTES = {
