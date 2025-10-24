@@ -3,7 +3,7 @@
 styles specific to the BookingTable component
 ------------------------------------------------------
 **/
-@import '../../styles/mixins';
+@use '../../styles/mixins' as *;
 
 .card {
   background-color: #fff;

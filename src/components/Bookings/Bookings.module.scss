@@ -70,7 +70,7 @@ styles specific to the Bookings component
 ------------------------------------------------------
 **/
 
-@import '../../styles/mixins';
+@use '../../styles/mixins' as *;
 
 .container {
   display: flex;
