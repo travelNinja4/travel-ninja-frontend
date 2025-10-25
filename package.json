@@ -19,10 +19,13 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
+    "@tanstack/react-table": "^8.21.3",
     "axios": "^1.12.2",
     "clsx": "^2.1.1",
     "lucide-react": "^0.539.0",
     "react": "19.1.0",
+    "react-content-loader": "^7.1.1",
+    "react-day-picker": "^9.11.1",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.62.0",
     "sass": "^1.89.2",

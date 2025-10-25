@@ -1,0 +1,62 @@
+/**
+------------------------------------------------------
+styles specific to the OfflinePage component
+------------------------------------------------------
+**/
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 1.5rem;
+  background-color: var(--color-gray-25);
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.floating {
+  font-size: 3.75rem;
+  display: inline-block;
+  animation: float 2.5s ease-in-out infinite;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+}
+
+.message {
+  color: var(--color-gray-320);
+  margin-top: 0.75rem;
+}
+
+.waiting {
+  margin-top: 2.5rem;
+  font-size: 0.875rem;
+  color: var(--color-gray-350);
+  animation: pulse 2s infinite;
+}
+
+/* Fade-in animation for the container */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Pulse animation for waiting text */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

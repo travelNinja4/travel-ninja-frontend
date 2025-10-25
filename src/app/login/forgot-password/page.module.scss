@@ -1,0 +1,114 @@
+@use '../../../styles/mixins' as *;
+
+.container {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 1rem;
+  align-items: center;
+  justify-content: center;
+
+  .bgImg {
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-indigo) 0%, var(--color-purple) 100%);
+    z-index: 1;
+    opacity: 0.8;
+  }
+
+  .contentWrapper {
+    background: var(--color-white);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px var(--color-black-alpha-10);
+    overflow: hidden;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    animation: slideInUp 0.8s ease-out;
+
+    .content {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      flex-direction: column;
+
+      .imageContainer {
+        position: relative;
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        flex: 0.5;
+      }
+
+      .formContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        background-color: var(--color-white);
+        animation: fadeInRight 1s ease-out 0.5s both;
+      }
+
+      @include respond-to(md) {
+        flex-direction: row;
+        min-height: 600px;
+        align-items: stretch;
+
+        .imageContainer {
+          align-items: stretch;
+          flex: 0.5;
+        }
+
+        .formContainer {
+          height: 400px;
+          flex: 0.5;
+        }
+      }
+
+      @include respond-to(lg) {
+        flex-direction: row;
+        min-height: 600px;
+        align-items: stretch;
+
+        .imageContainer {
+          align-items: stretch;
+          flex: 0.5;
+        }
+
+        .formContainer {
+          height: 400px;
+          flex: 0.5;
+        }
+      }
+    }
+  }
+
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}

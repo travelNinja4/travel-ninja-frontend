@@ -19,13 +19,17 @@ exports[`Home matches snapshot 1`] = `
         >
           Username 
         </label>
-        <input
-          class="inputField"
-          name="username"
-          placeholder="Enter username"
-          type="input"
-          width="full"
-        />
+        <div
+          class="inputWrapper"
+        >
+          <input
+            class="inputField"
+            name="username"
+            placeholder="Enter username"
+            type="input"
+            width="full"
+          />
+        </div>
       </div>
     </div>
     <div
@@ -41,13 +45,44 @@ exports[`Home matches snapshot 1`] = `
         >
           Password 
         </label>
-        <input
-          class="inputField"
-          name="password"
-          placeholder="Enter password"
-          type="password"
-          validationhints=""
-        />
+        <div
+          class="inputWrapper"
+        >
+          <input
+            class="inputField inputWithIcon"
+            name="password"
+            placeholder="Enter password"
+            type="password"
+            validationhints=""
+          />
+          <div
+            class="iconButton"
+            role="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-eye"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"
+              />
+              <circle
+                cx="12"
+                cy="12"
+                r="3"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
       <ul
         aria-live="polite"

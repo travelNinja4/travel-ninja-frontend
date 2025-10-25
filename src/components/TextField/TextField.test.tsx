@@ -47,4 +47,24 @@ describe('Home', () => {
     const { asFragment } = render(<TextField {...baseProps} />);
     expect(asFragment()).toMatchSnapshot();
   });
+
+  it('renders without label', () => {
+    render(<TextField {...baseProps} label={undefined} />);
+    expect(screen.getByTestId('TextFieldTest')).toBeInTheDocument();
+  });
+
+  it('shows required asterisk when required is true', () => {
+    render(<TextField {...baseProps} required />);
+    expect(screen.getByText('*')).toBeInTheDocument();
+  });
+
+  it('renders calendar icon when isCalender is true', () => {
+    render(<TextField {...baseProps} isCalender />);
+    expect(screen.getByTestId('TextFieldTest').querySelector('svg')).toBeInTheDocument();
+  });
+
+  it('renders error text when error prop is passed', () => {
+    render(<TextField {...baseProps} error="This is an error" />);
+    expect(screen.getByText('This is an error')).toBeInTheDocument();
+  });
 });

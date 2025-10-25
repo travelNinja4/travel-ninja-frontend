@@ -13,14 +13,18 @@ exports[`Home matches snapshot 1`] = `
     >
       TextField Test 
     </label>
-    <input
-      class="inputField"
-      id="testFieldId"
-      name="testField"
-      placeholder="Enter text here"
-      type="text"
-      value=""
-    />
+    <div
+      class="inputWrapper"
+    >
+      <input
+        class="inputField"
+        id="testFieldId"
+        name="testField"
+        placeholder="Enter text here"
+        type="text"
+        value=""
+      />
+    </div>
   </div>
 </DocumentFragment>
 `;

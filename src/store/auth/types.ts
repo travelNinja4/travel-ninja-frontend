@@ -1,5 +1,8 @@
 export interface AuthState {
   accountData: AccountData | null;
+  resetPasswordToken: string | null;
+  setResetPasswordToken: (token: string) => void;
+  clearResetPasswordToken: () => void;
   setAccountData: (data: AccountData) => void;
   clearAccountData: () => void;
 }

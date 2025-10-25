@@ -36,14 +36,16 @@ styles specific to the MobileNumberInput component
   border: 0;
 }
 
-.input {
+.inputContainer {
   flex: 1;
-  border: none;
-  border-radius: 8px;
 }
 
-.input:focus {
+.inputContainer:focus {
   outline: none;
+}
+
+.inputField {
+  border: 0;
 }
 
 .errorText {

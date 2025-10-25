@@ -1,7 +1,10 @@
+import { NotificationType } from '@/providers/NotificationProvider';
+
 export const STRINGS = {
   APP_NAME: 'TravelNinja',
   CREATE_ACCOUNT_APP_TAG_LINE: 'Transform your tour business with our powerful platform',
   LOGIN_APP_TAG_LINE: 'Empowering tour agencies to create unforgettable travel experiences',
+  RESET_PASSWORD_TAG_LINE: 'Reset your password to regain access to your account',
   EMAIL: 'email',
   MOBILE: 'mobile',
   EMAIL_VERIFICATION: 'Email Verification',
@@ -19,16 +22,41 @@ export const STRINGS = {
   NO_OPTIONS_FOUND: 'No options found',
   COUNTRY_CODE: 'Country code',
   ENTER_MOBILE_NUMBER: 'Enter mobile number',
+  FORGOT_PASSWORD: 'Forgot Password?',
+  RESET_PASSWORD_INSTRUCTION: 'Enter your email to receive reset instructions',
+  RESET_PASSWORD_LABEL: `We'll send you a link to reset your password`,
+  SEND_RESET_LINK: 'Send Reset Link',
+  EMAIL_ADDRESS: 'Email Address',
+  ENTER_EMAIL_ADDRESS: 'Enter your email address',
+  BACK_TO_LOGIN: 'Back to Login',
+  CHANGE_YOUR_PASSWORD: 'Change your password',
+  CHANGE_YOUR_PASSWORD_INSTRUCTION: 'Enter a new password below to change your password.',
+  NEW_PASSWORD: 'New password',
+  CONFIRM_PASSWORD: 'Confirm password',
+  ENTER_NEW_PASSWORD: 'Enter your new password',
+  RE_ENTER_NEW_PASSWORD: 'Re-enter your new password',
+  RESET_PASSWORD: 'Reset password',
+  RESET_LINK_INSTRUCTIONS: 'Reset link sent! Check your email for instructions.',
+  SUCCESS: 'Success!',
+  ERROR: 'Error!',
+  INVALID_TOKEN_INSTRUCTION:
+    'To reset password, return to the login page and select Forgot Password to send a new email',
+  BACK_TO_LOG_IN: 'Back to log in',
+  PASSWORD_RESET_SUCCESS: 'Password reset successful',
+  LINK_EXPIRED: 'Link Expired',
+  YOUR_OFFLINE: 'You’re offline!',
+  WAITING_FOR_CONNECTION: 'Waiting for connection...',
+  PLEASE_CONNECT_TO_INTERNET: 'Please reconnect to the internet to continue.',
 };
 
 export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
-  CREATE_ACCOUNT: '/createAccount',
-  VERIFY: '/verify',
+  CREATE_ACCOUNT: '/create-account',
+  VERIFY: '/create-account/verify',
 } as const;
 
-export const NOTIFICATION_TYPES = {
+export const NOTIFICATION_TYPES: Record<string, NotificationType> = {
   SUCCESS: 'success',
   ERROR: 'error',
   WARNING: 'warning',

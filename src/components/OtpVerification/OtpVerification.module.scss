@@ -3,7 +3,7 @@
 styles specific to the OtpVerification component
 ------------------------------------------------------
 **/
-@import '../../styles/mixins';
+@use '../../styles/mixins' as *;
 
 .container {
   position: relative;

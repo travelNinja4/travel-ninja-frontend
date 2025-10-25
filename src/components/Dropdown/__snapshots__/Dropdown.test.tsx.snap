@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Home matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="dropdown"
+    data-testid="DropdownTest"
+    tabindex="0"
+  >
+    <div
+      class="inputWrapper"
+    >
+      <label
+        class="typography label align-left label"
+        data-testid="TypographyTest"
+      >
+        Dropdown Test
+      </label>
+      <div
+        class="inputWithIcon"
+      >
+        <div
+          class="container"
+          data-testid="TextFieldTest"
+        >
+          <div
+            class="inputWrapper"
+          >
+            <input
+              class="inputField"
+              placeholder="Select..."
+              readonly=""
+              type="text"
+            />
+          </div>
+        </div>
+        <span
+          class="chevronIcon"
+        >
+          <svg
+            aria-hidden="true"
+            class="lucide lucide-chevron-down"
+            fill="none"
+            height="16"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m6 9 6 6 6-6"
+            />
+          </svg>
+        </span>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

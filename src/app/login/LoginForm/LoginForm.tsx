@@ -1,3 +1,5 @@
+'use client';
+
 import DynamicForm, { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
 import { loginSchema } from './LoginSchema';
 import styles from './LoginForm.module.scss';
@@ -37,7 +39,7 @@ export const loginFormConfig: FieldConfig[] = [
   {
     name: 'password',
     label: 'Password',
-    type: 'input',
+    type: 'password',
     placeholder: 'Enter your password',
     required: true,
     width: FieldWidth.FULL,
@@ -47,8 +49,8 @@ export const loginFormConfig: FieldConfig[] = [
     name: 'forgotPassword',
     label: (
       <>
-        <AppLink href="/terms" className={styles.forgotPassword}>
-          Forgot password?
+        <AppLink href="/login/forgot-password" className={styles.forgotPassword}>
+          Forgot Password?
         </AppLink>
       </>
     ),
@@ -89,7 +91,7 @@ export default function LoginForm() {
       fields={loginFormConfig}
       schema={loginSchema}
       onSubmit={() => {}}
-      className={styles.createAccountContainer}
+      className={styles.loginContainer}
     />
   );
 }
