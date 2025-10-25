@@ -15,7 +15,6 @@
 import { useEffect, useState } from 'react';
 import OfflinePage from '../OfflinePage';
 import { useNetworkStatus } from '@/hooks/useNetworkStatus';
-import styles from './ClientNetworkWrapper.module.scss';
 
 /**
  * Define the props available for the ClientNetworkWrapper component.

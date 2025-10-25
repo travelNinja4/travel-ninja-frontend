@@ -4,11 +4,6 @@ import { fn } from 'storybook/test';
 */
 import ClientNetworkWrapper from './ClientNetworkWrapper';
 
-const OnlineWrapper = ({ children }: { children: React.ReactNode }) => {
-  const useNetworkStatus = () => true;
-  return <ClientNetworkWrapper>{children}</ClientNetworkWrapper>;
-};
-
 const meta: Meta<typeof ClientNetworkWrapper> = {
   title: 'components/ClientNetworkWrapper',
   component: ClientNetworkWrapper,
