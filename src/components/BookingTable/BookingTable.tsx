@@ -27,7 +27,7 @@ import BookingTableSkeleton from './BookingTableSkeleton';
 import { bookingColumns, Booking } from './BookingTable.columns';
 
 interface BookingTableProps {
-  header: string;
+  header?: string;
   showViewAllBookings?: boolean;
 }
 
@@ -111,7 +111,7 @@ export default function BookingTable({ header, showViewAllBookings }: BookingTab
   }, [data.length]);
 
   return (
-    <>
+    <div data-testid="BookingTableTest">
       {loading ? (
         <BookingTableSkeleton />
       ) : (
@@ -217,6 +217,6 @@ export default function BookingTable({ header, showViewAllBookings }: BookingTab
           </ul>
         </nav>
       )}
-    </>
+    </div>
   );
 }

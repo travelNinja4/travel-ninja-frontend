@@ -118,7 +118,8 @@ interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   autoCapitalize?: string;
 
   /**
-   *
+   * to show the calender icon
+   * Defaults to false.
    */
   isCalender?: boolean;
 
@@ -188,7 +189,7 @@ export default function TextField({
           {...rest}
         />
         {isPasswordType && (
-          <div className={styles.iconButton} onClick={togglePasswordVisibility}>
+          <div role="button" className={styles.iconButton} onClick={togglePasswordVisibility}>
             {isPasswordVisible ? <EyeOff /> : <Eye />}
           </div>
         )}

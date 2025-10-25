@@ -4,9 +4,7 @@ import BookingTable from './BookingTable';
 
 describe('Home', () => {
   /** Base props for BookingTable **/
-  const baseProps = {
-    label: 'BookingTable Test',
-  };
+  const baseProps = {};
 
   /**
    * @test

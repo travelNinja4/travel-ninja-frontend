@@ -5,7 +5,11 @@ import { authService } from '@/services/authService';
 import ResetPasswordForm from '../../ResetPasswordForm/ResetPasswordForm';
 import styles from './page.module.scss';
 
-export default async function ForgotPassword({ params: { token } }: { params: { token: string } }) {
+type Params = Promise<{ token: string }>;
+
+export default async function ForgotPassword(props: { params: Params }) {
+  const { token } = await props.params;
+
   try {
     await authService.validateResetPassword(token);
   } catch (err: unknown) {

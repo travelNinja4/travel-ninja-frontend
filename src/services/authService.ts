@@ -66,7 +66,7 @@ export const authService = {
   },
 
   validateResetPassword(token: string) {
-    return apiClient.get(`/auth/forgot-password/${token}`);
+    return apiClient.get(`/auth/validate/${token}`);
   },
 
   resetPassword(data: resetPassword) {

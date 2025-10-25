@@ -106,4 +106,5 @@ export class ApiClient {
 }
 
 /** this line calls the proxy api and hides the real api in client side */
-export const apiClient = new ApiClient('/api/proxy');
+const BASE_URL = typeof window === 'undefined' ? process.env.API_BASE_URL : '/api/proxy';
+export const apiClient = new ApiClient(BASE_URL!);

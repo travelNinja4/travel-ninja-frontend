@@ -135,7 +135,7 @@ export default function DatePicker({
   };
 
   return (
-    <>
+    <div data-testid="DatePickerTest">
       <TextField
         readOnly
         label={label}
@@ -160,6 +160,6 @@ export default function DatePicker({
           </>
         </div>
       )}
-    </>
+    </div>
   );
 }

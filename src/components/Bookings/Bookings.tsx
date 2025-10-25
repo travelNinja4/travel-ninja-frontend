@@ -48,7 +48,7 @@ export default function Bookings({ label = 'label' }: BookingsProps) {
   ];
 
   return (
-    <div className={styles.container}>
+    <div data-testid="BookingsTest" className={styles.container}>
       <div className={styles.card}>
         <div className={styles.textCard}>
           <TextField label="Search" placeholder="Search bookings..." />
