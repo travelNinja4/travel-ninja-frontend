@@ -31,9 +31,9 @@
 'use client';
 
 import { useState, useRef, useEffect, KeyboardEvent, ChangeEvent } from 'react';
+import { STRINGS } from '@/constants/strings';
 import clsx from 'clsx';
 import styles from './Autocomplete.module.scss';
-import { STRINGS } from '@/constants/strings';
 
 export type AutocompleteOption<T> = {
   value: T;
@@ -195,7 +195,7 @@ export default function Autocomplete<T>({
                 Loading...
               </li>
             </li>
-          ) : options.length > 0 ? (
+          ) : options?.length > 0 ? (
             // Normal options
             options.map((option, idx) => {
               const isHighlighted = idx === highlightedIndex;

@@ -57,6 +57,7 @@ exports[`Home matches snapshot 1`] = `
           />
           <div
             class="iconButton"
+            role="button"
           >
             <svg
               aria-hidden="true"

@@ -50,7 +50,7 @@ export const loginFormConfig: FieldConfig[] = [
     label: (
       <>
         <AppLink href="/login/forgot-password" className={styles.forgotPassword}>
-          Forgot password?
+          Forgot Password?
         </AppLink>
       </>
     ),

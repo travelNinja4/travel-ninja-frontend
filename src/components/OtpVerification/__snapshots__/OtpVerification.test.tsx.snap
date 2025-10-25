@@ -170,7 +170,7 @@ exports[`Home matches snapshot 1`] = `
               </svg>
             </span>
             <span
-              class="typography span align-left button"
+              class="typography span align-center button"
               data-testid="TypographyTest"
             >
               Verify Email

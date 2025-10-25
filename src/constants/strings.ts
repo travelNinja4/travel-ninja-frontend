@@ -1,3 +1,5 @@
+import { NotificationType } from '@/providers/NotificationProvider';
+
 export const STRINGS = {
   APP_NAME: 'TravelNinja',
   CREATE_ACCOUNT_APP_TAG_LINE: 'Transform your tour business with our powerful platform',
@@ -34,6 +36,17 @@ export const STRINGS = {
   ENTER_NEW_PASSWORD: 'Enter your new password',
   RE_ENTER_NEW_PASSWORD: 'Re-enter your new password',
   RESET_PASSWORD: 'Reset password',
+  RESET_LINK_INSTRUCTIONS: 'Reset link sent! Check your email for instructions.',
+  SUCCESS: 'Success!',
+  ERROR: 'Error!',
+  INVALID_TOKEN_INSTRUCTION:
+    'To reset password, return to the login page and select Forgot Password to send a new email',
+  BACK_TO_LOG_IN: 'Back to log in',
+  PASSWORD_RESET_SUCCESS: 'Password reset successful',
+  LINK_EXPIRED: 'Link Expired',
+  YOUR_OFFLINE: 'You’re offline!',
+  WAITING_FOR_CONNECTION: 'Waiting for connection...',
+  PLEASE_CONNECT_TO_INTERNET: 'Please reconnect to the internet to continue.',
 };
 
 export const ROUTES = {
@@ -43,7 +56,7 @@ export const ROUTES = {
   VERIFY: '/create-account/verify',
 } as const;
 
-export const NOTIFICATION_TYPES = {
+export const NOTIFICATION_TYPES: Record<string, NotificationType> = {
   SUCCESS: 'success',
   ERROR: 'error',
   WARNING: 'warning',

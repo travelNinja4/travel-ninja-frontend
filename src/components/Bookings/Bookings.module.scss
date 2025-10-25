@@ -1,0 +1,132 @@
+// /**
+// ------------------------------------------------------
+// styles specific to the Bookings component
+// ------------------------------------------------------
+// **/
+
+// @import '../../styles/mixins';
+
+// .container {
+//   display: flex;
+//   flex-direction: column;
+//   padding: 1.5rem;
+// }
+
+// .card {
+//   position: relative;
+//   display: flex;
+//   flex: 1 1 auto;
+//   flex-direction: row;
+//   align-items: center;
+//   justify-content: center;
+//   min-width: 0;
+//   word-wrap: break-word;
+//   background-clip: border-box;
+//   border: 1px solid #dee2e6;
+//   border-radius: 0.25rem;
+//   background-color: #ffffff;
+//   margin-bottom: 1.5rem;
+//   padding: 1rem;
+//   row-gap: 1rem;
+//   column-gap: 1rem;
+
+//   .textCard {
+//     display: flex;
+//     // flex-direction: row;
+//   }
+
+//   .filterCard {
+//     display: flex;
+//     // flex-direction: row;
+//   }
+
+//   .statusDropdown {
+//     flex: 1 1 100%;
+//     width: 100%;
+//   }
+
+//   // 👉 Tablet adjustments
+//   @include respond-to(md) {
+//     flex-direction: row;
+//     .statusDropdown {
+//       flex: 0 0 auto;
+//       width: 25%;
+//     }
+//   }
+
+//   // 👉 Desktop adjustments
+//   @include respond-to(lg) {
+//     flex-direction: row;
+//     .statusDropdown {
+//       flex: 0 0 auto;
+//       width: 25%;
+//     }
+//   }
+// }
+
+/**
+------------------------------------------------------
+styles specific to the Bookings component
+------------------------------------------------------
+**/
+
+@use '../../styles/mixins' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  margin-bottom: 1.5rem;
+
+  .textCard {
+    width: 100%;
+    display: flex;
+  }
+
+  .filterCard {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .statusDropdown {
+    flex: 1 1 calc(25% - 1rem);
+    min-width: 150px;
+  }
+
+  // 👉 Tablet adjustments
+  @include respond-to(md) {
+    .filterCard {
+      flex-wrap: nowrap;
+    }
+
+    .statusDropdown {
+      flex: 0 0 auto;
+      width: 25%;
+    }
+  }
+
+  // 👉 Desktop adjustments
+  @include respond-to(lg) {
+    .filterCard {
+      flex-wrap: nowrap;
+    }
+
+    .statusDropdown {
+      flex: 0 0 auto;
+      width: 25%;
+    }
+  }
+}
