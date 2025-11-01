@@ -48,29 +48,22 @@ export class ApiClient {
             return new Promise((resolve, reject) => {
               this.failedQueue.push({ resolve, reject });
             })
-              .then((token) => {
-                if (originalRequest.headers)
-                  originalRequest.headers['Authorization'] = `Bearer ${token}`;
-                return this.axiosInstance(originalRequest);
-              })
+              .then(() => this.axiosInstance(originalRequest))
               .catch((err) => Promise.reject(err));
           }
 
           this.isRefreshing = true;
           try {
-            const refreshToken = localStorage.getItem('refreshToken');
             const response = await axios.post(
               `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/refresh-token`,
-              { token: refreshToken },
+              {},
+              { withCredentials: true },
             );
-            const newToken = response.data.accessToken;
 
-            localStorage.setItem('accessToken', newToken);
-            if (originalRequest.headers)
-              originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
-
-            this.failedQueue.forEach((p) => p.resolve(newToken));
+            // Server should set new cookies automatically
+            this.failedQueue.forEach((p) => p.resolve());
             this.failedQueue = [];
+
             return this.axiosInstance(originalRequest);
           } catch (err) {
             this.failedQueue.forEach((p) => p.reject(err));
@@ -88,20 +81,24 @@ export class ApiClient {
     );
   }
 
-  get<T>(url: string, config?: AxiosRequestConfig) {
-    return this.axiosInstance.get<T>(url, config).then((res) => res.data);
+  async get<T>(url: string, config?: AxiosRequestConfig) {
+    const res = await this.axiosInstance.get<T>(url, config);
+    return res.data;
   }
 
-  post<T, B = unknown>(url: string, body: B, config?: AxiosRequestConfig) {
-    return this.axiosInstance.post<T>(url, body, config).then((res) => res.data);
+  async post<T, B = unknown>(url: string, body: B, config?: AxiosRequestConfig) {
+    const res = await this.axiosInstance.post<T>(url, body, config);
+    return res.data;
   }
 
-  put<T, B = unknown>(url: string, body: B, config?: AxiosRequestConfig) {
-    return this.axiosInstance.put<T>(url, body, config).then((res) => res.data);
+  async put<T, B = unknown>(url: string, body: B, config?: AxiosRequestConfig) {
+    const res = await this.axiosInstance.put<T>(url, body, config);
+    return res.data;
   }
 
-  delete<T>(url: string, config?: AxiosRequestConfig) {
-    return this.axiosInstance.delete<T>(url, config).then((res) => res.data);
+  async delete<T>(url: string, config?: AxiosRequestConfig) {
+    const res = await this.axiosInstance.delete<T>(url, config);
+    return res.data;
   }
 }
 
