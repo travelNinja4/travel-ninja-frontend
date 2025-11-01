@@ -5,38 +5,95 @@
  * ```tsx
  * import OtpVerification from '@src/components/OtpVerification'
  *
- * export default function OtpVerification() {
- *   return <OtpVerification label="Hello" />;
+ * export default function Example() {
+ *   const handleOtpSubmit = (params) => {
+ *     console.log('OTP submitted:', params);
+ *   };
+ *
+ *   return (
+ *     <OtpVerification
+ *       otpType="mobile"
+ *       onSubmit={handleOtpSubmit}
+ *       loading={false}
+ *     />
+ *   );
  * }
  * ```
  */
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ROUTES, STRINGS } from '@/constants/strings';
-import AuthSideBanner from '../AuthSideBanner';
 import Button from '../Button';
 import TextField from '../TextField';
 import Typography from '../Typography';
 import CustomImage from '../CustomImage';
-import { Mail, Phone, Check, RotateCw } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
-import { useRouter } from 'next/navigation';
-import { authService } from '@/services/authService';
-import { useNotification } from '@/providers/NotificationProvider';
+import { OtpProps } from '@/constants/types';
+import { STRINGS } from '@/constants/strings';
+import AuthSideBanner from '../AuthSideBanner';
 import { errorHandler } from '@/utils/errorHandler';
+import { authService } from '@/services/authService';
+import { Mail, Phone, Check, RotateCw } from 'lucide-react';
+import { useNotification } from '@/providers/NotificationProvider';
 import styles from './OtpVerification.module.scss';
 
-export default function OtpVerification() {
-  const router = useRouter();
+interface OtpVerificationProps {
+  /**
+   * Specifies the type of OTP verification to perform.
+   * - `'email'` → Verifies the user's email address.
+   * - `'mobile'` → Verifies the user's mobile number.
+   *
+   * @default 'email'
+   */
+  otpType?: 'email' | 'mobile';
+
+  /**
+   * Callback function triggered when the user submits the OTP for verification.
+   *
+   * @param params - The OTP data containing the entered code and OTP type.
+   * @returns void
+   */
+  onSubmit?: (params: OtpProps) => void;
+
+  /**
+   * Indicates whether the verification process is currently loading.
+   * When `true`, the verify button is disabled and a loading indicator may be shown.
+   *
+   * @default false
+   */
+  loading?: boolean;
+}
+
+export default function OtpVerification({
+  otpType,
+  onSubmit,
+  loading = false,
+}: OtpVerificationProps) {
   const { showNotification } = useNotification();
   const accountData = useAuthStore((store) => store.accountData);
-  const [type, setType] = useState<'email' | 'mobile'>('email');
   const [value, setValue] = useState('');
   const [timer, setTimer] = useState(0);
-  const [verifyLoading, setVerifyLoading] = useState(false);
   const rawCountry = accountData?.phoneNumber?.country ?? '';
   const countryCode = rawCountry.split('(')[0].trim();
+
+  const phoneNumber =
+    typeof accountData?.phoneNumber === 'object'
+      ? `${countryCode}-${accountData?.phoneNumber.number}`
+      : accountData?.phoneNumber;
+
+  const email = accountData?.email;
+
+  const formattedContactValue =
+    otpType === STRINGS.EMAIL
+      ? (accountData?.email ?? '')
+      : typeof accountData?.phoneNumber === 'object'
+        ? `${countryCode}-${accountData?.phoneNumber.number}`
+        : (accountData?.phoneNumber ?? '');
+
+  useEffect(() => {
+    setValue('');
+    setTimer(0);
+  }, [otpType]);
 
   useEffect(() => {
     if (timer === 0) return;
@@ -52,11 +109,8 @@ export default function OtpVerification() {
 
   const handleResend = async () => {
     try {
-      const requestParams =
-        type === STRINGS.EMAIL
-          ? { email: accountData?.email }
-          : { phoneNumber: `${countryCode}-${accountData?.phoneNumber?.number}` };
-      const response = await authService.sendOtp(requestParams);
+      const requestParams = otpType === STRINGS.EMAIL ? { email } : { phoneNumber };
+      await authService.sendOtp(requestParams);
       setTimer(60);
     } catch (err: unknown) {
       const messages = errorHandler(err);
@@ -75,30 +129,7 @@ export default function OtpVerification() {
       return false;
     }
 
-    try {
-      const requestParams =
-        type === STRINGS.EMAIL
-          ? { email: accountData?.email, otpCode: value }
-          : { phoneNumber: `${countryCode}-${accountData?.phoneNumber?.number}`, otpCode: value };
-      console.log('requestParams>>>', requestParams);
-      setVerifyLoading(true);
-      const response = await authService.verifyOtp(requestParams);
-      if (type === STRINGS.EMAIL) {
-        setType('mobile');
-        setValue('');
-        setTimer(0);
-      } else {
-        showNotification('Success!', 'Account created successfully', 'success');
-        router.push(ROUTES.LOGIN);
-      }
-    } catch (err: unknown) {
-      const messages = errorHandler(err);
-      messages.forEach((errMsg) => {
-        showNotification('Error!', errMsg, 'error');
-      });
-    } finally {
-      setVerifyLoading(false);
-    }
+    onSubmit?.({ otpCode: value, otpType });
   };
 
   return (
@@ -121,15 +152,15 @@ export default function OtpVerification() {
           </div>
           <div className={styles.otpContainer}>
             <Typography tag="h2" align="center" className={styles.otpHeader}>
-              {type === STRINGS.EMAIL
+              {otpType === STRINGS.EMAIL
                 ? STRINGS.EMAIL_VERIFICATION
                 : STRINGS.MOBILE_NUMBER_VERIFICATION}
             </Typography>
             <Typography tag="p" align="center" className={styles.otpSubHeader}>
-              {type === STRINGS.EMAIL ? STRINGS.EMAIL_SENT : STRINGS.MOBILE_SENT}
+              {otpType === STRINGS.EMAIL ? STRINGS.EMAIL_SENT : STRINGS.MOBILE_SENT}
             </Typography>
             <div className={styles.userData}>
-              {type === STRINGS.EMAIL ? (
+              {otpType === STRINGS.EMAIL ? (
                 <Mail color="var(--color-black)" />
               ) : (
                 <Phone color="var(--color-black)" />
@@ -140,9 +171,7 @@ export default function OtpVerification() {
                 color="var(--color-indigo)"
                 className={styles.userEmail}
               >
-                {type === STRINGS.EMAIL
-                  ? accountData?.email
-                  : `${countryCode}-${accountData?.phoneNumber?.number}`}
+                {formattedContactValue}
               </Typography>
             </div>
             <div className={styles.verificationWrapper}>
@@ -155,17 +184,17 @@ export default function OtpVerification() {
                 onChange={(e) => handleOnChange(e.target.value)}
               />
               <Typography tag="label" align="center" className={styles.otpSubHeader}>
-                {type === STRINGS.EMAIL ? STRINGS.EMAIL_CODE_HINT : STRINGS.MOBILE_CODE_HINT}
+                {otpType === STRINGS.EMAIL ? STRINGS.EMAIL_CODE_HINT : STRINGS.MOBILE_CODE_HINT}
               </Typography>
             </div>
             <Button
               className={styles.button}
               startIcon={Check}
               onClick={handleCodeVerify}
-              disabled={verifyLoading}
-              loading={verifyLoading}
+              disabled={loading}
+              loading={loading}
             >
-              {type === STRINGS.EMAIL ? STRINGS.VERIFY_EMAIL : STRINGS.VERIFY_MOBILE_NUMBER}
+              {otpType === STRINGS.EMAIL ? STRINGS.VERIFY_EMAIL : STRINGS.VERIFY_MOBILE_NUMBER}
             </Button>
             <div className={styles.resendWrapper}>
               {timer > 0 ? (

@@ -47,6 +47,16 @@ export const STRINGS = {
   YOUR_OFFLINE: 'You’re offline!',
   WAITING_FOR_CONNECTION: 'Waiting for connection...',
   PLEASE_CONNECT_TO_INTERNET: 'Please reconnect to the internet to continue.',
+  WELCOME_BACK: 'Welcome Back',
+  SIGN_IN_TITLE: 'Sign in to your agency account',
+  PASSWORD: 'Password',
+  SIGN_IN: 'Sign In',
+  CREATE_NEW_ACCOUNT: 'Create a new account',
+  DONT_HAVE_ACCOUNT: `Don't have an account?`,
+  ENTER_YOUR_EMAIL: 'Enter your email',
+  ENTER_YOUR_PASSWORD: 'Enter your password',
+  LOGGED_IN_SUCCESSFUL: `You’ve logged in successfully!`,
+  ACCOUNT_CREATED_SUCCESSFUL: 'Account created successfully',
 };
 
 export const ROUTES = {
@@ -54,6 +64,8 @@ export const ROUTES = {
   LOGIN: '/login',
   CREATE_ACCOUNT: '/create-account',
   VERIFY: '/create-account/verify',
+  OTP_VERIFICATION: '/login/verify',
+  DASHBOARD: '/dashboard',
 } as const;
 
 export const NOTIFICATION_TYPES: Record<string, NotificationType> = {
