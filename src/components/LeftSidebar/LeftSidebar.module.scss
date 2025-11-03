@@ -1,0 +1,213 @@
+/**
+------------------------------------------------------
+styles specific to the LeftSidebar component
+------------------------------------------------------
+**/
+
+.sidebar {
+  position: relative;
+  height: 100vh;
+  // background: #fff;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  width: 16rem;
+  padding: 1.5rem;
+
+  &.collapsed {
+    width: 5rem;
+    padding: 0.5rem 0;
+  }
+
+  .collapseBtn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem; /* 👈 now it will stick to top-right INSIDE sidebar */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    z-index: 10;
+
+    &:hover {
+      background: #f3f4f6;
+    }
+  }
+
+  .headerSection {
+    position: relative;
+    // padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+    background-color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+
+    .headerContent {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .companyName {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #dc3545;
+      margin: 0;
+    }
+
+    /* Collapse Button — positioned at top-right */
+    .collapseBtn {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #f3f4f6;
+      }
+    }
+
+    /* when sidebar is collapsed */
+    .collapsed & {
+      justify-content: flex-start;
+      padding-left: 0.5rem;
+
+      .collapseBtn {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin-left: 0.5rem;
+      }
+    }
+  }
+
+  .profileSection {
+    margin-bottom: 1.5rem; // mb-4
+    padding: 1rem; // p-3
+    background-color: #f8f9fa; // bg-light
+    border-radius: 0.75rem; // rounded-3
+
+    display: flex;
+    align-items: center;
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .avatar {
+      border-radius: 9999px;
+      color: #111827;
+    }
+
+    .userName {
+      color: #111827;
+      font-weight: 600; // fw-bold
+      font-size: 0.875rem; // small
+    }
+
+    .userRole {
+      font-size: 0.75rem;
+      color: #6c757d;
+    }
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    // background-color: red;
+
+    .navItem {
+      // background-color: pink;
+      margin-bottom: 0.5rem;
+    }
+
+    .navLink {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0.75rem; // px-3 py-2
+      text-decoration: none;
+      color: #4b5563; // neutral gray
+      border-radius: 0.5rem;
+      transition: all 0.2s ease;
+
+      .navIcon {
+        margin-right: 0.75rem; // me-3
+        font-size: 1rem;
+      }
+
+      &:hover {
+        background-color: #f9fafb;
+        color: #111827;
+      }
+
+      &.active {
+        background-color: #eef2ff;
+        color: #4f46e5; // indigo tone
+        font-weight: 500;
+      }
+    }
+  }
+
+  .divider {
+    margin: 1rem 0; // my-3
+    border: none;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+  }
+}
+
+/* Mobile Hamburger */
+.mobileToggle {
+  position: fixed;
+  top: 1rem;
+  left: 1rem; // 👈 move hamburger to left side
+  z-index: 50;
+  display: flex;
+  align-items: center;
+}
+
+.hamburgerBtn {
+  padding: 0.5rem;
+  background: #f3f4f6;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s;
+
+  &:hover {
+    background: #e5e7eb;
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
