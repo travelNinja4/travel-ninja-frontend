@@ -66,92 +66,72 @@ const bottomNavItems: NavItem[] = [
 ];
 
 export default function LeftSidebar({ collapsed, setCollapsed }: LeftSidebarProps) {
-  const [active, setActive] = useState('Dashboard');
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const toggleSidebar = () => setMobileOpen((prev) => !prev);
-
   return (
-    <>
-      {/* Mobile Hamburger */}
-      {/* <div className={clsx(styles.mobileToggle, 'md:hidden')}>
-        <button onClick={toggleSidebar} className={styles.hamburgerBtn}>
-          {mobileOpen ? <X className={styles.icon} /> : <Menu className={styles.icon} />}
-        </button>
-      </div> */}
-
-      {/* Sidebar */}
-      <aside
-        className={clsx(
-          styles.sidebar,
-          collapsed && styles.collapsed,
-          mobileOpen ? styles.open : styles.closed,
+    <aside className={clsx(styles.sidebar, collapsed && styles.sidebarCollapsed)}>
+      {/* Logo + Collapse Button Section */}
+      <div className={styles.headerSection}>
+        {!collapsed && (
+          <Typography tag="h1" className={styles.logoText}>
+            TravelNinja
+          </Typography>
         )}
-      >
+
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className={clsx(styles.collapseBtn, 'hidden md:block')}
+          className={clsx(styles.collapseBtn, collapsed && styles.collapseBtnCollapsed)}
         >
-          {!collapsed ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
+          {!collapsed ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
         </button>
+      </div>
 
-        {/* Logo section */}
-        {!collapsed && (
-          <div className={styles.headerSection}>
-            <div className={styles.headerContent}>
-              <Typography tag="h1" className={styles.companyName}>
-                TravelNinja
+      {/* Profile Section */}
+      {!collapsed ? (
+        <div className={clsx(styles.profileSection, collapsed && styles.profileCollapsed)}>
+          <div className={styles.profile}>
+            <CircleUserRound size={40} className={styles.avatar} />
+            <div className={clsx(styles.profileInfo, collapsed && styles.hiddenText)}>
+              <Typography tag="p" className={styles.userName}>
+                Adventure Tours
+              </Typography>
+              <Typography tag="p" className={styles.userRole}>
+                Agency Owner
               </Typography>
             </div>
           </div>
-        )}
-
-        {/* Profile Section */}
-        {!collapsed && (
-          <div className={styles.profileSection}>
-            <div className={styles.profile}>
-              <CircleUserRound size={40} className={styles.avatar} />
-              <div>
-                <Typography tag="p" className={styles.userName}>
-                  Adventure Tours
-                </Typography>
-                <Typography tag="p" className={styles.userRole}>
-                  Agency Owner
-                </Typography>
-              </div>
-            </div>
+        </div>
+      ) : (
+        <div className={clsx(styles.profileCollapsed)}>
+          <div className={styles.profile}>
+            <CircleUserRound size={40} className={styles.avatar} />
           </div>
-        )}
+        </div>
+      )}
 
-        {/* Navigation Menu */}
-        <nav className={styles.nav}>
-          {navItems.map(({ name, icon: Icon }) => (
-            <li className={styles.navItem}>
-              <AppLink href="/dashboard" className={styles.navLink}>
-                <Icon className={styles.navIcon} />
-                {!collapsed && <Typography tag="span">{name}</Typography>}
-              </AppLink>
-            </li>
-          ))}
-        </nav>
+      {/* Navigation */}
+      <nav className={styles.navSection}>
+        {navItems.map(({ name, icon: Icon }, i) => (
+          <AppLink key={i} href="/dashboard" className={styles.navItem}>
+            <Icon size={20} className={styles.navIcon} />
+            <Typography tag="span" className={clsx(styles.navText, collapsed && styles.hiddenText)}>
+              {name}
+            </Typography>
+          </AppLink>
+        ))}
+      </nav>
 
-        <hr className={styles.divider} />
+      <hr className={styles.divider} />
 
-        {/* Utility Section */}
-        <nav className={styles.nav}>
-          {bottomNavItems.map(({ name, icon: Icon, badge }) => (
-            <li className={styles.navItem}>
-              <AppLink href="/dashboard" className={styles.navLink}>
-                <Icon className={styles.navIcon} />
-                {!collapsed && <Typography tag="span">{name}</Typography>}
-              </AppLink>
-            </li>
-          ))}
-        </nav>
-      </aside>
-
-      {/* Overlay */}
-      {mobileOpen && <div className={styles.overlay} onClick={() => setMobileOpen(false)}></div>}
-    </>
+      {/* Bottom Section */}
+      <nav className={styles.navSection}>
+        {bottomNavItems.map(({ name, icon: Icon }, i) => (
+          <AppLink key={i} href="/dashboard" className={styles.navItem}>
+            <Icon size={20} className={styles.navIcon} />
+            <Typography tag="span" className={clsx(styles.navText, collapsed && styles.hiddenText)}>
+              {name}
+            </Typography>
+          </AppLink>
+        ))}
+      </nav>
+    </aside>
   );
 }
