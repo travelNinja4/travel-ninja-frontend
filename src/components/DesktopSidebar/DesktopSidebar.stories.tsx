@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 /**
 import { fn } from 'storybook/test';
 */
-import LeftSidebar from './LeftSidebar'
+import DesktopSidebar from './DesktopSidebar'
 
 const meta = {
-  title: 'components/LeftSidebar',
-  component: LeftSidebar,
+  title: 'components/DesktopSidebar',
+  component: DesktopSidebar,
   parameters: {
     layout: 'centered',
   },
@@ -20,7 +20,7 @@ const meta = {
   args: { 
     /** onClick: fn() **/
     },
-} satisfies Meta<typeof LeftSidebar>;
+} satisfies Meta<typeof DesktopSidebar>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -16,33 +16,54 @@
  */
 'use client';
 
-import { useState } from 'react';
-import LeftSidebar from '../LeftSidebar';
+import { useState, useEffect, ReactNode } from 'react';
+import MobileSidebar from '../MobileSidebar';
+import DesktopSidebar from '../DesktopSidebar';
 import styles from './BaseLayout.module.scss';
 
 /**
  * Define the props available for the BaseLayout component.
  */
 interface BaseLayoutProps {
-  children: React.ReactNode;
-  showLeftNavbar?: boolean;
+  /**
+   * The main content to be rendered inside the layout.
+   *
+   * * This represents the page-specific content that appears
+   * beside the sidebar and within the main viewport area.
+   *
+   * Typically passed as:
+   *
+   * @example
+   * ```tsx
+   * <BaseLayout>
+   *   <DashboardPage />
+   * </BaseLayout>
+   * ```
+   */
+  children: ReactNode;
 }
 
-export default function BaseLayout({ children, showLeftNavbar = true }: BaseLayoutProps) {
+export default function BaseLayout({ children }: BaseLayoutProps) {
+  const [isMobile, setIsMobile] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 1024);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div
-      className={`${styles.container} ${
-        showLeftNavbar ? (collapsed ? styles.collapsed : styles.expanded) : ''
-      }`}
+      data-testid="BaseLayoutTest"
+      className={`${styles.container} ${collapsed ? styles.collapsed : styles.expanded}`}
     >
-      {showLeftNavbar && (
-        <aside className={styles.leftNavbar}>
-          <LeftSidebar collapsed={collapsed} setCollapsed={setCollapsed} />
-        </aside>
+      {isMobile ? (
+        <MobileSidebar />
+      ) : (
+        <DesktopSidebar collapsed={collapsed} setCollapsed={setCollapsed} />
       )}
-
       <main className={styles.mainContent}>{children}</main>
     </div>
   );

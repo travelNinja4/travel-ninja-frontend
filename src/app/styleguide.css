@@ -12,6 +12,8 @@
   --color-purple: #764ba2;
   --color-indigo: #667eea;
   --color-green-500: #28a745;
+  --color-indigo-700: #4338ca;
+  --color-indigo-50: #eef2ff;
 
   /* ==========================
      Notification / Status Icon Colors
@@ -29,6 +31,7 @@
   --color-gray-100: #f8f9fa;
   --color-gray-120: #f3f4f6;
   --color-gray-150: #e9ecef;
+  --color-gray-180: #dee2e6;
   --color-gray-200: #dddddd;
   --color-gray-220: #e5e7eb;
   --color-gray-250: #d1d5db;
@@ -39,7 +42,9 @@
   --color-gray-400: #999999;
   --color-gray-600: #666666;
   --color-gray-700: #374151;
+  --color-gray-750: #1f2937;
   --color-gray-800: #333333;
+  --color-gray-900: #111827;
 
   /* ==========================
      Transparent / Alpha Variants
@@ -49,6 +54,8 @@
   --color-black-alpha-10: rgba(0, 0, 0, 0.1);
   --color-black-alpha-20: rgba(0, 0, 0, 0.2);
   --color-black-alpha-30: rgba(0, 0, 0, 0.3);
+  --color-black-alpha-40: rgba(0, 0, 0, 0.4);
+  --color-black-alpha-150: rgba(0, 0, 0, 0.15);
   --color-indigo-alpha-30: rgba(102, 126, 234, 0.3);
   --color-indigo-alpha-40: rgba(102, 126, 234, 0.4);
   --color-indigo-alpha-25: rgba(102, 126, 234, 0.25);

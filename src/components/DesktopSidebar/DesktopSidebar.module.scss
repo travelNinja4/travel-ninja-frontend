@@ -1,0 +1,98 @@
+/**
+------------------------------------------------------
+styles specific to the DesktopSidebar component
+------------------------------------------------------
+**/
+
+.sidebar {
+  width: 16rem;
+  height: 100vh;
+  background-color: var(--color-white);
+  border-right: 1px solid var(--color-gray-220);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  padding: 1.25rem 1rem;
+}
+
+.collapsed {
+  width: 5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--color-gray-220);
+  padding-bottom: 1rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-red-500);
+  margin-bottom: 0;
+}
+
+.collapseBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-gray-220);
+
+  &:hover {
+    color: var(--color-gray-900);
+  }
+}
+
+.profileSection {
+  background-color: var(--color-gray-100);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .avatar {
+    border-radius: 9999px;
+    color: var(--color-gray-900);
+    transition: all 0.3s ease;
+  }
+}
+
+.profileCollapsed {
+  justify-content: center;
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid var(--color-gray-180);
+
+  .profile {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+.avatar {
+  margin: 0 auto;
+  color: var(--color-black);
+}
+
+.userName {
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.userRole {
+  color: var(--color-gray-320);
+  font-size: 0.8rem;
+}

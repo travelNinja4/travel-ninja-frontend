@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Home matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    data-testid="MobileSidebarTest"
+  >
+    <button
+      class="hamburgerBtn"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-menu"
+        fill="none"
+        height="22"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="22"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M4 12h16"
+        />
+        <path
+          d="M4 18h16"
+        />
+        <path
+          d="M4 6h16"
+        />
+      </svg>
+    </button>
+    <aside
+      class="sidebar"
+    >
+      <div
+        class="header"
+      >
+        <h1
+          class="typography h1 align-left logo"
+          data-testid="TypographyTest"
+        >
+          TravelNinja
+        </h1>
+        <button
+          class="closeBtn"
+        >
+          <svg
+            aria-hidden="true"
+            class="lucide lucide-x"
+            fill="none"
+            height="20"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18 6 6 18"
+            />
+            <path
+              d="m6 6 12 12"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="profileSection"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-circle-user-round avatar"
+          fill="none"
+          height="40"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="40"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M18 20a6 6 0 0 0-12 0"
+          />
+          <circle
+            cx="12"
+            cy="10"
+            r="4"
+          />
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+        </svg>
+        <div>
+          <p
+            class="typography p align-left userName"
+            data-testid="TypographyTest"
+          >
+            Adventure Tours
+          </p>
+          <p
+            class="typography p align-left userRole"
+            data-testid="TypographyTest"
+          >
+            Agency Owner
+          </p>
+        </div>
+      </div>
+      <div
+        data-testid="SidebarNavTest"
+      >
+        SidebarNav
+      </div>
+    </aside>
+  </div>
+</DocumentFragment>
+`;

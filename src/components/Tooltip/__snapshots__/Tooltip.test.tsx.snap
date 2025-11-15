@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Home matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="tooltipContainer"
+    data-testid="TooltipTest"
+  >
+    <button>
+      Hover me
+    </button>
+  </div>
+</DocumentFragment>
+`;
