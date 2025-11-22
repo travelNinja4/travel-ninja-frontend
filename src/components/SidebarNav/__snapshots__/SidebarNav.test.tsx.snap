@@ -6,10 +6,8 @@ exports[`Home matches snapshot 1`] = `
     class="nav"
     data-testid="SidebarNavTest"
   >
-    <a
-      class="navItem"
-      data-testid="AppLinkTest"
-      href="/"
+    <div
+      data-testid="AppLinkMock"
     >
       <svg
         aria-hidden="true"
@@ -54,16 +52,13 @@ exports[`Home matches snapshot 1`] = `
         />
       </svg>
       <span
-        class="typography span align-left"
-        data-testid="TypographyTest"
+        data-testid="TypographyMock"
       >
         Dashboard
       </span>
-    </a>
-    <a
-      class="navItem"
-      data-testid="AppLinkTest"
-      href="/"
+    </div>
+    <div
+      data-testid="AppLinkMock"
     >
       <svg
         aria-hidden="true"
@@ -96,16 +91,13 @@ exports[`Home matches snapshot 1`] = `
         />
       </svg>
       <span
-        class="typography span align-left"
-        data-testid="TypographyTest"
+        data-testid="TypographyMock"
       >
         Calendar
       </span>
-    </a>
-    <a
-      class="navItem"
-      data-testid="AppLinkTest"
-      href="/"
+    </div>
+    <div
+      data-testid="AppLinkMock"
     >
       <svg
         aria-hidden="true"
@@ -130,16 +122,13 @@ exports[`Home matches snapshot 1`] = `
         />
       </svg>
       <span
-        class="typography span align-left"
-        data-testid="TypographyTest"
+        data-testid="TypographyMock"
       >
         Tours
       </span>
-    </a>
-    <a
-      class="navItem"
-      data-testid="AppLinkTest"
-      href="/bookings"
+    </div>
+    <div
+      data-testid="AppLinkMock"
     >
       <svg
         aria-hidden="true"
@@ -165,16 +154,13 @@ exports[`Home matches snapshot 1`] = `
         />
       </svg>
       <span
-        class="typography span align-left"
-        data-testid="TypographyTest"
+        data-testid="TypographyMock"
       >
         Bookings
       </span>
-    </a>
-    <a
-      class="navItem"
-      data-testid="AppLinkTest"
-      href="/"
+    </div>
+    <div
+      data-testid="AppLinkMock"
     >
       <svg
         aria-hidden="true"
@@ -206,16 +192,13 @@ exports[`Home matches snapshot 1`] = `
         />
       </svg>
       <span
-        class="typography span align-left"
-        data-testid="TypographyTest"
+        data-testid="TypographyMock"
       >
         Customers
       </span>
-    </a>
-    <a
-      class="navItem"
-      data-testid="AppLinkTest"
-      href="/"
+    </div>
+    <div
+      data-testid="AppLinkMock"
     >
       <svg
         aria-hidden="true"
@@ -246,16 +229,13 @@ exports[`Home matches snapshot 1`] = `
         />
       </svg>
       <span
-        class="typography span align-left"
-        data-testid="TypographyTest"
+        data-testid="TypographyMock"
       >
         Travelers
       </span>
-    </a>
-    <a
-      class="navItem"
-      data-testid="AppLinkTest"
-      href="/"
+    </div>
+    <div
+      data-testid="AppLinkMock"
     >
       <svg
         aria-hidden="true"
@@ -287,19 +267,16 @@ exports[`Home matches snapshot 1`] = `
         />
       </svg>
       <span
-        class="typography span align-left"
-        data-testid="TypographyTest"
+        data-testid="TypographyMock"
       >
         Invoices & Billing
       </span>
-    </a>
+    </div>
     <hr
       class="divider"
     />
-    <a
-      class="navItem"
-      data-testid="AppLinkTest"
-      href="/"
+    <div
+      data-testid="AppLinkMock"
     >
       <svg
         aria-hidden="true"
@@ -324,16 +301,13 @@ exports[`Home matches snapshot 1`] = `
         />
       </svg>
       <span
-        class="typography span align-left"
-        data-testid="TypographyTest"
+        data-testid="TypographyMock"
       >
         Profile
       </span>
-    </a>
-    <a
-      class="navItem"
-      data-testid="AppLinkTest"
-      href="/"
+    </div>
+    <div
+      data-testid="AppLinkMock"
     >
       <svg
         aria-hidden="true"
@@ -358,12 +332,11 @@ exports[`Home matches snapshot 1`] = `
         />
       </svg>
       <span
-        class="typography span align-left"
-        data-testid="TypographyTest"
+        data-testid="TypographyMock"
       >
         Settings
       </span>
-    </a>
+    </div>
   </nav>
 </DocumentFragment>
 `;

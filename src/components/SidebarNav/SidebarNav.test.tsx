@@ -58,4 +58,41 @@ describe('Home', () => {
     const { asFragment } = render(<SidebarNav {...baseProps} />);
     expect(asFragment()).toMatchSnapshot();
   });
+
+  it('renders root container', () => {
+    render(<SidebarNav {...baseProps} />);
+    expect(screen.getByTestId('SidebarNavTest')).toBeInTheDocument();
+  });
+
+  it('renders all nav items', () => {
+    render(<SidebarNav {...baseProps} />);
+
+    // total nav items = 7 top + 2 bottom = 9 links
+    expect(screen.getAllByTestId('AppLinkMock')).toHaveLength(9);
+  });
+
+  it('shows labels when not collapsed', () => {
+    render(<SidebarNav {...baseProps} />);
+
+    // Typography should appear for each item
+    expect(screen.getAllByTestId('TypographyMock').length).toBeGreaterThan(0);
+  });
+
+  it('does NOT render Typography when collapsed = true', () => {
+    render(<SidebarNav collapsed={true} isMobile={false} />);
+
+    expect(screen.queryByTestId('TypographyMock')).not.toBeInTheDocument();
+  });
+
+  it('renders Tooltip when collapsed AND not mobile', () => {
+    render(<SidebarNav collapsed={true} isMobile={false} />);
+
+    expect(screen.getAllByTestId('TooltipMock').length).toBeGreaterThan(0);
+  });
+
+  it('does NOT render Tooltip when collapsed on mobile', () => {
+    render(<SidebarNav collapsed={true} isMobile={true} />);
+
+    expect(screen.queryByTestId('TooltipMock')).not.toBeInTheDocument();
+  });
 });
