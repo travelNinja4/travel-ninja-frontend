@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Home matches snapshot 1`] = `
+<DocumentFragment>
+  <aside
+    class="sidebar"
+    data-testid="DesktopSidebarTest"
+  >
+    <div
+      class="header"
+    >
+      <h1
+        class="typography h1 align-left logo"
+        data-testid="TypographyTest"
+      >
+        TravelNinja
+      </h1>
+      <button
+        class="collapseBtn"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-chevron-left"
+          fill="none"
+          height="18"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="18"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m15 18-6-6 6-6"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="profileSection"
+    >
+      <div
+        class="profile"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-circle-user-round avatar"
+          fill="none"
+          height="40"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="40"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M18 20a6 6 0 0 0-12 0"
+          />
+          <circle
+            cx="12"
+            cy="10"
+            r="4"
+          />
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+        </svg>
+        <div>
+          <p
+            class="typography p align-left userName"
+            data-testid="TypographyTest"
+          >
+            Adventure Tours
+          </p>
+          <p
+            class="typography p align-left userRole"
+            data-testid="TypographyTest"
+          >
+            Agency Owner
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      data-testid="SidebarNavTest"
+    >
+      ExpandedNav
+    </div>
+  </aside>
+</DocumentFragment>
+`;

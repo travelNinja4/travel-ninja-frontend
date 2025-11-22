@@ -47,6 +47,7 @@ export const STRINGS = {
   YOUR_OFFLINE: 'You’re offline!',
   WAITING_FOR_CONNECTION: 'Waiting for connection...',
   PLEASE_CONNECT_TO_INTERNET: 'Please reconnect to the internet to continue.',
+  AGENCY_OWNER: 'Agency Owner',
 };
 
 export const ROUTES = {
@@ -61,4 +62,16 @@ export const NOTIFICATION_TYPES: Record<string, NotificationType> = {
   ERROR: 'error',
   WARNING: 'warning',
   INFO: 'info',
+};
+
+export const NAV_ITEM = {
+  DASHBOARD: 'Dashboard',
+  CALENDER: 'Calendar',
+  TOURS: 'Tours',
+  BOOKINGS: 'Bookings',
+  CUSTOMERS: 'Customers',
+  TRAVELERS: 'Travelers',
+  INVOICES_AND_BILLING: 'Invoices & Billing',
+  PROFILE: 'Profile',
+  SETTINGS: 'Settings',
 };

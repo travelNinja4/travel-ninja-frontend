@@ -1,0 +1,126 @@
+/**
+------------------------------------------------------
+styles specific to the Tooltip component
+------------------------------------------------------
+**/
+
+.tooltipContainer {
+  position: relative;
+  display: inline-block;
+}
+
+/* ==============================
+   Tooltip Base Styles
+============================== */
+.tooltip {
+  position: absolute;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  z-index: 9999;
+  box-shadow: 0 2px 8px var(--color-black-alpha-150);
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* ==============================
+   Variants
+============================== */
+.dark {
+  background-color: var(--color-gray-750);
+  color: var(--color-white);
+}
+
+.light {
+  background-color: var(--color-white);
+  color: #111;
+  border: 1px solid var(--color-gray-300);
+}
+
+/* ==============================
+   Tooltip Positioning
+============================== */
+.top {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 10px;
+}
+
+.bottom {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px;
+}
+
+.left {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 10px;
+}
+
+.right {
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ==============================
+   Rounded Bubble Arrow (Modern UI)
+============================== */
+.arrow {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: inherit;
+  z-index: -1;
+}
+
+/* Rounded Arrow using clip-path (Bubble Shape) */
+.arrow-right {
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  clip-path: path('M 0 6 Q 0 0 6 0 Q 12 0 12 6 Q 12 12 6 12 Q 0 12 0 6 Z');
+}
+
+.arrow-left {
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%) rotate(225deg);
+  clip-path: path('M 0 6 Q 0 0 6 0 Q 12 0 12 6 Q 12 12 6 12 Q 0 12 0 6 Z');
+}
+
+.arrow-top {
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(135deg);
+  clip-path: path('M 0 6 Q 0 0 6 0 Q 12 0 12 6 Q 12 12 6 12 Q 0 12 0 6 Z');
+}
+
+.arrow-bottom {
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-45deg);
+  clip-path: path('M 0 6 Q 0 0 6 0 Q 12 0 12 6 Q 12 12 6 12 Q 0 12 0 6 Z');
+}
+
+/* ==============================
+   Match Arrow Colors by Variant
+============================== */
+.dark .arrow {
+  background-color: var(--color-gray-750);
+}
+
+.light .arrow {
+  background-color: var(var(--color-white));
+  border: 1px solid var(--color-gray-300);
+}
+
+/* Optional subtle shadow for more depth */
+.arrow {
+  filter: drop-shadow(0 1px 1px var(--color-black-alpha-150));
+}
