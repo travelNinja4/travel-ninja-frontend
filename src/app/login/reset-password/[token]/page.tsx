@@ -7,7 +7,7 @@ import styles from './page.module.scss';
 
 type Params = Promise<{ token: string }>;
 
-export default async function ForgotPassword(props: { params: Params }) {
+export default async function ForgotPasswordPage(props: { params: Params }) {
   const { token } = await props.params;
 
   try {

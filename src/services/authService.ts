@@ -1,3 +1,4 @@
+import { LoginResponse } from '@/constants/types';
 import { apiClient } from './apiClient';
 
 export type RegisterPayload = {
@@ -24,9 +25,10 @@ export type VerifyOtp = {
   phoneNumber?: string;
 };
 
-export type LoginPayload = {
+export type Login = {
   email: string;
   password: string;
+  role?: string;
 };
 
 export type Country = {
@@ -42,6 +44,11 @@ export type forgotPassword = {
 export type resetPassword = {
   newPassword: string;
   confirmPassword: string;
+};
+
+export type verifyLogin = {
+  phoneNumber?: string;
+  otp: string;
 };
 
 export const authService = {
@@ -73,8 +80,12 @@ export const authService = {
     return apiClient.post('/auth/reset-password', data);
   },
 
-  login(data: LoginPayload) {
+  login(data: Login): Promise<LoginResponse> {
     return apiClient.post('/auth/login', data);
+  },
+
+  verifyLogin(data: verifyLogin) {
+    return apiClient.post('/auth/verify-login', data);
   },
 
   logout() {

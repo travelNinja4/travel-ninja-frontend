@@ -4,7 +4,7 @@ import AuthSideBanner from '@/components/AuthSideBanner';
 import { STRINGS } from '@/constants/strings';
 import styles from './page.module.scss';
 
-export default function ForgotPassword() {
+export default function ForgotPasswordPage() {
   return (
     <div className={styles.container}>
       <CustomImage

@@ -1,16 +1,22 @@
 'use client';
 
-import DynamicForm, { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
-import { loginSchema } from './LoginSchema';
-import styles from './LoginForm.module.scss';
-import AppLink from '@/components/AppLink';
 import { LogIn } from 'lucide-react';
-import { ROUTES } from '@/constants/strings';
+import AppLink from '@/components/AppLink';
+import { useRouter } from 'next/navigation';
+import { loginSchema } from './LoginSchema';
+import { useAuthStore } from '@/store/auth';
+import { errorHandler } from '@/utils/errorHandler';
+import { useApiStatusStore } from '@/store/apiStatus';
+import { authService, Login } from '@/services/authService';
+import { useNotification } from '@/providers/NotificationProvider';
+import { NOTIFICATION_TYPES, ROUTES, STRINGS } from '@/constants/strings';
+import DynamicForm, { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
+import styles from './LoginForm.module.scss';
 
 export const loginFormConfig: FieldConfig[] = [
   {
     name: 'title',
-    label: 'Welcome Back',
+    label: STRINGS.WELCOME_BACK,
     type: 'label',
     tag: 'h2',
     children: null,
@@ -20,7 +26,7 @@ export const loginFormConfig: FieldConfig[] = [
   },
   {
     name: 'subTitle',
-    label: 'Sign in to your agency account',
+    label: STRINGS.SIGN_IN_TITLE,
     type: 'label',
     tag: 'h3',
     textAlign: 'center',
@@ -29,18 +35,18 @@ export const loginFormConfig: FieldConfig[] = [
   },
   {
     name: 'email',
-    label: 'Email Address',
+    label: STRINGS.EMAIL_ADDRESS,
     type: 'input',
     required: true,
-    placeholder: 'Enter your email',
+    placeholder: STRINGS.ENTER_YOUR_EMAIL,
     width: FieldWidth.FULL,
     validationHints: [],
   },
   {
     name: 'password',
-    label: 'Password',
+    label: STRINGS.PASSWORD,
     type: 'password',
-    placeholder: 'Enter your password',
+    placeholder: STRINGS.ENTER_YOUR_PASSWORD,
     required: true,
     width: FieldWidth.FULL,
     validationHints: [],
@@ -50,7 +56,7 @@ export const loginFormConfig: FieldConfig[] = [
     label: (
       <>
         <AppLink href="/login/forgot-password" className={styles.forgotPassword}>
-          Forgot Password?
+          {STRINGS.FORGOT_PASSWORD}
         </AppLink>
       </>
     ),
@@ -61,7 +67,7 @@ export const loginFormConfig: FieldConfig[] = [
   },
   {
     name: 'signIn',
-    label: 'Sign In',
+    label: STRINGS.SIGN_IN,
     type: 'button',
     buttonType: 'submit',
     className: styles.submitButton,
@@ -72,9 +78,9 @@ export const loginFormConfig: FieldConfig[] = [
     name: 'signUpText',
     label: (
       <>
-        Don&apos;t have an account?{' '}
+        {STRINGS.DONT_HAVE_ACCOUNT}{' '}
         <AppLink href={ROUTES.CREATE_ACCOUNT} className={styles.signUpText}>
-          Create a new account
+          {STRINGS.CREATE_NEW_ACCOUNT}
         </AppLink>
       </>
     ),
@@ -86,12 +92,36 @@ export const loginFormConfig: FieldConfig[] = [
 ];
 
 export default function LoginForm() {
+  const router = useRouter();
+  const { isLoading } = useApiStatusStore((store) => store);
+  const { showNotification } = useNotification();
+  const { setAccountData } = useAuthStore((store) => store);
+
+  const handleLogin = async (formData: Login) => {
+    try {
+      const requestParams = {
+        ...formData,
+        // role: 'agency',
+      };
+      // const encryptedBody = encryptObject(requestParams, ['password']);
+      const loginResponse = await authService.login(requestParams);
+      setAccountData(loginResponse.data);
+      router.push(ROUTES.OTP_VERIFICATION);
+    } catch (err: unknown) {
+      const messages = errorHandler(err);
+      messages.forEach((errMsg) => {
+        showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
+      });
+    }
+  };
+
   return (
     <DynamicForm
       fields={loginFormConfig}
       schema={loginSchema}
-      onSubmit={() => {}}
+      loading={isLoading}
       className={styles.loginContainer}
+      onSubmit={handleLogin}
     />
   );
 }
