@@ -45,48 +45,29 @@ exports[`Home matches snapshot 1`] = `
             >
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="q5ltt0v-aria"
-=======
-                  aria-labelledby="wbxmcz9-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="pq3ic4i-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="q5ltt0v-aria"
-=======
-                    id="wbxmcz9-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="pq3ic4i-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#q5ltt0v-diff)"
+                    clip-path="url(#pq3ic4i-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#q5ltt0v-animated-diff);"
-=======
-                    clip-path="url(#wbxmcz9-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#wbxmcz9-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#pq3ic4i-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="q5ltt0v-diff"
-=======
-                      id="wbxmcz9-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="pq3ic4i-diff"
                     >
                       <rect
                         height="12"
@@ -99,11 +80,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="q5ltt0v-animated-diff"
-=======
-                      id="wbxmcz9-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="pq3ic4i-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -133,48 +110,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="1gj4xbm-aria"
-=======
-                  aria-labelledby="fuddg9g-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="f5w7oin-aria"
                   height="50"
                   role="img"
                   viewBox="0 0 200 50"
                   width="200"
                 >
                   <title
-<<<<<<< HEAD
-                    id="1gj4xbm-aria"
-=======
-                    id="fuddg9g-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="f5w7oin-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#1gj4xbm-diff)"
+                    clip-path="url(#f5w7oin-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#1gj4xbm-animated-diff);"
-=======
-                    clip-path="url(#fuddg9g-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#fuddg9g-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#f5w7oin-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="1gj4xbm-diff"
-=======
-                      id="fuddg9g-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="f5w7oin-diff"
                     >
                       <circle
                         cx="20"
@@ -208,11 +166,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="1gj4xbm-animated-diff"
-=======
-                      id="fuddg9g-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="f5w7oin-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -242,48 +196,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="1t4iohr-aria"
-=======
-                  aria-labelledby="izsd0o9-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="he8czhe-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="1t4iohr-aria"
-=======
-                    id="izsd0o9-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="he8czhe-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#1t4iohr-diff)"
+                    clip-path="url(#he8czhe-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#1t4iohr-animated-diff);"
-=======
-                    clip-path="url(#izsd0o9-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#izsd0o9-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#he8czhe-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="1t4iohr-diff"
-=======
-                      id="izsd0o9-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="he8czhe-diff"
                     >
                       <rect
                         height="12"
@@ -296,11 +231,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="1t4iohr-animated-diff"
-=======
-                      id="izsd0o9-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="he8czhe-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -330,48 +261,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="ze0h0k-aria"
-=======
-                  aria-labelledby="v8di0ck-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="3qp4hsu-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="ze0h0k-aria"
-=======
-                    id="v8di0ck-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="3qp4hsu-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#ze0h0k-diff)"
+                    clip-path="url(#3qp4hsu-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#ze0h0k-animated-diff);"
-=======
-                    clip-path="url(#v8di0ck-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#v8di0ck-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#3qp4hsu-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="ze0h0k-diff"
-=======
-                      id="v8di0ck-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="3qp4hsu-diff"
                     >
                       <rect
                         height="12"
@@ -384,11 +296,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="ze0h0k-animated-diff"
-=======
-                      id="v8di0ck-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="3qp4hsu-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -418,48 +326,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="t83cbj-aria"
-=======
-                  aria-labelledby="h5adtcq-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="p7tg42-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="t83cbj-aria"
-=======
-                    id="h5adtcq-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="p7tg42-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#t83cbj-diff)"
+                    clip-path="url(#p7tg42-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#t83cbj-animated-diff);"
-=======
-                    clip-path="url(#h5adtcq-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#h5adtcq-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#p7tg42-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="t83cbj-diff"
-=======
-                      id="h5adtcq-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="p7tg42-diff"
                     >
                       <rect
                         height="12"
@@ -472,11 +361,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="t83cbj-animated-diff"
-=======
-                      id="h5adtcq-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="p7tg42-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -506,48 +391,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="5rmpzau-aria"
-=======
-                  aria-labelledby="cd6ry1h-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="egsbbap-aria"
                   height="24"
                   role="img"
                   viewBox="0 0 100 24"
                   width="100"
                 >
                   <title
-<<<<<<< HEAD
-                    id="5rmpzau-aria"
-=======
-                    id="cd6ry1h-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="egsbbap-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#5rmpzau-diff)"
+                    clip-path="url(#egsbbap-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#5rmpzau-animated-diff);"
-=======
-                    clip-path="url(#cd6ry1h-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#cd6ry1h-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#egsbbap-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="5rmpzau-diff"
-=======
-                      id="cd6ry1h-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="egsbbap-diff"
                     >
                       <rect
                         height="24"
@@ -560,11 +426,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="5rmpzau-animated-diff"
-=======
-                      id="cd6ry1h-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="egsbbap-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -594,48 +456,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="u07dl1l-aria"
-=======
-                  aria-labelledby="lgdwpu8-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="mr4del8-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="u07dl1l-aria"
-=======
-                    id="lgdwpu8-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="mr4del8-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#u07dl1l-diff)"
+                    clip-path="url(#mr4del8-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#u07dl1l-animated-diff);"
-=======
-                    clip-path="url(#lgdwpu8-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#lgdwpu8-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#mr4del8-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="u07dl1l-diff"
-=======
-                      id="lgdwpu8-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="mr4del8-diff"
                     >
                       <rect
                         height="12"
@@ -648,11 +491,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="u07dl1l-animated-diff"
-=======
-                      id="lgdwpu8-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="mr4del8-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -686,48 +525,29 @@ exports[`Home matches snapshot 1`] = `
             >
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="lblfgj-aria"
-=======
-                  aria-labelledby="z9g7ohj-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="vaur1l1r-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="lblfgj-aria"
-=======
-                    id="z9g7ohj-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="vaur1l1r-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#lblfgj-diff)"
+                    clip-path="url(#vaur1l1r-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#lblfgj-animated-diff);"
-=======
-                    clip-path="url(#z9g7ohj-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#z9g7ohj-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#vaur1l1r-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="lblfgj-diff"
-=======
-                      id="z9g7ohj-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="vaur1l1r-diff"
                     >
                       <rect
                         height="12"
@@ -740,11 +560,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="lblfgj-animated-diff"
-=======
-                      id="z9g7ohj-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="vaur1l1r-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -774,48 +590,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="io33ze-aria"
-=======
-                  aria-labelledby="ttzg16d-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="xsd7q8q-aria"
                   height="50"
                   role="img"
                   viewBox="0 0 200 50"
                   width="200"
                 >
                   <title
-<<<<<<< HEAD
-                    id="io33ze-aria"
-=======
-                    id="ttzg16d-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="xsd7q8q-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#io33ze-diff)"
+                    clip-path="url(#xsd7q8q-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#io33ze-animated-diff);"
-=======
-                    clip-path="url(#ttzg16d-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#ttzg16d-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#xsd7q8q-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="io33ze-diff"
-=======
-                      id="ttzg16d-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="xsd7q8q-diff"
                     >
                       <circle
                         cx="20"
@@ -849,11 +646,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="io33ze-animated-diff"
-=======
-                      id="ttzg16d-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="xsd7q8q-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -883,48 +676,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="w4w6bdi-aria"
-=======
-                  aria-labelledby="ganxdru-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="7z2chyf-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="w4w6bdi-aria"
-=======
-                    id="ganxdru-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="7z2chyf-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#w4w6bdi-diff)"
+                    clip-path="url(#7z2chyf-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#w4w6bdi-animated-diff);"
-=======
-                    clip-path="url(#ganxdru-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#ganxdru-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#7z2chyf-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="w4w6bdi-diff"
-=======
-                      id="ganxdru-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="7z2chyf-diff"
                     >
                       <rect
                         height="12"
@@ -937,11 +711,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="w4w6bdi-animated-diff"
-=======
-                      id="ganxdru-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="7z2chyf-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -971,48 +741,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="msoxmsf-aria"
-=======
-                  aria-labelledby="x5y4jjj-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="gmdkms-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="msoxmsf-aria"
-=======
-                    id="x5y4jjj-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="gmdkms-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#msoxmsf-diff)"
+                    clip-path="url(#gmdkms-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#msoxmsf-animated-diff);"
-=======
-                    clip-path="url(#x5y4jjj-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#x5y4jjj-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#gmdkms-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="msoxmsf-diff"
-=======
-                      id="x5y4jjj-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="gmdkms-diff"
                     >
                       <rect
                         height="12"
@@ -1025,11 +776,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="msoxmsf-animated-diff"
-=======
-                      id="x5y4jjj-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="gmdkms-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1059,48 +806,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="138wm4-aria"
-=======
-                  aria-labelledby="stn2ss6-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="j6xrkuq-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="138wm4-aria"
-=======
-                    id="stn2ss6-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="j6xrkuq-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#138wm4-diff)"
+                    clip-path="url(#j6xrkuq-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#138wm4-animated-diff);"
-=======
-                    clip-path="url(#stn2ss6-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#stn2ss6-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#j6xrkuq-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="138wm4-diff"
-=======
-                      id="stn2ss6-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="j6xrkuq-diff"
                     >
                       <rect
                         height="12"
@@ -1113,11 +841,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="138wm4-animated-diff"
-=======
-                      id="stn2ss6-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="j6xrkuq-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1147,48 +871,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="ctrrial-aria"
-=======
-                  aria-labelledby="phhtcro-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="3005by-aria"
                   height="24"
                   role="img"
                   viewBox="0 0 100 24"
                   width="100"
                 >
                   <title
-<<<<<<< HEAD
-                    id="ctrrial-aria"
-=======
-                    id="phhtcro-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="3005by-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#ctrrial-diff)"
+                    clip-path="url(#3005by-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#ctrrial-animated-diff);"
-=======
-                    clip-path="url(#phhtcro-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#phhtcro-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#3005by-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="ctrrial-diff"
-=======
-                      id="phhtcro-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="3005by-diff"
                     >
                       <rect
                         height="24"
@@ -1201,11 +906,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="ctrrial-animated-diff"
-=======
-                      id="phhtcro-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="3005by-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1235,48 +936,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="844zbhp-aria"
-=======
-                  aria-labelledby="p641ced-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="zu2d6uj-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="844zbhp-aria"
-=======
-                    id="p641ced-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="zu2d6uj-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#844zbhp-diff)"
+                    clip-path="url(#zu2d6uj-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#844zbhp-animated-diff);"
-=======
-                    clip-path="url(#p641ced-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#p641ced-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#zu2d6uj-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="844zbhp-diff"
-=======
-                      id="p641ced-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="zu2d6uj-diff"
                     >
                       <rect
                         height="12"
@@ -1289,11 +971,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="844zbhp-animated-diff"
-=======
-                      id="p641ced-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="zu2d6uj-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1327,48 +1005,29 @@ exports[`Home matches snapshot 1`] = `
             >
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="dq73zyv-aria"
-=======
-                  aria-labelledby="0mq3auc-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="catb0fl-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="dq73zyv-aria"
-=======
-                    id="0mq3auc-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="catb0fl-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#dq73zyv-diff)"
+                    clip-path="url(#catb0fl-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#dq73zyv-animated-diff);"
-=======
-                    clip-path="url(#0mq3auc-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#0mq3auc-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#catb0fl-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="dq73zyv-diff"
-=======
-                      id="0mq3auc-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="catb0fl-diff"
                     >
                       <rect
                         height="12"
@@ -1381,11 +1040,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="dq73zyv-animated-diff"
-=======
-                      id="0mq3auc-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="catb0fl-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1415,48 +1070,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="yw789bi-aria"
-=======
-                  aria-labelledby="klo7fbn-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="u9itvce-aria"
                   height="50"
                   role="img"
                   viewBox="0 0 200 50"
                   width="200"
                 >
                   <title
-<<<<<<< HEAD
-                    id="yw789bi-aria"
-=======
-                    id="klo7fbn-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="u9itvce-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#yw789bi-diff)"
+                    clip-path="url(#u9itvce-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#yw789bi-animated-diff);"
-=======
-                    clip-path="url(#klo7fbn-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#klo7fbn-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#u9itvce-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="yw789bi-diff"
-=======
-                      id="klo7fbn-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="u9itvce-diff"
                     >
                       <circle
                         cx="20"
@@ -1490,11 +1126,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="yw789bi-animated-diff"
-=======
-                      id="klo7fbn-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="u9itvce-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1524,48 +1156,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="p9mgllp-aria"
-=======
-                  aria-labelledby="bekorhi-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="l2q6ut-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="p9mgllp-aria"
-=======
-                    id="bekorhi-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="l2q6ut-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#p9mgllp-diff)"
+                    clip-path="url(#l2q6ut-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#p9mgllp-animated-diff);"
-=======
-                    clip-path="url(#bekorhi-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#bekorhi-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#l2q6ut-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="p9mgllp-diff"
-=======
-                      id="bekorhi-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="l2q6ut-diff"
                     >
                       <rect
                         height="12"
@@ -1578,11 +1191,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="p9mgllp-animated-diff"
-=======
-                      id="bekorhi-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="l2q6ut-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1612,48 +1221,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="whnwbw-aria"
-=======
-                  aria-labelledby="g9gf85r-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="2hdhbzm-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="whnwbw-aria"
-=======
-                    id="g9gf85r-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="2hdhbzm-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#whnwbw-diff)"
+                    clip-path="url(#2hdhbzm-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#whnwbw-animated-diff);"
-=======
-                    clip-path="url(#g9gf85r-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#g9gf85r-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#2hdhbzm-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="whnwbw-diff"
-=======
-                      id="g9gf85r-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="2hdhbzm-diff"
                     >
                       <rect
                         height="12"
@@ -1666,11 +1256,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="whnwbw-animated-diff"
-=======
-                      id="g9gf85r-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="2hdhbzm-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1700,48 +1286,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="hzcpp54-aria"
-=======
-                  aria-labelledby="5e1py-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="cdb4up-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="hzcpp54-aria"
-=======
-                    id="5e1py-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="cdb4up-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#hzcpp54-diff)"
+                    clip-path="url(#cdb4up-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#hzcpp54-animated-diff);"
-=======
-                    clip-path="url(#5e1py-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#5e1py-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#cdb4up-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="hzcpp54-diff"
-=======
-                      id="5e1py-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="cdb4up-diff"
                     >
                       <rect
                         height="12"
@@ -1754,11 +1321,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="hzcpp54-animated-diff"
-=======
-                      id="5e1py-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="cdb4up-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1788,48 +1351,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="ectz0cw-aria"
-=======
-                  aria-labelledby="ke8wtz8-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="3isleq-aria"
                   height="24"
                   role="img"
                   viewBox="0 0 100 24"
                   width="100"
                 >
                   <title
-<<<<<<< HEAD
-                    id="ectz0cw-aria"
-=======
-                    id="ke8wtz8-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="3isleq-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#ectz0cw-diff)"
+                    clip-path="url(#3isleq-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#ectz0cw-animated-diff);"
-=======
-                    clip-path="url(#ke8wtz8-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#ke8wtz8-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#3isleq-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="ectz0cw-diff"
-=======
-                      id="ke8wtz8-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="3isleq-diff"
                     >
                       <rect
                         height="24"
@@ -1842,11 +1386,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="ectz0cw-animated-diff"
-=======
-                      id="ke8wtz8-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="3isleq-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1876,48 +1416,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="fy8q3rf-aria"
-=======
-                  aria-labelledby="niiiflh-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="bz6bsql-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="fy8q3rf-aria"
-=======
-                    id="niiiflh-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="bz6bsql-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#fy8q3rf-diff)"
+                    clip-path="url(#bz6bsql-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#fy8q3rf-animated-diff);"
-=======
-                    clip-path="url(#niiiflh-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#niiiflh-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#bz6bsql-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="fy8q3rf-diff"
-=======
-                      id="niiiflh-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="bz6bsql-diff"
                     >
                       <rect
                         height="12"
@@ -1930,11 +1451,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="fy8q3rf-animated-diff"
-=======
-                      id="niiiflh-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="bz6bsql-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1968,48 +1485,29 @@ exports[`Home matches snapshot 1`] = `
             >
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="xw9tijp-aria"
-=======
-                  aria-labelledby="xq0pb9-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="1es6oao-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="xw9tijp-aria"
-=======
-                    id="xq0pb9-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="1es6oao-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#xw9tijp-diff)"
+                    clip-path="url(#1es6oao-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#xw9tijp-animated-diff);"
-=======
-                    clip-path="url(#xq0pb9-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#xq0pb9-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#1es6oao-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="xw9tijp-diff"
-=======
-                      id="xq0pb9-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="1es6oao-diff"
                     >
                       <rect
                         height="12"
@@ -2022,11 +1520,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="xw9tijp-animated-diff"
-=======
-                      id="xq0pb9-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="1es6oao-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2056,48 +1550,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="1jccmbh-aria"
-=======
-                  aria-labelledby="3v4hnh-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="zmk1b5-aria"
                   height="50"
                   role="img"
                   viewBox="0 0 200 50"
                   width="200"
                 >
                   <title
-<<<<<<< HEAD
-                    id="1jccmbh-aria"
-=======
-                    id="3v4hnh-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="zmk1b5-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#1jccmbh-diff)"
+                    clip-path="url(#zmk1b5-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#1jccmbh-animated-diff);"
-=======
-                    clip-path="url(#3v4hnh-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#3v4hnh-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#zmk1b5-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="1jccmbh-diff"
-=======
-                      id="3v4hnh-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="zmk1b5-diff"
                     >
                       <circle
                         cx="20"
@@ -2131,11 +1606,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="1jccmbh-animated-diff"
-=======
-                      id="3v4hnh-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="zmk1b5-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2165,48 +1636,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="7uvw5me-aria"
-=======
-                  aria-labelledby="39jvfbf-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="q77je4tf-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="7uvw5me-aria"
-=======
-                    id="39jvfbf-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="q77je4tf-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#7uvw5me-diff)"
+                    clip-path="url(#q77je4tf-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#7uvw5me-animated-diff);"
-=======
-                    clip-path="url(#39jvfbf-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#39jvfbf-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#q77je4tf-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="7uvw5me-diff"
-=======
-                      id="39jvfbf-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="q77je4tf-diff"
                     >
                       <rect
                         height="12"
@@ -2219,11 +1671,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="7uvw5me-animated-diff"
-=======
-                      id="39jvfbf-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="q77je4tf-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2253,48 +1701,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="6u2lnbj-aria"
-=======
-                  aria-labelledby="f05h1l-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="3dvgo8t-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="6u2lnbj-aria"
-=======
-                    id="f05h1l-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="3dvgo8t-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#6u2lnbj-diff)"
+                    clip-path="url(#3dvgo8t-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#6u2lnbj-animated-diff);"
-=======
-                    clip-path="url(#f05h1l-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#f05h1l-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#3dvgo8t-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="6u2lnbj-diff"
-=======
-                      id="f05h1l-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="3dvgo8t-diff"
                     >
                       <rect
                         height="12"
@@ -2307,11 +1736,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="6u2lnbj-animated-diff"
-=======
-                      id="f05h1l-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="3dvgo8t-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2341,48 +1766,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="dhs1jx5-aria"
-=======
-                  aria-labelledby="j0nvpn-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="u7x9ksc-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="dhs1jx5-aria"
-=======
-                    id="j0nvpn-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="u7x9ksc-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#dhs1jx5-diff)"
+                    clip-path="url(#u7x9ksc-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#dhs1jx5-animated-diff);"
-=======
-                    clip-path="url(#j0nvpn-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#j0nvpn-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#u7x9ksc-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="dhs1jx5-diff"
-=======
-                      id="j0nvpn-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="u7x9ksc-diff"
                     >
                       <rect
                         height="12"
@@ -2395,11 +1801,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="dhs1jx5-animated-diff"
-=======
-                      id="j0nvpn-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="u7x9ksc-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2429,48 +1831,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="6m2r34-aria"
-=======
-                  aria-labelledby="2nq7d7r-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="6d0wur-aria"
                   height="24"
                   role="img"
                   viewBox="0 0 100 24"
                   width="100"
                 >
                   <title
-<<<<<<< HEAD
-                    id="6m2r34-aria"
-=======
-                    id="2nq7d7r-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="6d0wur-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#6m2r34-diff)"
+                    clip-path="url(#6d0wur-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#6m2r34-animated-diff);"
-=======
-                    clip-path="url(#2nq7d7r-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#2nq7d7r-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#6d0wur-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="6m2r34-diff"
-=======
-                      id="2nq7d7r-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="6d0wur-diff"
                     >
                       <rect
                         height="24"
@@ -2483,11 +1866,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="6m2r34-animated-diff"
-=======
-                      id="2nq7d7r-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="6d0wur-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2517,48 +1896,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="qxpsx18-aria"
-=======
-                  aria-labelledby="an44eub-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="f1p4i9t-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="qxpsx18-aria"
-=======
-                    id="an44eub-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="f1p4i9t-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#qxpsx18-diff)"
+                    clip-path="url(#f1p4i9t-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#qxpsx18-animated-diff);"
-=======
-                    clip-path="url(#an44eub-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#an44eub-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#f1p4i9t-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="qxpsx18-diff"
-=======
-                      id="an44eub-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="f1p4i9t-diff"
                     >
                       <rect
                         height="12"
@@ -2571,11 +1931,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="qxpsx18-animated-diff"
-=======
-                      id="an44eub-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="f1p4i9t-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2609,48 +1965,29 @@ exports[`Home matches snapshot 1`] = `
             >
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="bpuchg-aria"
-=======
-                  aria-labelledby="33dh5l-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="9i3qa5l-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="bpuchg-aria"
-=======
-                    id="33dh5l-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="9i3qa5l-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#bpuchg-diff)"
+                    clip-path="url(#9i3qa5l-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#bpuchg-animated-diff);"
-=======
-                    clip-path="url(#33dh5l-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#33dh5l-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#9i3qa5l-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="bpuchg-diff"
-=======
-                      id="33dh5l-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="9i3qa5l-diff"
                     >
                       <rect
                         height="12"
@@ -2663,11 +2000,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="bpuchg-animated-diff"
-=======
-                      id="33dh5l-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="9i3qa5l-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2697,48 +2030,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="h0avbys-aria"
-=======
-                  aria-labelledby="ocnzlka-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="p7uhcyb-aria"
                   height="50"
                   role="img"
                   viewBox="0 0 200 50"
                   width="200"
                 >
                   <title
-<<<<<<< HEAD
-                    id="h0avbys-aria"
-=======
-                    id="ocnzlka-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="p7uhcyb-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#h0avbys-diff)"
+                    clip-path="url(#p7uhcyb-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#h0avbys-animated-diff);"
-=======
-                    clip-path="url(#ocnzlka-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#ocnzlka-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#p7uhcyb-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="h0avbys-diff"
-=======
-                      id="ocnzlka-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="p7uhcyb-diff"
                     >
                       <circle
                         cx="20"
@@ -2772,11 +2086,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="h0avbys-animated-diff"
-=======
-                      id="ocnzlka-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="p7uhcyb-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2806,48 +2116,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="vzm0int-aria"
-=======
-                  aria-labelledby="hvps7zu-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="nu2bxfn-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="vzm0int-aria"
-=======
-                    id="hvps7zu-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="nu2bxfn-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#vzm0int-diff)"
+                    clip-path="url(#nu2bxfn-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#vzm0int-animated-diff);"
-=======
-                    clip-path="url(#hvps7zu-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#hvps7zu-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#nu2bxfn-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="vzm0int-diff"
-=======
-                      id="hvps7zu-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="nu2bxfn-diff"
                     >
                       <rect
                         height="12"
@@ -2860,11 +2151,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="vzm0int-animated-diff"
-=======
-                      id="hvps7zu-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="nu2bxfn-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2894,48 +2181,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="cnlifc-aria"
-=======
-                  aria-labelledby="1rn8nqd-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="42mkhyt-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="cnlifc-aria"
-=======
-                    id="1rn8nqd-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="42mkhyt-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#cnlifc-diff)"
+                    clip-path="url(#42mkhyt-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#cnlifc-animated-diff);"
-=======
-                    clip-path="url(#1rn8nqd-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#1rn8nqd-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#42mkhyt-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="cnlifc-diff"
-=======
-                      id="1rn8nqd-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="42mkhyt-diff"
                     >
                       <rect
                         height="12"
@@ -2948,11 +2216,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="cnlifc-animated-diff"
-=======
-                      id="1rn8nqd-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="42mkhyt-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2982,48 +2246,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="tn0eqga-aria"
-=======
-                  aria-labelledby="chyvsy-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="yu6di3a-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="tn0eqga-aria"
-=======
-                    id="chyvsy-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="yu6di3a-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#tn0eqga-diff)"
+                    clip-path="url(#yu6di3a-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#tn0eqga-animated-diff);"
-=======
-                    clip-path="url(#chyvsy-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#chyvsy-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#yu6di3a-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="tn0eqga-diff"
-=======
-                      id="chyvsy-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="yu6di3a-diff"
                     >
                       <rect
                         height="12"
@@ -3036,11 +2281,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="tn0eqga-animated-diff"
-=======
-                      id="chyvsy-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="yu6di3a-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -3070,48 +2311,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="9yjo2hj-aria"
-=======
-                  aria-labelledby="2g5ei4s-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="t9owxn-aria"
                   height="24"
                   role="img"
                   viewBox="0 0 100 24"
                   width="100"
                 >
                   <title
-<<<<<<< HEAD
-                    id="9yjo2hj-aria"
-=======
-                    id="2g5ei4s-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="t9owxn-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#9yjo2hj-diff)"
+                    clip-path="url(#t9owxn-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#9yjo2hj-animated-diff);"
-=======
-                    clip-path="url(#2g5ei4s-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#2g5ei4s-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#t9owxn-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="9yjo2hj-diff"
-=======
-                      id="2g5ei4s-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="t9owxn-diff"
                     >
                       <rect
                         height="24"
@@ -3124,11 +2346,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="9yjo2hj-animated-diff"
-=======
-                      id="2g5ei4s-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="t9owxn-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -3158,48 +2376,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-<<<<<<< HEAD
-                  aria-labelledby="0zub1wb-aria"
-=======
-                  aria-labelledby="7jdu91d-aria"
->>>>>>> bfad711 (integrated login api)
+                  aria-labelledby="vltlksu-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-<<<<<<< HEAD
-                    id="0zub1wb-aria"
-=======
-                    id="7jdu91d-aria"
->>>>>>> bfad711 (integrated login api)
+                    id="vltlksu-aria"
                   >
                     Loading...
                   </title>
                   <rect
-<<<<<<< HEAD
-                    clip-path="url(#0zub1wb-diff)"
+                    clip-path="url(#vltlksu-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#0zub1wb-animated-diff);"
-=======
-                    clip-path="url(#7jdu91d-diff)"
-                    height="100%"
-                    role="presentation"
-                    style="fill: url(#7jdu91d-animated-diff);"
->>>>>>> bfad711 (integrated login api)
+                    style="fill: url(#vltlksu-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-<<<<<<< HEAD
-                      id="0zub1wb-diff"
-=======
-                      id="7jdu91d-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="vltlksu-diff"
                     >
                       <rect
                         height="12"
@@ -3212,11 +2411,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-<<<<<<< HEAD
-                      id="0zub1wb-animated-diff"
-=======
-                      id="7jdu91d-animated-diff"
->>>>>>> bfad711 (integrated login api)
+                      id="vltlksu-animated-diff"
                     >
                       <stop
                         offset="0%"
