@@ -68,20 +68,20 @@ exports[`Home matches snapshot 1`] = `
             class="typography h2 align-center otpHeader"
             data-testid="TypographyTest"
           >
-            Email Verification
+            Mobile Number Verification
           </h2>
           <p
             class="typography p align-center otpSubHeader"
             data-testid="TypographyTest"
           >
-            We've sent a verification code to your email
+            We've sent a verification code to your mobile number
           </p>
           <div
             class="userData"
           >
             <svg
               aria-hidden="true"
-              class="lucide lucide-mail"
+              class="lucide lucide-phone"
               fill="none"
               height="24"
               stroke="var(--color-black)"
@@ -93,14 +93,7 @@ exports[`Home matches snapshot 1`] = `
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"
-              />
-              <rect
-                height="16"
-                rx="2"
-                width="20"
-                x="2"
-                y="4"
+                d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"
               />
             </svg>
             <span
@@ -108,7 +101,7 @@ exports[`Home matches snapshot 1`] = `
               data-testid="TypographyTest"
               style="color: var(--color-indigo);"
             >
-              test@example.com
+              US-1234567890
             </span>
           </div>
           <div
@@ -140,7 +133,7 @@ exports[`Home matches snapshot 1`] = `
               class="typography label align-center otpSubHeader"
               data-testid="TypographyTest"
             >
-              Enter the 6-digit code sent to your email
+              Enter the 6-digit code sent to your mobile number
             </label>
           </div>
           <button
@@ -173,7 +166,7 @@ exports[`Home matches snapshot 1`] = `
               class="typography span align-center button"
               data-testid="TypographyTest"
             >
-              Verify Email
+              Verify Mobile Number
             </span>
           </button>
           <div

@@ -4,7 +4,7 @@ import styles from './page.module.scss';
 import AuthSideBanner from '@/components/AuthSideBanner';
 import { STRINGS } from '@/constants/strings';
 
-export default function Login() {
+export default function LoginPage() {
   return (
     <div className={styles.container}>
       <CustomImage
