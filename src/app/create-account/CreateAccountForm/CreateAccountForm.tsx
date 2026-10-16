@@ -1,18 +1,15 @@
 'use client';
 
+import { useMemo, useTransition } from 'react';
 import DynamicForm, { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
 import { createAccountSchema } from './CreateAccountSchema';
 import AppLink from '@/components/AppLink';
 import { UserPlus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { ROUTES } from '@/constants/strings';
-import { AccountData, useAuthStore } from '@/store/auth';
-import { useApiStatusStore } from '@/store/apiStatus';
-import { authService } from '@/services/authService';
+import { NOTIFICATION_TYPES, ROUTES, STRINGS } from '@/constants/strings';
+import { AccountData, Country } from '@/constants/types';
+import { registerAction } from '@/actions/auth';
 import { useNotification } from '@/providers/NotificationProvider';
-import { errorHandler } from '@/utils/errorHandler';
-import { useCommonStore } from '@/store/common';
-import { encryptObject } from '@/utils/encryptor';
 import styles from './CreateAccountForm.module.scss';
 
 export const createAccountFormConfig: FieldConfig[] = [
@@ -168,41 +165,49 @@ export const createAccountFormConfig: FieldConfig[] = [
   },
 ];
 
-export default function CreateAccountForm() {
+interface CreateAccountFormProps {
+  /** Country codes, fetched on the server by the page */
+  countries: Country[];
+}
+
+export default function CreateAccountForm({ countries }: CreateAccountFormProps) {
   const router = useRouter();
   const { showNotification } = useNotification();
-  const setAccountData = useAuthStore((store) => store.setAccountData);
-  const isLoading = useApiStatusStore((store) => store.isLoading);
-  const countries = useCommonStore((state) => state.countries);
-  const schema = createAccountSchema(countries);
+  const [isPending, startTransition] = useTransition();
+  const schema = useMemo(() => createAccountSchema(countries), [countries]);
+  const fields = useMemo(
+    () =>
+      createAccountFormConfig.map((field) =>
+        field.type === 'MobileNumberInput' ? { ...field, countries } : field,
+      ),
+    [countries],
+  );
 
-  const handleSubmit = async (formData: AccountData) => {
-    try {
+  const handleSubmit = (formData: AccountData) => {
+    startTransition(async () => {
       const rawCountry = formData.phoneNumber?.country ?? '';
       const countryCode = rawCountry.split('(')[0].trim();
-      const requestParams = {
+      const result = await registerAction({
         ...formData,
         phoneNumber: `${countryCode}-${formData.phoneNumber?.number}`,
         role: 'agency',
-      };
-      // const encryptedBody = encryptObject(requestParams, ['password']);
-      await authService.register(requestParams);
-      setAccountData(formData);
-      router.push(ROUTES.VERIFY);
-    } catch (err: unknown) {
-      const messages = errorHandler(err);
-      messages.forEach((errMsg) => {
-        showNotification('Error!', errMsg, 'error');
       });
-    }
+      if (!result.success) {
+        result.errors.forEach((errMsg) => {
+          showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
+        });
+        return;
+      }
+      router.push(ROUTES.VERIFY);
+    });
   };
 
   return (
     <DynamicForm
-      fields={createAccountFormConfig}
+      fields={fields}
       schema={schema}
       className={styles.createAccountContainer}
-      loading={isLoading}
+      loading={isPending}
       onSubmit={handleSubmit}
     />
   );

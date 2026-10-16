@@ -13,6 +13,7 @@
  *   return (
  *     <OtpVerification
  *       otpType="mobile"
+ *       contact={{ phoneNumber: '+91-9876543210' }}
  *       onSubmit={handleOtpSubmit}
  *       loading={false}
  *     />
@@ -27,12 +28,10 @@ import Button from '../Button';
 import TextField from '../TextField';
 import Typography from '../Typography';
 import CustomImage from '../CustomImage';
-import { useAuthStore } from '@/store/auth';
-import { OtpProps } from '@/constants/types';
-import { STRINGS } from '@/constants/strings';
+import { OtpProps, OtpType, PendingVerification } from '@/constants/types';
+import { NOTIFICATION_TYPES, STRINGS } from '@/constants/strings';
 import AuthSideBanner from '../AuthSideBanner';
-import { errorHandler } from '@/utils/errorHandler';
-import { authService } from '@/services/authService';
+import { sendOtpAction } from '@/actions/auth';
 import { Mail, Phone, Check, RotateCw } from 'lucide-react';
 import { useNotification } from '@/providers/NotificationProvider';
 import styles from './OtpVerification.module.scss';
@@ -45,7 +44,13 @@ interface OtpVerificationProps {
    *
    * @default 'email'
    */
-  otpType?: 'email' | 'mobile';
+  otpType?: OtpType;
+
+  /**
+   * The email / phone number the code was sent to, shown to the user.
+   * Read on the server from the pending-verification cookie and passed down by the page.
+   */
+  contact?: PendingVerification;
 
   /**
    * Callback function triggered when the user submits the OTP for verification.
@@ -65,30 +70,17 @@ interface OtpVerificationProps {
 }
 
 export default function OtpVerification({
-  otpType,
+  otpType = 'email',
+  contact,
   onSubmit,
   loading = false,
 }: OtpVerificationProps) {
   const { showNotification } = useNotification();
-  const accountData = useAuthStore((store) => store.accountData);
   const [value, setValue] = useState('');
   const [timer, setTimer] = useState(0);
-  const rawCountry = accountData?.phoneNumber?.country ?? '';
-  const countryCode = rawCountry.split('(')[0].trim();
-
-  const phoneNumber =
-    typeof accountData?.phoneNumber === 'object'
-      ? `${countryCode}-${accountData?.phoneNumber.number}`
-      : accountData?.phoneNumber;
-
-  const email = accountData?.email;
 
   const formattedContactValue =
-    otpType === STRINGS.EMAIL
-      ? (accountData?.email ?? '')
-      : typeof accountData?.phoneNumber === 'object'
-        ? `${countryCode}-${accountData?.phoneNumber.number}`
-        : (accountData?.phoneNumber ?? '');
+    (otpType === STRINGS.EMAIL ? contact?.email : contact?.phoneNumber) ?? '';
 
   useEffect(() => {
     setValue('');
@@ -108,16 +100,14 @@ export default function OtpVerification({
   }, [timer]);
 
   const handleResend = async () => {
-    try {
-      const requestParams = otpType === STRINGS.EMAIL ? { email } : { phoneNumber };
-      await authService.sendOtp(requestParams);
-      setTimer(60);
-    } catch (err: unknown) {
-      const messages = errorHandler(err);
-      messages.forEach((errMsg) => {
-        showNotification('Error!', errMsg, 'error');
+    const result = await sendOtpAction(otpType);
+    if (!result.success) {
+      result.errors.forEach((errMsg) => {
+        showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
       });
+      return;
     }
+    setTimer(60);
   };
 
   const handleOnChange = (val: string) => {

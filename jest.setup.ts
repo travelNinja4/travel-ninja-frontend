@@ -1,19 +1,5 @@
 import '@testing-library/jest-dom';
 
-jest.mock('./src/store/auth', () => ({
-  useAuthStore: jest.fn((selector) =>
-    selector({
-      accountData: {
-        email: 'test@example.com',
-        phoneNumber: {
-          country: 'US (+1)',
-          number: '1234567890',
-        },
-      },
-    }),
-  ),
-}));
-
 // next/navigation mock
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -30,10 +16,14 @@ jest.mock('./src/providers/NotificationProvider', () => ({
   }),
 }));
 
-// authService mock
-jest.mock('./src/services/authService', () => ({
-  authService: {
-    sendOtp: jest.fn(),
-    verifyOtp: jest.fn(),
-  },
+// server actions mock: the real module imports server-only code that can't run in jsdom
+jest.mock('./src/actions/auth', () => ({
+  registerAction: jest.fn(),
+  sendOtpAction: jest.fn(),
+  verifyOtpAction: jest.fn(),
+  loginAction: jest.fn(),
+  verifyLoginAction: jest.fn(),
+  forgotPasswordAction: jest.fn(),
+  resetPasswordAction: jest.fn(),
+  logoutAction: jest.fn(),
 }));

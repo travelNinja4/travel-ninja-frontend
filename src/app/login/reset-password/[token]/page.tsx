@@ -1,7 +1,7 @@
 import CustomImage from '@/components/CustomImage';
 import AuthSideBanner from '@/components/AuthSideBanner';
 import { STRINGS } from '@/constants/strings';
-import { authService } from '@/services/authService';
+import { authService } from '@/server/authService';
 import ResetPasswordForm from '../../ResetPasswordForm/ResetPasswordForm';
 import styles from './page.module.scss';
 

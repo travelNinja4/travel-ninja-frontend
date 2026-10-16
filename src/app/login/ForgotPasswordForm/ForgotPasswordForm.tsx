@@ -1,15 +1,15 @@
 'use client';
 
+import { useTransition } from 'react';
 import DynamicForm from '@/components/DynamicForm';
 import { forgotPasswordSchema } from './ForgotPasswordSchema';
 import { Send, ArrowLeft } from 'lucide-react';
 import AppLink from '@/components/AppLink';
 import { NOTIFICATION_TYPES, ROUTES, STRINGS } from '@/constants/strings';
-import { authService, forgotPassword } from '@/services/authService';
-import { errorHandler } from '@/utils/errorHandler';
+import { forgotPassword } from '@/constants/types';
+import { forgotPasswordAction } from '@/actions/auth';
 import { useNotification } from '@/providers/NotificationProvider';
 import { useRouter } from 'next/navigation';
-import { useApiStatusStore } from '@/store/apiStatus';
 import { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
 import styles from './ForgotPassword.module.scss';
 
@@ -78,24 +78,25 @@ export const forgotPasswordFormConfig: FieldConfig[] = [
 
 export default function ForgotPasswordForm() {
   const { showNotification } = useNotification();
-  const isLoading = useApiStatusStore((store) => store.isLoading);
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
-  const handleResetLink = async (formData: forgotPassword) => {
-    try {
-      await authService.forgotPassword(formData);
+  const handleResetLink = (formData: forgotPassword) => {
+    startTransition(async () => {
+      const result = await forgotPasswordAction(formData);
+      if (!result.success) {
+        result.errors.forEach((errMsg) => {
+          showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
+        });
+        return;
+      }
       showNotification(
         STRINGS.SUCCESS,
         STRINGS.RESET_LINK_INSTRUCTIONS,
         NOTIFICATION_TYPES.SUCCESS,
       );
       router.push(ROUTES.LOGIN);
-    } catch (err: unknown) {
-      const messages = errorHandler(err);
-      messages.forEach((errMsg) => {
-        showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
-      });
-    }
+    });
   };
 
   return (
@@ -103,7 +104,7 @@ export default function ForgotPasswordForm() {
       fields={forgotPasswordFormConfig}
       schema={forgotPasswordSchema}
       className={styles.forgotPasswordContainer}
-      loading={isLoading}
+      loading={isPending}
       onSubmit={handleResetLink}
     />
   );

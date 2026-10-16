@@ -25,6 +25,7 @@ import CheckBox from '../CheckBox';
 import Button from '../Button';
 import { LucideIcon } from 'lucide-react';
 import MobileNumberInput from '../MobileNumberInput';
+import { Country } from '@/constants/types';
 import clsx from 'clsx';
 import styles from './DynamicForm.module.scss';
 
@@ -84,6 +85,8 @@ export interface FieldConfig {
   iconColor?: string;
   textAlign?: TextAlign;
   maxLength?: number;
+  /** Country codes for a `MobileNumberInput` field */
+  countries?: Country[];
 }
 
 type FieldType =
@@ -112,7 +115,6 @@ export default function DynamicForm<T extends FieldValues>({
     control,
     formState: { errors },
   } = useForm<T>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: zodResolver(schema as any) as unknown as Resolver<T>,
     mode: 'all',
     reValidateMode: 'onChange',
@@ -122,7 +124,6 @@ export default function DynamicForm<T extends FieldValues>({
     const value = watch(field.name as Path<T>) || '';
     const commonProps = {
       ...field,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ...register(field.name as any),
       error: errors[field.name]?.message as string,
     };
@@ -199,6 +200,7 @@ export default function DynamicForm<T extends FieldValues>({
               render={({ field: { onChange, value } }) => (
                 <MobileNumberInput
                   value={value ?? { country: '+91 (IN)', number: '' }}
+                  countries={field.countries}
                   onChange={onChange}
                   maxLength={field.maxLength}
                   error={errors[field.name]?.number?.message as string}

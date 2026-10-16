@@ -1,11 +1,19 @@
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import { authService } from '../../services/authService';
+import { sendOtpAction } from '../../actions/auth';
 import OtpVerification from './OtpVerification';
+
+const mockShowNotification = jest.fn();
+
+jest.mock('../../providers/NotificationProvider', () => ({
+  useNotification: () => ({ showNotification: mockShowNotification }),
+}));
 
 describe('Home', () => {
   /** Base props for OtpVerification **/
-  const baseProps = {};
+  const baseProps = {
+    contact: { email: 'test@example.com', phoneNumber: '+1-1234567890' },
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -46,64 +54,56 @@ describe('Home', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
+  it('shows the email for email verification and the phone number for mobile', () => {
+    const { rerender } = render(<OtpVerification {...baseProps} otpType="email" />);
+    expect(screen.getByText('test@example.com')).toBeInTheDocument();
+
+    rerender(<OtpVerification {...baseProps} otpType="mobile" />);
+    expect(screen.getByText('+1-1234567890')).toBeInTheDocument();
+    expect(screen.getByText(/VERIFY MOBILE NUMBER/i)).toBeInTheDocument();
+  });
+
   it('handles OTP resend and sets timer', async () => {
-    (authService.sendOtp as jest.Mock).mockResolvedValue({});
-    render(<OtpVerification />);
-    const resendBtn = screen.getByText(/RESEND CODE/i);
+    (sendOtpAction as jest.Mock).mockResolvedValue({ success: true, data: undefined });
+    render(<OtpVerification {...baseProps} />);
     await act(async () => {
-      fireEvent.click(resendBtn);
+      fireEvent.click(screen.getByText(/RESEND CODE/i));
     });
-    expect(authService.sendOtp).toHaveBeenCalled();
+    expect(sendOtpAction).toHaveBeenCalledWith('email');
     expect(screen.getByText(/RESEND CODE IN 60 SECONDS/i)).toBeInTheDocument();
   });
 
-  it('verifies email OTP and switches to mobile', async () => {
-    (authService.verifyOtp as jest.Mock).mockResolvedValue({});
-    render(<OtpVerification />);
-    const input = screen.getByPlaceholderText('000000');
-    fireEvent.change(input, { target: { value: '123456' } });
-    const verifyBtn = screen.getByText(/VERIFY EMAIL/i);
+  it('shows an error and keeps the resend link when resend fails', async () => {
+    (sendOtpAction as jest.Mock).mockResolvedValue({
+      success: false,
+      errors: ['Too many requests'],
+    });
+
+    render(<OtpVerification {...baseProps} />);
     await act(async () => {
-      fireEvent.click(verifyBtn);
+      fireEvent.click(screen.getByText(/RESEND CODE/i));
     });
-    expect(authService.verifyOtp).toHaveBeenCalledWith({
-      email: 'test@example.com',
-      otpCode: '123456',
-    });
-    expect(screen.getByText(/MOBILE NUMBER VERIFICATION/i)).toBeInTheDocument();
+
+    expect(mockShowNotification).toHaveBeenCalledWith('Error!', 'Too many requests', 'error');
+    expect(screen.getByText(/RESEND CODE/i)).toBeInTheDocument();
   });
 
-  it('verifies mobile OTP and navigates to login', async () => {
-    (authService.verifyOtp as jest.Mock).mockResolvedValue({});
+  it('submits the entered code with the OTP type', async () => {
+    const onSubmit = jest.fn();
+    render(<OtpVerification {...baseProps} onSubmit={onSubmit} />);
+    fireEvent.change(screen.getByPlaceholderText('000000'), { target: { value: '123456' } });
+    await act(async () => {
+      fireEvent.click(screen.getByText(/VERIFY EMAIL/i));
+    });
+    expect(onSubmit).toHaveBeenCalledWith({ otpCode: '123456', otpType: 'email' });
+  });
 
-    const showNotificationSpy = jest.spyOn(
-      require('../../providers/NotificationProvider'),
-      'useNotification',
-    );
-    const pushSpy = jest.spyOn(require('next/navigation'), 'useRouter');
-
-    const mockShowNotification = jest.fn();
-    const mockPush = jest.fn();
-
-    showNotificationSpy.mockReturnValue({ showNotification: mockShowNotification });
-    pushSpy.mockReturnValue({ push: mockPush, replace: jest.fn(), prefetch: jest.fn() });
-
-    render(<OtpVerification />);
-
-    const emailInput = screen.getByPlaceholderText('000000');
-    fireEvent.change(emailInput, { target: { value: '123456' } });
-    await act(async () => fireEvent.click(screen.getByText(/VERIFY EMAIL/i)));
-
-    const mobileInput = screen.getByPlaceholderText('000000');
-    fireEvent.change(mobileInput, { target: { value: '654321' } });
-    await act(async () => fireEvent.click(screen.getByText(/VERIFY MOBILE NUMBER/i)));
-
-    expect(authService.verifyOtp).toHaveBeenCalled();
-    expect(mockShowNotification).toHaveBeenCalledWith(
-      'Success!',
-      'Account created successfully',
-      'success',
-    );
-    expect(mockPush).toHaveBeenCalledWith('/login');
+  it('does not submit when no code is entered', async () => {
+    const onSubmit = jest.fn();
+    render(<OtpVerification {...baseProps} onSubmit={onSubmit} />);
+    await act(async () => {
+      fireEvent.click(screen.getByText(/VERIFY EMAIL/i));
+    });
+    expect(onSubmit).not.toHaveBeenCalled();
   });
 });
