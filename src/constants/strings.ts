@@ -1,4 +1,4 @@
-import { NotificationType } from '@/providers/NotificationProvider';
+import type { NotificationType } from '@/providers/NotificationProvider';
 
 export const STRINGS = {
   APP_NAME: 'TravelNinja',
@@ -58,6 +58,8 @@ export const STRINGS = {
   ENTER_YOUR_PASSWORD: 'Enter your password',
   LOGGED_IN_SUCCESSFUL: `You’ve logged in successfully!`,
   ACCOUNT_CREATED_SUCCESSFUL: 'Account created successfully',
+  SOMETHING_WENT_WRONG: 'Something went wrong',
+  VERIFICATION_SESSION_EXPIRED: 'Your verification session has expired. Please start again.',
 };
 
 export const ROUTES = {

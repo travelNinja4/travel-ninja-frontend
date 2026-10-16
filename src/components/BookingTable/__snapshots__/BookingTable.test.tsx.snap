@@ -45,29 +45,29 @@ exports[`Home matches snapshot 1`] = `
             >
               <td>
                 <svg
-                  aria-labelledby="pq3ic4i-aria"
+                  aria-labelledby="booking-skeleton-0-bookingId-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="pq3ic4i-aria"
+                    id="booking-skeleton-0-bookingId-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#pq3ic4i-diff)"
+                    clip-path="url(#booking-skeleton-0-bookingId-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#pq3ic4i-animated-diff);"
+                    style="fill: url(#booking-skeleton-0-bookingId-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="pq3ic4i-diff"
+                      id="booking-skeleton-0-bookingId-diff"
                     >
                       <rect
                         height="12"
@@ -80,7 +80,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="pq3ic4i-animated-diff"
+                      id="booking-skeleton-0-bookingId-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -110,29 +110,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="f5w7oin-aria"
+                  aria-labelledby="booking-skeleton-0-customer-aria"
                   height="50"
                   role="img"
                   viewBox="0 0 200 50"
                   width="200"
                 >
                   <title
-                    id="f5w7oin-aria"
+                    id="booking-skeleton-0-customer-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#f5w7oin-diff)"
+                    clip-path="url(#booking-skeleton-0-customer-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#f5w7oin-animated-diff);"
+                    style="fill: url(#booking-skeleton-0-customer-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="f5w7oin-diff"
+                      id="booking-skeleton-0-customer-diff"
                     >
                       <circle
                         cx="20"
@@ -166,7 +166,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="f5w7oin-animated-diff"
+                      id="booking-skeleton-0-customer-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -196,29 +196,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="he8czhe-aria"
+                  aria-labelledby="booking-skeleton-0-tour-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="he8czhe-aria"
+                    id="booking-skeleton-0-tour-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#he8czhe-diff)"
+                    clip-path="url(#booking-skeleton-0-tour-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#he8czhe-animated-diff);"
+                    style="fill: url(#booking-skeleton-0-tour-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="he8czhe-diff"
+                      id="booking-skeleton-0-tour-diff"
                     >
                       <rect
                         height="12"
@@ -231,7 +231,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="he8czhe-animated-diff"
+                      id="booking-skeleton-0-tour-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -261,29 +261,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="3qp4hsu-aria"
+                  aria-labelledby="booking-skeleton-0-date-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="3qp4hsu-aria"
+                    id="booking-skeleton-0-date-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#3qp4hsu-diff)"
+                    clip-path="url(#booking-skeleton-0-date-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#3qp4hsu-animated-diff);"
+                    style="fill: url(#booking-skeleton-0-date-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="3qp4hsu-diff"
+                      id="booking-skeleton-0-date-diff"
                     >
                       <rect
                         height="12"
@@ -296,7 +296,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="3qp4hsu-animated-diff"
+                      id="booking-skeleton-0-date-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -326,29 +326,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="p7tg42-aria"
+                  aria-labelledby="booking-skeleton-0-slots-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="p7tg42-aria"
+                    id="booking-skeleton-0-slots-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#p7tg42-diff)"
+                    clip-path="url(#booking-skeleton-0-slots-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#p7tg42-animated-diff);"
+                    style="fill: url(#booking-skeleton-0-slots-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="p7tg42-diff"
+                      id="booking-skeleton-0-slots-diff"
                     >
                       <rect
                         height="12"
@@ -361,7 +361,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="p7tg42-animated-diff"
+                      id="booking-skeleton-0-slots-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -391,29 +391,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="egsbbap-aria"
+                  aria-labelledby="booking-skeleton-0-status-aria"
                   height="24"
                   role="img"
                   viewBox="0 0 100 24"
                   width="100"
                 >
                   <title
-                    id="egsbbap-aria"
+                    id="booking-skeleton-0-status-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#egsbbap-diff)"
+                    clip-path="url(#booking-skeleton-0-status-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#egsbbap-animated-diff);"
+                    style="fill: url(#booking-skeleton-0-status-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="egsbbap-diff"
+                      id="booking-skeleton-0-status-diff"
                     >
                       <rect
                         height="24"
@@ -426,7 +426,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="egsbbap-animated-diff"
+                      id="booking-skeleton-0-status-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -456,29 +456,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="mr4del8-aria"
+                  aria-labelledby="booking-skeleton-0-amount-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="mr4del8-aria"
+                    id="booking-skeleton-0-amount-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#mr4del8-diff)"
+                    clip-path="url(#booking-skeleton-0-amount-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#mr4del8-animated-diff);"
+                    style="fill: url(#booking-skeleton-0-amount-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="mr4del8-diff"
+                      id="booking-skeleton-0-amount-diff"
                     >
                       <rect
                         height="12"
@@ -491,7 +491,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="mr4del8-animated-diff"
+                      id="booking-skeleton-0-amount-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -525,29 +525,29 @@ exports[`Home matches snapshot 1`] = `
             >
               <td>
                 <svg
-                  aria-labelledby="vaur1l1r-aria"
+                  aria-labelledby="booking-skeleton-1-bookingId-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="vaur1l1r-aria"
+                    id="booking-skeleton-1-bookingId-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#vaur1l1r-diff)"
+                    clip-path="url(#booking-skeleton-1-bookingId-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#vaur1l1r-animated-diff);"
+                    style="fill: url(#booking-skeleton-1-bookingId-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="vaur1l1r-diff"
+                      id="booking-skeleton-1-bookingId-diff"
                     >
                       <rect
                         height="12"
@@ -560,7 +560,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="vaur1l1r-animated-diff"
+                      id="booking-skeleton-1-bookingId-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -590,29 +590,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="xsd7q8q-aria"
+                  aria-labelledby="booking-skeleton-1-customer-aria"
                   height="50"
                   role="img"
                   viewBox="0 0 200 50"
                   width="200"
                 >
                   <title
-                    id="xsd7q8q-aria"
+                    id="booking-skeleton-1-customer-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#xsd7q8q-diff)"
+                    clip-path="url(#booking-skeleton-1-customer-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#xsd7q8q-animated-diff);"
+                    style="fill: url(#booking-skeleton-1-customer-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="xsd7q8q-diff"
+                      id="booking-skeleton-1-customer-diff"
                     >
                       <circle
                         cx="20"
@@ -646,7 +646,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="xsd7q8q-animated-diff"
+                      id="booking-skeleton-1-customer-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -676,29 +676,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="7z2chyf-aria"
+                  aria-labelledby="booking-skeleton-1-tour-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="7z2chyf-aria"
+                    id="booking-skeleton-1-tour-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#7z2chyf-diff)"
+                    clip-path="url(#booking-skeleton-1-tour-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#7z2chyf-animated-diff);"
+                    style="fill: url(#booking-skeleton-1-tour-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="7z2chyf-diff"
+                      id="booking-skeleton-1-tour-diff"
                     >
                       <rect
                         height="12"
@@ -711,7 +711,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="7z2chyf-animated-diff"
+                      id="booking-skeleton-1-tour-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -741,29 +741,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="gmdkms-aria"
+                  aria-labelledby="booking-skeleton-1-date-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="gmdkms-aria"
+                    id="booking-skeleton-1-date-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#gmdkms-diff)"
+                    clip-path="url(#booking-skeleton-1-date-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#gmdkms-animated-diff);"
+                    style="fill: url(#booking-skeleton-1-date-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="gmdkms-diff"
+                      id="booking-skeleton-1-date-diff"
                     >
                       <rect
                         height="12"
@@ -776,7 +776,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="gmdkms-animated-diff"
+                      id="booking-skeleton-1-date-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -806,29 +806,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="j6xrkuq-aria"
+                  aria-labelledby="booking-skeleton-1-slots-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="j6xrkuq-aria"
+                    id="booking-skeleton-1-slots-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#j6xrkuq-diff)"
+                    clip-path="url(#booking-skeleton-1-slots-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#j6xrkuq-animated-diff);"
+                    style="fill: url(#booking-skeleton-1-slots-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="j6xrkuq-diff"
+                      id="booking-skeleton-1-slots-diff"
                     >
                       <rect
                         height="12"
@@ -841,7 +841,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="j6xrkuq-animated-diff"
+                      id="booking-skeleton-1-slots-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -871,29 +871,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="3005by-aria"
+                  aria-labelledby="booking-skeleton-1-status-aria"
                   height="24"
                   role="img"
                   viewBox="0 0 100 24"
                   width="100"
                 >
                   <title
-                    id="3005by-aria"
+                    id="booking-skeleton-1-status-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#3005by-diff)"
+                    clip-path="url(#booking-skeleton-1-status-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#3005by-animated-diff);"
+                    style="fill: url(#booking-skeleton-1-status-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="3005by-diff"
+                      id="booking-skeleton-1-status-diff"
                     >
                       <rect
                         height="24"
@@ -906,7 +906,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="3005by-animated-diff"
+                      id="booking-skeleton-1-status-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -936,29 +936,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="zu2d6uj-aria"
+                  aria-labelledby="booking-skeleton-1-amount-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="zu2d6uj-aria"
+                    id="booking-skeleton-1-amount-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#zu2d6uj-diff)"
+                    clip-path="url(#booking-skeleton-1-amount-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#zu2d6uj-animated-diff);"
+                    style="fill: url(#booking-skeleton-1-amount-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="zu2d6uj-diff"
+                      id="booking-skeleton-1-amount-diff"
                     >
                       <rect
                         height="12"
@@ -971,7 +971,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="zu2d6uj-animated-diff"
+                      id="booking-skeleton-1-amount-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1005,29 +1005,29 @@ exports[`Home matches snapshot 1`] = `
             >
               <td>
                 <svg
-                  aria-labelledby="catb0fl-aria"
+                  aria-labelledby="booking-skeleton-2-bookingId-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="catb0fl-aria"
+                    id="booking-skeleton-2-bookingId-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#catb0fl-diff)"
+                    clip-path="url(#booking-skeleton-2-bookingId-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#catb0fl-animated-diff);"
+                    style="fill: url(#booking-skeleton-2-bookingId-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="catb0fl-diff"
+                      id="booking-skeleton-2-bookingId-diff"
                     >
                       <rect
                         height="12"
@@ -1040,7 +1040,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="catb0fl-animated-diff"
+                      id="booking-skeleton-2-bookingId-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1070,29 +1070,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="u9itvce-aria"
+                  aria-labelledby="booking-skeleton-2-customer-aria"
                   height="50"
                   role="img"
                   viewBox="0 0 200 50"
                   width="200"
                 >
                   <title
-                    id="u9itvce-aria"
+                    id="booking-skeleton-2-customer-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#u9itvce-diff)"
+                    clip-path="url(#booking-skeleton-2-customer-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#u9itvce-animated-diff);"
+                    style="fill: url(#booking-skeleton-2-customer-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="u9itvce-diff"
+                      id="booking-skeleton-2-customer-diff"
                     >
                       <circle
                         cx="20"
@@ -1126,7 +1126,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="u9itvce-animated-diff"
+                      id="booking-skeleton-2-customer-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1156,29 +1156,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="l2q6ut-aria"
+                  aria-labelledby="booking-skeleton-2-tour-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="l2q6ut-aria"
+                    id="booking-skeleton-2-tour-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#l2q6ut-diff)"
+                    clip-path="url(#booking-skeleton-2-tour-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#l2q6ut-animated-diff);"
+                    style="fill: url(#booking-skeleton-2-tour-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="l2q6ut-diff"
+                      id="booking-skeleton-2-tour-diff"
                     >
                       <rect
                         height="12"
@@ -1191,7 +1191,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="l2q6ut-animated-diff"
+                      id="booking-skeleton-2-tour-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1221,29 +1221,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="2hdhbzm-aria"
+                  aria-labelledby="booking-skeleton-2-date-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="2hdhbzm-aria"
+                    id="booking-skeleton-2-date-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#2hdhbzm-diff)"
+                    clip-path="url(#booking-skeleton-2-date-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#2hdhbzm-animated-diff);"
+                    style="fill: url(#booking-skeleton-2-date-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="2hdhbzm-diff"
+                      id="booking-skeleton-2-date-diff"
                     >
                       <rect
                         height="12"
@@ -1256,7 +1256,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="2hdhbzm-animated-diff"
+                      id="booking-skeleton-2-date-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1286,29 +1286,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="cdb4up-aria"
+                  aria-labelledby="booking-skeleton-2-slots-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="cdb4up-aria"
+                    id="booking-skeleton-2-slots-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#cdb4up-diff)"
+                    clip-path="url(#booking-skeleton-2-slots-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#cdb4up-animated-diff);"
+                    style="fill: url(#booking-skeleton-2-slots-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="cdb4up-diff"
+                      id="booking-skeleton-2-slots-diff"
                     >
                       <rect
                         height="12"
@@ -1321,7 +1321,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="cdb4up-animated-diff"
+                      id="booking-skeleton-2-slots-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1351,29 +1351,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="3isleq-aria"
+                  aria-labelledby="booking-skeleton-2-status-aria"
                   height="24"
                   role="img"
                   viewBox="0 0 100 24"
                   width="100"
                 >
                   <title
-                    id="3isleq-aria"
+                    id="booking-skeleton-2-status-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#3isleq-diff)"
+                    clip-path="url(#booking-skeleton-2-status-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#3isleq-animated-diff);"
+                    style="fill: url(#booking-skeleton-2-status-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="3isleq-diff"
+                      id="booking-skeleton-2-status-diff"
                     >
                       <rect
                         height="24"
@@ -1386,7 +1386,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="3isleq-animated-diff"
+                      id="booking-skeleton-2-status-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1416,29 +1416,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="bz6bsql-aria"
+                  aria-labelledby="booking-skeleton-2-amount-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="bz6bsql-aria"
+                    id="booking-skeleton-2-amount-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#bz6bsql-diff)"
+                    clip-path="url(#booking-skeleton-2-amount-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#bz6bsql-animated-diff);"
+                    style="fill: url(#booking-skeleton-2-amount-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="bz6bsql-diff"
+                      id="booking-skeleton-2-amount-diff"
                     >
                       <rect
                         height="12"
@@ -1451,7 +1451,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="bz6bsql-animated-diff"
+                      id="booking-skeleton-2-amount-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1485,29 +1485,29 @@ exports[`Home matches snapshot 1`] = `
             >
               <td>
                 <svg
-                  aria-labelledby="1es6oao-aria"
+                  aria-labelledby="booking-skeleton-3-bookingId-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="1es6oao-aria"
+                    id="booking-skeleton-3-bookingId-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#1es6oao-diff)"
+                    clip-path="url(#booking-skeleton-3-bookingId-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#1es6oao-animated-diff);"
+                    style="fill: url(#booking-skeleton-3-bookingId-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="1es6oao-diff"
+                      id="booking-skeleton-3-bookingId-diff"
                     >
                       <rect
                         height="12"
@@ -1520,7 +1520,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="1es6oao-animated-diff"
+                      id="booking-skeleton-3-bookingId-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1550,29 +1550,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="zmk1b5-aria"
+                  aria-labelledby="booking-skeleton-3-customer-aria"
                   height="50"
                   role="img"
                   viewBox="0 0 200 50"
                   width="200"
                 >
                   <title
-                    id="zmk1b5-aria"
+                    id="booking-skeleton-3-customer-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#zmk1b5-diff)"
+                    clip-path="url(#booking-skeleton-3-customer-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#zmk1b5-animated-diff);"
+                    style="fill: url(#booking-skeleton-3-customer-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="zmk1b5-diff"
+                      id="booking-skeleton-3-customer-diff"
                     >
                       <circle
                         cx="20"
@@ -1606,7 +1606,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="zmk1b5-animated-diff"
+                      id="booking-skeleton-3-customer-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1636,29 +1636,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="q77je4tf-aria"
+                  aria-labelledby="booking-skeleton-3-tour-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="q77je4tf-aria"
+                    id="booking-skeleton-3-tour-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#q77je4tf-diff)"
+                    clip-path="url(#booking-skeleton-3-tour-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#q77je4tf-animated-diff);"
+                    style="fill: url(#booking-skeleton-3-tour-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="q77je4tf-diff"
+                      id="booking-skeleton-3-tour-diff"
                     >
                       <rect
                         height="12"
@@ -1671,7 +1671,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="q77je4tf-animated-diff"
+                      id="booking-skeleton-3-tour-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1701,29 +1701,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="3dvgo8t-aria"
+                  aria-labelledby="booking-skeleton-3-date-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="3dvgo8t-aria"
+                    id="booking-skeleton-3-date-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#3dvgo8t-diff)"
+                    clip-path="url(#booking-skeleton-3-date-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#3dvgo8t-animated-diff);"
+                    style="fill: url(#booking-skeleton-3-date-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="3dvgo8t-diff"
+                      id="booking-skeleton-3-date-diff"
                     >
                       <rect
                         height="12"
@@ -1736,7 +1736,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="3dvgo8t-animated-diff"
+                      id="booking-skeleton-3-date-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1766,29 +1766,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="u7x9ksc-aria"
+                  aria-labelledby="booking-skeleton-3-slots-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="u7x9ksc-aria"
+                    id="booking-skeleton-3-slots-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#u7x9ksc-diff)"
+                    clip-path="url(#booking-skeleton-3-slots-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#u7x9ksc-animated-diff);"
+                    style="fill: url(#booking-skeleton-3-slots-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="u7x9ksc-diff"
+                      id="booking-skeleton-3-slots-diff"
                     >
                       <rect
                         height="12"
@@ -1801,7 +1801,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="u7x9ksc-animated-diff"
+                      id="booking-skeleton-3-slots-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1831,29 +1831,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="6d0wur-aria"
+                  aria-labelledby="booking-skeleton-3-status-aria"
                   height="24"
                   role="img"
                   viewBox="0 0 100 24"
                   width="100"
                 >
                   <title
-                    id="6d0wur-aria"
+                    id="booking-skeleton-3-status-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#6d0wur-diff)"
+                    clip-path="url(#booking-skeleton-3-status-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#6d0wur-animated-diff);"
+                    style="fill: url(#booking-skeleton-3-status-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="6d0wur-diff"
+                      id="booking-skeleton-3-status-diff"
                     >
                       <rect
                         height="24"
@@ -1866,7 +1866,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="6d0wur-animated-diff"
+                      id="booking-skeleton-3-status-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1896,29 +1896,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="f1p4i9t-aria"
+                  aria-labelledby="booking-skeleton-3-amount-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="f1p4i9t-aria"
+                    id="booking-skeleton-3-amount-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#f1p4i9t-diff)"
+                    clip-path="url(#booking-skeleton-3-amount-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#f1p4i9t-animated-diff);"
+                    style="fill: url(#booking-skeleton-3-amount-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="f1p4i9t-diff"
+                      id="booking-skeleton-3-amount-diff"
                     >
                       <rect
                         height="12"
@@ -1931,7 +1931,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="f1p4i9t-animated-diff"
+                      id="booking-skeleton-3-amount-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -1965,29 +1965,29 @@ exports[`Home matches snapshot 1`] = `
             >
               <td>
                 <svg
-                  aria-labelledby="9i3qa5l-aria"
+                  aria-labelledby="booking-skeleton-4-bookingId-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="9i3qa5l-aria"
+                    id="booking-skeleton-4-bookingId-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#9i3qa5l-diff)"
+                    clip-path="url(#booking-skeleton-4-bookingId-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#9i3qa5l-animated-diff);"
+                    style="fill: url(#booking-skeleton-4-bookingId-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="9i3qa5l-diff"
+                      id="booking-skeleton-4-bookingId-diff"
                     >
                       <rect
                         height="12"
@@ -2000,7 +2000,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="9i3qa5l-animated-diff"
+                      id="booking-skeleton-4-bookingId-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2030,29 +2030,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="p7uhcyb-aria"
+                  aria-labelledby="booking-skeleton-4-customer-aria"
                   height="50"
                   role="img"
                   viewBox="0 0 200 50"
                   width="200"
                 >
                   <title
-                    id="p7uhcyb-aria"
+                    id="booking-skeleton-4-customer-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#p7uhcyb-diff)"
+                    clip-path="url(#booking-skeleton-4-customer-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#p7uhcyb-animated-diff);"
+                    style="fill: url(#booking-skeleton-4-customer-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="p7uhcyb-diff"
+                      id="booking-skeleton-4-customer-diff"
                     >
                       <circle
                         cx="20"
@@ -2086,7 +2086,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="p7uhcyb-animated-diff"
+                      id="booking-skeleton-4-customer-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2116,29 +2116,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="nu2bxfn-aria"
+                  aria-labelledby="booking-skeleton-4-tour-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="nu2bxfn-aria"
+                    id="booking-skeleton-4-tour-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#nu2bxfn-diff)"
+                    clip-path="url(#booking-skeleton-4-tour-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#nu2bxfn-animated-diff);"
+                    style="fill: url(#booking-skeleton-4-tour-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="nu2bxfn-diff"
+                      id="booking-skeleton-4-tour-diff"
                     >
                       <rect
                         height="12"
@@ -2151,7 +2151,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="nu2bxfn-animated-diff"
+                      id="booking-skeleton-4-tour-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2181,29 +2181,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="42mkhyt-aria"
+                  aria-labelledby="booking-skeleton-4-date-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="42mkhyt-aria"
+                    id="booking-skeleton-4-date-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#42mkhyt-diff)"
+                    clip-path="url(#booking-skeleton-4-date-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#42mkhyt-animated-diff);"
+                    style="fill: url(#booking-skeleton-4-date-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="42mkhyt-diff"
+                      id="booking-skeleton-4-date-diff"
                     >
                       <rect
                         height="12"
@@ -2216,7 +2216,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="42mkhyt-animated-diff"
+                      id="booking-skeleton-4-date-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2246,29 +2246,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="yu6di3a-aria"
+                  aria-labelledby="booking-skeleton-4-slots-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="yu6di3a-aria"
+                    id="booking-skeleton-4-slots-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#yu6di3a-diff)"
+                    clip-path="url(#booking-skeleton-4-slots-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#yu6di3a-animated-diff);"
+                    style="fill: url(#booking-skeleton-4-slots-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="yu6di3a-diff"
+                      id="booking-skeleton-4-slots-diff"
                     >
                       <rect
                         height="12"
@@ -2281,7 +2281,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="yu6di3a-animated-diff"
+                      id="booking-skeleton-4-slots-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2311,29 +2311,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="t9owxn-aria"
+                  aria-labelledby="booking-skeleton-4-status-aria"
                   height="24"
                   role="img"
                   viewBox="0 0 100 24"
                   width="100"
                 >
                   <title
-                    id="t9owxn-aria"
+                    id="booking-skeleton-4-status-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#t9owxn-diff)"
+                    clip-path="url(#booking-skeleton-4-status-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#t9owxn-animated-diff);"
+                    style="fill: url(#booking-skeleton-4-status-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="t9owxn-diff"
+                      id="booking-skeleton-4-status-diff"
                     >
                       <rect
                         height="24"
@@ -2346,7 +2346,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="t9owxn-animated-diff"
+                      id="booking-skeleton-4-status-animated-diff"
                     >
                       <stop
                         offset="0%"
@@ -2376,29 +2376,29 @@ exports[`Home matches snapshot 1`] = `
               </td>
               <td>
                 <svg
-                  aria-labelledby="vltlksu-aria"
+                  aria-labelledby="booking-skeleton-4-amount-aria"
                   height="20"
                   role="img"
                   viewBox="0 0 120 20"
                   width="120"
                 >
                   <title
-                    id="vltlksu-aria"
+                    id="booking-skeleton-4-amount-aria"
                   >
                     Loading...
                   </title>
                   <rect
-                    clip-path="url(#vltlksu-diff)"
+                    clip-path="url(#booking-skeleton-4-amount-diff)"
                     height="100%"
                     role="presentation"
-                    style="fill: url(#vltlksu-animated-diff);"
+                    style="fill: url(#booking-skeleton-4-amount-animated-diff);"
                     width="100%"
                     x="0"
                     y="0"
                   />
                   <defs>
                     <clippath
-                      id="vltlksu-diff"
+                      id="booking-skeleton-4-amount-diff"
                     >
                       <rect
                         height="12"
@@ -2411,7 +2411,7 @@ exports[`Home matches snapshot 1`] = `
                     </clippath>
                     <lineargradient
                       gradientTransform="translate(-2 0)"
-                      id="vltlksu-animated-diff"
+                      id="booking-skeleton-4-amount-animated-diff"
                     >
                       <stop
                         offset="0%"

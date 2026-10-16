@@ -3,8 +3,11 @@ import CreateAccountForm from './CreateAccountForm/CreateAccountForm';
 import styles from './page.module.scss';
 import AuthSideBanner from '@/components/AuthSideBanner';
 import { STRINGS } from '@/constants/strings';
+import { commonService } from '@/server/commonService';
 
-export default function CreateAccountPage() {
+export default async function CreateAccountPage() {
+  const countries = await commonService.getCountries();
+
   return (
     <div className={styles.container}>
       <CustomImage
@@ -24,7 +27,7 @@ export default function CreateAccountPage() {
             <AuthSideBanner appTagLine={STRINGS.CREATE_ACCOUNT_APP_TAG_LINE} />
           </div>
           <div className={styles.formContainer}>
-            <CreateAccountForm />
+            <CreateAccountForm countries={countries} />
           </div>
         </div>
       </div>

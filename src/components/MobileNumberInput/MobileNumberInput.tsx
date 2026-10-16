@@ -27,14 +27,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import TextField from '../TextField';
 import Autocomplete from '../Autocomplete';
-import { useNotification } from '@/providers/NotificationProvider';
-import { errorHandler } from '@/utils/errorHandler';
-import { authService } from '@/services/authService';
-import { useCommonStore } from '@/store/common';
-import { useApiStatusStore } from '@/store/apiStatus';
 import { STRINGS } from '@/constants/strings';
+import { Country } from '@/constants/types';
 import clsx from 'clsx';
 import styles from './MobileNumberInput.module.scss';
+
+// Stable default, so the effect below doesn't re-run on every render when no countries are passed
+const EMPTY_COUNTRIES: Country[] = [];
 
 /**
  * Define the props available for the MobileNumberInput component.
@@ -61,6 +60,13 @@ interface MobileNumberInputProps {
    * @param val - Updated mobile number state.
    */
   onChange?: (val: { country: string; number: string }) => void;
+
+  /**
+   * Country codes to choose from. Fetched on the server by the page and passed down.
+   *
+   * @default []
+   */
+  countries?: Country[];
 
   /**
    * The maximum length allowed for the mobile number input.
@@ -96,28 +102,14 @@ export default function MobileNumberInput({
   countryError,
   value,
   onChange,
+  countries = EMPTY_COUNTRIES,
 }: MobileNumberInputProps) {
-  const { showNotification } = useNotification();
-  const { countries, setCountries } = useCommonStore();
-  const isLoading = useApiStatusStore((store) => store.isLoading);
   const [country, setCountry] = useState('');
   const [search, setSearch] = useState('');
   const [number, setNumber] = useState(value?.number ?? '');
   const [length, setLength] = useState(
     value?.country ? countries.find((c) => c.code === value.country)?.length : maxLength,
   );
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await authService.getCountryCode();
-        setCountries(response);
-      } catch (err) {
-        const messages = errorHandler(err);
-        messages.forEach((msg) => showNotification('Error!', msg, 'error'));
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     if (countries.length === 0) return;
@@ -178,7 +170,6 @@ export default function MobileNumberInput({
             placeholder={STRINGS.COUNTRY_CODE}
             value={country}
             searchValue={search}
-            isLoading={isLoading}
             onSearchChange={(val) => handleSearch(val)}
             onChange={handleSelect}
             dropdownContainerClassName={clsx(styles.dropdown)}

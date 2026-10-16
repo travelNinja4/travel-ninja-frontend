@@ -5,14 +5,12 @@ import { KeyRound } from 'lucide-react';
 import { NOTIFICATION_TYPES, ROUTES, STRINGS } from '@/constants/strings';
 import { resetPasswordSchema } from './ResetPasswordSchema';
 import { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
-import { authService, resetPassword } from '@/services/authService';
+import { resetPassword } from '@/constants/types';
+import { resetPasswordAction } from '@/actions/auth';
 import { useNotification } from '@/providers/NotificationProvider';
 import { useRouter } from 'next/navigation';
-import { errorHandler } from '@/utils/errorHandler';
-import { useAuthStore } from '@/store/auth';
-import { useApiStatusStore } from '@/store/apiStatus';
 import styles from './ResetPassword.module.scss';
-import { useEffect } from 'react';
+import { useTransition } from 'react';
 
 export const resetPasswordFormConfig: FieldConfig[] = [
   {
@@ -72,32 +70,20 @@ interface ResetPasswordFormProps {
 export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   const router = useRouter();
   const { showNotification } = useNotification();
-  const { resetPasswordToken, setResetPasswordToken, clearResetPasswordToken } = useAuthStore(
-    (store) => store,
-  );
-  const { isLoading } = useApiStatusStore((store) => store);
+  const [isPending, startTransition] = useTransition();
 
-  useEffect(() => {
-    setResetPasswordToken(token);
-  }, [token]);
-
-  const handleResetPassword = async (formData: resetPassword) => {
-    try {
-      const requestParams = {
-        token: resetPasswordToken,
-        ...formData,
-      };
-      // const encryptedBody = encryptObject(requestParams, ['password']);
-      await authService.resetPassword(requestParams);
-      clearResetPasswordToken();
+  const handleResetPassword = (formData: resetPassword) => {
+    startTransition(async () => {
+      const result = await resetPasswordAction(token, formData);
+      if (!result.success) {
+        result.errors.forEach((errMsg) => {
+          showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
+        });
+        return;
+      }
       showNotification(STRINGS.SUCCESS, STRINGS.PASSWORD_RESET_SUCCESS, NOTIFICATION_TYPES.SUCCESS);
       router.push(ROUTES.LOGIN);
-    } catch (err: unknown) {
-      const messages = errorHandler(err);
-      messages.forEach((errMsg) => {
-        showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
-      });
-    }
+    });
   };
 
   return (
@@ -105,7 +91,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       fields={resetPasswordFormConfig}
       schema={resetPasswordSchema}
       className={styles.forgotPasswordContainer}
-      loading={isLoading}
+      loading={isPending}
       onSubmit={handleResetPassword}
     />
   );

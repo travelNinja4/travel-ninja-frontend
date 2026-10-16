@@ -1,13 +1,12 @@
 'use client';
 
+import { useTransition } from 'react';
 import { LogIn } from 'lucide-react';
 import AppLink from '@/components/AppLink';
 import { useRouter } from 'next/navigation';
 import { loginSchema } from './LoginSchema';
-import { useAuthStore } from '@/store/auth';
-import { errorHandler } from '@/utils/errorHandler';
-import { useApiStatusStore } from '@/store/apiStatus';
-import { authService, Login } from '@/services/authService';
+import { Login } from '@/constants/types';
+import { loginAction } from '@/actions/auth';
 import { useNotification } from '@/providers/NotificationProvider';
 import { NOTIFICATION_TYPES, ROUTES, STRINGS } from '@/constants/strings';
 import DynamicForm, { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
@@ -93,33 +92,27 @@ export const loginFormConfig: FieldConfig[] = [
 
 export default function LoginForm() {
   const router = useRouter();
-  const { isLoading } = useApiStatusStore((store) => store);
+  const [isPending, startTransition] = useTransition();
   const { showNotification } = useNotification();
-  const { setAccountData } = useAuthStore((store) => store);
 
-  const handleLogin = async (formData: Login) => {
-    try {
-      const requestParams = {
-        ...formData,
-        // role: 'agency',
-      };
-      // const encryptedBody = encryptObject(requestParams, ['password']);
-      const loginResponse = await authService.login(requestParams);
-      setAccountData(loginResponse.data);
+  const handleLogin = (formData: Login) => {
+    startTransition(async () => {
+      const result = await loginAction(formData);
+      if (!result.success) {
+        result.errors.forEach((errMsg) => {
+          showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
+        });
+        return;
+      }
       router.push(ROUTES.OTP_VERIFICATION);
-    } catch (err: unknown) {
-      const messages = errorHandler(err);
-      messages.forEach((errMsg) => {
-        showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
-      });
-    }
+    });
   };
 
   return (
     <DynamicForm
       fields={loginFormConfig}
       schema={loginSchema}
-      loading={isLoading}
+      loading={isPending}
       className={styles.loginContainer}
       onSubmit={handleLogin}
     />
