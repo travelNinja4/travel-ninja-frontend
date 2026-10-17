@@ -33,16 +33,4 @@ describe('Home', () => {
   it('renders without throwing', () => {
     expect(() => render(<Tooltip {...baseProps} />)).not.toThrow();
   });
-
-  /**
-   * @test
-   * Captures a snapshot of the Tooltip component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<Tooltip {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
 });

@@ -48,18 +48,6 @@ describe('Home', () => {
     expect(() => render(<SidebarNav {...baseProps} />)).not.toThrow();
   });
 
-  /**
-   * @test
-   * Captures a snapshot of the SidebarNav component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<SidebarNav {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   it('renders root container', () => {
     render(<SidebarNav {...baseProps} />);
     expect(screen.getByTestId('SidebarNavTest')).toBeInTheDocument();

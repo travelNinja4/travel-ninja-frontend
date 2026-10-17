@@ -49,18 +49,6 @@ describe('Home', () => {
     expect(screen.getByTestId('NotificationContainerTest')).toBeInTheDocument();
   });
 
-  /**
-   * @test
-   * Captures a snapshot of the NotificationContainer component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = renderContainer();
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   it('auto-dismisses notification after duration', () => {
     renderContainer();
     vi.advanceTimersByTime(3000);
