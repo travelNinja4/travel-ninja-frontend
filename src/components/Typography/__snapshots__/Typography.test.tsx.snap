@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Home matches snapshot 1`] = `
+exports[`Home > matches snapshot 1`] = `
 <DocumentFragment>
   <p
-    class="typography p align-left"
+    class="typography align-left"
     data-testid="TypographyTest"
   >
     Typography Test

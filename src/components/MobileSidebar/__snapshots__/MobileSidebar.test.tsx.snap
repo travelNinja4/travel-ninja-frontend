@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Home matches snapshot 1`] = `
+exports[`Home > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     data-testid="MobileSidebarTest"
@@ -39,7 +39,7 @@ exports[`Home matches snapshot 1`] = `
         class="header"
       >
         <h1
-          class="typography h1 align-left logo"
+          class="typography align-left logo"
           data-testid="TypographyTest"
         >
           TravelNinja
@@ -101,13 +101,13 @@ exports[`Home matches snapshot 1`] = `
         </svg>
         <div>
           <p
-            class="typography p align-left userName"
+            class="typography align-left userName"
             data-testid="TypographyTest"
           >
             Adventure Tours
           </p>
           <p
-            class="typography p align-left userRole"
+            class="typography align-left userRole"
             data-testid="TypographyTest"
           >
             Agency Owner

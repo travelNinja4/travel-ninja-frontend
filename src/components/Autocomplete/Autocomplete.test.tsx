@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Autocomplete from './Autocomplete';
 
@@ -11,14 +10,14 @@ describe('Home', () => {
       { value: 'cherry', label: 'Cherry' },
     ],
     value: '',
-    onChange: jest.fn(),
+    onChange: vi.fn(),
     searchValue: '',
-    onSearchChange: jest.fn(),
+    onSearchChange: vi.fn(),
     placeholder: 'Search...',
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   /**

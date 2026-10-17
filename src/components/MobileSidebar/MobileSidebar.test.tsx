@@ -1,9 +1,10 @@
-import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import styles from './MobileSidebar.module.scss';
 import MobileSidebar from './MobileSidebar';
 
-jest.mock('../SidebarNav', () => () => <div data-testid="SidebarNavTest">SidebarNav</div>);
+vi.mock('../SidebarNav', () => ({
+  default: () => <div data-testid="SidebarNavTest">SidebarNav</div>,
+}));
 
 describe('Home', () => {
   /** Base props for MobileSidebar **/

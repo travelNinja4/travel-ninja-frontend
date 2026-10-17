@@ -1,24 +1,29 @@
-import '@testing-library/jest-dom';
+import type { Mock } from 'vitest';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { verifyOtpAction } from '../../../actions/auth';
 import CreateAccountVerify from './CreateAccountVerify';
 
-const mockShowNotification = jest.fn();
-const mockPush = jest.fn();
+// vi.mock is hoisted above these declarations, so the mocks it uses must be hoisted too
+const { mockShowNotification, mockPush } = vi.hoisted(() => ({
+  mockShowNotification: vi.fn(),
+  mockPush: vi.fn(),
+}));
 
-jest.mock('../../../providers/NotificationProvider', () => ({
+vi.mock('../../../actions/auth', () => ({ verifyOtpAction: vi.fn() }));
+
+vi.mock('../../../providers/NotificationProvider', () => ({
   useNotification: () => ({ showNotification: mockShowNotification }),
 }));
 
-jest.mock('next/navigation', () => ({
-  useRouter: () => ({ push: mockPush, replace: jest.fn(), prefetch: jest.fn() }),
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: mockPush, replace: vi.fn(), prefetch: vi.fn() }),
 }));
 
 describe('CreateAccountVerify', () => {
   const contact = { email: 'test@example.com', phoneNumber: '+1-1234567890' };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   const enterCodeAndVerify = async (code: string, buttonText: RegExp) => {
@@ -29,7 +34,7 @@ describe('CreateAccountVerify', () => {
   };
 
   it('verifies email OTP and switches to mobile', async () => {
-    (verifyOtpAction as jest.Mock).mockResolvedValue({ success: true, data: undefined });
+    (verifyOtpAction as Mock).mockResolvedValue({ success: true, data: undefined });
     render(<CreateAccountVerify contact={contact} />);
 
     await enterCodeAndVerify('123456', /VERIFY EMAIL/i);
@@ -39,7 +44,7 @@ describe('CreateAccountVerify', () => {
   });
 
   it('verifies mobile OTP and navigates to login', async () => {
-    (verifyOtpAction as jest.Mock).mockResolvedValue({ success: true, data: undefined });
+    (verifyOtpAction as Mock).mockResolvedValue({ success: true, data: undefined });
 
     render(<CreateAccountVerify contact={contact} />);
     await enterCodeAndVerify('123456', /VERIFY EMAIL/i);
@@ -55,7 +60,7 @@ describe('CreateAccountVerify', () => {
   });
 
   it('shows the error and stays on email verification when the code is wrong', async () => {
-    (verifyOtpAction as jest.Mock).mockResolvedValue({ success: false, errors: ['Invalid OTP'] });
+    (verifyOtpAction as Mock).mockResolvedValue({ success: false, errors: ['Invalid OTP'] });
 
     render(<CreateAccountVerify contact={contact} />);
     await enterCodeAndVerify('000000', /VERIFY EMAIL/i);

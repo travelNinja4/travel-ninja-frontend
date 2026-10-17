@@ -1,11 +1,14 @@
-import '@testing-library/jest-dom';
+import type { Mock } from 'vitest';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { sendOtpAction } from '../../actions/auth';
 import OtpVerification from './OtpVerification';
 
-const mockShowNotification = jest.fn();
+// vi.mock is hoisted above this declaration, so the mock it uses must be hoisted too
+const { mockShowNotification } = vi.hoisted(() => ({ mockShowNotification: vi.fn() }));
 
-jest.mock('../../providers/NotificationProvider', () => ({
+vi.mock('../../actions/auth', () => ({ sendOtpAction: vi.fn() }));
+
+vi.mock('../../providers/NotificationProvider', () => ({
   useNotification: () => ({ showNotification: mockShowNotification }),
 }));
 
@@ -16,7 +19,7 @@ describe('Home', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   /**
@@ -64,7 +67,7 @@ describe('Home', () => {
   });
 
   it('handles OTP resend and sets timer', async () => {
-    (sendOtpAction as jest.Mock).mockResolvedValue({ success: true, data: undefined });
+    (sendOtpAction as Mock).mockResolvedValue({ success: true, data: undefined });
     render(<OtpVerification {...baseProps} />);
     await act(async () => {
       fireEvent.click(screen.getByText(/RESEND CODE/i));
@@ -74,7 +77,7 @@ describe('Home', () => {
   });
 
   it('shows an error and keeps the resend link when resend fails', async () => {
-    (sendOtpAction as jest.Mock).mockResolvedValue({
+    (sendOtpAction as Mock).mockResolvedValue({
       success: false,
       errors: ['Too many requests'],
     });
@@ -89,7 +92,7 @@ describe('Home', () => {
   });
 
   it('submits the entered code with the OTP type', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     render(<OtpVerification {...baseProps} onSubmit={onSubmit} />);
     fireEvent.change(screen.getByPlaceholderText('000000'), { target: { value: '123456' } });
     await act(async () => {
@@ -99,7 +102,7 @@ describe('Home', () => {
   });
 
   it('does not submit when no code is entered', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
     render(<OtpVerification {...baseProps} onSubmit={onSubmit} />);
     await act(async () => {
       fireEvent.click(screen.getByText(/VERIFY EMAIL/i));

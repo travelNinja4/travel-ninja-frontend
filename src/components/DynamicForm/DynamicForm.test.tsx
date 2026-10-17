@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { z } from 'zod';
 import DynamicForm, { FieldConfig, FieldWidth } from './DynamicForm';
@@ -31,7 +30,7 @@ describe('Home', () => {
     fields: mockFields,
     schema: mockSchema,
     className: 'dynamic-form',
-    onSubmit: jest.fn(),
+    onSubmit: vi.fn(),
   };
 
   /**

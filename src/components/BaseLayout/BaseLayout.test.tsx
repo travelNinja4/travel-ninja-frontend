@@ -1,12 +1,15 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import BaseLayout from './BaseLayout';
 
-jest.mock('../MobileSidebar', () => () => <div data-testid="MobileSidebarTest" />);
-jest.mock('../DesktopSidebar', () => (props: any) => (
-  <div data-testid="DesktopSidebarTest">{props.collapsed ? 'Collapsed' : 'Expanded'}</div>
-));
+vi.mock('../MobileSidebar', () => ({
+  default: () => <div data-testid="MobileSidebarTest" />,
+}));
+vi.mock('../DesktopSidebar', () => ({
+  default: (props: any) => (
+    <div data-testid="DesktopSidebarTest">{props.collapsed ? 'Collapsed' : 'Expanded'}</div>
+  ),
+}));
 
 describe('Home', () => {
   /** Base props for BaseLayout **/
@@ -15,7 +18,7 @@ describe('Home', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders DesktopSidebar on large screens', () => {

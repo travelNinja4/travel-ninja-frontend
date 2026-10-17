@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import MobileNumberInput from './MobileNumberInput';
 
@@ -6,7 +5,7 @@ describe('Home', () => {
   /** Base props for MobileNumberInput **/
   const baseProps = {
     value: { country: 'US', number: '1234567890' },
-    onChange: jest.fn(),
+    onChange: vi.fn(),
     maxLength: 10,
     error: '',
     countryError: '',
