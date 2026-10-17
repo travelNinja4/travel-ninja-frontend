@@ -1,0 +1,134 @@
+/**
+------------------------------------------------------
+styles specific to the InputField component
+
+The border lives on `.field` (not the input) so it wraps the icons, and
+`:focus-within` drives the focus state for the whole box.
+------------------------------------------------------
+**/
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.label {
+  color: var(--color-text);
+}
+
+.required {
+  margin-left: var(--space-1);
+  color: var(--color-danger);
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--space-10);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 8px;
+  background-color: var(--color-surface);
+  cursor: text;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    border-color: var(--color-border-hover);
+  }
+
+  &:focus-within {
+    border-color: var(--color-border-focus);
+    box-shadow: var(--shadow-focus);
+  }
+
+  &.hasError {
+    border-color: var(--color-danger);
+
+    &:focus-within {
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 18%, transparent);
+    }
+  }
+
+  &.disabled {
+    background-color: var(--color-surface-muted);
+    border-color: var(--color-border);
+    cursor: not-allowed;
+  }
+
+  &.readOnly {
+    background-color: var(--color-surface-sunken);
+  }
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: var(--space-2) 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-text);
+
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  &:disabled {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  color: var(--color-text-secondary);
+
+  .hasError & {
+    color: var(--color-danger);
+  }
+}
+
+// Sits outside `.icon` so the error state never recolours it
+.toggle {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-text);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.message {
+  color: var(--color-text-secondary);
+}
+
+.errorMessage {
+  color: var(--color-danger);
+}

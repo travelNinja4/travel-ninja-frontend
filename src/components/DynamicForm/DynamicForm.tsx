@@ -18,7 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodSchema } from 'zod';
 import Typography from '../Typography';
 import { Tags, TextAlign } from '../Typography/Typography';
-import TextField from '../TextField';
+import InputField from '../InputField';
 import PasswordFeedback from '../PasswordFeedback';
 import { PasswordHint } from '../PasswordFeedback/PasswordFeedback';
 import CheckBox from '../CheckBox';
@@ -137,13 +137,13 @@ export default function DynamicForm<T extends FieldValues>({
 
       case 'input':
         return (
-          <TextField {...commonProps} className={field.className} maxLength={field.maxLength} />
+          <InputField {...commonProps} className={field.className} maxLength={field.maxLength} />
         );
 
       case 'password':
         return (
           <>
-            <TextField {...commonProps} className={field.className} maxLength={field.maxLength} />
+            <InputField {...commonProps} className={field.className} maxLength={field.maxLength} />
             <PasswordFeedback value={value} hints={field.validationHints ?? []} />
           </>
         );

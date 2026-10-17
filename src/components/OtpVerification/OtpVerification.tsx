@@ -25,7 +25,7 @@
 
 import { useEffect, useState } from 'react';
 import Button from '../Button';
-import TextField from '../TextField';
+import InputField from '../InputField';
 import Typography from '../Typography';
 import CustomImage from '../CustomImage';
 import { OtpProps, OtpType, PendingVerification } from '@/constants/types';
@@ -82,10 +82,13 @@ export default function OtpVerification({
   const formattedContactValue =
     (otpType === STRINGS.EMAIL ? contact?.email : contact?.phoneNumber) ?? '';
 
-  useEffect(() => {
+  // Reset the code and timer when switching between email and mobile
+  const [prevOtpType, setPrevOtpType] = useState(otpType);
+  if (otpType !== prevOtpType) {
+    setPrevOtpType(otpType);
     setValue('');
     setTimer(0);
-  }, [otpType]);
+  }
 
   useEffect(() => {
     if (timer === 0) return;
@@ -165,7 +168,7 @@ export default function OtpVerification({
               </Typography>
             </div>
             <div className={styles.verificationWrapper}>
-              <TextField
+              <InputField
                 label={STRINGS.ENTER_VERIFICATION_CODE}
                 placeholder="000000"
                 value={value}

@@ -16,7 +16,7 @@ import { DayPicker, DateRange } from 'react-day-picker';
 import 'react-day-picker/style.css';
 import styles from './DatePicker.module.scss';
 import { useMemo, useState } from 'react';
-import TextField from '../TextField';
+import InputField from '../InputField';
 import { Calendar } from 'lucide-react';
 
 /**
@@ -136,13 +136,13 @@ export default function DatePicker({
 
   return (
     <div data-testid="DatePickerTest">
-      <TextField
+      <InputField
         readOnly
         label={label}
         placeholder="Select date"
         onClick={() => !disabled && setOpen((prev) => !prev)}
         className={inputClassName}
-        isCalender
+        rightIcon={<Calendar size={16} />}
       />
 
       {open && (

@@ -11,19 +11,20 @@ exports[`Home > matches snapshot 1`] = `
     >
       <div
         class="container"
-        data-testid="TextFieldTest"
+        data-testid="InputFieldTest"
       >
         <label
-          class="typography align-left label"
-          data-testid="TypographyTest"
+          class="typography label label"
+          for="«r4»"
         >
-          Username 
+          Username
         </label>
         <div
-          class="inputWrapper"
+          class="field"
         >
           <input
-            class="inputField"
+            class="input"
+            id="«r4»"
             name="username"
             placeholder="Enter username"
             type="input"
@@ -37,39 +38,42 @@ exports[`Home > matches snapshot 1`] = `
     >
       <div
         class="container"
-        data-testid="TextFieldTest"
+        data-testid="InputFieldTest"
       >
         <label
-          class="typography align-left label"
-          data-testid="TypographyTest"
+          class="typography label label"
+          for="«r5»"
         >
-          Password 
+          Password
         </label>
         <div
-          class="inputWrapper"
+          class="field"
         >
           <input
-            class="inputField inputWithIcon"
+            class="input"
+            id="«r5»"
             name="password"
             placeholder="Enter password"
             type="password"
             validationhints=""
           />
-          <div
-            class="iconButton"
-            role="button"
+          <button
+            aria-label="Show password"
+            aria-pressed="false"
+            class="toggle"
+            type="button"
           >
             <svg
               aria-hidden="true"
               class="lucide lucide-eye"
               fill="none"
-              height="24"
+              height="18"
               stroke="currentColor"
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
               viewBox="0 0 24 24"
-              width="24"
+              width="18"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -81,7 +85,7 @@ exports[`Home > matches snapshot 1`] = `
                 r="3"
               />
             </svg>
-          </div>
+          </button>
         </div>
       </div>
       <ul

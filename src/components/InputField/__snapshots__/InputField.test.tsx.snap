@@ -1,0 +1,28 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`InputField > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="container"
+    data-testid="InputFieldTest"
+  >
+    <label
+      class="typography label label"
+      for="email"
+    >
+      Work email
+    </label>
+    <div
+      class="field"
+    >
+      <input
+        class="input"
+        id="email"
+        name="email"
+        placeholder="ops@wanderlytravels.example"
+        type="text"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

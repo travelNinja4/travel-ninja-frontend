@@ -44,8 +44,10 @@ styles specific to the MobileNumberInput component
   outline: none;
 }
 
-.inputField {
+.inputField,
+.inputField:focus-within {
   border: 0;
+  box-shadow: none;
 }
 
 .errorText {
