@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Home matches snapshot 1`] = `
+exports[`Home > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="container"
@@ -45,14 +45,14 @@ exports[`Home matches snapshot 1`] = `
               class="headerContainer"
             >
               <h1
-                class="typography h1 align-center header"
+                class="typography align-center header"
                 data-testid="TypographyTest"
                 style="color: var(--color-white);"
               >
                 TravelNinja
               </h1>
               <p
-                class="typography p align-center subHeader"
+                class="typography align-center subHeader"
                 data-testid="TypographyTest"
                 style="color: var(--color-white);"
               >
@@ -65,13 +65,13 @@ exports[`Home matches snapshot 1`] = `
           class="otpContainer"
         >
           <h2
-            class="typography h2 align-center otpHeader"
+            class="typography align-center otpHeader"
             data-testid="TypographyTest"
           >
             Email Verification
           </h2>
           <p
-            class="typography p align-center otpSubHeader"
+            class="typography align-center otpSubHeader"
             data-testid="TypographyTest"
           >
             We've sent a verification code to your email
@@ -104,7 +104,7 @@ exports[`Home matches snapshot 1`] = `
               />
             </svg>
             <span
-              class="typography span align-center userEmail"
+              class="typography align-center userEmail"
               data-testid="TypographyTest"
               style="color: var(--color-indigo);"
             >
@@ -119,7 +119,7 @@ exports[`Home matches snapshot 1`] = `
               data-testid="TextFieldTest"
             >
               <label
-                class="typography label align-left label"
+                class="typography align-left label"
                 data-testid="TypographyTest"
               >
                 Enter Verification Code 
@@ -137,7 +137,7 @@ exports[`Home matches snapshot 1`] = `
               </div>
             </div>
             <label
-              class="typography label align-center otpSubHeader"
+              class="typography align-center otpSubHeader"
               data-testid="TypographyTest"
             >
               Enter the 6-digit code sent to your email
@@ -148,9 +148,7 @@ exports[`Home matches snapshot 1`] = `
             data-testid="ButtonTest"
             type="button"
           >
-            <span
-              class="icon"
-            >
+            <span>
               <svg
                 aria-hidden="true"
                 class="lucide lucide-check"
@@ -170,7 +168,7 @@ exports[`Home matches snapshot 1`] = `
               </svg>
             </span>
             <span
-              class="typography span align-center button"
+              class="typography align-center button"
               data-testid="TypographyTest"
             >
               Verify Email
@@ -203,7 +201,7 @@ exports[`Home matches snapshot 1`] = `
                 />
               </svg>
               <span
-                class="typography span align-left resendText"
+                class="typography align-left resendText"
                 data-testid="TypographyTest"
               >
                 Resend Code

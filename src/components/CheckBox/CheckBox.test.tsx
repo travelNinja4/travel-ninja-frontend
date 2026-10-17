@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import CheckBox from './CheckBox';
 
@@ -7,7 +6,7 @@ describe('Home', () => {
   const baseProps = {
     label: 'CheckBox Test',
     name: 'checkboxTest',
-    onChange: jest.fn(),
+    onChange: vi.fn(),
   };
 
   /**
@@ -46,14 +45,14 @@ describe('Home', () => {
   });
 
   it('does not call onChange when disabled', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(<CheckBox {...baseProps} disabled onChange={onChange} />);
     screen.getByRole('checkbox').click();
     expect(onChange).not.toHaveBeenCalled();
   });
 
   it('calls onChange when enabled and clicked', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(<CheckBox {...baseProps} onChange={onChange} />);
     fireEvent.click(screen.getByRole('checkbox'));
     expect(onChange).toHaveBeenCalledTimes(1);
@@ -87,7 +86,7 @@ describe('Home', () => {
   });
 
   it('renders without a label prop', () => {
-    render(<CheckBox name="noLabel" onChange={jest.fn()} label="no label" />);
+    render(<CheckBox name="noLabel" onChange={vi.fn()} label="no label" />);
     expect(screen.getByRole('checkbox')).toBeInTheDocument();
   });
 
@@ -103,7 +102,7 @@ describe('Home', () => {
   });
 
   it('renders without a label when label is null', () => {
-    render(<CheckBox name="noLabel" onChange={jest.fn()} label={null} />);
+    render(<CheckBox name="noLabel" onChange={vi.fn()} label={null} />);
     expect(screen.queryByText('CheckBox Test')).not.toBeInTheDocument();
   });
 
@@ -121,7 +120,7 @@ describe('Home', () => {
   });
 
   it('calls onChange when not disabled', () => {
-    const handleChange = jest.fn();
+    const handleChange = vi.fn();
     render(<CheckBox name="test" label="Accept" onChange={handleChange} />);
     const input = screen.getByRole('checkbox');
     fireEvent.click(input);
@@ -129,7 +128,7 @@ describe('Home', () => {
   });
 
   it('does not call onChange when disabled', () => {
-    const handleChange = jest.fn();
+    const handleChange = vi.fn();
     render(<CheckBox name="test" label="Disabled" disabled onChange={handleChange} />);
     const input = screen.getByRole('checkbox');
     fireEvent.click(input);
@@ -152,7 +151,7 @@ describe('Home', () => {
   });
 
   it('handles invalid label type gracefully (number)', () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     render(<CheckBox name="test" label={123 as any} />);
     const typography = screen.getByTestId('TypographyTest');
     expect(typography).toBeEmptyDOMElement();

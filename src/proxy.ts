@@ -1,5 +1,5 @@
-// documentation https://nextjs.org/docs/app/building-your-application/routing/middleware
-// Note: Next.js 16 renames this file convention to `proxy.ts` (export `proxy`). This project is on Next 15.
+// documentation https://nextjs.org/docs/app/api-reference/file-conventions/proxy
+// Next.js 16 renamed the `middleware.ts` convention to `proxy.ts` (export `proxy`).
 
 import { NextRequest, NextResponse } from 'next/server';
 import { ROUTES } from '@/constants/strings';
@@ -11,7 +11,7 @@ const PUBLIC_ROUTE_PREFIXES = [ROUTES.LOGIN, ROUTES.CREATE_ACCOUNT];
 const isPublicRoute = (pathname: string) =>
   PUBLIC_ROUTE_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // the backend sets the accessToken cookie, and server actions copy it onto our domain
   const token = request.cookies.get('accessToken')?.value;
 

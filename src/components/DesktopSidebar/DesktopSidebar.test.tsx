@@ -1,20 +1,21 @@
-import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import DesktopSidebar from './DesktopSidebar';
 
-jest.mock('../SidebarNav', () => (props: any) => (
-  <div data-testid="SidebarNavTest">{props.collapsed ? 'CollapsedNav' : 'ExpandedNav'}</div>
-));
+vi.mock('../SidebarNav', () => ({
+  default: (props: any) => (
+    <div data-testid="SidebarNavTest">{props.collapsed ? 'CollapsedNav' : 'ExpandedNav'}</div>
+  ),
+}));
 
 describe('Home', () => {
   /** Base props for DesktopSidebar **/
   const baseProps = {
     collapsed: false,
-    setCollapsed: jest.fn(),
+    setCollapsed: vi.fn(),
   };
 
   it('renders expanded view when collapsed=false', () => {
-    render(<DesktopSidebar collapsed={false} setCollapsed={jest.fn()} />);
+    render(<DesktopSidebar collapsed={false} setCollapsed={vi.fn()} />);
 
     expect(screen.getByTestId('DesktopSidebarTest')).toBeInTheDocument();
 
@@ -26,7 +27,7 @@ describe('Home', () => {
   });
 
   it('renders collapsed view when collapsed=true', () => {
-    render(<DesktopSidebar collapsed={true} setCollapsed={jest.fn()} />);
+    render(<DesktopSidebar collapsed={true} setCollapsed={vi.fn()} />);
 
     expect(screen.queryByText('TravelNinja')).not.toBeInTheDocument();
 
@@ -34,7 +35,7 @@ describe('Home', () => {
   });
 
   it('calls setCollapsed(true) when collapse button clicked in expanded mode', () => {
-    const mockSetCollapsed = jest.fn();
+    const mockSetCollapsed = vi.fn();
     render(<DesktopSidebar collapsed={false} setCollapsed={mockSetCollapsed} />);
 
     const button = screen.getByRole('button');
@@ -44,7 +45,7 @@ describe('Home', () => {
   });
 
   it('calls setCollapsed(false) when collapse button clicked in collapsed mode', () => {
-    const mockSetCollapsed = jest.fn();
+    const mockSetCollapsed = vi.fn();
     render(<DesktopSidebar collapsed={true} setCollapsed={mockSetCollapsed} />);
 
     const button = screen.getByRole('button');

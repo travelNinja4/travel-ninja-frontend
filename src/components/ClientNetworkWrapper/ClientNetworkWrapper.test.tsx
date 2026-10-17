@@ -1,11 +1,11 @@
-import '@testing-library/jest-dom';
+import type { Mock } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import React from 'react';
+import { renderToString } from 'react-dom/server';
 import { useNetworkStatus } from '../../hooks/useNetworkStatus';
 import ClientNetworkWrapper from './ClientNetworkWrapper';
 
-jest.mock('../../hooks/useNetworkStatus', () => ({
-  useNetworkStatus: jest.fn(),
+vi.mock('../../hooks/useNetworkStatus', () => ({
+  useNetworkStatus: vi.fn(),
 }));
 
 describe('Home', () => {
@@ -15,7 +15,7 @@ describe('Home', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   /**
@@ -42,26 +42,21 @@ describe('Home', () => {
   });
 
   it('renders children when online', () => {
-    (useNetworkStatus as jest.Mock).mockReturnValue(true);
+    (useNetworkStatus as Mock).mockReturnValue(true);
     render(<ClientNetworkWrapper {...baseProps} />);
     expect(screen.getByTestId('ClientNetworkWrapperTest')).toBeInTheDocument();
   });
 
   it('renders OfflinePage when offline', () => {
-    (useNetworkStatus as jest.Mock).mockReturnValue(false);
+    (useNetworkStatus as Mock).mockReturnValue(false);
     render(<ClientNetworkWrapper {...baseProps} />);
     expect(screen.getByText(/You’re offline/i)).toBeInTheDocument();
   });
 
   it('renders nothing before hydration', () => {
-    (useNetworkStatus as jest.Mock).mockReturnValue(true);
+    (useNetworkStatus as Mock).mockReturnValue(true);
 
-    const useStateSpy = jest.spyOn(React, 'useState');
-    useStateSpy.mockImplementationOnce(() => [false, jest.fn()]);
-
-    const { container } = render(<ClientNetworkWrapper {...baseProps} />);
-    expect(container.firstChild).toBeNull();
-
-    useStateSpy.mockRestore();
+    // Effects never run during server rendering, so this is the pre-hydration output
+    expect(renderToString(<ClientNetworkWrapper {...baseProps} />)).toBe('');
   });
 });

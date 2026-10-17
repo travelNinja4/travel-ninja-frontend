@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Home matches snapshot 1`] = `
+exports[`Home > matches snapshot 1`] = `
 <DocumentFragment>
   <form
     class="dynamic-form"
@@ -14,7 +14,7 @@ exports[`Home matches snapshot 1`] = `
         data-testid="TextFieldTest"
       >
         <label
-          class="typography label align-left label"
+          class="typography align-left label"
           data-testid="TypographyTest"
         >
           Username 
@@ -40,7 +40,7 @@ exports[`Home matches snapshot 1`] = `
         data-testid="TextFieldTest"
       >
         <label
-          class="typography label align-left label"
+          class="typography align-left label"
           data-testid="TypographyTest"
         >
           Password 

@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import TextField from './TextField';
 
@@ -10,7 +9,7 @@ describe('Home', () => {
     id: 'testFieldId',
     placeholder: 'Enter text here',
     value: '',
-    onChange: jest.fn(),
+    onChange: vi.fn(),
   };
 
   /**

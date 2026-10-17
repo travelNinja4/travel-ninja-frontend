@@ -1,21 +1,22 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import SidebarNav from './SidebarNav';
 
-jest.mock('../AppLink', () => ({ children }: any) => (
-  <div data-testid="AppLinkMock">{children}</div>
-));
+vi.mock('../AppLink', () => ({
+  default: ({ children }: any) => <div data-testid="AppLinkMock">{children}</div>,
+}));
 
-jest.mock('../Tooltip', () => ({ children, content }: any) => (
-  <div data-testid="TooltipMock">
-    {content}
-    {children}
-  </div>
-));
+vi.mock('../Tooltip', () => ({
+  default: ({ children, content }: any) => (
+    <div data-testid="TooltipMock">
+      {content}
+      {children}
+    </div>
+  ),
+}));
 
-jest.mock('../Typography', () => ({ children }: any) => (
-  <span data-testid="TypographyMock">{children}</span>
-));
+vi.mock('../Typography', () => ({
+  default: ({ children }: any) => <span data-testid="TypographyMock">{children}</span>,
+}));
 
 describe('Home', () => {
   /** Base props for SidebarNav **/

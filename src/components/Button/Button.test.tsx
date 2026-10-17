@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import Button from './Button';
 
@@ -6,7 +5,7 @@ describe('Home', () => {
   /** Base props for Button **/
   const baseProps = {
     children: 'ButtonTest',
-    onClick: jest.fn(),
+    onClick: vi.fn(),
     type: 'button' as const,
     disabled: false,
     className: 'test-class',

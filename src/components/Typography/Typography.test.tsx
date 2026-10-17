@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { ElementType } from 'react';
 import { render, screen } from '@testing-library/react';
 import Typography, { TypographyProps } from './Typography';
