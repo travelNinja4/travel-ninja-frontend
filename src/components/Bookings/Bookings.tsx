@@ -14,7 +14,7 @@
 import BookingTable from '../BookingTable';
 import DatePicker from '../DatePicker';
 import Dropdown from '../Dropdown';
-import TextField from '../TextField';
+import InputField from '../InputField';
 import styles from './Bookings.module.scss';
 
 /**
@@ -51,7 +51,7 @@ export default function Bookings({ label = 'label' }: BookingsProps) {
     <div data-testid="BookingsTest" className={styles.container}>
       <div className={styles.card}>
         <div className={styles.textCard}>
-          <TextField label="Search" placeholder="Search bookings..." />
+          <InputField label="Search" placeholder="Search bookings..." />
         </div>
         <div className={styles.filterCard}>
           <Dropdown

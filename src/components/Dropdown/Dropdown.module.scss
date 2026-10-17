@@ -99,24 +99,8 @@ styles specific to the Dropdown component
 }
 
 .inputWithIcon {
-  position: relative;
   display: flex;
   align-items: center;
-
-  input {
-    width: 100%;
-    padding-right: 2.5rem;
-  }
-}
-
-.chevronIcon {
-  position: absolute;
-  right: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: #000000;
-  transition: transform 0.2s ease;
 }
 
 .loading {

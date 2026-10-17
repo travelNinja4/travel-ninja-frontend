@@ -15,7 +15,7 @@
 import { useState, useRef, useEffect, KeyboardEvent } from 'react';
 import { STRINGS } from '@/constants/strings';
 import Typography from '../Typography';
-import TextField from '../TextField';
+import InputField from '../InputField';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import clsx from 'clsx';
 import styles from './Dropdown.module.scss';
@@ -167,7 +167,7 @@ export default function Dropdown<T>({
           className={styles.inputWithIcon}
           onClick={() => !disabled && setIsOpen((prev) => !prev)}
         >
-          <TextField
+          <InputField
             readOnly
             placeholder={placeholder}
             value={value as string}
@@ -175,12 +175,8 @@ export default function Dropdown<T>({
             onFocus={() => !disabled && setIsOpen(true)}
             onKeyDown={handleKeyDown}
             disabled={disabled}
+            rightIcon={isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           />
-
-          {/* Chevron inside the input */}
-          <span className={clsx(styles.chevronIcon)}>
-            {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-          </span>
         </div>
       </div>
 

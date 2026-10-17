@@ -14,19 +14,20 @@ exports[`Home > matches snapshot 1`] = `
       >
         <div
           class="container"
-          data-testid="TextFieldTest"
+          data-testid="InputFieldTest"
         >
           <label
-            class="typography align-left label"
-            data-testid="TypographyTest"
+            class="typography label label"
+            for="«ra»"
           >
-            Search 
+            Search
           </label>
           <div
-            class="inputWrapper"
+            class="field"
           >
             <input
-              class="inputField"
+              class="input"
+              id="«ra»"
               placeholder="Search bookings..."
               type="text"
             />
@@ -45,8 +46,7 @@ exports[`Home > matches snapshot 1`] = `
             class="inputWrapper"
           >
             <label
-              class="typography align-left label"
-              data-testid="TypographyTest"
+              class="typography body label"
             >
               Status
             </label>
@@ -55,40 +55,41 @@ exports[`Home > matches snapshot 1`] = `
             >
               <div
                 class="container"
-                data-testid="TextFieldTest"
+                data-testid="InputFieldTest"
               >
                 <div
-                  class="inputWrapper"
+                  class="field readOnly"
                 >
                   <input
-                    class="inputField"
+                    class="input"
+                    id="«rb»"
                     placeholder="Select..."
                     readonly=""
                     type="text"
                   />
+                  <span
+                    class="icon"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="lucide lucide-chevron-down"
+                      fill="none"
+                      height="16"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m6 9 6 6 6-6"
+                      />
+                    </svg>
+                  </span>
                 </div>
               </div>
-              <span
-                class="chevronIcon"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="lucide lucide-chevron-down"
-                  fill="none"
-                  height="16"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="16"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="m6 9 6 6 6-6"
-                  />
-                </svg>
-              </span>
             </div>
           </div>
         </div>
@@ -101,8 +102,7 @@ exports[`Home > matches snapshot 1`] = `
             class="inputWrapper"
           >
             <label
-              class="typography align-left label"
-              data-testid="TypographyTest"
+              class="typography body label"
             >
               Tour
             </label>
@@ -111,40 +111,41 @@ exports[`Home > matches snapshot 1`] = `
             >
               <div
                 class="container"
-                data-testid="TextFieldTest"
+                data-testid="InputFieldTest"
               >
                 <div
-                  class="inputWrapper"
+                  class="field readOnly"
                 >
                   <input
-                    class="inputField"
+                    class="input"
+                    id="«rc»"
                     placeholder="Select..."
                     readonly=""
                     type="text"
                   />
+                  <span
+                    class="icon"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="lucide lucide-chevron-down"
+                      fill="none"
+                      height="16"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m6 9 6 6 6-6"
+                      />
+                    </svg>
+                  </span>
                 </div>
               </div>
-              <span
-                class="chevronIcon"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="lucide lucide-chevron-down"
-                  fill="none"
-                  height="16"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="16"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="m6 9 6 6 6-6"
-                  />
-                </svg>
-              </span>
             </div>
           </div>
         </div>
@@ -157,8 +158,7 @@ exports[`Home > matches snapshot 1`] = `
             class="inputWrapper"
           >
             <label
-              class="typography align-left label"
-              data-testid="TypographyTest"
+              class="typography body label"
             >
               Quick Date Filter
             </label>
@@ -167,40 +167,41 @@ exports[`Home > matches snapshot 1`] = `
             >
               <div
                 class="container"
-                data-testid="TextFieldTest"
+                data-testid="InputFieldTest"
               >
                 <div
-                  class="inputWrapper"
+                  class="field readOnly"
                 >
                   <input
-                    class="inputField"
+                    class="input"
+                    id="«rd»"
                     placeholder="Select preset"
                     readonly=""
                     type="text"
                   />
+                  <span
+                    class="icon"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="lucide lucide-chevron-down"
+                      fill="none"
+                      height="16"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m6 9 6 6 6-6"
+                      />
+                    </svg>
+                  </span>
                 </div>
               </div>
-              <span
-                class="chevronIcon"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="lucide lucide-chevron-down"
-                  fill="none"
-                  height="16"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="16"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="m6 9 6 6 6-6"
-                  />
-                </svg>
-              </span>
             </div>
           </div>
         </div>
@@ -209,25 +210,26 @@ exports[`Home > matches snapshot 1`] = `
         >
           <div
             class="container"
-            data-testid="TextFieldTest"
+            data-testid="InputFieldTest"
           >
             <label
-              class="typography align-left label"
-              data-testid="TypographyTest"
+              class="typography label label"
+              for="«re»"
             >
-              Date Range 
+              Date Range
             </label>
             <div
-              class="inputWrapper"
+              class="field readOnly"
             >
               <input
-                class="inputField"
+                class="input"
+                id="«re»"
                 placeholder="Select date"
                 readonly=""
                 type="text"
               />
-              <div
-                class="iconButton"
+              <span
+                class="icon"
               >
                 <svg
                   aria-hidden="true"
@@ -259,7 +261,7 @@ exports[`Home > matches snapshot 1`] = `
                     d="M3 10h18"
                   />
                 </svg>
-              </div>
+              </span>
             </div>
           </div>
         </div>

@@ -24,8 +24,8 @@
  */
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import TextField from '../TextField';
+import { useMemo, useState } from 'react';
+import InputField from '../InputField';
 import Autocomplete from '../Autocomplete';
 import { STRINGS } from '@/constants/strings';
 import { Country } from '@/constants/types';
@@ -111,18 +111,28 @@ export default function MobileNumberInput({
     value?.country ? countries.find((c) => c.code === value.country)?.length : maxLength,
   );
 
-  useEffect(() => {
-    if (countries.length === 0) return;
-
-    // Set initial country and number if value exists
-    if (value) {
+  // Sync country and number from `value` once countries are loaded, and
+  // again whenever `value`, `countries` or `maxLength` change
+  const [synced, setSynced] = useState<{
+    countries: typeof countries;
+    value: typeof value;
+    maxLength: typeof maxLength;
+  } | null>(null);
+  if (
+    !synced ||
+    synced.countries !== countries ||
+    synced.value !== value ||
+    synced.maxLength !== maxLength
+  ) {
+    setSynced({ countries, value, maxLength });
+    if (countries.length > 0 && value) {
       setCountry(value.country);
       setNumber(value.number);
       setLength(
         value.country ? countries.find((c) => c.code === value.country)?.length : maxLength,
       );
     }
-  }, [countries, value, maxLength]);
+  }
 
   const filteredCountries = useMemo(() => {
     if (!search) return countries;
@@ -177,10 +187,10 @@ export default function MobileNumberInput({
           />
         </div>
 
-        <TextField
+        <InputField
           placeholder={STRINGS.ENTER_MOBILE_NUMBER}
           className={clsx(styles.inputContainer)}
-          inputClassName={styles.inputField}
+          fieldClassName={styles.inputField}
           value={number}
           maxLength={length || maxLength}
           onChange={(e) => {

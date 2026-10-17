@@ -11,8 +11,7 @@ exports[`Home > matches snapshot 1`] = `
       class="inputWrapper"
     >
       <label
-        class="typography align-left label"
-        data-testid="TypographyTest"
+        class="typography body label"
       >
         Dropdown Test
       </label>
@@ -21,40 +20,41 @@ exports[`Home > matches snapshot 1`] = `
       >
         <div
           class="container"
-          data-testid="TextFieldTest"
+          data-testid="InputFieldTest"
         >
           <div
-            class="inputWrapper"
+            class="field readOnly"
           >
             <input
-              class="inputField"
+              class="input"
+              id="«r2»"
               placeholder="Select..."
               readonly=""
               type="text"
             />
+            <span
+              class="icon"
+            >
+              <svg
+                aria-hidden="true"
+                class="lucide lucide-chevron-down"
+                fill="none"
+                height="16"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m6 9 6 6 6-6"
+                />
+              </svg>
+            </span>
           </div>
         </div>
-        <span
-          class="chevronIcon"
-        >
-          <svg
-            aria-hidden="true"
-            class="lucide lucide-chevron-down"
-            fill="none"
-            height="16"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-            width="16"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="m6 9 6 6 6-6"
-            />
-          </svg>
-        </span>
       </div>
     </div>
   </div>

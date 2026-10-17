@@ -45,16 +45,16 @@ exports[`Home > matches snapshot 1`] = `
               class="headerContainer"
             >
               <h1
-                class="typography align-center header"
-                data-testid="TypographyTest"
-                style="color: var(--color-white);"
+                align="center"
+                class="typography body header"
+                color="var(--color-white)"
               >
                 TravelNinja
               </h1>
               <p
-                class="typography align-center subHeader"
-                data-testid="TypographyTest"
-                style="color: var(--color-white);"
+                align="center"
+                class="typography body subHeader"
+                color="var(--color-white)"
               >
                 Transform your tour business with our powerful platform
               </p>
@@ -65,14 +65,14 @@ exports[`Home > matches snapshot 1`] = `
           class="otpContainer"
         >
           <h2
-            class="typography align-center otpHeader"
-            data-testid="TypographyTest"
+            align="center"
+            class="typography body otpHeader"
           >
             Email Verification
           </h2>
           <p
-            class="typography align-center otpSubHeader"
-            data-testid="TypographyTest"
+            align="center"
+            class="typography body otpSubHeader"
           >
             We've sent a verification code to your email
           </p>
@@ -104,9 +104,9 @@ exports[`Home > matches snapshot 1`] = `
               />
             </svg>
             <span
-              class="typography align-center userEmail"
-              data-testid="TypographyTest"
-              style="color: var(--color-indigo);"
+              align="center"
+              class="typography body userEmail"
+              color="var(--color-indigo)"
             >
               test@example.com
             </span>
@@ -116,19 +116,20 @@ exports[`Home > matches snapshot 1`] = `
           >
             <div
               class="container"
-              data-testid="TextFieldTest"
+              data-testid="InputFieldTest"
             >
               <label
-                class="typography align-left label"
-                data-testid="TypographyTest"
+                class="typography label label"
+                for="«r2»"
               >
-                Enter Verification Code 
+                Enter Verification Code
               </label>
               <div
-                class="inputWrapper"
+                class="field"
               >
                 <input
-                  class="inputField verificationTextField"
+                  class="input verificationTextField"
+                  id="«r2»"
                   maxlength="6"
                   placeholder="000000"
                   type="text"
@@ -137,8 +138,8 @@ exports[`Home > matches snapshot 1`] = `
               </div>
             </div>
             <label
-              class="typography align-center otpSubHeader"
-              data-testid="TypographyTest"
+              align="center"
+              class="typography body otpSubHeader"
             >
               Enter the 6-digit code sent to your email
             </label>
@@ -168,8 +169,8 @@ exports[`Home > matches snapshot 1`] = `
               </svg>
             </span>
             <span
-              class="typography align-center button"
-              data-testid="TypographyTest"
+              align="center"
+              class="typography body button"
             >
               Verify Email
             </span>
@@ -201,8 +202,7 @@ exports[`Home > matches snapshot 1`] = `
                 />
               </svg>
               <span
-                class="typography align-left resendText"
-                data-testid="TypographyTest"
+                class="typography body resendText"
               >
                 Resend Code
               </span>

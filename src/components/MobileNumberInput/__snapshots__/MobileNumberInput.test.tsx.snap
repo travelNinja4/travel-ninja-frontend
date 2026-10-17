@@ -27,13 +27,14 @@ exports[`Home > matches snapshot 1`] = `
     </div>
     <div
       class="container inputContainer"
-      data-testid="TextFieldTest"
+      data-testid="InputFieldTest"
     >
       <div
-        class="inputWrapper"
+        class="field inputField"
       >
         <input
-          class="inputField inputField"
+          class="input"
+          id="«r2»"
           maxlength="10"
           placeholder="Enter mobile number"
           type="text"

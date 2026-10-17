@@ -7,19 +7,20 @@ exports[`Home > matches snapshot 1`] = `
   >
     <div
       class="container"
-      data-testid="TextFieldTest"
+      data-testid="InputFieldTest"
     >
       <div
-        class="inputWrapper"
+        class="field readOnly"
       >
         <input
-          class="inputField"
+          class="input"
+          id="«r2»"
           placeholder="Select date"
           readonly=""
           type="text"
         />
-        <div
-          class="iconButton"
+        <span
+          class="icon"
         >
           <svg
             aria-hidden="true"
@@ -51,7 +52,7 @@ exports[`Home > matches snapshot 1`] = `
               d="M3 10h18"
             />
           </svg>
-        </div>
+        </span>
       </div>
     </div>
   </div>
