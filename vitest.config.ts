@@ -34,7 +34,7 @@ export default defineConfig({
         },
         test: {
           name: 'unit',
-          // Keep CSS module class names readable (e.g. "button") so snapshots stay stable
+          // Keep CSS module class names readable (e.g. "button") so tests can assert on them
           css: {
             include: /\.module\.(css|scss|sass)$/,
             modules: { classNameStrategy: 'non-scoped' },
@@ -44,7 +44,7 @@ export default defineConfig({
           include: ['src/**/*.test.{ts,tsx}'],
           setupFiles: ['./vitest.setup.ts'],
           clearMocks: true,
-          // Fixed values so snapshots don't depend on each developer's .env
+          // Fixed values so tests don't depend on each developer's .env
           env: {
             NEXT_PUBLIC_CLOUDINARY_URL: 'https://res.cloudinary.com/dyci0wg0i/image/upload/',
             NEXT_PUBLIC_PLACEHOLDER_BG_URL: 'https://picsum.photos/1920/1080?random=1',
