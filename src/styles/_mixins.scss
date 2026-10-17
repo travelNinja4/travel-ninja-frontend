@@ -1,30 +1,41 @@
+@use 'sass:map';
+
 /* -----------------------------
-  Breakpoints
+  Breakpoints (mobile-first, min-width)
 ----------------------------- */
+$bp-tablet: 768px; // tablets (portrait iPad and up)
+$bp-laptop: 1024px; // small laptops, landscape tablets
+$bp-desktop: 1280px; // standard desktops
+$bp-wide: 1440px; // large monitors
+
+/* Legacy breakpoints - kept at their original values so existing
+   styles don't shift. Prefer the device names above for new code. */
 $breakpoint-sm: 576px;
 $breakpoint-md: 768px;
 $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
 
+$breakpoints: (
+  tablet: $bp-tablet,
+  laptop: $bp-laptop,
+  desktop: $bp-desktop,
+  wide: $bp-wide,
+  sm: $breakpoint-sm,
+  md: $breakpoint-md,
+  lg: $breakpoint-lg,
+  xl: $breakpoint-xl,
+);
+
 /* -----------------------------
   Mixin for media queries
+  Usage: @include respond-to(laptop) { ... }
 ----------------------------- */
 @mixin respond-to($breakpoint) {
-  @if $breakpoint == sm {
-    @media (min-width: #{$breakpoint-sm}) {
-      @content;
-    }
-  } @else if $breakpoint == md {
-    @media (min-width: #{$breakpoint-md}) {
-      @content;
-    }
-  } @else if $breakpoint == lg {
-    @media (min-width: #{$breakpoint-lg}) {
-      @content;
-    }
-  } @else if $breakpoint == xl {
-    @media (min-width: #{$breakpoint-xl}) {
-      @content;
-    }
+  @if not map.has-key($breakpoints, $breakpoint) {
+    @error 'Unknown breakpoint `#{$breakpoint}`. Use one of: #{map.keys($breakpoints)}';
+  }
+
+  @media (min-width: #{map.get($breakpoints, $breakpoint)}) {
+    @content;
   }
 }

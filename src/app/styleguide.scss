@@ -1,0 +1,324 @@
+/* ==========================================================================
+   Typography, spacing & layout tokens (theme independent)
+   ========================================================================== */
+
+:root {
+  /* ==========================
+     Font
+  ========================== */
+  /* --font-inter is set by next/font in app/layout.tsx */
+  --font-sans:
+    var(--font-inter), 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ==========================
+     Spacing
+  ========================== */
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
+
+  /* ==========================
+     Layout sizes
+  ========================== */
+  --sidebar-width: 240px;
+  --sidebar-collapsed: 64px;
+  --topbar-height: 56px;
+  --content-max: 1200px;
+  --content-wide: 1320px;
+}
+
+/* ==========================================================================
+   Color tokens
+
+   Themes:
+   - default: no `data-theme` on <html> -> follows the OS preference
+   - light:   <html data-theme="light">
+   - dark:    <html data-theme="dark">
+   ========================================================================== */
+
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  /* ==========================
+     Surfaces
+  ========================== */
+  --color-bg: #f7f7f4;
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-surface-sunken: #f1f2ed;
+  --color-surface-muted: #f1f2ed;
+  --color-surface-sage: #eaf1eb;
+  --color-surface-hover: #f3f4f0;
+  --color-surface-selected: #eaf1eb;
+
+  /* ==========================
+     Text
+  ========================== */
+  --color-text: #202521;
+  --color-text-primary: #202521;
+  --color-text-secondary: #636963;
+  --color-text-muted: #737873;
+  --color-text-disabled: #9a9f9b;
+  --color-text-inverse: #ffffff;
+  --color-text-link: #245c46;
+
+  /* ==========================
+     Borders
+  ========================== */
+  --color-border: #e7e8e3;
+  --color-border-subtle: #eeefea;
+  --color-border-strong: #d5d7cf;
+  --color-border-hover: #c5c8bf;
+  --color-border-focus: #245c46;
+
+  /* ==========================
+     Brand
+  ========================== */
+  --color-brand: #245c46;
+  --color-brand-hover: #1c4a38;
+  --color-brand-active: #163b2d;
+  --color-brand-subtle: #eaf1eb;
+  --color-brand-muted: #d4e3d7;
+  --color-brand-border: #c5dec9;
+  --color-on-brand: #ffffff;
+
+  /* ==========================
+     Interactive
+  ========================== */
+  --color-focus-ring: rgba(36, 92, 70, 0.18);
+  --color-link: #245c46;
+  --color-selection: rgba(36, 92, 70, 0.16);
+  --color-on-media: #ffffff;
+  --color-on-media-bg: rgba(32, 37, 33, 0.72);
+
+  /* ==========================
+     Semantic
+  ========================== */
+  --color-success: #2f6b4f;
+  --color-success-bg: #e8f3ec;
+  --color-success-border: #c5dec9;
+  --color-warning: #b7791f;
+  --color-warning-bg: #f8f1e3;
+  --color-warning-border: #e8d4a8;
+  --color-danger: #a94442;
+  --color-danger-hover: #933838;
+  --color-danger-bg: #f8eaea;
+  --color-danger-border: #e8c5c4;
+  --color-on-danger: #ffffff;
+  --color-info: #3d5a6c;
+  --color-info-bg: #e8eef2;
+  --color-info-border: #c5d4de;
+  --color-rating: #b8892e;
+
+  /* ==========================
+     Status chips
+  ========================== */
+  --status-published-bg: #e8f3ec;
+  --status-published-text: #2f6b4f;
+  --status-draft-bg: #f1f2ed;
+  --status-draft-text: #5c635e;
+  --status-archived-bg: #ededed;
+  --status-archived-text: #6b716c;
+  --status-confirmed-bg: #e8f3ec;
+  --status-confirmed-text: #2f6b4f;
+  --status-pending-bg: #f8f1e3;
+  --status-pending-text: #8a5a12;
+  --status-cancelled-bg: #f8eaea;
+  --status-cancelled-text: #a94442;
+  --status-completed-bg: #e8eef2;
+  --status-completed-text: #3d5a6c;
+  --status-paid-bg: #e8f3ec;
+  --status-paid-text: #2f6b4f;
+  --status-refunded-bg: #f8eaea;
+  --status-refunded-text: #a94442;
+  --status-available-bg: #e8f3ec;
+  --status-available-text: #2f6b4f;
+  --status-soldout-bg: #f8eaea;
+  --status-soldout-text: #a94442;
+  --status-partial-bg: #f8f1e3;
+  --status-partial-text: #8a5a12;
+
+  /* ==========================
+     Charts
+  ========================== */
+  --color-chart-1: #245c46;
+  --color-chart-2: #b7791f;
+  --color-chart-3: #3d5a6c;
+  --color-chart-4: #a94442;
+  --color-chart-grid: #e7e8e3;
+  --color-chart-axis: #737873;
+  --color-chart-area: rgba(36, 92, 70, 0.12);
+
+  /* ==========================
+     Placeholders, overlays and other surfaces
+  ========================== */
+  --color-placeholder-from: #d4e3d7;
+  --color-placeholder-mid: #eaf1eb;
+  --color-placeholder-to: #c5d9cc;
+  --color-cal-muted: #fafaf8;
+  --color-skeleton-mid: #e9ebe6;
+  --color-overlay: rgba(32, 37, 33, 0.35);
+
+  /* ==========================
+     Auth panel
+  ========================== */
+  --color-auth-panel: #245c46;
+  --color-auth-panel-mid: #1c4a38;
+  --color-auth-panel-text: rgba(255, 255, 255, 0.78);
+  --color-auth-panel-muted: rgba(255, 255, 255, 0.65);
+  --color-auth-panel-line: rgba(255, 255, 255, 0.15);
+
+  /* ==========================
+     Shadows
+  ========================== */
+  --shadow-xs: 0 1px 2px rgba(32, 37, 33, 0.04);
+  --shadow-sm: 0 1px 3px rgba(32, 37, 33, 0.06);
+  --shadow-md: 0 4px 12px rgba(32, 37, 33, 0.08);
+  --shadow-lg: 0 12px 32px rgba(32, 37, 33, 0.1);
+  --shadow-focus: 0 0 0 3px var(--color-focus-ring);
+}
+
+/* Dark values live in one mixin and are applied in two places: an explicit
+   data-theme="dark", and the default theme when the OS prefers dark. */
+@mixin dark-tokens {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --color-bg: #121514;
+  --color-surface: #1a1e1b;
+  --color-surface-raised: #1f2420;
+  --color-surface-sunken: #151916;
+  --color-surface-muted: #232925;
+  --color-surface-sage: #1c2a22;
+  --color-surface-hover: #262c28;
+  --color-surface-selected: #1c2a22;
+
+  /* Text */
+  --color-text: #e6e9e5;
+  --color-text-primary: #e6e9e5;
+  --color-text-secondary: #a3aaa4;
+  --color-text-muted: #8b928c;
+  --color-text-disabled: #5c635e;
+  --color-text-inverse: #ffffff;
+  --color-text-link: #6bb08a;
+
+  /* Borders */
+  --color-border: #2c3330;
+  --color-border-subtle: #252a27;
+  --color-border-strong: #3a4340;
+  --color-border-hover: #4a5450;
+  --color-border-focus: #6bb08a;
+
+  /* Brand */
+  --color-brand: #4f9a72;
+  --color-brand-hover: #5eab82;
+  --color-brand-active: #6bb08a;
+  --color-brand-subtle: #1c2a22;
+  --color-brand-muted: #2a3f34;
+  --color-brand-border: #2e4638;
+  --color-on-brand: #0e1612;
+
+  /* Interactive */
+  --color-focus-ring: rgba(79, 154, 114, 0.35);
+  --color-link: #6bb08a;
+  --color-selection: rgba(79, 154, 114, 0.28);
+  --color-on-media: #ffffff;
+  --color-on-media-bg: rgba(0, 0, 0, 0.62);
+
+  /* Semantic */
+  --color-success: #6bb08a;
+  --color-success-bg: #1c2a22;
+  --color-success-border: #2e4638;
+  --color-warning: #e0b56a;
+  --color-warning-bg: #2c2618;
+  --color-warning-border: #5a4a28;
+  --color-danger: #d47a78;
+  --color-danger-hover: #e08a88;
+  --color-danger-bg: #2a1c1c;
+  --color-danger-border: #5a3836;
+  --color-on-danger: #1a1010;
+  --color-info: #7a9aad;
+  --color-info-bg: #1a242a;
+  --color-info-border: #2e3e48;
+  --color-rating: #d4a054;
+
+  /* Status chips */
+  --status-published-bg: #1c2a22;
+  --status-published-text: #6bb08a;
+  --status-draft-bg: #232925;
+  --status-draft-text: #a3aaa4;
+  --status-archived-bg: #232925;
+  --status-archived-text: #8b928c;
+  --status-confirmed-bg: #1c2a22;
+  --status-confirmed-text: #6bb08a;
+  --status-pending-bg: #2a2418;
+  --status-pending-text: #d4a054;
+  --status-cancelled-bg: #2a1c1c;
+  --status-cancelled-text: #d47a78;
+  --status-completed-bg: #1a242a;
+  --status-completed-text: #7a9aad;
+  --status-paid-bg: #1c2a22;
+  --status-paid-text: #6bb08a;
+  --status-refunded-bg: #2a1c1c;
+  --status-refunded-text: #d47a78;
+  --status-available-bg: #1c2a22;
+  --status-available-text: #6bb08a;
+  --status-soldout-bg: #2a1c1c;
+  --status-soldout-text: #d47a78;
+  --status-partial-bg: #2a2418;
+  --status-partial-text: #d4a054;
+
+  /* Charts */
+  --color-chart-1: #4f9a72;
+  --color-chart-2: #e0b56a;
+  --color-chart-3: #7a9aad;
+  --color-chart-4: #d47a78;
+  --color-chart-grid: #2c3330;
+  --color-chart-axis: #8b928c;
+  --color-chart-area: rgba(79, 154, 114, 0.18);
+
+  /* Placeholders, overlays and other surfaces */
+  --color-placeholder-from: #2a3f34;
+  --color-placeholder-mid: #1c2a22;
+  --color-placeholder-to: #232925;
+  --color-cal-muted: #161a17;
+  --color-skeleton-mid: #2c3330;
+  --color-overlay: rgba(0, 0, 0, 0.55);
+
+  /* Auth panel */
+  --color-auth-panel: #1c3a2c;
+  --color-auth-panel-mid: #163028;
+  --color-auth-panel-text: rgba(230, 233, 229, 0.82);
+  --color-auth-panel-muted: rgba(230, 233, 229, 0.62);
+  --color-auth-panel-line: rgba(230, 233, 229, 0.14);
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+  --shadow-focus: 0 0 0 3px var(--color-focus-ring);
+}
+
+:root[data-theme='dark'] {
+  @include dark-tokens;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include dark-tokens;
+  }
+}
