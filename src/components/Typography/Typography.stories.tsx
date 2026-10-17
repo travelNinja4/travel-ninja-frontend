@@ -1,8 +1,36 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-/**
-import { fn } from 'storybook/test';
-*/
-import Typography from './Typography';
+import type { ComponentType, ReactNode } from 'react';
+import Typography, * as Text from './Typography';
+import { TYPOGRAPHY_VARIANTS } from './Typography';
+
+/** Named components in scale order, shown in the "Components" story. */
+const NAMED_COMPONENTS: [string, ComponentType<{ children?: ReactNode }>][] = [
+  ['Display2xl', Text.Display2xl],
+  ['DisplayXl', Text.DisplayXl],
+  ['DisplayLg', Text.DisplayLg],
+  ['Heading1', Text.Heading1],
+  ['StatLg', Text.StatLg],
+  ['Heading2', Text.Heading2],
+  ['StatSm', Text.StatSm],
+  ['Heading3', Text.Heading3],
+  ['Heading4', Text.Heading4],
+  ['TitleMd', Text.TitleMd],
+  ['BodyLg', Text.BodyLg],
+  ['TitleSm', Text.TitleSm],
+  ['Body', Text.Body],
+  ['BodySm', Text.BodySm],
+  ['Label', Text.Label],
+  ['BodySmStrong', Text.BodySmStrong],
+  ['Caption', Text.Caption],
+  ['CaptionMedium', Text.CaptionMedium],
+  ['CaptionStrong', Text.CaptionStrong],
+  ['Overline', Text.Overline],
+  ['Micro', Text.Micro],
+  ['MicroMedium', Text.MicroMedium],
+  ['MicroOverline', Text.MicroOverline],
+  ['Tiny', Text.Tiny],
+  ['TinyOverline', Text.TinyOverline],
+];
 
 const meta = {
   title: 'components/Typography',
@@ -12,29 +40,15 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
+    variant: {
+      control: 'select',
+      options: TYPOGRAPHY_VARIANTS,
+      description: 'Text style from the type scale (size, weight, line-height, letter-spacing)',
+    },
     tag: {
       control: 'select',
-      options: ['h1', 'h2', 'h3', 'h4', 'h6', 'p', 'span'],
-      description: 'The semantic HTML tag for the typography element',
-    },
-    as: {
-      control: 'select',
-      options: ['p', 'span', 'div', 'label', 'strong', 'em'],
-      description: 'Overrides the rendered HTML element while keeping the styling of `tag`',
-    },
-    children: {
-      control: 'text',
-      description: 'The text content or elements inside Typography',
-    },
-    align: {
-      control: 'select',
-      options: ['left', 'center', 'right', 'justify', 'start', 'end', 'match-parent'],
-      description: 'Text alignment',
-    },
-    transform: {
-      control: 'select',
-      options: ['none', 'uppercase', 'lowercase', 'capitalize'],
-      description: 'Text transformation style',
+      options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'div', 'label', 'strong'],
+      description: 'The HTML element. Defaults from the variant; never changes the style',
     },
     truncation: {
       control: 'select',
@@ -49,104 +63,73 @@ const meta = {
       ],
       description: 'Truncates or clamps text display',
     },
-    className: {
+    children: {
       control: 'text',
-      description: 'Custom class name for additional styling',
+      description: 'The text content or elements inside Typography',
     },
   },
   args: {
-    tag: 'p',
-    children: 'This is a sample typography text.',
-    align: 'left',
-    transform: 'none',
-    truncation: undefined,
+    variant: 'body',
+    children: 'The quick brown fox jumps over the lazy dog',
   },
 } satisfies Meta<typeof Typography>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Default story
 export const Default: Story = {};
 
-// Show heading variants
-export const Headings: Story = {
+// Every variant in the type scale
+export const Scale: Story = {
+  parameters: { layout: 'padded' },
   render: (args) => (
-    <>
-      <Typography {...args} tag="h1">
-        Heading 1
-      </Typography>
-      <Typography {...args} tag="h2">
-        Heading 2
-      </Typography>
-      <Typography {...args} tag="h3">
-        Heading 3
-      </Typography>
-      <Typography {...args} tag="h4">
-        Heading 4
-      </Typography>
-      <Typography {...args} tag="h6">
-        Heading 6
-      </Typography>
-    </>
+    <div style={{ display: 'grid', gap: 'var(--space-4)' }}>
+      {TYPOGRAPHY_VARIANTS.map((variant) => (
+        <div
+          key={variant}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '10rem 1fr',
+            alignItems: 'baseline',
+            gap: 'var(--space-4)',
+          }}
+        >
+          <Typography variant="caption">{variant}</Typography>
+          <Typography {...args} variant={variant} />
+        </div>
+      ))}
+    </div>
   ),
 };
 
-// Show alignments
-export const Alignments: Story = {
+// The named components the app imports, e.g. `import { Heading1 } from '@/components/Typography'`
+export const Components: Story = {
+  parameters: { layout: 'padded' },
   render: (args) => (
-    <>
-      <Typography {...args} align="left">
-        Left aligned text
-      </Typography>
-      <Typography {...args} align="center">
-        Center aligned text
-      </Typography>
-      <Typography {...args} align="right">
-        Right aligned text
-      </Typography>
-      <Typography {...args} align="justify">
-        Justify aligned text
-      </Typography>
-      <Typography {...args} align="start">
-        Start aligned text
-      </Typography>
-      <Typography {...args} align="end">
-        End aligned text
-      </Typography>
-      <Typography {...args} align="match-parent">
-        Match-Parent aligned text
-      </Typography>
-    </>
+    <div style={{ display: 'grid', gap: 'var(--space-4)' }}>
+      {NAMED_COMPONENTS.map(([name, Component]) => (
+        <div
+          key={name}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '10rem 1fr',
+            alignItems: 'baseline',
+            gap: 'var(--space-4)',
+          }}
+        >
+          <Typography variant="caption">{`<${name} />`}</Typography>
+          <Component>{args.children}</Component>
+        </div>
+      ))}
+    </div>
   ),
 };
 
-// Show text transforms
-export const Transforms: Story = {
-  render: (args) => (
-    <>
-      <Typography {...args} transform="uppercase">
-        Uppercase text
-      </Typography>
-      <Typography {...args} transform="lowercase">
-        Lowercase Text
-      </Typography>
-      <Typography {...args} transform="capitalize">
-        capitalize text
-      </Typography>
-    </>
-  ),
-};
-
-// Show truncation styles
 export const Truncations: Story = {
   render: (args) => (
-    <div style={{ width: '250px' }}>
-      <Typography {...args} truncation="ellipsis">
-        This is a very long sentence that will be cut off with an ellipsis.
-      </Typography>
-      <Typography {...args} truncation="noWrap">
-        This is a long text that will not wrap at all.
+    <div style={{ width: '250px', display: 'grid', gap: 'var(--space-2)' }}>
+      <Typography {...args} variant="caption" truncation="ellipsis">
+        A caption renders as a span and still truncates with an ellipsis.
       </Typography>
       <Typography {...args} truncation="lineClamp-2">
         This is a long paragraph that will be clamped to two lines in height, and anything beyond
@@ -156,14 +139,10 @@ export const Truncations: Story = {
   ),
 };
 
-// Playground with full controls
 export const Playground: Story = {
   args: {
-    tag: 'p',
-    as: 'p',
+    variant: 'heading-2',
+    tag: 'h2',
     children: 'Edit me in Storybook controls!',
-    align: 'left',
-    transform: 'none',
-    truncation: undefined,
   },
 };

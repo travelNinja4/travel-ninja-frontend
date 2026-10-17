@@ -1,5 +1,9 @@
 import type { Preview } from '@storybook/nextjs-vite'
 
+// Global base styles and design tokens, as loaded by app/layout.tsx
+import '../src/app/globals.css'
+import '../src/app/styleguide.scss'
+
 const preview: Preview = {
   parameters: {
     controls: {
