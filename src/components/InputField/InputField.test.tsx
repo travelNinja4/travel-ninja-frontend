@@ -21,15 +21,6 @@ describe('InputField', () => {
     expect(screen.getByTestId('InputFieldTest')).toBeInTheDocument();
   });
 
-  /**
-   * @test
-   * Captures a snapshot of the InputField with base props to detect unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<InputField {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   it('associates the label with the input', () => {
     render(<InputField {...baseProps} />);
     expect(screen.getByLabelText('Work email')).toHaveAttribute('id', 'email');

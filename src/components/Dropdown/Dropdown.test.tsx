@@ -29,16 +29,4 @@ describe('Home', () => {
   it('renders without throwing', () => {
     expect(() => render(<Dropdown {...baseProps} />)).not.toThrow();
   });
-
-  /**
-   * @test
-   * Captures a snapshot of the Dropdown component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<Dropdown {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
 });

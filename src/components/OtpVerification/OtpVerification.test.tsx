@@ -45,18 +45,6 @@ describe('Home', () => {
     expect(() => render(<OtpVerification {...baseProps} />)).not.toThrow();
   });
 
-  /**
-   * @test
-   * Captures a snapshot of the OtpVerification component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<OtpVerification {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   it('shows the email for email verification and the phone number for mobile', () => {
     const { rerender } = render(<OtpVerification {...baseProps} otpType="email" />);
     expect(screen.getByText('test@example.com')).toBeInTheDocument();

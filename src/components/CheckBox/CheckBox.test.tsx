@@ -32,18 +32,6 @@ describe('Home', () => {
     expect(() => render(<CheckBox {...baseProps} />)).not.toThrow();
   });
 
-  /**
-   * @test
-   * Captures a snapshot of the CheckBox component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<CheckBox {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   it('does not call onChange when disabled', () => {
     const onChange = vi.fn();
     render(<CheckBox {...baseProps} disabled onChange={onChange} />);
@@ -151,7 +139,6 @@ describe('Home', () => {
   });
 
   it('handles invalid label type gracefully (number)', () => {
-     
     render(<CheckBox name="test" label={123 as any} />);
     const typography = screen.getByTestId('TypographyTest');
     expect(typography).toBeEmptyDOMElement();

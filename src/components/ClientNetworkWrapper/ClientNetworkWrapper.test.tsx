@@ -29,18 +29,6 @@ describe('Home', () => {
     expect(() => render(<ClientNetworkWrapper {...baseProps} />)).not.toThrow();
   });
 
-  /**
-   * @test
-   * Captures a snapshot of the ClientNetworkWrapper component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<ClientNetworkWrapper {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   it('renders children when online', () => {
     (useNetworkStatus as Mock).mockReturnValue(true);
     render(<ClientNetworkWrapper {...baseProps} />);

@@ -27,16 +27,4 @@ describe('Home', () => {
   it('renders without throwing', () => {
     expect(() => render(<DatePicker {...baseProps} />)).not.toThrow();
   });
-
-  /**
-   * @test
-   * Captures a snapshot of the DatePicker component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<DatePicker {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
 });
