@@ -20,7 +20,10 @@ export default function ForgotPasswordPage() {
       <div className={styles.contentWrapper}>
         <div className={styles.content}>
           <div className={styles.imageContainer}>
-            <AuthSideBanner appTagLine={STRINGS.RESET_PASSWORD_TAG_LINE} />
+            <AuthSideBanner
+              header={STRINGS.RESET_PASSWORD_BANNER_HEADER}
+              subText={STRINGS.RESET_PASSWORD_BANNER_SUB_TEXT}
+            />
           </div>
 
           <div className={styles.formContainer}>

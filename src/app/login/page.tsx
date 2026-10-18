@@ -20,7 +20,10 @@ export default function LoginPage() {
       <div className={styles.subContainer}>
         <div className={styles.mainContainer}>
           <div className={styles.imageContainer}>
-            <AuthSideBanner appTagLine={STRINGS.LOGIN_APP_TAG_LINE} />
+            <AuthSideBanner
+              header={STRINGS.LOGIN_BANNER_HEADER}
+              subText={STRINGS.LOGIN_BANNER_SUB_TEXT}
+            />
           </div>
           <div className={styles.formContainer}>
             <LoginForm />

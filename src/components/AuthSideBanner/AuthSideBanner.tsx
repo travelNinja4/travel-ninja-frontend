@@ -1,45 +1,65 @@
 /**
- * AuthSideBanner is a reusable UI component that displays a full-height side banner with an optional background image, overlay, title, and description.
+ * Brand panel shown beside the auth forms (sign in, create account, password
+ * reset, OTP). A green surface with a faint grid, and a header + sub text
+ * pinned to the bottom-left. Each screen passes its own copy.
+ *
+ * Pure CSS and text: no images, no client JavaScript, so it renders on the
+ * server and costs nothing to load.
  *
  * @example
  * ```tsx
- * import AuthSideBanner from '@src/components/AuthSideBanner'
+ * import AuthSideBanner from '@/components/AuthSideBanner'
  *
- * export default function AuthSideBanner() {
- *   return <AuthSideBanner appTagLine="Hello" />;
+ * export default function LoginPage() {
+ *   return (
+ *     <AuthSideBanner
+ *       header="Run tours with clarity"
+ *       subText="TravelNinja helps Indian tour operators publish departures, fill seats, and track net earnings after platform commission."
+ *     />
+ *   );
  * }
  * ```
  */
-
-import { STRINGS } from '@/constants/strings';
-import Image from '../Image';
-import Typography from '../Typography';
+import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+import clsx from 'clsx';
+import { BodyLg, DisplayLg } from '../Typography';
 import styles from './AuthSideBanner.module.scss';
 
-interface AuthSideBannerProps {
-  appTagLine: string;
+/**
+ * Define the props available for the AuthSideBanner component.
+ * Other native `<aside>` attributes are passed through.
+ */
+export interface AuthSideBannerProps extends Omit<ComponentPropsWithoutRef<'aside'>, 'children'> {
+  /**
+   * Main line of the panel, e.g. "Run tours with clarity".
+   */
+  header: ReactNode;
+
+  /**
+   * Supporting sentence shown under the header.
+   */
+  subText?: ReactNode;
 }
 
-export default function AuthSideBanner({ appTagLine }: AuthSideBannerProps) {
+export default function AuthSideBanner({
+  header,
+  subText,
+  className,
+  ...rest
+}: AuthSideBannerProps) {
   return (
-    <div data-testid="AuthSideBannerTest" className={styles.container}>
-      <Image
-        src="https://picsum.photos/1920/1080?random=1"
-        preload
-        alt="authImg"
-        className={styles.imgContainer}
-        unoptimized
-        fill
-      />
-      <div className={styles.overlay}></div>
-      <div className={styles.headerContainer}>
-        <Typography tag="h1" className={styles.header} color="var(--color-white)" align="center">
-          {STRINGS.APP_NAME}
-        </Typography>
-        <Typography tag="p" className={styles.subHeader} color="var(--color-white)" align="center">
-          {appTagLine}
-        </Typography>
+    <aside data-testid="AuthSideBannerTest" className={clsx(styles.banner, className)} {...rest}>
+      <div className={styles.content}>
+        {/* h2: the form beside it owns the page's h1 */}
+        <DisplayLg tag="h2" className={styles.header}>
+          {header}
+        </DisplayLg>
+        {subText && (
+          <BodyLg tag="p" className={styles.subText}>
+            {subText}
+          </BodyLg>
+        )}
       </div>
-    </div>
+    </aside>
   );
 }
