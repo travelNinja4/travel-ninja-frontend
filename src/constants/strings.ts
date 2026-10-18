@@ -20,6 +20,7 @@ export const STRINGS = {
   SECONDS: 'seconds',
   RESEND_CODE: 'Resend Code',
   NO_OPTIONS_FOUND: 'No options found',
+  LOADING: 'Loading...',
   COUNTRY_CODE: 'Country code',
   ENTER_MOBILE_NUMBER: 'Enter mobile number',
   FORGOT_PASSWORD: 'Forgot Password?',
