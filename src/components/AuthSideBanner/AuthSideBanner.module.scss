@@ -64,14 +64,20 @@ The greens come from the auth-panel tokens, which already switch for dark mode.
   flex-direction: column;
   gap: var(--space-4);
   max-width: 36rem;
-}
 
-.header {
-  color: var(--color-text-inverse);
-  text-wrap: balance;
-}
+  // Font sizes scale with the viewport, from the tablet split (768px) to 1280px.
+  // Nested so they beat the Typography variant sizes.
+  .header {
+    // 24px → 32px
+    font-size: clamp(1.5rem, 0.75rem + 1.5625vw, 2rem);
+    color: var(--color-text-inverse);
+    text-wrap: balance;
+  }
 
-.subText {
-  color: var(--color-auth-panel-text);
-  text-wrap: pretty;
+  .subText {
+    // 15px → 16px
+    font-size: clamp(0.9375rem, 0.844rem + 0.195vw, 1rem);
+    color: var(--color-auth-panel-text);
+    text-wrap: pretty;
+  }
 }

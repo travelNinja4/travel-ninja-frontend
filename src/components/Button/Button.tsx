@@ -112,7 +112,7 @@ export default function Button({
       {loading ? (
         <>
           <span className={styles.loader} />
-          <Typography tag="span" className={className}>
+          <Typography tag="span" className={styles.label}>
             {children}
           </Typography>
         </>
@@ -123,7 +123,7 @@ export default function Button({
               <StartIcon size={iconSize} color={iconColor} />
             </span>
           )}
-          <Typography tag="span" className={className} align="center">
+          <Typography tag="span" className={styles.label}>
             {children}
           </Typography>
           {EndIcon && (

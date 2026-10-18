@@ -8,34 +8,55 @@ styles specific to the Button component
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  border-radius: 0.5rem;
-  background: linear-gradient(135deg, var(--color-indigo) 0%, var(--color-purple) 100%);
+  gap: var(--space-2);
+  min-height: var(--space-10);
+  padding: var(--space-2) var(--space-6);
   border: none;
-  transition: all 0.3s ease;
-  font-size: 1rem;
+  border-radius: 8px;
+  background-color: var(--color-brand);
+  color: var(--color-on-brand);
+  font-size: 0.875rem;
   font-weight: 600;
-  padding: 0.75rem 2rem;
-  color: var(--color-white);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-brand-hover);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--color-brand-active);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
 
   &:disabled {
-    color: var(--color-gray-500);
-    opacity: 0.6;
-    background: linear-gradient(135deg, var(--color-gray-250) 0%, var(--color-gray-350) 100%);
     cursor: not-allowed;
+    opacity: 0.6;
   }
 }
 
-.button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px var(--color-indigo-alpha-30);
+// Inherits the button's colour and weight instead of the Typography defaults
+.label {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1.25;
+}
+
+.icon {
+  display: inline-flex;
 }
 
 .loader {
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--color-white);
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid currentColor;
   border-top-color: transparent;
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
@@ -44,5 +65,15 @@ styles specific to the Button component
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+
+  .loader {
+    animation-duration: 1.5s;
   }
 }
