@@ -1,106 +1,50 @@
+/**
+ * Login form: work email, password, remember me, and links to reset the
+ * password or create an account. Validates with `loginSchema`, then calls the
+ * `loginAction` server action and sends the user to OTP verification.
+ *
+ * The heading lives here (not in the page) so the form and its title stay
+ * together; the page only handles layout.
+ */
 'use client';
 
 import { useTransition } from 'react';
-import { LogIn } from 'lucide-react';
-import AppLink from '@/components/AppLink';
 import { useRouter } from 'next/navigation';
-import { loginSchema } from './LoginSchema';
-import { Login } from '@/constants/types';
+import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { loginAction } from '@/actions/auth';
-import { useNotification } from '@/providers/NotificationProvider';
+import AppLink from '@/components/AppLink';
+import Button from '@/components/Button';
+import CheckBox from '@/components/CheckBox';
+import InputField from '@/components/InputField';
+import { Body, BodyLg, Heading2 } from '@/components/Typography';
 import { NOTIFICATION_TYPES, ROUTES, STRINGS } from '@/constants/strings';
-import DynamicForm, { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
+import { useNotification } from '@/providers/NotificationProvider';
+import { loginSchema, type LoginFormValues } from './LoginSchema';
 import styles from './LoginForm.module.scss';
-
-export const loginFormConfig: FieldConfig[] = [
-  {
-    name: 'title',
-    label: STRINGS.WELCOME_BACK,
-    type: 'label',
-    tag: 'h2',
-    children: null,
-    textAlign: 'center',
-    validationHints: [],
-    className: styles.title,
-  },
-  {
-    name: 'subTitle',
-    label: STRINGS.SIGN_IN_TITLE,
-    type: 'label',
-    tag: 'h3',
-    textAlign: 'center',
-    validationHints: [],
-    className: styles.subTitle,
-  },
-  {
-    name: 'email',
-    label: STRINGS.EMAIL_ADDRESS,
-    type: 'input',
-    required: true,
-    placeholder: STRINGS.ENTER_YOUR_EMAIL,
-    width: FieldWidth.FULL,
-    validationHints: [],
-  },
-  {
-    name: 'password',
-    label: STRINGS.PASSWORD,
-    type: 'password',
-    placeholder: STRINGS.ENTER_YOUR_PASSWORD,
-    required: true,
-    width: FieldWidth.FULL,
-    validationHints: [],
-  },
-  {
-    name: 'forgotPassword',
-    label: (
-      <>
-        <AppLink href="/login/forgot-password" className={styles.forgotPassword}>
-          {STRINGS.FORGOT_PASSWORD}
-        </AppLink>
-      </>
-    ),
-    type: 'label',
-    validationHints: [],
-    textAlign: 'right',
-    className: styles.forgotPassword,
-  },
-  {
-    name: 'signIn',
-    label: STRINGS.SIGN_IN,
-    type: 'button',
-    buttonType: 'submit',
-    className: styles.submitButton,
-    startIcon: LogIn,
-    iconColor: 'var(--color-white)',
-  },
-  {
-    name: 'signUpText',
-    label: (
-      <>
-        {STRINGS.DONT_HAVE_ACCOUNT}{' '}
-        <AppLink href={ROUTES.CREATE_ACCOUNT} className={styles.signUpText}>
-          {STRINGS.CREATE_NEW_ACCOUNT}
-        </AppLink>
-      </>
-    ),
-    type: 'label',
-    tag: 'p',
-    textAlign: 'center',
-    validationHints: [],
-  },
-];
 
 export default function LoginForm() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const { showNotification } = useNotification();
 
-  const handleLogin = (formData: Login) => {
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: '', password: '', rememberMe: false },
+  });
+
+  const onSubmit = ({ email, password }: LoginFormValues) => {
+    // rememberMe is UI-only until the login API accepts it
     startTransition(async () => {
-      const result = await loginAction(formData);
+      const result = await loginAction({ email, password });
       if (!result.success) {
-        result.errors.forEach((errMsg) => {
-          showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
+        result.errors.forEach((message) => {
+          showNotification(STRINGS.ERROR, message, NOTIFICATION_TYPES.ERROR);
         });
         return;
       }
@@ -109,12 +53,78 @@ export default function LoginForm() {
   };
 
   return (
-    <DynamicForm
-      fields={loginFormConfig}
-      schema={loginSchema}
-      loading={isPending}
-      className={styles.loginContainer}
-      onSubmit={handleLogin}
-    />
+    <div data-testid="LoginFormTest" className={styles.loginForm}>
+      <header className={styles.header}>
+        <Heading2 tag="h1" className={styles.title}>
+          {STRINGS.SIGN_IN_HEADING}
+        </Heading2>
+        <BodyLg className={styles.description}>{STRINGS.SIGN_IN_DESCRIPTION}</BodyLg>
+      </header>
+
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+        aria-busy={isPending}
+      >
+        <InputField
+          {...register('email')}
+          label={STRINGS.WORK_EMAIL}
+          type="email"
+          inputMode="email"
+          autoComplete="username"
+          placeholder={STRINGS.WORK_EMAIL_PLACEHOLDER}
+          error={errors.email?.message}
+          disabled={isPending}
+          fieldClassName={styles.field}
+          inputClassName={styles.input}
+        />
+
+        <InputField
+          {...register('password')}
+          label={STRINGS.PASSWORD}
+          type="password"
+          autoComplete="current-password"
+          placeholder={STRINGS.ENTER_YOUR_PASSWORD}
+          error={errors.password?.message}
+          disabled={isPending}
+          fieldClassName={styles.field}
+          inputClassName={styles.input}
+        />
+
+        <div className={styles.options}>
+          <Controller
+            name="rememberMe"
+            control={control}
+            render={({ field: { value, onChange, onBlur, name, ref } }) => (
+              <CheckBox
+                ref={ref}
+                name={name}
+                label={STRINGS.REMEMBER_ME}
+                labelClassName={styles.checkboxLabel}
+                checked={!!value}
+                onChange={onChange}
+                onBlur={onBlur}
+                disabled={isPending}
+              />
+            )}
+          />
+          <AppLink href={ROUTES.FORGOT_PASSWORD} className={styles.link}>
+            {STRINGS.FORGOT_PASSWORD_LINK}
+          </AppLink>
+        </div>
+
+        <Button type="submit" loading={isPending} className={styles.submit}>
+          {STRINGS.SIGN_IN}
+        </Button>
+      </form>
+
+      <Body className={styles.footer}>
+        {STRINGS.NEW_AGENCY}{' '}
+        <AppLink href={ROUTES.CREATE_ACCOUNT} className={styles.link}>
+          {STRINGS.CREATE_AN_ACCOUNT}
+        </AppLink>
+      </Body>
+    </div>
   );
 }
