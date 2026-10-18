@@ -153,11 +153,15 @@ export default function DynamicForm<T extends FieldValues>({
           <Controller
             name={field.name as Path<T>}
             control={control}
-            render={({ field: { onChange, value } }) => (
+            render={({ field: { onChange, onBlur, value, name, ref } }) => (
               <CheckBox
+                ref={ref}
+                name={name}
                 label={field.label as ReactNode}
+                required={field.required}
                 checked={!!value}
                 onChange={(checked: boolean) => onChange(checked)}
+                onBlur={onBlur}
                 className={field.className}
                 error={errors[field.name]?.message as string}
               />
