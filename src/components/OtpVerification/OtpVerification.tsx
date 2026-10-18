@@ -140,7 +140,10 @@ export default function OtpVerification({
       <div className={styles.subContainer}>
         <div className={styles.mainContainer}>
           <div className={styles.imageContainer}>
-            <AuthSideBanner appTagLine={STRINGS.CREATE_ACCOUNT_APP_TAG_LINE} />
+            <AuthSideBanner
+              header={STRINGS.CREATE_ACCOUNT_BANNER_HEADER}
+              subText={STRINGS.CREATE_ACCOUNT_BANNER_SUB_TEXT}
+            />
           </div>
           <div className={styles.otpContainer}>
             <Typography tag="h2" align="center" className={styles.otpHeader}>

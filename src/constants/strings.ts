@@ -2,9 +2,15 @@ import type { NotificationType } from '@/providers/NotificationProvider';
 
 export const STRINGS = {
   APP_NAME: 'TravelNinja',
-  CREATE_ACCOUNT_APP_TAG_LINE: 'Transform your tour business with our powerful platform',
-  LOGIN_APP_TAG_LINE: 'Empowering tour agencies to create unforgettable travel experiences',
-  RESET_PASSWORD_TAG_LINE: 'Reset your password to regain access to your account',
+  LOGIN_BANNER_HEADER: 'Run tours with clarity',
+  LOGIN_BANNER_SUB_TEXT:
+    'TravelNinja helps Indian tour operators publish departures, fill seats, and track net earnings after platform commission.',
+  CREATE_ACCOUNT_BANNER_HEADER: 'Grow your tour business',
+  CREATE_ACCOUNT_BANNER_SUB_TEXT:
+    'Set up your agency in minutes, list your first departure, and start taking bookings from travellers across India.',
+  RESET_PASSWORD_BANNER_HEADER: 'Back to your bookings in a minute',
+  RESET_PASSWORD_BANNER_SUB_TEXT:
+    'Reset your password to regain access to your tours, bookings, and payouts.',
   EMAIL: 'email',
   MOBILE: 'mobile',
   EMAIL_VERIFICATION: 'Email Verification',
