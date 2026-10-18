@@ -1,4 +1,4 @@
-import CustomImage from '@/components/CustomImage';
+import Image from '@/components/Image';
 import ForgotPasswordForm from '../ForgotPasswordForm/ForgotPasswordForm';
 import AuthSideBanner from '@/components/AuthSideBanner';
 import { STRINGS } from '@/constants/strings';
@@ -7,11 +7,10 @@ import styles from './page.module.scss';
 export default function ForgotPasswordPage() {
   return (
     <div className={styles.container}>
-      <CustomImage
-        isUrl
+      <Image
         src={process.env.NEXT_PUBLIC_PLACEHOLDER_BG_URL as string}
         fill
-        priority
+        preload
         alt="BackgroundImg"
         className={styles.bgImg}
         unoptimized

@@ -12,7 +12,7 @@
  */
 
 import { STRINGS } from '@/constants/strings';
-import CustomImage from '../CustomImage';
+import Image from '../Image';
 import Typography from '../Typography';
 import styles from './AuthSideBanner.module.scss';
 
@@ -23,10 +23,9 @@ interface AuthSideBannerProps {
 export default function AuthSideBanner({ appTagLine }: AuthSideBannerProps) {
   return (
     <div data-testid="AuthSideBannerTest" className={styles.container}>
-      <CustomImage
-        isUrl
+      <Image
         src="https://picsum.photos/1920/1080?random=1"
-        priority
+        preload
         alt="authImg"
         className={styles.imgContainer}
         unoptimized
