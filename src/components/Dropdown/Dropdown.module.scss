@@ -1,130 +1,99 @@
 /**
 ------------------------------------------------------
 styles specific to the Dropdown component
+
+The field itself comes from InputField; these styles only make it read as a
+select (pointer cursor, normal background while read-only) and style the list.
 ------------------------------------------------------
 **/
 
 .dropdown {
   position: relative;
+  width: 100%;
 }
 
-.inputWrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.label {
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--color-gray-800);
-  margin-bottom: 0.5rem;
+// InputField gives read-only fields a sunken background; a select should not look disabled.
+// The extra element selector outranks InputField's `.field.readOnly`.
+.dropdown div.enabled {
+  cursor: pointer;
+  background-color: var(--color-surface);
 }
 
 .input {
-  flex: 1;
-  width: 100%;
-  font-size: 1rem;
-  padding: 0.75rem 0.87rem;
-  border-radius: 8px;
-  border: 1px solid var(--color-gray-300);
-  background-color: var(--color-white);
-  color: var(--color-black);
-  color-scheme: light;
-  box-sizing: border-box;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  cursor: inherit;
+  text-overflow: ellipsis;
+}
 
-  &:focus {
-    outline: none;
-    border-color: var(--color-indigo);
-    box-shadow: 0 0 0 0.2rem var(--color-indigo-alpha-25);
-    outline: none;
-  }
+.chevron {
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
 
-  &:disabled {
-    background-color: #e9ecef;
-    color: var(--color-gray-400);
-    cursor: not-allowed;
-  }
+.chevronOpen {
+  transform: rotate(180deg);
 }
 
 .list {
   position: absolute;
-  top: calc(100% + 0.25rem);
+  top: calc(100% + var(--space-1));
   left: 0;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border: 1px solid var(--color-gray-220);
-  border-radius: 6px;
-  background: var(--color-white);
-  box-shadow: 0 4px 8px var(--color-black-alpha-10);
-  max-height: 12rem;
-  overflow-y: auto;
   z-index: 100;
-
-  // smooth open/close animation
+  width: 100%;
+  max-height: 12rem;
+  margin: 0;
+  padding: var(--space-1) 0;
+  overflow-y: auto;
+  list-style: none;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-surface-raised);
+  box-shadow: var(--shadow-md);
   animation: fadeIn 0.15s ease-in-out;
 }
 
 .option {
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-text);
   cursor: pointer;
-  font-size: 0.95rem;
-  color: var(--color-gray-700);
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
+  transition: background-color 0.15s ease;
 
-  &:hover,
   &.highlighted {
-    background: var(--color-option-hover-bg);
+    background-color: var(--color-surface-hover);
   }
 
   &.selected {
     font-weight: 600;
-    background: darker(var(--color-option-selected-bg), 15%);
-    color: var(--color-option-selected-text);
+    background-color: var(--color-surface-selected);
+    color: var(--color-brand);
   }
 }
 
-.noOptions {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.9rem;
-  color: var(--color-gray-350);
-  text-align: center;
-}
-
-.inputWithIcon {
+.status {
   display: flex;
   align-items: center;
-}
-
-.loading {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--color-gray-320);
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
   font-size: 0.875rem;
-  height: 45px;
-  .spinner {
-    height: 1rem;
-    width: 1rem;
-    border: 2px solid var(--icon-color-info);
-    border-top-color: transparent;
-    border-radius: 9999px;
-    animation: spin 1s linear infinite;
-  }
+  color: var(--color-text-muted);
+}
+
+.empty {
+  justify-content: center;
+}
+
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--color-info);
+  border-top-color: transparent;
+  border-radius: 9999px;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
+  to {
     transform: rotate(360deg);
   }
 }
@@ -137,5 +106,14 @@ styles specific to the Dropdown component
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .list,
+  .spinner,
+  .chevron {
+    animation: none;
+    transition: none;
   }
 }

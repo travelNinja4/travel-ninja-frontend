@@ -54,21 +54,13 @@ export default function Bookings({ label = 'label' }: BookingsProps) {
           <InputField label="Search" placeholder="Search bookings..." />
         </div>
         <div className={styles.filterCard}>
-          <Dropdown
-            label="Status"
-            options={status}
-            dropdownContainerClassName={styles.statusDropdown}
-          />
-          <Dropdown
-            label="Tour"
-            options={tour}
-            dropdownContainerClassName={styles.statusDropdown}
-          />
+          <Dropdown label="Status" options={status} className={styles.statusDropdown} />
+          <Dropdown label="Tour" options={tour} className={styles.statusDropdown} />
           <Dropdown
             label="Quick Date Filter"
             placeholder="Select preset"
             options={quickDateFilter}
-            dropdownContainerClassName={styles.statusDropdown}
+            className={styles.statusDropdown}
           />
           <DatePicker
             label="Date Range"
