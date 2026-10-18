@@ -27,7 +27,7 @@ import { useEffect, useState } from 'react';
 import Button from '../Button';
 import InputField from '../InputField';
 import Typography from '../Typography';
-import CustomImage from '../CustomImage';
+import Image from '../Image';
 import { OtpProps, OtpType, PendingVerification } from '@/constants/types';
 import { NOTIFICATION_TYPES, STRINGS } from '@/constants/strings';
 import AuthSideBanner from '../AuthSideBanner';
@@ -127,11 +127,10 @@ export default function OtpVerification({
 
   return (
     <div data-testid="OtpVerificationTest" className={styles.container}>
-      <CustomImage
-        isUrl
+      <Image
         src={process.env.NEXT_PUBLIC_PLACEHOLDER_BG_URL as string}
         fill
-        priority
+        preload
         alt="BackgroundImg"
         className={styles.bgImg}
         unoptimized
