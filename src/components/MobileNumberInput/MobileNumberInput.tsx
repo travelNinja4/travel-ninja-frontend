@@ -24,17 +24,16 @@
  */
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import TextField from '../TextField';
+import { useMemo, useState } from 'react';
+import InputField from '../InputField';
 import Autocomplete from '../Autocomplete';
-import { useNotification } from '@/providers/NotificationProvider';
-import { errorHandler } from '@/utils/errorHandler';
-import { authService } from '@/services/authService';
-import { useCommonStore } from '@/store/common';
-import { useApiStatusStore } from '@/store/apiStatus';
 import { STRINGS } from '@/constants/strings';
+import { Country } from '@/constants/types';
 import clsx from 'clsx';
 import styles from './MobileNumberInput.module.scss';
+
+// Stable default, so the effect below doesn't re-run on every render when no countries are passed
+const EMPTY_COUNTRIES: Country[] = [];
 
 /**
  * Define the props available for the MobileNumberInput component.
@@ -61,6 +60,13 @@ interface MobileNumberInputProps {
    * @param val - Updated mobile number state.
    */
   onChange?: (val: { country: string; number: string }) => void;
+
+  /**
+   * Country codes to choose from. Fetched on the server by the page and passed down.
+   *
+   * @default []
+   */
+  countries?: Country[];
 
   /**
    * The maximum length allowed for the mobile number input.
@@ -96,10 +102,8 @@ export default function MobileNumberInput({
   countryError,
   value,
   onChange,
+  countries = EMPTY_COUNTRIES,
 }: MobileNumberInputProps) {
-  const { showNotification } = useNotification();
-  const { countries, setCountries } = useCommonStore();
-  const isLoading = useApiStatusStore((store) => store.isLoading);
   const [country, setCountry] = useState('');
   const [search, setSearch] = useState('');
   const [number, setNumber] = useState(value?.number ?? '');
@@ -107,30 +111,28 @@ export default function MobileNumberInput({
     value?.country ? countries.find((c) => c.code === value.country)?.length : maxLength,
   );
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await authService.getCountryCode();
-        setCountries(response);
-      } catch (err) {
-        const messages = errorHandler(err);
-        messages.forEach((msg) => showNotification('Error!', msg, 'error'));
-      }
-    })();
-  }, []);
-
-  useEffect(() => {
-    if (countries.length === 0) return;
-
-    // Set initial country and number if value exists
-    if (value) {
+  // Sync country and number from `value` once countries are loaded, and
+  // again whenever `value`, `countries` or `maxLength` change
+  const [synced, setSynced] = useState<{
+    countries: typeof countries;
+    value: typeof value;
+    maxLength: typeof maxLength;
+  } | null>(null);
+  if (
+    !synced ||
+    synced.countries !== countries ||
+    synced.value !== value ||
+    synced.maxLength !== maxLength
+  ) {
+    setSynced({ countries, value, maxLength });
+    if (countries.length > 0 && value) {
       setCountry(value.country);
       setNumber(value.number);
       setLength(
         value.country ? countries.find((c) => c.code === value.country)?.length : maxLength,
       );
     }
-  }, [countries, value, maxLength]);
+  }
 
   const filteredCountries = useMemo(() => {
     if (!search) return countries;
@@ -178,7 +180,6 @@ export default function MobileNumberInput({
             placeholder={STRINGS.COUNTRY_CODE}
             value={country}
             searchValue={search}
-            isLoading={isLoading}
             onSearchChange={(val) => handleSearch(val)}
             onChange={handleSelect}
             dropdownContainerClassName={clsx(styles.dropdown)}
@@ -186,10 +187,10 @@ export default function MobileNumberInput({
           />
         </div>
 
-        <TextField
+        <InputField
           placeholder={STRINGS.ENTER_MOBILE_NUMBER}
           className={clsx(styles.inputContainer)}
-          inputClassName={styles.inputField}
+          fieldClassName={styles.inputField}
           value={number}
           maxLength={length || maxLength}
           onChange={(e) => {

@@ -1,5 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table';
-import CustomImage from '../CustomImage';
+import Image from '../Image';
 import styles from './BookingTable.module.scss';
 import Typography from '../Typography';
 import clsx from 'clsx';
@@ -34,7 +34,7 @@ export const bookingColumns: ColumnDef<Booking>[] = [
       return (
         <div className={styles.subContainer}>
           <div className={styles.customerAvatar}>
-            <CustomImage src={customerAvatar} alt={customerName} isUrl />
+            <Image src={customerAvatar} alt={customerName} width={40} height={40} />
           </div>
           <div>
             <div className={styles.fwMedium}>{customerName}</div>

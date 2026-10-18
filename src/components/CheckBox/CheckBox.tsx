@@ -1,187 +1,191 @@
 /**
- * Checkbox component is a clickable UI element that allows users to select or deselect an option
+ * Labelled checkbox built on a native `<input type="checkbox">`, so it keeps
+ * keyboard support (Space), form submission, `required` validation and the
+ * `:indeterminate` state for free. The box is restyled with CSS and an icon.
+ *
+ * Works controlled (`checked` + `onChange`) or uncontrolled (`defaultChecked`),
+ * and accepts every native input attribute plus `ref`, so it works with
+ * react-hook-form's `register()` as well as `Controller`.
  *
  * @example
  * ```tsx
- * import CheckBox from '@src/components/CheckBox'
+ * import CheckBox from '@/components/CheckBox'
  *
- * export default function CheckBox() {
- *   return <CheckBox
- *          name="policyCheck"
- *          label={
- *               <>
- *               I agree to the{' '}
- *               <Link href="/terms">
- *                Terms of Service
- *                </Link>{' '}
- *                and <Link href="/privacy">Privacy Policy</Link>
- *                </>
- *          }
- *          checked={true}
- *          onChange={()=>{}}
- *      />;
+ * export default function TermsField() {
+ *   const [accepted, setAccepted] = useState(false);
+ *   return (
+ *     <CheckBox
+ *       name="termStatus"
+ *       required
+ *       checked={accepted}
+ *       onChange={setAccepted}
+ *       label={
+ *         <>
+ *           I agree to the <Link href="/terms">Terms of Service</Link> and{' '}
+ *           <Link href="/privacy">Privacy Policy</Link>
+ *         </>
+ *       }
+ *     />
+ *   );
  * }
  * ```
  */
-
 'use client';
 
-import React, { useEffect, useRef, ReactNode } from 'react';
-import Typography from '@/components/Typography';
-import { Tags } from '../Typography/Typography';
+import {
+  ChangeEvent,
+  ComponentPropsWithRef,
+  ReactNode,
+  RefCallback,
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+} from 'react';
+import { Check, Minus } from 'lucide-react';
+import clsx from 'clsx';
+import { Body, Caption } from '../Typography';
 import styles from './CheckBox.module.scss';
 
 /**
  * Define the props available for the CheckBox component.
+ * Every other native input attribute (and `ref`) is passed through to the `<input>`.
  */
-interface CheckBoxProps {
+export interface CheckBoxProps
+  extends Omit<ComponentPropsWithRef<'input'>, 'type' | 'size' | 'onChange'> {
   /**
-   * The label displayed next to the checkbox.
-   * Can be a string, React element, or any valid ReactNode.
+   * Text or elements shown next to the box. Links inside it stay clickable
+   * without toggling the checkbox.
+   */
+  label?: ReactNode;
+
+  /**
+   * Secondary text shown under the label when there is no error.
+   */
+  helperText?: ReactNode;
+
+  /**
+   * Error message shown under the label. Turns the box red and marks the
+   * input as `aria-invalid`.
+   */
+  error?: string;
+
+  /**
+   * Shows a dash instead of a check, e.g. for a "select all" box when only
+   * some items are selected. Visual only: the next click still checks the box.
    *
-   * @example
-   * label="Accept terms"
-   * @example
-   * label={<span>Custom label element</span>}
-   */
-  label: ReactNode;
-
-  /**
-   * The HTML tag to use for rendering the label text.
-   * Defaults to `'span'`.
-   * Useful for semantic markup (e.g., 'h3', 'p', etc.).
-   */
-  tag?: Tags;
-
-  /**
-   * Name attribute of the checkbox input element.
-   * Also used to generate a unique `id` for the checkbox if not provided.
-   */
-  name?: string;
-
-  /**
-   * Value attribute of the checkbox input element.
-   * Sent as part of form data when the checkbox is checked.
-   */
-  value?: string;
-
-  /**
-   * Whether the checkbox is required in a form.
-   * When `true`, form submission will be blocked until this checkbox is checked.
-   */
-  required?: boolean;
-
-  /**
-   * Whether the checkbox is displayed in an indeterminate state.
-   * This is a visual state often used to represent a partially selected group.
-   */
-  indeterminate?: boolean;
-  /**
-   * Controlled checked state for the checkbox.
-   * Use this for fully controlled components where state is managed externally.
    * @default false
    */
-  checked?: boolean;
+  indeterminate?: boolean;
 
   /**
-   * Initial checked state for the checkbox.
-   * Use this for uncontrolled components where the checkbox manages its own state.
+   * Called with the new checked state, followed by the original event.
    */
-  defaultChecked?: boolean;
+  onChange?: (checked: boolean, event: ChangeEvent<HTMLInputElement>) => void;
 
   /**
-   * Whether the checkbox is disabled.
-   * When `true`, the checkbox cannot be interacted with.
-   */
-  disabled?: boolean;
-
-  /**
-   * Callback fired when the checked state changes.
-   * Will not be called if the checkbox is disabled.
-   *
-   * @param checked - The new checked state of the checkbox.
-   * @returns
-   */
-  onChange?: (checked: boolean) => void;
-
-  /**
-   * Additional CSS class names to apply to the root label element.
+   * Class for the outer wrapper (box + label + message).
    */
   className?: string;
 
   /**
-   * Inline CSS styles to apply to the root label element.
+   * Class for the label text.
    */
-  style?: React.CSSProperties;
-
-  /**
-   * error message to display below the checkbox.
-   */
-  error?: string;
+  labelClassName?: string;
 }
 
 export default function CheckBox({
   label,
-  tag = 'span',
-  name,
-  value,
-  required,
-  indeterminate = false,
-  checked,
-  defaultChecked,
-  disabled,
-  className,
-  onChange,
-  style,
+  helperText,
   error,
+  indeterminate = false,
+  onChange,
+  className,
+  labelClassName,
+  id,
+  required,
+  disabled,
+  ref,
+  ...rest
 }: CheckBoxProps) {
-  const checkboxId = name || `checkbox-${Math.random()}`;
-  const inputRef = useRef<HTMLInputElement>(null);
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
+  const messageId = `${inputId}-message`;
+  const message = error || helperText;
 
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  // `indeterminate` only exists as a DOM property, not an attribute
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.indeterminate = indeterminate;
-    }
+    if (inputRef.current) inputRef.current.indeterminate = indeterminate;
   }, [indeterminate]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (disabled) {
-      return;
-    } else if (onChange) {
-      onChange(e.target.checked);
-    }
-  };
-
-  const getLabelContent = () => {
-    if (typeof label === 'string' || React.isValidElement(label)) {
-      return label;
-    }
-  };
+  // Keep our own ref while still forwarding the caller's (object or callback ref)
+  const setRefs: RefCallback<HTMLInputElement> = useCallback(
+    (node) => {
+      inputRef.current = node;
+      if (typeof ref === 'function') ref(node);
+      else if (ref) ref.current = node;
+    },
+    [ref],
+  );
 
   return (
-    <>
+    <div data-testid="CheckBoxTest" className={clsx(styles.container, className)}>
       <label
-        data-testid="CheckBoxTest"
-        htmlFor={checkboxId}
-        className={(styles.checkBoxContainer, className)}
-        style={style}
+        htmlFor={inputId}
+        className={clsx(styles.root, {
+          [styles.disabled]: disabled,
+          [styles.hasError]: !!error,
+        })}
       >
-        <input
-          ref={inputRef}
-          type="checkbox"
-          id={checkboxId}
-          name={name}
-          value={value}
-          required={required}
-          checked={checked}
-          defaultChecked={defaultChecked}
-          disabled={disabled}
-          onChange={handleChange}
-          className={styles.checkbox}
-        />
-        {label && <Typography tag={tag}>{getLabelContent()}</Typography>}
+        <span className={styles.control}>
+          <input
+            ref={setRefs}
+            type="checkbox"
+            id={inputId}
+            className={styles.input}
+            required={required}
+            disabled={disabled}
+            aria-invalid={!!error || undefined}
+            aria-describedby={message ? messageId : undefined}
+            onChange={(event) => !disabled && onChange?.(event.target.checked, event)}
+            {...rest}
+          />
+          <Check
+            className={clsx(styles.icon, styles.checkIcon)}
+            strokeWidth={3}
+            aria-hidden="true"
+          />
+          <Minus
+            className={clsx(styles.icon, styles.indeterminateIcon)}
+            strokeWidth={3}
+            aria-hidden="true"
+          />
+        </span>
+
+        {label && (
+          <Body tag="span" className={clsx(styles.label, labelClassName)}>
+            {label}
+            {required && (
+              <span className={styles.required} aria-hidden="true">
+                *
+              </span>
+            )}
+          </Body>
+        )}
       </label>
-      {error && <p className={styles.errorText}>{error}</p>}
-    </>
+
+      {message && (
+        <Caption
+          tag="p"
+          id={messageId}
+          role={error ? 'alert' : undefined}
+          className={clsx(styles.message, { [styles.errorMessage]: !!error })}
+        >
+          {message}
+        </Caption>
+      )}
+    </div>
   );
 }

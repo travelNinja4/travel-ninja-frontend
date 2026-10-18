@@ -1,160 +1,173 @@
-import '@testing-library/jest-dom';
+import { createRef } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import CheckBox from './CheckBox';
 
-describe('Home', () => {
+describe('CheckBox', () => {
   /** Base props for CheckBox **/
   const baseProps = {
-    label: 'CheckBox Test',
-    name: 'checkboxTest',
-    onChange: jest.fn(),
+    label: 'Accept terms',
+    name: 'termStatus',
   };
 
   /**
    * @test
    * Renders the CheckBox component without throwing an error
-   * and checks if the CheckBoxTest text is present in the document.
-   *
-   * This ensures that the component loads correctly with the base props.
+   * and checks if the CheckBoxTest element is present in the document.
    */
   it('renders without crashing', () => {
     render(<CheckBox {...baseProps} />);
     expect(screen.getByTestId('CheckBoxTest')).toBeInTheDocument();
   });
 
-  /**
-   * @test
-   * Ensures that the CheckBox component renders without throwing any runtime errors.
-   *
-   * This is a safety check to confirm that the component can mount successfully
-   * with the provided base props, even if it does not render any visible content.
-   */
-  it('renders without throwing', () => {
-    expect(() => render(<CheckBox {...baseProps} />)).not.toThrow();
+  it('associates the label with the checkbox', () => {
+    render(<CheckBox {...baseProps} />);
+    expect(screen.getByLabelText('Accept terms')).toBe(screen.getByRole('checkbox'));
   });
 
-  /**
-   * @test
-   * Captures a snapshot of the CheckBox component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<CheckBox {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
+  it('uses the passed id, or a stable generated one', () => {
+    const { rerender } = render(<CheckBox {...baseProps} id="terms" />);
+    expect(screen.getByRole('checkbox')).toHaveAttribute('id', 'terms');
+
+    rerender(<CheckBox {...baseProps} />);
+    const generated = screen.getByRole('checkbox').id;
+    expect(generated).toBeTruthy();
+    rerender(<CheckBox {...baseProps} />);
+    expect(screen.getByRole('checkbox').id).toBe(generated);
+  });
+
+  it('gives each checkbox a unique id even when names match', () => {
+    render(
+      <>
+        <CheckBox name="tour" label="Goa" />
+        <CheckBox name="tour" label="Kerala" />
+      </>,
+    );
+    const [first, second] = screen.getAllByRole('checkbox');
+    expect(first.id).not.toBe(second.id);
+  });
+
+  it('renders without a label', () => {
+    render(<CheckBox name="bare" aria-label="Select row" />);
+    expect(screen.getByRole('checkbox', { name: 'Select row' })).toBeInTheDocument();
+  });
+
+  it('renders a React node label with links', () => {
+    render(
+      <CheckBox
+        name="terms"
+        label={
+          <>
+            I agree to the <a href="/terms">Terms of Service</a>
+          </>
+        }
+      />,
+    );
+    expect(screen.getByRole('link', { name: 'Terms of Service' })).toBeInTheDocument();
+    expect(screen.getByRole('checkbox')).toHaveAccessibleName('I agree to the Terms of Service');
+  });
+
+  it('calls onChange with the new checked state and the event', () => {
+    const onChange = vi.fn();
+    render(<CheckBox {...baseProps} onChange={onChange} />);
+
+    fireEvent.click(screen.getByRole('checkbox'));
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith(true, expect.objectContaining({ type: 'change' }));
+  });
+
+  it('toggles when the label is clicked', () => {
+    render(<CheckBox {...baseProps} />);
+    fireEvent.click(screen.getByText('Accept terms'));
+    expect(screen.getByRole('checkbox')).toBeChecked();
+  });
+
+  it('works uncontrolled with defaultChecked', () => {
+    render(<CheckBox {...baseProps} defaultChecked />);
+    const checkbox = screen.getByRole('checkbox');
+    expect(checkbox).toBeChecked();
+
+    fireEvent.click(checkbox);
+    expect(checkbox).not.toBeChecked();
+  });
+
+  it('stays in sync with the parent when controlled', () => {
+    const { rerender } = render(<CheckBox {...baseProps} checked={false} onChange={vi.fn()} />);
+    fireEvent.click(screen.getByRole('checkbox'));
+    expect(screen.getByRole('checkbox')).not.toBeChecked();
+
+    rerender(<CheckBox {...baseProps} checked onChange={vi.fn()} />);
+    expect(screen.getByRole('checkbox')).toBeChecked();
   });
 
   it('does not call onChange when disabled', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     render(<CheckBox {...baseProps} disabled onChange={onChange} />);
-    screen.getByRole('checkbox').click();
+
+    fireEvent.click(screen.getByRole('checkbox'));
+
+    expect(screen.getByRole('checkbox')).toBeDisabled();
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it('calls onChange when enabled and clicked', () => {
-    const onChange = jest.fn();
-    render(<CheckBox {...baseProps} onChange={onChange} />);
-    fireEvent.click(screen.getByRole('checkbox'));
-    expect(onChange).toHaveBeenCalledTimes(1);
-  });
-
-  it('sets indeterminate property on checkbox input', () => {
-    const { container } = render(<CheckBox {...baseProps} indeterminate />);
-    const input = container.querySelector('input') as HTMLInputElement;
+  it('sets the indeterminate DOM property and updates it', () => {
+    const { rerender } = render(<CheckBox {...baseProps} indeterminate />);
+    const input = screen.getByRole('checkbox') as HTMLInputElement;
     expect(input.indeterminate).toBe(true);
-  });
 
-  it('can render with defaultChecked true', () => {
-    render(<CheckBox {...baseProps} defaultChecked />);
-    expect(screen.getByRole('checkbox')).toBeChecked();
-  });
-
-  it('sets indeterminate property on checkbox input', () => {
-    const { container } = render(<CheckBox {...baseProps} indeterminate />);
-    const input = container.querySelector('input') as HTMLInputElement;
-    expect(input.indeterminate).toBe(true);
-  });
-
-  it('renders React element as label', () => {
-    render(<CheckBox {...baseProps} label={<span>Element Label</span>} />);
-    expect(screen.getByText('Element Label')).toBeInTheDocument();
-  });
-
-  it('handles non-string, non-element labels gracefully', () => {
-    render(<CheckBox {...baseProps} label={123} />);
-    expect(screen.getByTestId('CheckBoxTest')).toBeInTheDocument();
-  });
-
-  it('renders without a label prop', () => {
-    render(<CheckBox name="noLabel" onChange={jest.fn()} label="no label" />);
-    expect(screen.getByRole('checkbox')).toBeInTheDocument();
-  });
-
-  it('renders with a custom tag prop', () => {
-    render(<CheckBox {...baseProps} tag="h3" />);
-    expect(screen.getByText('CheckBox Test').tagName).toBe('H3');
-  });
-
-  it('does not set indeterminate when prop is false', () => {
-    const { container } = render(<CheckBox {...baseProps} indeterminate={false} />);
-    const input = container.querySelector('input') as HTMLInputElement;
+    rerender(<CheckBox {...baseProps} indeterminate={false} />);
     expect(input.indeterminate).toBe(false);
   });
 
-  it('renders without a label when label is null', () => {
-    render(<CheckBox name="noLabel" onChange={jest.fn()} label={null} />);
-    expect(screen.queryByText('CheckBox Test')).not.toBeInTheDocument();
+  it('shows a required marker and sets required on the input', () => {
+    render(<CheckBox {...baseProps} required />);
+    expect(screen.getByText('*')).toHaveAttribute('aria-hidden', 'true');
+    expect(screen.getByRole('checkbox')).toBeRequired();
   });
 
-  it('does not throw when clicked without onChange handler', () => {
-    render(<CheckBox name="noOnChange" label="No OnChange" />);
-    fireEvent.click(screen.getByRole('checkbox'));
-    expect(screen.getByRole('checkbox')).toBeChecked();
+  it('shows the error message and marks the input invalid', () => {
+    render(<CheckBox {...baseProps} id="terms" error="You must accept" helperText="Read first" />);
+    const checkbox = screen.getByRole('checkbox');
+
+    expect(screen.getByRole('alert')).toHaveTextContent('You must accept');
+    expect(screen.queryByText('Read first')).not.toBeInTheDocument();
+    expect(checkbox).toHaveAttribute('aria-invalid', 'true');
+    expect(checkbox).toHaveAttribute('aria-describedby', 'terms-message');
   });
 
-  it('renders empty Typography when label is non-string and non-element', () => {
-    render(<CheckBox name="badLabel" label={123} />);
-    const typography = screen.getByTestId('TypographyTest');
-    expect(typography).toBeInTheDocument();
-    expect(typography).toBeEmptyDOMElement();
+  it('shows helper text when there is no error', () => {
+    render(<CheckBox {...baseProps} helperText="You can change this later" />);
+    expect(screen.getByText('You can change this later')).toBeInTheDocument();
+    expect(screen.getByRole('checkbox')).not.toHaveAttribute('aria-invalid');
   });
 
-  it('calls onChange when not disabled', () => {
-    const handleChange = jest.fn();
-    render(<CheckBox name="test" label="Accept" onChange={handleChange} />);
-    const input = screen.getByRole('checkbox');
-    fireEvent.click(input);
-    expect(handleChange).toHaveBeenCalledWith(true);
+  it('forwards object and callback refs to the input', () => {
+    const objectRef = createRef<HTMLInputElement>();
+    const { unmount } = render(<CheckBox {...baseProps} ref={objectRef} />);
+    expect(objectRef.current).toBe(screen.getByRole('checkbox'));
+    unmount();
+
+    const callbackRef = vi.fn();
+    render(<CheckBox {...baseProps} ref={callbackRef} />);
+    expect(callbackRef).toHaveBeenCalledWith(screen.getByRole('checkbox'));
   });
 
-  it('does not call onChange when disabled', () => {
-    const handleChange = jest.fn();
-    render(<CheckBox name="test" label="Disabled" disabled onChange={handleChange} />);
-    const input = screen.getByRole('checkbox');
-    fireEvent.click(input);
-    expect(handleChange).not.toHaveBeenCalled();
+  it('passes native attributes through to the input', () => {
+    const onBlur = vi.fn();
+    render(<CheckBox {...baseProps} value="yes" onBlur={onBlur} data-track="terms" />);
+    const checkbox = screen.getByRole('checkbox');
+
+    fireEvent.blur(checkbox);
+
+    expect(checkbox).toHaveAttribute('name', 'termStatus');
+    expect(checkbox).toHaveAttribute('value', 'yes');
+    expect(checkbox).toHaveAttribute('data-track', 'terms');
+    expect(onBlur).toHaveBeenCalled();
   });
 
-  it('renders string label', () => {
-    render(<CheckBox name="test" label="StringLabel" />);
-    expect(screen.getByText('StringLabel')).toBeInTheDocument();
-  });
-
-  it('renders React element label', () => {
-    render(<CheckBox name="test" label={<span>ElementLabel</span>} />);
-    expect(screen.getByText('ElementLabel')).toBeInTheDocument();
-  });
-
-  it('does not render Typography when label is falsy', () => {
-    render(<CheckBox name="test" label={null} />);
-    expect(screen.queryByTestId('TypographyTest')).not.toBeInTheDocument();
-  });
-
-  it('handles invalid label type gracefully (number)', () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    render(<CheckBox name="test" label={123 as any} />);
-    const typography = screen.getByTestId('TypographyTest');
-    expect(typography).toBeEmptyDOMElement();
+  it('applies custom class names', () => {
+    render(<CheckBox {...baseProps} className="wrapper" labelClassName="text" />);
+    expect(screen.getByTestId('CheckBoxTest')).toHaveClass('wrapper');
+    expect(screen.getByText('Accept terms')).toHaveClass('text');
   });
 });

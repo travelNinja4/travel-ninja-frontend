@@ -1,13 +1,13 @@
-import CustomImage from '@/components/CustomImage';
+import Image from '@/components/Image';
 import AuthSideBanner from '@/components/AuthSideBanner';
 import { STRINGS } from '@/constants/strings';
-import { authService } from '@/services/authService';
+import { authService } from '@/server/authService';
 import ResetPasswordForm from '../../ResetPasswordForm/ResetPasswordForm';
 import styles from './page.module.scss';
 
 type Params = Promise<{ token: string }>;
 
-export default async function ForgotPassword(props: { params: Params }) {
+export default async function ForgotPasswordPage(props: { params: Params }) {
   const { token } = await props.params;
 
   try {
@@ -18,11 +18,10 @@ export default async function ForgotPassword(props: { params: Params }) {
 
   return (
     <div className={styles.container}>
-      <CustomImage
-        isUrl
+      <Image
         src={process.env.NEXT_PUBLIC_PLACEHOLDER_BG_URL as string}
         fill
-        priority
+        preload
         alt="BackgroundImg"
         className={styles.bgImg}
         unoptimized
@@ -32,7 +31,10 @@ export default async function ForgotPassword(props: { params: Params }) {
       <div className={styles.contentWrapper}>
         <div className={styles.content}>
           <div className={styles.imageContainer}>
-            <AuthSideBanner appTagLine={STRINGS.RESET_PASSWORD_TAG_LINE} />
+            <AuthSideBanner
+              header={STRINGS.RESET_PASSWORD_BANNER_HEADER}
+              subText={STRINGS.RESET_PASSWORD_BANNER_SUB_TEXT}
+            />
           </div>
 
           <div className={styles.formContainer}>

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import React, { useState } from 'react';
-import TextField from '../TextField';
+import InputField from '../InputField';
 /**
 import { fn } from 'storybook/test';
 */
@@ -44,7 +44,7 @@ export const Interactive: Story = {
 
     return (
       <div style={{ width: 300 }}>
-        <TextField
+        <InputField
           type="password"
           value={password}
           placeholder="Enter password"

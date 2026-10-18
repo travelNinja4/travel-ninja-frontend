@@ -1,59 +1,143 @@
 /**
 ------------------------------------------------------
 styles specific to the CheckBox component
+
+The native input fills the box with `appearance: none`, so it stays clickable,
+focusable and form-aware. The check/dash icons sit on top of it and are shown
+with sibling selectors (`:checked + .checkIcon`), so no extra state is needed.
 ------------------------------------------------------
 **/
 
-.checkBoxContainer {
+$box-size: 1rem;
+
+.container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: var(--space-1);
+}
 
-  input[type='checkbox'] {
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--color-gray-300);
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.2s ease;
+.root {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  cursor: pointer;
 
-    &:checked {
-      background-color: var(--color-indigo);
-      border-color: var(--color-indigo);
-      box-shadow: 0 0 0 4px var(--color-indigo-alpha-30);
-    }
-
-    &:checked::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 40%;
-      width: 6px;
-      height: 11px;
-      border: solid var(--color-white);
-      border-width: 0 2px 2px 0;
-      transform: translate(-50%, -50%) rotate(45deg);
-    }
-
-    &:disabled {
-      cursor: not-allowed;
-      background-color: var(--color-gray-50);
-      border-color: var(--color-gray-200);
-      opacity: 0.6;
-    }
-
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px var(--color-indigo-alpha-40);
-    }
+  &.disabled {
+    cursor: not-allowed;
   }
 }
 
-.errorText {
-  color: var(--color-red-500);
-  font-size: 0.875rem;
-  margin-top: 4px;
+// Same height as one line of label text, so the box stays centred on the first line
+.control {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: $box-size;
+  height: calc(0.875rem * 1.5);
+}
+
+.input {
+  appearance: none;
+  width: $box-size;
+  height: $box-size;
+  margin: 0;
+  border: 1.5px solid var(--color-border-hover);
+  border-radius: 4px;
+  background-color: var(--color-surface);
+  cursor: inherit;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-text-muted);
+  }
+
+  &:checked,
+  &:indeterminate {
+    border-color: var(--color-brand);
+    background-color: var(--color-brand);
+
+    &:hover:not(:disabled) {
+      border-color: var(--color-brand-hover);
+      background-color: var(--color-brand-hover);
+    }
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  &:disabled {
+    border-color: var(--color-border);
+    background-color: var(--color-surface-muted);
+  }
+
+  &:disabled:checked,
+  &:disabled:indeterminate {
+    border-color: var(--color-text-disabled);
+    background-color: var(--color-text-disabled);
+  }
+
+  .hasError &:not(:checked):not(:indeterminate) {
+    border-color: var(--color-danger);
+  }
+
+  .hasError &:focus-visible {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 18%, transparent);
+  }
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.75rem;
+  height: 0.75rem;
+  color: var(--color-on-brand);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+  transition:
+    opacity 0.12s ease,
+    transform 0.12s ease;
+}
+
+.input:checked:not(:indeterminate) ~ .checkIcon,
+.input:indeterminate ~ .indeterminateIcon {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.label {
+  color: var(--color-text-secondary);
+
+  .disabled & {
+    color: var(--color-text-disabled);
+  }
+}
+
+.required {
+  margin-left: var(--space-1);
+}
+
+// Lines the message up with the label text, not the box
+.message {
+  padding-left: calc(#{$box-size} + var(--space-3));
+  color: var(--color-text-secondary);
+}
+
+.errorMessage {
+  color: var(--color-danger);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .input,
+  .icon {
+    transition: none;
+  }
 }

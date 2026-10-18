@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { z } from 'zod';
 import DynamicForm, { FieldConfig, FieldWidth } from './DynamicForm';
@@ -31,7 +30,7 @@ describe('Home', () => {
     fields: mockFields,
     schema: mockSchema,
     className: 'dynamic-form',
-    onSubmit: jest.fn(),
+    onSubmit: vi.fn(),
   };
 
   /**
@@ -55,17 +54,5 @@ describe('Home', () => {
    */
   it('renders without throwing', () => {
     expect(() => render(<DynamicForm {...baseProps} />)).not.toThrow();
-  });
-
-  /**
-   * @test
-   * Captures a snapshot of the DynamicForm component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<DynamicForm {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
   });
 });

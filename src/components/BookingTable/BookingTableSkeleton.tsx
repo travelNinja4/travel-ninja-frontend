@@ -21,11 +21,15 @@ const BookingTableSkeleton: React.FC<BookingTableSkeletonProps> = ({
     { key: 'amount', label: 'Amount' },
   ],
 }) => {
-  const renderSkeletonCell = (key: string) => {
+  const renderSkeletonCell = (key: string, rowIndex: number) => {
+    // a fixed id per cell, otherwise ContentLoader generates random ids that change on every render
+    const uniqueKey = `booking-skeleton-${rowIndex}-${key}`;
+
     switch (key) {
       case 'customer':
         return (
           <ContentLoader
+            uniqueKey={uniqueKey}
             speed={2}
             width={200}
             height={50}
@@ -43,6 +47,7 @@ const BookingTableSkeleton: React.FC<BookingTableSkeletonProps> = ({
       case 'status':
         return (
           <ContentLoader
+            uniqueKey={uniqueKey}
             speed={2}
             width={100}
             height={24}
@@ -57,6 +62,7 @@ const BookingTableSkeleton: React.FC<BookingTableSkeletonProps> = ({
       default:
         return (
           <ContentLoader
+            uniqueKey={uniqueKey}
             speed={2}
             width={120}
             height={20}
@@ -86,7 +92,7 @@ const BookingTableSkeleton: React.FC<BookingTableSkeletonProps> = ({
             {Array.from({ length: rows }).map((_, i) => (
               <tr key={i} className={styles.tableRow}>
                 {columns.map((col) => (
-                  <td key={col.key}>{renderSkeletonCell(col.key)}</td>
+                  <td key={col.key}>{renderSkeletonCell(col.key, i)}</td>
                 ))}
               </tr>
             ))}

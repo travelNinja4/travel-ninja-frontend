@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Country } from '@/services/authService';
+import { Country } from '@/constants/types';
 
 export const createAccountSchema = (countries: Country[]) =>
   z.object({

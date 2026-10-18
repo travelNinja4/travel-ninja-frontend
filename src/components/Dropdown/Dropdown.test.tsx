@@ -1,45 +1,189 @@
-import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
-import Dropdown from './Dropdown'
+import { render, screen, fireEvent } from '@testing-library/react';
+import { STRINGS } from '@/constants/strings';
+import Dropdown from './Dropdown';
 
-describe('Home', () => {
+describe('Dropdown', () => {
   /** Base props for Dropdown **/
-  const baseProps={
-    label: 'Dropdown Test'
-  }
- 
+  const baseProps = {
+    label: 'Status',
+    options: [
+      { value: 'confirmed', label: 'Confirmed' },
+      { value: 'pending', label: 'Pending' },
+      { value: 'cancelled', label: 'Cancelled' },
+    ],
+  };
+
+  const getCombobox = () => screen.getByRole('combobox');
+
   /**
-  * @test
-  * Renders the Dropdown component without throwing an error
-  * and checks if the DropdownTest text is present in the document.
-  *
-  * This ensures that the component loads correctly with the base props.
-  */
+   * @test
+   * Renders the Dropdown component without throwing an error
+   * and checks if the DropdownTest element is present in the document.
+   */
   it('renders without crashing', () => {
-   render(<Dropdown {...baseProps}/>);
-   expect(screen.getByTestId('DropdownTest')).toBeInTheDocument();
+    render(<Dropdown {...baseProps} />);
+    expect(screen.getByTestId('DropdownTest')).toBeInTheDocument();
   });
 
-  /**
-  * @test
-  * Ensures that the Dropdown component renders without throwing any runtime errors.
-  *
-  * This is a safety check to confirm that the component can mount successfully
-  * with the provided base props, even if it does not render any visible content.
-  */
-  it('renders without throwing', () => {
-  expect(() => render(<Dropdown {...baseProps}/>)).not.toThrow();
+  it('associates the label with the combobox', () => {
+    render(<Dropdown {...baseProps} />);
+    expect(screen.getByLabelText('Status')).toBe(getCombobox());
   });
 
-  /**
-  * @test
-  * Captures a snapshot of the Dropdown component with base props
-  * and ensures it matches the previously stored snapshot.
-  *
-  * This helps detect any unexpected UI changes.
-  */
-  it('matches snapshot', () => {
-   const { asFragment } = render(<Dropdown {...baseProps}/>);
-   expect(asFragment()).toMatchSnapshot();
+  it('is closed by default and opens on click', () => {
+    render(<Dropdown {...baseProps} />);
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(getCombobox()).toHaveAttribute('aria-expanded', 'false');
+
+    fireEvent.click(getCombobox());
+
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
+    expect(screen.getAllByRole('option')).toHaveLength(3);
+    expect(getCombobox()).toHaveAttribute('aria-expanded', 'true');
   });
-})
+
+  it('closes when clicked again', () => {
+    render(<Dropdown {...baseProps} />);
+    fireEvent.click(getCombobox());
+    fireEvent.click(getCombobox());
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  });
+
+  it('shows the selected option label, not the raw value', () => {
+    render(<Dropdown {...baseProps} value="pending" />);
+    expect(getCombobox()).toHaveValue('Pending');
+  });
+
+  it('calls onChange with the value and option when an option is clicked', () => {
+    const onChange = vi.fn();
+    render(<Dropdown {...baseProps} onChange={onChange} />);
+
+    fireEvent.click(getCombobox());
+    fireEvent.click(screen.getByRole('option', { name: 'Cancelled' }));
+
+    expect(onChange).toHaveBeenCalledWith('cancelled', baseProps.options[2]);
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  });
+
+  it('updates its own value when uncontrolled', () => {
+    render(<Dropdown {...baseProps} defaultValue="confirmed" />);
+    expect(getCombobox()).toHaveValue('Confirmed');
+
+    fireEvent.click(getCombobox());
+    fireEvent.click(screen.getByRole('option', { name: 'Pending' }));
+
+    expect(getCombobox()).toHaveValue('Pending');
+  });
+
+  it('keeps the parent value when controlled', () => {
+    render(<Dropdown {...baseProps} value="confirmed" onChange={vi.fn()} />);
+
+    fireEvent.click(getCombobox());
+    fireEvent.click(screen.getByRole('option', { name: 'Pending' }));
+
+    expect(getCombobox()).toHaveValue('Confirmed');
+  });
+
+  it('marks the selected option with aria-selected', () => {
+    render(<Dropdown {...baseProps} value="pending" />);
+    fireEvent.click(getCombobox());
+    expect(screen.getByRole('option', { name: 'Pending' })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
+    expect(screen.getByRole('option', { name: 'Confirmed' })).toHaveAttribute(
+      'aria-selected',
+      'false',
+    );
+  });
+
+  it('opens with ArrowDown and selects with the keyboard', () => {
+    const onChange = vi.fn();
+    render(<Dropdown {...baseProps} onChange={onChange} />);
+    const combobox = getCombobox();
+
+    fireEvent.keyDown(combobox, { key: 'ArrowDown' });
+    expect(combobox).toHaveAttribute('aria-activedescendant', expect.stringMatching(/option-0$/));
+
+    fireEvent.keyDown(combobox, { key: 'ArrowDown' });
+    fireEvent.keyDown(combobox, { key: 'Enter' });
+
+    expect(onChange).toHaveBeenCalledWith('pending', baseProps.options[1]);
+  });
+
+  it('wraps around with ArrowUp and supports Home/End', () => {
+    render(<Dropdown {...baseProps} />);
+    const combobox = getCombobox();
+
+    fireEvent.keyDown(combobox, { key: 'ArrowDown' });
+    fireEvent.keyDown(combobox, { key: 'ArrowUp' });
+    expect(combobox).toHaveAttribute('aria-activedescendant', expect.stringMatching(/option-2$/));
+
+    fireEvent.keyDown(combobox, { key: 'Home' });
+    expect(combobox).toHaveAttribute('aria-activedescendant', expect.stringMatching(/option-0$/));
+
+    fireEvent.keyDown(combobox, { key: 'End' });
+    expect(combobox).toHaveAttribute('aria-activedescendant', expect.stringMatching(/option-2$/));
+  });
+
+  it('highlights the selected option when opened', () => {
+    render(<Dropdown {...baseProps} value="cancelled" />);
+    fireEvent.click(getCombobox());
+    expect(getCombobox()).toHaveAttribute(
+      'aria-activedescendant',
+      expect.stringMatching(/option-2$/),
+    );
+  });
+
+  it('closes on Escape and Tab', () => {
+    render(<Dropdown {...baseProps} />);
+    const combobox = getCombobox();
+
+    fireEvent.click(combobox);
+    fireEvent.keyDown(combobox, { key: 'Escape' });
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+
+    fireEvent.click(combobox);
+    fireEvent.keyDown(combobox, { key: 'Tab' });
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  });
+
+  it('closes when clicking outside', () => {
+    render(<Dropdown {...baseProps} />);
+    fireEvent.click(getCombobox());
+    fireEvent.mouseDown(document.body);
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  });
+
+  it('shows the empty state and ignores Enter when there are no options', () => {
+    const onChange = vi.fn();
+    render(<Dropdown {...baseProps} options={[]} onChange={onChange} />);
+
+    fireEvent.click(getCombobox());
+    expect(screen.getByText(STRINGS.NO_OPTIONS_FOUND)).toBeInTheDocument();
+
+    expect(() => fireEvent.keyDown(getCombobox(), { key: 'Enter' })).not.toThrow();
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('shows the loading state instead of options', () => {
+    render(<Dropdown {...baseProps} isLoading />);
+    fireEvent.click(getCombobox());
+    expect(screen.getByText(STRINGS.LOADING)).toBeInTheDocument();
+    expect(screen.queryByRole('option')).not.toBeInTheDocument();
+  });
+
+  it('does not open when disabled', () => {
+    render(<Dropdown {...baseProps} disabled />);
+    expect(getCombobox()).toBeDisabled();
+    fireEvent.click(getCombobox());
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  });
+
+  it('passes error and required through to the field', () => {
+    render(<Dropdown {...baseProps} required error="Pick a status" />);
+    expect(screen.getByText('*')).toBeInTheDocument();
+    expect(screen.getByRole('alert')).toHaveTextContent('Pick a status');
+    expect(getCombobox()).toHaveAttribute('aria-invalid', 'true');
+  });
+});

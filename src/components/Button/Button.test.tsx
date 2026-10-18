@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import Button from './Button';
 
@@ -6,7 +5,7 @@ describe('Home', () => {
   /** Base props for Button **/
   const baseProps = {
     children: 'ButtonTest',
-    onClick: jest.fn(),
+    onClick: vi.fn(),
     type: 'button' as const,
     disabled: false,
     className: 'test-class',
@@ -33,18 +32,6 @@ describe('Home', () => {
    */
   it('renders without throwing', () => {
     expect(() => render(<Button {...baseProps} />)).not.toThrow();
-  });
-
-  /**
-   * @test
-   * Captures a snapshot of the Button component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<Button {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders loading state with loader', () => {

@@ -1,3 +1,4 @@
+import 'server-only';
 import crypto from 'crypto';
 
 const publicKey = process.env.NEXT_PUBLIC_RSA_PUBLIC_KEY as string;

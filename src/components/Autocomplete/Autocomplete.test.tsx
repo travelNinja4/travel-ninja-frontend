@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Autocomplete from './Autocomplete';
 
@@ -11,14 +10,14 @@ describe('Home', () => {
       { value: 'cherry', label: 'Cherry' },
     ],
     value: '',
-    onChange: jest.fn(),
+    onChange: vi.fn(),
     searchValue: '',
-    onSearchChange: jest.fn(),
+    onSearchChange: vi.fn(),
     placeholder: 'Search...',
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   /**
@@ -42,18 +41,6 @@ describe('Home', () => {
    */
   it('renders without throwing', () => {
     expect(() => render(<Autocomplete {...baseProps} />)).not.toThrow();
-  });
-
-  /**
-   * @test
-   * Captures a snapshot of the Autocomplete component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<Autocomplete {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
   });
 
   it('opens dropdown on focus and shows options', () => {

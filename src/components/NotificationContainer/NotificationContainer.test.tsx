@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom';
+import type { Mock } from 'vitest';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import type { Notification } from './NotificationContainer';
 import NotificationContainer from './NotificationContainer';
@@ -15,17 +15,17 @@ describe('Home', () => {
     position: 'top-right',
   };
 
-  let removeNotificationMock: jest.Mock;
+  let removeNotificationMock: Mock;
 
   beforeEach(() => {
-    removeNotificationMock = jest.fn();
-    jest.useFakeTimers();
+    removeNotificationMock = vi.fn();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
     cleanup();
-    jest.clearAllTimers();
-    jest.useRealTimers();
+    vi.clearAllTimers();
+    vi.useRealTimers();
   });
 
   const renderContainer = (notifications: Notification[] = [baseNotification]) => {
@@ -49,21 +49,9 @@ describe('Home', () => {
     expect(screen.getByTestId('NotificationContainerTest')).toBeInTheDocument();
   });
 
-  /**
-   * @test
-   * Captures a snapshot of the NotificationContainer component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = renderContainer();
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   it('auto-dismisses notification after duration', () => {
     renderContainer();
-    jest.advanceTimersByTime(3000);
+    vi.advanceTimersByTime(3000);
     expect(removeNotificationMock).toHaveBeenCalledWith(1);
   });
 

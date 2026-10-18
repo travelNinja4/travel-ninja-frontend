@@ -6,18 +6,13 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'res.cloudinary.com',
-        pathname: '/**',
+        hostname: 'picsum.photos',
       },
       {
         protocol: 'https',
-        hostname: 'picsum.photos',
+        hostname: 'i.pravatar.cc',
       },
     ],
-    domains: ['i.pravatar.cc'],
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
   },
   typescript: {
     ignoreBuildErrors: true,

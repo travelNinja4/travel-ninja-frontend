@@ -13,7 +13,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -31,7 +31,8 @@
     ".next/types/**/*.ts",
     "generators/index.js",
     "src/**/*.ts",
-    "src/**/*.tsx"
+    "src/**/*.tsx",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,10 +1,16 @@
-import { NotificationType } from '@/providers/NotificationProvider';
+import type { NotificationType } from '@/providers/NotificationProvider';
 
 export const STRINGS = {
   APP_NAME: 'TravelNinja',
-  CREATE_ACCOUNT_APP_TAG_LINE: 'Transform your tour business with our powerful platform',
-  LOGIN_APP_TAG_LINE: 'Empowering tour agencies to create unforgettable travel experiences',
-  RESET_PASSWORD_TAG_LINE: 'Reset your password to regain access to your account',
+  LOGIN_BANNER_HEADER: 'Run tours with clarity',
+  LOGIN_BANNER_SUB_TEXT:
+    'TravelNinja helps Indian tour operators publish departures, fill seats, and track net earnings after platform commission.',
+  CREATE_ACCOUNT_BANNER_HEADER: 'Grow your tour business',
+  CREATE_ACCOUNT_BANNER_SUB_TEXT:
+    'Set up your agency in minutes, list your first departure, and start taking bookings from travellers across India.',
+  RESET_PASSWORD_BANNER_HEADER: 'Back to your bookings in a minute',
+  RESET_PASSWORD_BANNER_SUB_TEXT:
+    'Reset your password to regain access to your tours, bookings, and payouts.',
   EMAIL: 'email',
   MOBILE: 'mobile',
   EMAIL_VERIFICATION: 'Email Verification',
@@ -20,6 +26,7 @@ export const STRINGS = {
   SECONDS: 'seconds',
   RESEND_CODE: 'Resend Code',
   NO_OPTIONS_FOUND: 'No options found',
+  LOADING: 'Loading...',
   COUNTRY_CODE: 'Country code',
   ENTER_MOBILE_NUMBER: 'Enter mobile number',
   FORGOT_PASSWORD: 'Forgot Password?',
@@ -47,13 +54,33 @@ export const STRINGS = {
   YOUR_OFFLINE: 'You’re offline!',
   WAITING_FOR_CONNECTION: 'Waiting for connection...',
   PLEASE_CONNECT_TO_INTERNET: 'Please reconnect to the internet to continue.',
+  AGENCY_OWNER: 'Agency Owner',
+  AGENCY_DASHBOARD: 'Agency Dashboard',
+  SIGN_IN_HEADING: 'Sign in to your agency',
+  SIGN_IN_DESCRIPTION: 'Manage tours, bookings, and payouts in one place.',
+  WORK_EMAIL: 'Work email',
+  WORK_EMAIL_PLACEHOLDER: 'ops@wanderlytravels.example',
+  PASSWORD: 'Password',
+  ENTER_YOUR_PASSWORD: 'Enter your password',
+  REMEMBER_ME: 'Remember me',
+  FORGOT_PASSWORD_LINK: 'Forgot password?',
+  SIGN_IN: 'Sign in',
+  NEW_AGENCY: 'New agency?',
+  CREATE_AN_ACCOUNT: 'Create an account',
+  LOGGED_IN_SUCCESSFUL: `You’ve logged in successfully!`,
+  ACCOUNT_CREATED_SUCCESSFUL: 'Account created successfully',
+  SOMETHING_WENT_WRONG: 'Something went wrong',
+  VERIFICATION_SESSION_EXPIRED: 'Your verification session has expired. Please start again.',
 };
 
 export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
+  FORGOT_PASSWORD: '/login/forgot-password',
   CREATE_ACCOUNT: '/create-account',
   VERIFY: '/create-account/verify',
+  OTP_VERIFICATION: '/login/verify',
+  DASHBOARD: '/dashboard',
 } as const;
 
 export const NOTIFICATION_TYPES: Record<string, NotificationType> = {
@@ -61,4 +88,16 @@ export const NOTIFICATION_TYPES: Record<string, NotificationType> = {
   ERROR: 'error',
   WARNING: 'warning',
   INFO: 'info',
+};
+
+export const NAV_ITEM = {
+  DASHBOARD: 'Dashboard',
+  CALENDER: 'Calendar',
+  TOURS: 'Tours',
+  BOOKINGS: 'Bookings',
+  CUSTOMERS: 'Customers',
+  TRAVELERS: 'Travelers',
+  INVOICES_AND_BILLING: 'Invoices & Billing',
+  PROFILE: 'Profile',
+  SETTINGS: 'Settings',
 };

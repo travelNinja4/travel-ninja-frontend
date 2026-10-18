@@ -1,23 +1,38 @@
 /**
- * A reusable dropdown component that allows users to select an option from a list. It supports customizable labels, dynamic options, and flexible styling for use across the application.
+ * Select-style dropdown built on InputField. Shows the selected option's label
+ * in a read-only field and opens a listbox of options below it.
+ *
+ * Works controlled (`value` + `onChange`) or uncontrolled (`defaultValue`), and
+ * follows the WAI-ARIA select-only combobox pattern: focus stays on the input
+ * while Arrow keys, Home/End, Enter/Space, Escape and Tab drive the list.
  *
  * @example
  * ```tsx
- * import Dropdown from '@src/components/Dropdown'
+ * import Dropdown from '@/components/Dropdown'
  *
- * export default function Dropdown() {
- *   return <Dropdown label="Hello" />;
+ * export default function StatusFilter() {
+ *   const [status, setStatus] = useState<string>();
+ *   return (
+ *     <Dropdown
+ *       label="Status"
+ *       options={[
+ *         { value: 'confirmed', label: 'Confirmed' },
+ *         { value: 'pending', label: 'Pending' },
+ *       ]}
+ *       value={status}
+ *       onChange={setStatus}
+ *     />
+ *   );
  * }
  * ```
  */
 'use client';
 
-import { useState, useRef, useEffect, KeyboardEvent } from 'react';
-import { STRINGS } from '@/constants/strings';
-import Typography from '../Typography';
-import TextField from '../TextField';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { KeyboardEvent, ReactNode, useEffect, useId, useRef, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import clsx from 'clsx';
+import { STRINGS } from '@/constants/strings';
+import InputField from '../InputField';
 import styles from './Dropdown.module.scss';
 
 export type DropdownOption<T> = {
@@ -28,72 +43,85 @@ export type DropdownOption<T> = {
 /**
  * Define the props available for the Dropdown component.
  */
-interface DropdownProps<T> {
+export interface DropdownProps<T> {
   /**
-   * The label displayed above the dropdown input.
+   * Text shown above the field. Linked to the input through `htmlFor`.
    */
-  label?: string;
+  label?: ReactNode;
 
   /**
-   * If true, indicates that selecting a value is required.
-   * Typically adds a visual indicator (like a *) next to the label.
+   * Shows a required marker next to the label and sets `aria-required`.
    */
   required?: boolean;
 
   /**
-   * List of options to display in the dropdown.
-   *
-   * Each option must have a `label` (string shown to the user)
-   * and a `value` (the underlying data of generic type `T`).
+   * Options shown in the list. `label` is displayed, `value` is passed to `onChange`.
    */
   options: DropdownOption<T>[];
 
   /**
-   * The currently selected value.
-   *
-   * Can be a string or of type `T`. Useful for controlled components
-   * where the parent manages the selected state.
+   * Selected value for a controlled dropdown. Pass `null` for "nothing selected".
    */
-  value?: T | string;
+  value?: T | null;
 
   /**
-   * Callback fired when an option is selected.
-   *
-   * @param value The selected value of type `T` or string.
-   * If cleared, it may be `undefined`.
+   * Initial value for an uncontrolled dropdown.
    */
-  onChange?: (value: T | string | undefined) => void;
+  defaultValue?: T;
 
   /**
-   * Placeholder text for the search input field.
+   * Called with the chosen option's value and the option itself.
+   */
+  onChange?: (value: T, option: DropdownOption<T>) => void;
+
+  /**
+   * Text shown when nothing is selected.
    *
-   * @default "Search..."
+   * @default "Select..."
    */
   placeholder?: string;
 
   /**
-   * Additional class name(s) applied to the dropdown container.
-   * Allows custom styling.
+   * Error message shown below the field. Turns the border red.
    */
-  dropdownContainerClassName?: string;
+  error?: string;
 
   /**
-   * Additional class name(s) applied to the text input container.
-   * Allows custom styling.
+   * Hint shown below the field when there is no error.
    */
-  dropdownTextContainerClassName?: string;
+  helperText?: ReactNode;
 
   /**
-   * If true, disables the input and dropdown interaction.
+   * Disables the field and the list.
    *
    * @default false
    */
   disabled?: boolean;
 
   /**
-   * If true, shows loading state in the dropdown options.
+   * Shows a loading row instead of the options.
    */
   isLoading?: boolean;
+
+  /**
+   * Id for the input. Generated when omitted.
+   */
+  id?: string;
+
+  /**
+   * Name for the input, for forms that read values by name.
+   */
+  name?: string;
+
+  /**
+   * Class for the outer wrapper (label + field + list).
+   */
+  className?: string;
+
+  /**
+   * Class for the bordered box that holds the input and the chevron.
+   */
+  fieldClassName?: string;
 }
 
 export default function Dropdown<T>({
@@ -101,122 +129,188 @@ export default function Dropdown<T>({
   required,
   options,
   value,
+  defaultValue,
   onChange,
   placeholder = 'Select...',
-  dropdownContainerClassName,
-  dropdownTextContainerClassName,
+  error,
+  helperText,
   disabled = false,
   isLoading,
+  id,
+  name,
+  className,
+  fieldClassName,
 }: DropdownProps<T>) {
-  const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
+  const listId = `${inputId}-listbox`;
+  const optionId = (index: number) => `${inputId}-option-${index}`;
 
-  // Close dropdown when clicking outside
+  const [isOpen, setIsOpen] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [internalValue, setInternalValue] = useState<T | undefined>(defaultValue);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+
+  const isControlled = value !== undefined;
+  const selectedValue = isControlled ? value : internalValue;
+  const selectedIndex = options.findIndex((option) => Object.is(option.value, selectedValue));
+  const selectedOption = selectedIndex >= 0 ? options[selectedIndex] : undefined;
+  const canSelect = !isLoading && options.length > 0;
+
+  const open = () => {
+    if (disabled) return;
+    setIsOpen(true);
+    setHighlightedIndex(selectedIndex >= 0 ? selectedIndex : 0);
+  };
+
+  const close = () => {
+    setIsOpen(false);
+    setHighlightedIndex(-1);
+  };
+
+  const toggle = () => (isOpen ? close() : open());
+
+  const select = (index: number) => {
+    const option = options[index];
+    if (!option) return;
+    if (!isControlled) setInternalValue(option.value);
+    onChange?.(option.value, option);
+    close();
+  };
+
+  // Close when clicking outside, only while open
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
+    if (!isOpen) return;
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!dropdownRef.current?.contains(event.target as Node)) close();
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [isOpen]);
 
-  // Keyboard navigation
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement | HTMLUListElement>) => {
-    if (!isOpen) return;
+  // Keep the highlighted option visible while moving through a long list
+  useEffect(() => {
+    if (!isOpen || highlightedIndex < 0) return;
+    const element = listRef.current?.querySelector<HTMLElement>(
+      `#${CSS.escape(optionId(highlightedIndex))}`,
+    );
+    element?.scrollIntoView?.({ block: 'nearest' });
+    // optionId only depends on inputId, which is stable
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, highlightedIndex]);
 
-    if (e.key === 'ArrowDown') {
-      setHighlightedIndex((prev) => (prev + 1) % options.length);
-      e.preventDefault();
-    } else if (e.key === 'ArrowUp') {
-      setHighlightedIndex((prev) => (prev - 1 + options.length) % options.length);
-      e.preventDefault();
-    } else if (e.key === 'Enter') {
-      const option = options[highlightedIndex];
-      onChange?.(option.value);
-      setIsOpen(false);
-      e.preventDefault();
-    } else if (e.key === 'Escape') {
-      setIsOpen(false);
-      e.preventDefault();
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (!isOpen) {
+      if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(event.key)) {
+        event.preventDefault();
+        open();
+      }
+      return;
+    }
+
+    const last = options.length - 1;
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        if (canSelect) setHighlightedIndex((prev) => (prev >= last ? 0 : prev + 1));
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        if (canSelect) setHighlightedIndex((prev) => (prev <= 0 ? last : prev - 1));
+        break;
+      case 'Home':
+        event.preventDefault();
+        if (canSelect) setHighlightedIndex(0);
+        break;
+      case 'End':
+        event.preventDefault();
+        if (canSelect) setHighlightedIndex(last);
+        break;
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        if (canSelect) select(highlightedIndex);
+        break;
+      case 'Escape':
+        event.preventDefault();
+        close();
+        break;
+      case 'Tab':
+        close();
+        break;
     }
   };
 
   return (
-    <div
-      data-testid="DropdownTest"
-      ref={dropdownRef}
-      tabIndex={0}
-      className={clsx(styles.dropdown, dropdownContainerClassName)}
-    >
-      <div className={styles.inputWrapper}>
-        {label && (
-          <Typography tag="label" className={styles.label}>
-            {label}
-            {required && (
-              <Typography tag="span" className={styles.requiredMark}>
-                *
-              </Typography>
-            )}
-          </Typography>
-        )}
-
-        <div
-          className={styles.inputWithIcon}
-          onClick={() => !disabled && setIsOpen((prev) => !prev)}
-        >
-          <TextField
-            readOnly
-            placeholder={placeholder}
-            value={value as string}
-            className={clsx(dropdownTextContainerClassName)}
-            onFocus={() => !disabled && setIsOpen(true)}
-            onKeyDown={handleKeyDown}
-            disabled={disabled}
+    <div data-testid="DropdownTest" ref={dropdownRef} className={clsx(styles.dropdown, className)}>
+      <InputField
+        id={inputId}
+        name={name}
+        label={label}
+        required={required}
+        error={error}
+        helperText={helperText}
+        disabled={disabled}
+        readOnly
+        placeholder={placeholder}
+        value={selectedOption?.label ?? ''}
+        role="combobox"
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        aria-controls={listId}
+        aria-required={required || undefined}
+        aria-activedescendant={
+          isOpen && canSelect && highlightedIndex >= 0 ? optionId(highlightedIndex) : undefined
+        }
+        autoComplete="off"
+        onClick={toggle}
+        onKeyDown={handleKeyDown}
+        fieldClassName={clsx({ [styles.enabled]: !disabled }, fieldClassName)}
+        inputClassName={styles.input}
+        rightIcon={
+          <ChevronDown
+            size={16}
+            aria-hidden="true"
+            className={clsx(styles.chevron, { [styles.chevronOpen]: isOpen })}
+            onClick={() => !disabled && toggle()}
           />
-
-          {/* Chevron inside the input */}
-          <span className={clsx(styles.chevronIcon)}>
-            {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-          </span>
-        </div>
-      </div>
+        }
+      />
 
       {isOpen && (
-        <ul role="listbox" tabIndex={-1} onKeyDown={handleKeyDown} className={styles.list}>
+        <ul
+          ref={listRef}
+          id={listId}
+          role="listbox"
+          className={styles.list}
+          // Keep focus on the input when clicking inside the list
+          onMouseDown={(event) => event.preventDefault()}
+        >
           {isLoading ? (
-            // Loading State (fixed)
-            <li className={styles.loading}>
-              <span className={styles.spinner}></span>
-              Loading...
+            <li className={styles.status} aria-live="polite">
+              <span className={styles.spinner} aria-hidden="true" />
+              {STRINGS.LOADING}
             </li>
-          ) : options?.length > 0 ? (
-            //  Normal Options
-            options.map((option, idx) => {
-              const isHighlighted = idx === highlightedIndex;
-              return (
-                <li
-                  key={idx}
-                  role="option"
-                  className={clsx(styles.option, {
-                    [styles.highlighted]: isHighlighted,
-                    [styles.selected]: option.value === value,
-                  })}
-                  onMouseEnter={() => setHighlightedIndex(idx)}
-                  onClick={() => {
-                    onChange?.(option.value);
-                    setIsOpen(false);
-                  }}
-                >
-                  {option.label}
-                </li>
-              );
-            })
+          ) : options.length > 0 ? (
+            options.map((option, index) => (
+              <li
+                key={index}
+                id={optionId(index)}
+                role="option"
+                aria-selected={index === selectedIndex}
+                className={clsx(styles.option, {
+                  [styles.highlighted]: index === highlightedIndex,
+                  [styles.selected]: index === selectedIndex,
+                })}
+                onMouseEnter={() => setHighlightedIndex(index)}
+                onClick={() => select(index)}
+              >
+                {option.label}
+              </li>
+            ))
           ) : (
-            // No Options Fallback
-            <li className={styles.noOptions}>{STRINGS.NO_OPTIONS_FOUND}</li>
+            <li className={clsx(styles.status, styles.empty)}>{STRINGS.NO_OPTIONS_FOUND}</li>
           )}
         </ul>
       )}

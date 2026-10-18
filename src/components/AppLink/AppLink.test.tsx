@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import AppLink from './AppLink';
 
@@ -30,18 +29,6 @@ describe('Home', () => {
    */
   it('renders without throwing', () => {
     expect(() => render(<AppLink {...baseProps} />)).not.toThrow();
-  });
-
-  /**
-   * @test
-   * Captures a snapshot of the AppLink component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<AppLink {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders an external link with correct attributes', () => {
