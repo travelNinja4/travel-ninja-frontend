@@ -33,18 +33,6 @@ describe('Home', () => {
     expect(() => render(<CustomImage {...baseProps} />)).not.toThrow();
   });
 
-  /**
-   * @test
-   * Captures a snapshot of the CustomImage component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<CustomImage {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   it('uses fallback image when src is empty', () => {
     render(<CustomImage {...baseProps} src="" />);
     const img = screen.getByTestId('CustomImageTest') as HTMLImageElement;

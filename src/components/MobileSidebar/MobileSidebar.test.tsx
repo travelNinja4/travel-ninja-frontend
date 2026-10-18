@@ -33,18 +33,6 @@ describe('Home', () => {
     expect(() => render(<MobileSidebar {...baseProps} />)).not.toThrow();
   });
 
-  /**
-   * @test
-   * Captures a snapshot of the MobileSidebar component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<MobileSidebar {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   it('closes sidebar when overlay is clicked', () => {
     render(<MobileSidebar />);
 

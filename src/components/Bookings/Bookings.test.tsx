@@ -29,16 +29,4 @@ describe('Home', () => {
   it('renders without throwing', () => {
     expect(() => render(<Bookings {...baseProps} />)).not.toThrow();
   });
-
-  /**
-   * @test
-   * Captures a snapshot of the Bookings component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<Bookings {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
 });

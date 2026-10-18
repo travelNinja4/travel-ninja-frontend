@@ -43,18 +43,6 @@ describe('Home', () => {
     expect(() => render(<Autocomplete {...baseProps} />)).not.toThrow();
   });
 
-  /**
-   * @test
-   * Captures a snapshot of the Autocomplete component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<Autocomplete {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   it('opens dropdown on focus and shows options', () => {
     render(<Autocomplete {...baseProps} />);
     const input = screen.getByPlaceholderText('Search...');

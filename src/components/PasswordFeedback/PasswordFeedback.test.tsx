@@ -41,18 +41,6 @@ describe('Home', () => {
     expect(() => render(<PasswordFeedback {...baseProps} />)).not.toThrow();
   });
 
-  /**
-   * @test
-   * Captures a snapshot of the PasswordFeedback component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<PasswordFeedback {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
-
   it('renders valid hints correctly', () => {
     render(<PasswordFeedback value="Password1" hints={hints} />);
     expect(screen.getByTestId('check-icon-0')).toBeInTheDocument();

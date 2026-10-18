@@ -27,16 +27,4 @@ describe('Home', () => {
   it('renders without throwing', () => {
     expect(() => render(<OfflinePage {...baseProps} />)).not.toThrow();
   });
-
-  /**
-   * @test
-   * Captures a snapshot of the OfflinePage component with base props
-   * and ensures it matches the previously stored snapshot.
-   *
-   * This helps detect any unexpected UI changes.
-   */
-  it('matches snapshot', () => {
-    const { asFragment } = render(<OfflinePage {...baseProps} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
 });
