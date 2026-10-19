@@ -1,21 +1,22 @@
 /**
- * A reusable component for verifying users via a one-time password (OTP) sent to their email or mobile number, with support for code input, verification, and resending OTP.
+ * OTP verification form for an email address or mobile number: heading, the
+ * contact the code went to, a 6-box code input, submit, and resend with a
+ * cooldown. The same form serves both steps; only the copy changes.
+ *
+ * Layout (brand + side banner) comes from the page via `AuthLayout`.
+ * Verifying is the caller's job (`onSubmit`); resending calls `sendOtpAction`.
  *
  * @example
  * ```tsx
- * import OtpVerification from '@src/components/OtpVerification'
+ * import OtpVerification from '@/components/OtpVerification'
  *
  * export default function Example() {
- *   const handleOtpSubmit = (params) => {
- *     console.log('OTP submitted:', params);
- *   };
- *
  *   return (
  *     <OtpVerification
- *       otpType="mobile"
- *       contact={{ phoneNumber: '+91-9876543210' }}
- *       onSubmit={handleOtpSubmit}
- *       loading={false}
+ *       otpType="email"
+ *       contact={{ email: 'ops@wanderlytravels.example' }}
+ *       changeContactHref="/create-account"
+ *       onSubmit={({ otpCode }) => console.log(otpCode)}
  *     />
  *   );
  * }
@@ -23,24 +24,27 @@
  */
 'use client';
 
-import { useEffect, useState } from 'react';
-import Button from '../Button';
-import InputField from '../InputField';
-import Typography from '../Typography';
-import Image from '../Image';
-import { OtpProps, OtpType, PendingVerification } from '@/constants/types';
-import { NOTIFICATION_TYPES, STRINGS } from '@/constants/strings';
-import AuthSideBanner from '../AuthSideBanner';
+import { FormEvent, useEffect, useId, useState, useTransition } from 'react';
 import { sendOtpAction } from '@/actions/auth';
-import { Mail, Phone, Check, RotateCw } from 'lucide-react';
+import { NOTIFICATION_TYPES, STRINGS } from '@/constants/strings';
+import { OtpProps, OtpType, PendingVerification } from '@/constants/types';
 import { useNotification } from '@/providers/NotificationProvider';
+import AppLink from '../AppLink';
+import Button from '../Button';
+import OtpInput from '../OtpInput';
+import { Body, BodyLg, BodySm, Heading2 } from '../Typography';
 import styles from './OtpVerification.module.scss';
 
+const OTP_LENGTH = 6;
+const RESEND_COOLDOWN_SECONDS = 60;
+
+/**
+ * Define the props available for the OtpVerification component.
+ * Callers render it with `key={otpType}` when switching steps so the code and cooldown reset.
+ */
 interface OtpVerificationProps {
   /**
-   * Specifies the type of OTP verification to perform.
-   * - `'email'` → Verifies the user's email address.
-   * - `'mobile'` → Verifies the user's mobile number.
+   * Which contact is being verified.
    *
    * @default 'email'
    */
@@ -53,16 +57,17 @@ interface OtpVerificationProps {
   contact?: PendingVerification;
 
   /**
-   * Callback function triggered when the user submits the OTP for verification.
-   *
-   * @param params - The OTP data containing the entered code and OTP type.
-   * @returns void
+   * Where "Change email" / "Change mobile number" leads. The link is hidden when not set.
+   */
+  changeContactHref?: string;
+
+  /**
+   * Called with the full code when the form is submitted.
    */
   onSubmit?: (params: OtpProps) => void;
 
   /**
-   * Indicates whether the verification process is currently loading.
-   * When `true`, the verify button is disabled and a loading indicator may be shown.
+   * True while the code is being verified: disables the input and shows the button spinner.
    *
    * @default false
    */
@@ -72,139 +77,111 @@ interface OtpVerificationProps {
 export default function OtpVerification({
   otpType = 'email',
   contact,
+  changeContactHref,
   onSubmit,
   loading = false,
 }: OtpVerificationProps) {
   const { showNotification } = useNotification();
-  const [value, setValue] = useState('');
-  const [timer, setTimer] = useState(0);
+  const [code, setCode] = useState('');
+  const [error, setError] = useState<string>();
+  const [cooldown, setCooldown] = useState(0);
+  const [isResending, startResend] = useTransition();
+  const errorId = useId();
 
-  const formattedContactValue =
-    (otpType === STRINGS.EMAIL ? contact?.email : contact?.phoneNumber) ?? '';
+  const isEmail = otpType === STRINGS.EMAIL;
+  const contactValue = (isEmail ? contact?.email : contact?.phoneNumber) ?? '';
 
-  // Reset the code and timer when switching between email and mobile
-  const [prevOtpType, setPrevOtpType] = useState(otpType);
-  if (otpType !== prevOtpType) {
-    setPrevOtpType(otpType);
-    setValue('');
-    setTimer(0);
-  }
-
+  // One tick per second while the resend cooldown runs
   useEffect(() => {
-    if (timer === 0) return;
+    if (cooldown === 0) return;
+    const timeout = setTimeout(() => setCooldown((seconds) => seconds - 1), 1000);
+    return () => clearTimeout(timeout);
+  }, [cooldown]);
 
-    let interval: NodeJS.Timeout | null = null;
-    if (timer > 0) {
-      interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
-    }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [timer]);
+  const handleCodeChange = (next: string) => {
+    setCode(next);
+    setError(undefined);
+  };
 
-  const handleResend = async () => {
-    const result = await sendOtpAction(otpType);
-    if (!result.success) {
-      result.errors.forEach((errMsg) => {
-        showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
-      });
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (code.length < OTP_LENGTH) {
+      setError(STRINGS.ENTER_COMPLETE_CODE);
       return;
     }
-    setTimer(60);
+    onSubmit?.({ otpCode: code, otpType });
   };
 
-  const handleOnChange = (val: string) => {
-    setValue(val);
-  };
-
-  const handleCodeVerify = async () => {
-    if (!value) {
-      return false;
-    }
-
-    onSubmit?.({ otpCode: value, otpType });
+  const handleResend = () => {
+    startResend(async () => {
+      const result = await sendOtpAction(otpType);
+      if (!result.success) {
+        result.errors.forEach((errMsg) => {
+          showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
+        });
+        return;
+      }
+      setCode('');
+      setError(undefined);
+      setCooldown(RESEND_COOLDOWN_SECONDS);
+      showNotification(STRINGS.SUCCESS, STRINGS.CODE_RESENT, NOTIFICATION_TYPES.SUCCESS);
+    });
   };
 
   return (
-    <div data-testid="OtpVerificationTest" className={styles.container}>
-      <Image
-        src={process.env.NEXT_PUBLIC_PLACEHOLDER_BG_URL as string}
-        fill
-        preload
-        alt="BackgroundImg"
-        className={styles.bgImg}
-        unoptimized
-      />
-      <div className={styles.overlay}></div>
+    <div data-testid="OtpVerificationTest" className={styles.otpVerification}>
+      <header className={styles.header}>
+        <Heading2 tag="h1" className={styles.title}>
+          {isEmail ? STRINGS.VERIFY_YOUR_EMAIL : STRINGS.VERIFY_YOUR_MOBILE_NUMBER}
+        </Heading2>
+        <BodyLg className={styles.description}>
+          {STRINGS.ENTER_CODE_SENT_TO} <strong className={styles.contact}>{contactValue}</strong>.
+        </BodyLg>
+        {changeContactHref && (
+          <AppLink href={changeContactHref} replace className={styles.link}>
+            {isEmail ? STRINGS.CHANGE_EMAIL : STRINGS.CHANGE_MOBILE_NUMBER}
+          </AppLink>
+        )}
+      </header>
 
-      <div className={styles.subContainer}>
-        <div className={styles.mainContainer}>
-          <div className={styles.imageContainer}>
-            <AuthSideBanner
-              header={STRINGS.CREATE_ACCOUNT_BANNER_HEADER}
-              subText={STRINGS.CREATE_ACCOUNT_BANNER_SUB_TEXT}
-            />
-          </div>
-          <div className={styles.otpContainer}>
-            <Typography tag="h2" align="center" className={styles.otpHeader}>
-              {otpType === STRINGS.EMAIL
-                ? STRINGS.EMAIL_VERIFICATION
-                : STRINGS.MOBILE_NUMBER_VERIFICATION}
-            </Typography>
-            <Typography tag="p" align="center" className={styles.otpSubHeader}>
-              {otpType === STRINGS.EMAIL ? STRINGS.EMAIL_SENT : STRINGS.MOBILE_SENT}
-            </Typography>
-            <div className={styles.userData}>
-              {otpType === STRINGS.EMAIL ? (
-                <Mail color="var(--color-black)" />
-              ) : (
-                <Phone color="var(--color-black)" />
-              )}
-              <Typography
-                tag="span"
-                align="center"
-                color="var(--color-indigo)"
-                className={styles.userEmail}
-              >
-                {formattedContactValue}
-              </Typography>
-            </div>
-            <div className={styles.verificationWrapper}>
-              <InputField
-                label={STRINGS.ENTER_VERIFICATION_CODE}
-                placeholder="000000"
-                value={value}
-                maxLength={6}
-                inputClassName={styles.verificationTextField}
-                onChange={(e) => handleOnChange(e.target.value)}
-              />
-              <Typography tag="label" align="center" className={styles.otpSubHeader}>
-                {otpType === STRINGS.EMAIL ? STRINGS.EMAIL_CODE_HINT : STRINGS.MOBILE_CODE_HINT}
-              </Typography>
-            </div>
-            <Button
-              className={styles.button}
-              startIcon={Check}
-              onClick={handleCodeVerify}
-              disabled={loading}
-              loading={loading}
-            >
-              {otpType === STRINGS.EMAIL ? STRINGS.VERIFY_EMAIL : STRINGS.VERIFY_MOBILE_NUMBER}
-            </Button>
-            <div className={styles.resendWrapper}>
-              {timer > 0 ? (
-                <Typography tag="span">{`${STRINGS.RESEND_CODE_IN} ${timer} ${STRINGS.SECONDS}`}</Typography>
-              ) : (
-                <div onClick={handleResend} className={styles.resendTextContainer}>
-                  <RotateCw color="var(--color-indigo)" />
-                  <Typography tag="span" className={styles.resendText}>
-                    {STRINGS.RESEND_CODE}
-                  </Typography>
-                </div>
-              )}
-            </div>
-          </div>
+      <form className={styles.form} onSubmit={handleSubmit} noValidate aria-busy={loading}>
+        <div className={styles.codeField}>
+          <OtpInput
+            label={STRINGS.VERIFICATION_CODE}
+            value={code}
+            onChange={handleCodeChange}
+            length={OTP_LENGTH}
+            disabled={loading}
+            hasError={!!error}
+            aria-describedby={error ? errorId : undefined}
+            autoFocus
+          />
+          {error && (
+            <BodySm id={errorId} role="alert" className={styles.error}>
+              {error}
+            </BodySm>
+          )}
         </div>
+
+        <Button type="submit" loading={loading} className={styles.submit}>
+          {STRINGS.VERIFY_AND_CONTINUE}
+        </Button>
+      </form>
+
+      <div className={styles.resend}>
+        <Body className={styles.muted}>{STRINGS.DIDNT_RECEIVE_CODE}</Body>
+        {cooldown > 0 ? (
+          <Body className={styles.muted}>{`${STRINGS.RESEND_CODE_IN} ${cooldown}s`}</Body>
+        ) : (
+          <button
+            type="button"
+            className={styles.resendButton}
+            onClick={handleResend}
+            disabled={isResending || loading}
+          >
+            {STRINGS.RESEND_CODE}
+          </button>
+        )}
       </div>
     </div>
   );

@@ -14,7 +14,6 @@ export const registerAction = fn(ok).mockName('registerAction');
 export const sendOtpAction = fn(ok).mockName('sendOtpAction');
 export const verifyOtpAction = fn(ok).mockName('verifyOtpAction');
 export const loginAction = fn(ok).mockName('loginAction');
-export const verifyLoginAction = fn(ok).mockName('verifyLoginAction');
 export const forgotPasswordAction = fn(ok).mockName('forgotPasswordAction');
 export const resetPasswordAction = fn(ok).mockName('resetPasswordAction');
 export const logoutAction = fn(async () => {}).mockName('logoutAction');

@@ -2,14 +2,14 @@
 
 /**
 ------------------------------------------------------
-Login page layout (mobile-first)
+Auth screen layout (mobile-first)
 
   phone   < 768px     one column, form only (banner hidden)
   tablet  768–1023px  split, form side a little wider so fields stay roomy
   laptop  ≥ 1024px    50 / 50 split, as in the design
   wide    ≥ 1440px    more breathing room around the form
 
-The form column is capped at 31rem (as in the design), centred on phones and
+The form column is capped at 42rem, centred on phones and
 left-aligned in its half from tablet up.
 ------------------------------------------------------
 **/
@@ -54,7 +54,7 @@ left-aligned in its half from tablet up.
   // 32px on phones (375px) up to 40px from 1280px
   gap: clamp(2rem, 1.793rem + 0.884vw, 2.5rem);
   width: 100%;
-  max-width: 31rem;
+  max-width: 42rem;
   margin-inline: auto;
 
   @include respond-to(tablet) {
@@ -102,10 +102,5 @@ left-aligned in its half from tablet up.
 
   @include respond-to(tablet) {
     display: flex;
-  }
-
-  // Lifts the copy to where the design has it (the design fills the space below with stat cards)
-  @include respond-to(laptop) {
-    padding-bottom: clamp(var(--space-12), 24vh, 16rem);
   }
 }

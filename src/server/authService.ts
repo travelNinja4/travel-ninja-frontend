@@ -5,13 +5,7 @@
 
 import 'server-only';
 import { http } from './http';
-import {
-  forgotPassword,
-  Login,
-  LoginResponse,
-  RegisterPayload,
-  resetPassword,
-} from '@/constants/types';
+import { forgotPassword, Login, RegisterPayload, resetPassword } from '@/constants/types';
 
 // Calls that create or change the session persist the backend's Set-Cookie headers on our domain
 const withCookies = { persistCookies: true };
@@ -42,11 +36,7 @@ export const authService = {
   },
 
   login(data: Login) {
-    return http.post<LoginResponse>('/auth/login', data, withCookies);
-  },
-
-  verifyLogin(data: { otp: string }) {
-    return http.post('/auth/verify-login', data, withCookies);
+    return http.post('/auth/login', data, withCookies);
   },
 
   logout() {

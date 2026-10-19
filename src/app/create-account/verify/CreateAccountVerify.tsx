@@ -43,8 +43,11 @@ export default function CreateAccountVerify({ contact }: CreateAccountVerifyProp
 
   return (
     <OtpVerification
+      // Remount per step so the code and resend cooldown start fresh
+      key={otpType}
       otpType={otpType}
       contact={contact}
+      changeContactHref={ROUTES.CREATE_ACCOUNT}
       onSubmit={handleCodeVerify}
       loading={isPending}
     />

@@ -5,11 +5,13 @@
  * - The browser's cookies are forwarded to the backend, so the backend's auth cookies keep working.
  * - `persistCookies: true` copies the backend's Set-Cookie headers onto our own domain. Next.js only allows
  *   setting cookies in Server Actions and Route Handlers, so use it only from there.
- * - A 401 on a non-auth endpoint triggers one refresh-token call and a retry.
+ * - Expired sessions are refreshed by the proxy before the request reaches here, not by this client:
+ *   the backend rotates refresh tokens, and a refresh during a page render couldn't save the new ones.
  */
 
 import 'server-only';
 import { cookies } from 'next/headers';
+import { parseSetCookie } from './session';
 
 const API_BASE_URL = process.env.API_BASE_URL;
 
@@ -59,44 +61,6 @@ const parseBody = async (res: Response) => {
   }
 };
 
-type CookieOptions = {
-  path?: string;
-  expires?: Date;
-  maxAge?: number;
-  httpOnly?: boolean;
-  secure?: boolean;
-  sameSite?: 'lax' | 'strict' | 'none';
-};
-
-type ParsedCookie = { name: string; value: string; options: CookieOptions };
-
-// Parses a single Set-Cookie header into the shape cookies().set() expects. The Domain attribute is
-// dropped on purpose so the cookie is stored for our own domain instead of the backend's.
-const parseSetCookie = (header: string): ParsedCookie => {
-  const [pair, ...attributes] = header.split(';');
-  const separator = pair.indexOf('=');
-  const name = pair.slice(0, separator).trim();
-  const value = decodeURIComponent(pair.slice(separator + 1).trim());
-  const options: CookieOptions = {};
-
-  attributes.forEach((attribute) => {
-    const [rawKey, ...rest] = attribute.split('=');
-    const key = rawKey.trim().toLowerCase();
-    const attrValue = rest.join('=').trim();
-
-    if (key === 'path') options.path = attrValue;
-    if (key === 'expires') options.expires = new Date(attrValue);
-    if (key === 'max-age') options.maxAge = Number(attrValue);
-    if (key === 'httponly') options.httpOnly = true;
-    if (key === 'secure') options.secure = true;
-    if (key === 'samesite') options.sameSite = attrValue.toLowerCase() as CookieOptions['sameSite'];
-  });
-
-  return { name, value, options };
-};
-
-const isAuthPath = (path: string) => path.startsWith('/auth/');
-
 async function send(
   path: string,
   method: HttpMethod,
@@ -125,26 +89,7 @@ async function request<T>(
   options: RequestOptions = {},
 ): Promise<T> {
   const cookieStore = await cookies();
-  let cookieHeader = cookieStore.toString();
-
-  let res = await send(path, method, cookieHeader, options);
-
-  // Access token expired: refresh once, then retry the original request with the new cookies
-  if (res.status === 401 && !isAuthPath(path)) {
-    const refreshRes = await send('/auth/refresh-token', 'POST', cookieHeader, { body: {} });
-
-    if (refreshRes.ok) {
-      const refreshed = refreshRes.headers.getSetCookie().map(parseSetCookie);
-      const merged = new Map(cookieStore.getAll().map((c) => [c.name, c.value]));
-      refreshed.forEach((c) => merged.set(c.name, c.value));
-      cookieHeader = [...merged].map(([name, value]) => `${name}=${value}`).join('; ');
-
-      if (options.persistCookies) {
-        refreshed.forEach((c) => cookieStore.set(c.name, c.value, c.options));
-      }
-      res = await send(path, method, cookieHeader, options);
-    }
-  }
+  const res = await send(path, method, cookieStore.toString(), options);
 
   if (options.persistCookies) {
     res.headers
