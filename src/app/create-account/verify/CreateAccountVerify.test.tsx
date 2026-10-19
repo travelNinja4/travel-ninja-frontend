@@ -26,10 +26,10 @@ describe('CreateAccountVerify', () => {
     vi.clearAllMocks();
   });
 
-  const enterCodeAndVerify = async (code: string, buttonText: RegExp) => {
-    fireEvent.change(screen.getByPlaceholderText('000000'), { target: { value: code } });
+  const enterCodeAndVerify = async (code: string) => {
+    fireEvent.change(screen.getByLabelText('Digit 1 of 6'), { target: { value: code } });
     await act(async () => {
-      fireEvent.click(screen.getByText(buttonText));
+      fireEvent.click(screen.getByRole('button', { name: /verify and continue/i }));
     });
   };
 
@@ -37,18 +37,18 @@ describe('CreateAccountVerify', () => {
     (verifyOtpAction as Mock).mockResolvedValue({ success: true, data: undefined });
     render(<CreateAccountVerify contact={contact} />);
 
-    await enterCodeAndVerify('123456', /VERIFY EMAIL/i);
+    await enterCodeAndVerify('123456');
 
     expect(verifyOtpAction).toHaveBeenCalledWith('email', '123456');
-    expect(screen.getByText(/MOBILE NUMBER VERIFICATION/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /verify your mobile number/i })).toBeInTheDocument();
   });
 
   it('verifies mobile OTP and navigates to login', async () => {
     (verifyOtpAction as Mock).mockResolvedValue({ success: true, data: undefined });
 
     render(<CreateAccountVerify contact={contact} />);
-    await enterCodeAndVerify('123456', /VERIFY EMAIL/i);
-    await enterCodeAndVerify('654321', /VERIFY MOBILE NUMBER/i);
+    await enterCodeAndVerify('123456');
+    await enterCodeAndVerify('654321');
 
     expect(verifyOtpAction).toHaveBeenLastCalledWith('mobile', '654321');
     expect(mockShowNotification).toHaveBeenCalledWith(
@@ -63,9 +63,9 @@ describe('CreateAccountVerify', () => {
     (verifyOtpAction as Mock).mockResolvedValue({ success: false, errors: ['Invalid OTP'] });
 
     render(<CreateAccountVerify contact={contact} />);
-    await enterCodeAndVerify('000000', /VERIFY EMAIL/i);
+    await enterCodeAndVerify('000000');
 
     expect(mockShowNotification).toHaveBeenCalledWith('Error!', 'Invalid OTP', 'error');
-    expect(screen.getByText(/EMAIL VERIFICATION/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /verify your email/i })).toBeInTheDocument();
   });
 });

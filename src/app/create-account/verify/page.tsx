@@ -1,7 +1,13 @@
+import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { ROUTES } from '@/constants/strings';
+import AuthLayout from '@/components/AuthLayout';
+import { ROUTES, STRINGS } from '@/constants/strings';
 import { getPendingVerification } from '@/server/pendingVerification';
 import CreateAccountVerify from './CreateAccountVerify';
+
+export const metadata: Metadata = {
+  title: `Verify your account | ${STRINGS.APP_NAME}`,
+};
 
 export default async function CreateAccountVerifyPage() {
   const contact = await getPendingVerification();
@@ -11,5 +17,13 @@ export default async function CreateAccountVerifyPage() {
     redirect(ROUTES.CREATE_ACCOUNT);
   }
 
-  return <CreateAccountVerify contact={contact} />;
+  return (
+    <AuthLayout
+      subtitle={STRINGS.VERIFICATION}
+      bannerHeader={STRINGS.VERIFICATION_BANNER_HEADER}
+      bannerSubText={STRINGS.VERIFICATION_BANNER_SUB_TEXT}
+    >
+      <CreateAccountVerify contact={contact} />
+    </AuthLayout>
+  );
 }
