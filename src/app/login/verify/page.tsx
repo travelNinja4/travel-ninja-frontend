@@ -1,7 +1,13 @@
+import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { ROUTES } from '@/constants/strings';
+import AuthLayout from '@/components/AuthLayout';
+import { ROUTES, STRINGS } from '@/constants/strings';
 import { getPendingVerification } from '@/server/pendingVerification';
 import LoginVerify from './LoginVerify';
+
+export const metadata: Metadata = {
+  title: `Verify your mobile number | ${STRINGS.APP_NAME}`,
+};
 
 export default async function LoginVerifyPage() {
   const contact = await getPendingVerification();
@@ -11,5 +17,13 @@ export default async function LoginVerifyPage() {
     redirect(ROUTES.LOGIN);
   }
 
-  return <LoginVerify contact={contact} />;
+  return (
+    <AuthLayout
+      subtitle={STRINGS.VERIFICATION}
+      bannerHeader={STRINGS.VERIFICATION_BANNER_HEADER}
+      bannerSubText={STRINGS.VERIFICATION_BANNER_SUB_TEXT}
+    >
+      <LoginVerify contact={contact} />
+    </AuthLayout>
+  );
 }

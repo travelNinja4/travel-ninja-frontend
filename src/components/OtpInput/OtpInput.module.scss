@@ -1,0 +1,59 @@
+/**
+------------------------------------------------------
+styles specific to the OtpInput component
+
+Boxes share the row evenly but never grow past the design's 3.25rem width,
+so the row fits narrow phones and stays compact on wide screens.
+------------------------------------------------------
+**/
+
+.otpInput {
+  display: flex;
+  justify-content: center;
+  gap: clamp(0.5rem, 2vw, 0.75rem);
+}
+
+.box {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 3.25rem;
+  aspect-ratio: 13 / 16;
+  padding: 0;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 8px;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  // 16px minimum stops iOS Safari zooming in on focus
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  font-weight: 600;
+  text-align: center;
+  caret-color: var(--color-brand);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-border-hover);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-border-focus);
+    box-shadow: var(--shadow-focus);
+  }
+
+  &:disabled {
+    background-color: var(--color-surface-muted);
+    border-color: var(--color-border);
+    cursor: not-allowed;
+  }
+
+  &.hasError {
+    border-color: var(--color-danger);
+
+    &:focus {
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 18%, transparent);
+    }
+  }
+}
