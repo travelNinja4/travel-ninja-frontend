@@ -14,7 +14,7 @@ import {
   getPendingVerification,
   setPendingVerification,
 } from '@/server/pendingVerification';
-import { ROUTES, STRINGS } from '@/constants/strings';
+import { AUTH_COOKIES, ROUTES, STRINGS } from '@/constants/strings';
 import {
   ActionResult,
   forgotPassword,
@@ -86,18 +86,8 @@ export async function verifyOtpAction(otpType: OtpType, otpCode: string): Promis
 
 export async function loginAction(data: Login): Promise<ActionResult> {
   try {
-    const res = await authService.login(data);
-    await setPendingVerification({ phoneNumber: res?.data?.phoneNumber });
-    return ok();
-  } catch (err) {
-    return fail(err);
-  }
-}
-
-export async function verifyLoginAction(otpCode: string): Promise<ActionResult> {
-  try {
-    await authService.verifyLogin({ otp: otpCode });
-    await clearPendingVerification();
+    // The backend sets the session cookies on success, so the user can go straight to the dashboard
+    await authService.login(data);
     return ok();
   } catch (err) {
     return fail(err);
@@ -134,7 +124,7 @@ export async function logoutAction() {
     console.error(err);
   }
   const cookieStore = await cookies();
-  cookieStore.delete('accessToken');
-  cookieStore.delete('refreshToken');
+  cookieStore.delete(AUTH_COOKIES.ACCESS_TOKEN);
+  cookieStore.delete(AUTH_COOKIES.REFRESH_TOKEN);
   redirect(ROUTES.LOGIN);
 }

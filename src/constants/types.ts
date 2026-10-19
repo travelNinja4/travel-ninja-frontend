@@ -10,12 +10,6 @@ export type OtpProps = {
   otpType?: OtpType;
 };
 
-export interface LoginResponse {
-  data: {
-    phoneNumber?: string;
-  };
-}
-
 export type Country = {
   name: string;
   code: string;
@@ -43,6 +37,8 @@ export type Login = {
   email: string;
   password: string;
   role?: string;
+  /** Keeps the session for 30 days instead of until the browser closes */
+  rememberMe?: boolean;
 };
 
 export type forgotPassword = {

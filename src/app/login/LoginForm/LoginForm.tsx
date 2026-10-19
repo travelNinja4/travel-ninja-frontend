@@ -1,7 +1,7 @@
 /**
  * Login form: work email, password, remember me, and links to reset the
  * password or create an account. Validates with `loginSchema`, then calls the
- * `loginAction` server action and sends the user to OTP verification.
+ * `loginAction` server action and sends the user to the dashboard.
  *
  * The heading lives here (not in the page) so the form and its title stay
  * together; the page only handles layout.
@@ -38,17 +38,17 @@ export default function LoginForm() {
     defaultValues: { email: '', password: '', rememberMe: false },
   });
 
-  const onSubmit = ({ email, password }: LoginFormValues) => {
-    // rememberMe is UI-only until the login API accepts it
+  const onSubmit = ({ email, password, rememberMe = false }: LoginFormValues) => {
     startTransition(async () => {
-      const result = await loginAction({ email, password });
+      const result = await loginAction({ email, password, rememberMe });
       if (!result.success) {
         result.errors.forEach((message) => {
           showNotification(STRINGS.ERROR, message, NOTIFICATION_TYPES.ERROR);
         });
         return;
       }
-      router.push(ROUTES.OTP_VERIFICATION);
+      showNotification(STRINGS.SUCCESS, STRINGS.LOGGED_IN_SUCCESSFUL, NOTIFICATION_TYPES.SUCCESS);
+      router.push(ROUTES.DASHBOARD);
     });
   };
 
