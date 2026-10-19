@@ -6,7 +6,7 @@ import { ROUTES, STRINGS } from '@/constants/strings';
 import AuthLayout from '../AuthLayout';
 import OtpVerification from './OtpVerification';
 
-// Shown inside AuthLayout, as on /create-account/verify and /login/verify
+// Shown inside AuthLayout, as on /create-account/verify
 const meta = {
   title: 'screens/Verification',
   component: OtpVerification,

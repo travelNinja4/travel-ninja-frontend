@@ -79,17 +79,37 @@ describe('LoginForm', () => {
     expect(loginAction).not.toHaveBeenCalled();
   });
 
-  it('logs in with email and password only, then goes to OTP verification', async () => {
+  it('logs in without remember me by default', async () => {
+    render(<LoginForm />);
+    fillValid();
+    submit();
+
+    await waitFor(() =>
+      expect(loginAction).toHaveBeenCalledWith({
+        email: 'ops@wanderlytravels.example',
+        password: 'secret123',
+        rememberMe: false,
+      }),
+    );
+  });
+
+  it('logs in with remember me ticked, then goes to the dashboard', async () => {
     render(<LoginForm />);
     fillValid();
     fireEvent.click(screen.getByRole('checkbox', { name: STRINGS.REMEMBER_ME }));
     submit();
 
-    await waitFor(() => expect(push).toHaveBeenCalledWith(ROUTES.OTP_VERIFICATION));
+    await waitFor(() => expect(push).toHaveBeenCalledWith(ROUTES.DASHBOARD));
     expect(loginAction).toHaveBeenCalledWith({
       email: 'ops@wanderlytravels.example',
       password: 'secret123',
+      rememberMe: true,
     });
+    expect(showNotification).toHaveBeenCalledWith(
+      STRINGS.SUCCESS,
+      STRINGS.LOGGED_IN_SUCCESSFUL,
+      'success',
+    );
   });
 
   it('trims spaces around the email', async () => {

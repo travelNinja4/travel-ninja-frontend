@@ -99,6 +99,12 @@ export const STRINGS = {
   VERIFICATION_SESSION_EXPIRED: 'Your verification session has expired. Please start again.',
 };
 
+// Session cookies set by the backend on login (AUTH_COOKIE_NAME / REFRESH_COOKIE_NAME in its config)
+export const AUTH_COOKIES = {
+  ACCESS_TOKEN: 'access_token',
+  REFRESH_TOKEN: 'refresh_token',
+} as const;
+
 export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
@@ -107,7 +113,6 @@ export const ROUTES = {
   VERIFY: '/create-account/verify',
   TERMS: '/terms',
   PRIVACY: '/privacy',
-  OTP_VERIFICATION: '/login/verify',
   DASHBOARD: '/dashboard',
 } as const;
 
