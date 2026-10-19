@@ -22,36 +22,22 @@ export type Country = {
   length: number;
 };
 
+/** Body of POST /auth/register. Only fullName, email, phoneNumber, password and termStatus are required by the API. */
 export type RegisterPayload = {
   fullName: string;
   agencyName?: string;
+  country?: string;
   email: string;
   website?: string;
-  address: string;
-  city: string;
-  state: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  /** Dial code and number, e.g. "+91-9876543210" */
   phoneNumber: string;
   password: string;
   termStatus: boolean;
   role: string;
 };
-
-/** Values of the create-account form, before they are mapped to a RegisterPayload */
-export interface AccountData {
-  fullName: string;
-  agencyName?: string;
-  email: string;
-  website?: string;
-  address: string;
-  city: string;
-  state: string;
-  phoneNumber: {
-    country: string;
-    number: string;
-  };
-  password: string;
-  termStatus: boolean;
-}
 
 export type Login = {
   email: string;
