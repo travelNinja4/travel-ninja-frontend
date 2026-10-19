@@ -73,7 +73,7 @@ export default function LoginForm() {
           type="email"
           inputMode="email"
           autoComplete="username"
-          placeholder={STRINGS.WORK_EMAIL_PLACEHOLDER}
+          placeholder={STRINGS.ENTER_EMAIL}
           error={errors.email?.message}
           disabled={isPending}
           fieldClassName={styles.field}

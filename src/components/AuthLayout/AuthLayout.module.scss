@@ -9,7 +9,7 @@ Auth screen layout (mobile-first)
   laptop  ≥ 1024px    50 / 50 split, as in the design
   wide    ≥ 1440px    more breathing room around the form
 
-The form column is capped at 31rem (as in the design), centred on phones and
+The form column is capped at 42rem, centred on phones and
 left-aligned in its half from tablet up.
 ------------------------------------------------------
 **/
@@ -54,7 +54,7 @@ left-aligned in its half from tablet up.
   // 32px on phones (375px) up to 40px from 1280px
   gap: clamp(2rem, 1.793rem + 0.884vw, 2.5rem);
   width: 100%;
-  max-width: 31rem;
+  max-width: 42rem;
   margin-inline: auto;
 
   @include respond-to(tablet) {

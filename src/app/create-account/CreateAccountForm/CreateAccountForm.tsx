@@ -1,200 +1,94 @@
+/**
+ * Create-account form: agency and contact details, country, business email,
+ * mobile number, password and terms. Validates with `createAccountSchema`,
+ * then calls the `registerAction` server action and sends the user to
+ * email / mobile verification.
+ *
+ * The page handles layout (AuthLayout) and fetches the countries.
+ */
 'use client';
 
 import { useMemo, useTransition } from 'react';
-import DynamicForm, { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
-import { createAccountSchema } from './CreateAccountSchema';
-import AppLink from '@/components/AppLink';
-import { UserPlus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { NOTIFICATION_TYPES, ROUTES, STRINGS } from '@/constants/strings';
-import { AccountData, Country } from '@/constants/types';
+import { Controller, useForm, useWatch } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { registerAction } from '@/actions/auth';
+import AppLink from '@/components/AppLink';
+import Button from '@/components/Button';
+import CheckBox from '@/components/CheckBox';
+import Dropdown from '@/components/Dropdown';
+import InputField from '@/components/InputField';
+import { Body, BodyLg, Heading2 } from '@/components/Typography';
+import { NOTIFICATION_TYPES, ROUTES, STRINGS } from '@/constants/strings';
+import { Country } from '@/constants/types';
 import { useNotification } from '@/providers/NotificationProvider';
+import { createAccountSchema, type CreateAccountFormValues } from './CreateAccountSchema';
 import styles from './CreateAccountForm.module.scss';
 
-export const createAccountFormConfig: FieldConfig[] = [
-  {
-    name: 'title',
-    label: 'Create Your Agency Account',
-    type: 'label',
-    tag: 'h2',
-    textAlign: 'center',
-    children: null,
-    validationHints: [],
-    className: styles.title,
-  },
-  {
-    name: 'subTitle',
-    label: 'Start your journey with TravelNinja today',
-    type: 'label',
-    tag: 'h3',
-    textAlign: 'center',
-    validationHints: [],
-    className: styles.subTitle,
-  },
-  {
-    name: 'fullName',
-    label: 'Full Name',
-    type: 'input',
-    placeholder: 'Enter full name',
-    required: true,
-    maxLength: 50,
-    width: FieldWidth.HALF,
-    validationHints: [],
-  },
-  {
-    name: 'agencyName',
-    label: 'Agency Name',
-    type: 'input',
-    placeholder: 'Enter agency name',
-    required: true,
-    width: FieldWidth.HALF,
-    validationHints: [],
-  },
-  {
-    name: 'email',
-    label: 'Email Address',
-    type: 'input',
-    required: true,
-    placeholder: 'Enter email address',
-    maxLength: 50,
-    width: FieldWidth.HALF,
-    validationHints: [],
-  },
-  {
-    name: 'website',
-    label: 'Website(optional)',
-    type: 'input',
-    placeholder: 'https://yourwebsite.com',
-    width: FieldWidth.HALF,
-    validationHints: [],
-  },
-  {
-    name: 'phoneNumber',
-    label: 'Mobile Number',
-    type: 'MobileNumberInput',
-    placeholder: 'Enter mobile number',
-    required: true,
-    maxLength: 10,
-    width: FieldWidth.FULL,
-    validationHints: [],
-  },
-  {
-    name: 'address',
-    label: 'Address',
-    type: 'input',
-    placeholder: 'Enter full address',
-    required: true,
-    maxLength: 200,
-    width: FieldWidth.FULL,
-    validationHints: [],
-  },
-  {
-    name: 'city',
-    label: 'City',
-    type: 'input',
-    placeholder: 'Enter city',
-    required: true,
-    maxLength: 20,
-    width: FieldWidth.THIRD,
-    validationHints: [],
-  },
-  {
-    name: 'state',
-    label: 'State',
-    type: 'input',
-    placeholder: 'Enter state',
-    required: true,
-    maxLength: 20,
-    width: FieldWidth.THIRD,
-    validationHints: [],
-  },
-  {
-    name: 'country',
-    label: 'Country',
-    type: 'input',
-    placeholder: 'Enter Country',
-    required: true,
-    maxLength: 20,
-    width: FieldWidth.THIRD,
-    validationHints: [],
-  },
-  {
-    name: 'password',
-    label: 'Password',
-    type: 'password',
-    placeholder: 'Create a password',
-    required: true,
-    maxLength: 12,
-    width: FieldWidth.FULL,
-    validationHints: [
-      { label: 'At least 8 characters', regex: /^.{8,}$/ },
-      { label: 'One uppercase letter', regex: /[A-Z]/ },
-      { label: 'One lowercase letter', regex: /[a-z]/ },
-      { label: 'One number', regex: /\d/ },
-      { label: 'One special character', regex: /[@$!%*?&]/ },
-    ],
-  },
-  {
-    name: 'termStatus',
-    label: (
-      <>
-        I agree to the{' '}
-        <AppLink href="/terms" className={styles.termsPolicy}>
-          Terms of Service
-        </AppLink>{' '}
-        and{' '}
-        <AppLink href="/privacy" className={styles.termsPolicy}>
-          Privacy Policy
-        </AppLink>
-      </>
-    ),
-    type: 'checkbox',
-    required: true,
-    validationHints: [],
-    className: styles.termStatusCheckbox,
-  },
-  {
-    name: 'submit',
-    label: 'Create Account',
-    type: 'button',
-    buttonType: 'submit',
-    className: styles.submitButton,
-    startIcon: UserPlus,
-    iconColor: 'var(--color-white)',
-  },
-];
+/** "+91 (IN)" -> "+91" */
+const dialCode = (code: string) => code.split(' ')[0];
 
 interface CreateAccountFormProps {
-  /** Country codes, fetched on the server by the page */
+  /** Countries from the API, fetched on the server by the page */
   countries: Country[];
 }
 
 export default function CreateAccountForm({ countries }: CreateAccountFormProps) {
   const router = useRouter();
-  const { showNotification } = useNotification();
   const [isPending, startTransition] = useTransition();
+  const { showNotification } = useNotification();
+
   const schema = useMemo(() => createAccountSchema(countries), [countries]);
-  const fields = useMemo(
-    () =>
-      createAccountFormConfig.map((field) =>
-        field.type === 'MobileNumberInput' ? { ...field, countries } : field,
-      ),
+  const countryOptions = useMemo(
+    () => countries.map((c) => ({ value: c.code, label: c.name })),
     [countries],
   );
 
-  const handleSubmit = (formData: AccountData) => {
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateAccountFormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      agencyName: '',
+      fullName: '',
+      // India first, as most agencies are Indian
+      country: (countries.find((c) => c.code.endsWith('(IN)')) ?? countries[0])?.code ?? '',
+      email: '',
+      mobileNumber: '',
+      password: '',
+      confirmPassword: '',
+      termStatus: false,
+    },
+  });
+
+  const countryCode = useWatch({ control, name: 'country' });
+  const selectedCountry = countries.find((c) => c.code === countryCode);
+
+  const onSubmit = ({
+    country,
+    mobileNumber,
+    fullName,
+    agencyName,
+    email,
+    password,
+  }: CreateAccountFormValues) => {
     startTransition(async () => {
-      const rawCountry = formData.phoneNumber?.country ?? '';
-      const countryCode = rawCountry.split('(')[0].trim();
       const result = await registerAction({
-        ...formData,
-        phoneNumber: `${countryCode}-${formData.phoneNumber?.number}`,
+        fullName,
+        agencyName,
+        email,
+        password,
+        country: countries.find((c) => c.code === country)?.name,
+        phoneNumber: `${dialCode(country)}-${mobileNumber}`,
+        termStatus: true,
         role: 'agency',
       });
       if (!result.success) {
-        result.errors.forEach((errMsg) => {
-          showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
+        result.errors.forEach((message) => {
+          showNotification(STRINGS.ERROR, message, NOTIFICATION_TYPES.ERROR);
         });
         return;
       }
@@ -202,13 +96,159 @@ export default function CreateAccountForm({ countries }: CreateAccountFormProps)
     });
   };
 
+  // Shared by every text field so they all use the roomy 16px scale
+  const fieldProps = {
+    required: true,
+    disabled: isPending,
+    fieldClassName: styles.field,
+    inputClassName: styles.input,
+  };
+
   return (
-    <DynamicForm
-      fields={fields}
-      schema={schema}
-      className={styles.createAccountContainer}
-      loading={isPending}
-      onSubmit={handleSubmit}
-    />
+    <div data-testid="CreateAccountFormTest" className={styles.createAccountForm}>
+      <header className={styles.header}>
+        <Heading2 tag="h1" className={styles.title}>
+          {STRINGS.CREATE_ACCOUNT_HEADING}
+        </Heading2>
+        <BodyLg className={styles.description}>{STRINGS.CREATE_ACCOUNT_DESCRIPTION}</BodyLg>
+      </header>
+
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+        aria-busy={isPending}
+      >
+        <InputField
+          {...register('agencyName')}
+          {...fieldProps}
+          label={STRINGS.AGENCY_NAME}
+          autoComplete="organization"
+          placeholder={STRINGS.AGENCY_NAME_PLACEHOLDER}
+          error={errors.agencyName?.message}
+        />
+
+        <div className={styles.row}>
+          <InputField
+            {...register('fullName')}
+            {...fieldProps}
+            label={STRINGS.CONTACT_PERSON_NAME}
+            autoComplete="name"
+            placeholder={STRINGS.FULL_NAME_PLACEHOLDER}
+            error={errors.fullName?.message}
+          />
+
+          <Controller
+            name="country"
+            control={control}
+            render={({ field: { value, onChange, name } }) => (
+              <Dropdown
+                name={name}
+                label={STRINGS.COUNTRY}
+                required
+                options={countryOptions}
+                value={value || null}
+                onChange={onChange}
+                placeholder={STRINGS.SELECT_COUNTRY}
+                error={errors.country?.message}
+                disabled={isPending}
+                className={styles.dropdown}
+                fieldClassName={styles.field}
+              />
+            )}
+          />
+        </div>
+
+        <InputField
+          {...register('email')}
+          {...fieldProps}
+          label={STRINGS.BUSINESS_EMAIL}
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          placeholder={STRINGS.ENTER_EMAIL}
+          error={errors.email?.message}
+        />
+
+        <InputField
+          {...register('mobileNumber')}
+          {...fieldProps}
+          label={STRINGS.MOBILE_NUMBER}
+          type="tel"
+          inputMode="numeric"
+          autoComplete="tel-national"
+          placeholder={STRINGS.ENTER_MOBILE_NUMBER}
+          maxLength={selectedCountry?.length}
+          leftIcon={
+            selectedCountry && (
+              <span className={styles.dialCode}>{dialCode(selectedCountry.code)}</span>
+            )
+          }
+          error={errors.mobileNumber?.message}
+        />
+
+        <div className={styles.row}>
+          <InputField
+            {...register('password')}
+            {...fieldProps}
+            label={STRINGS.PASSWORD}
+            type="password"
+            autoComplete="new-password"
+            helperText={STRINGS.PASSWORD_HINT}
+            error={errors.password?.message}
+          />
+
+          <InputField
+            {...register('confirmPassword')}
+            {...fieldProps}
+            label={STRINGS.CONFIRM_PASSWORD}
+            type="password"
+            autoComplete="new-password"
+            error={errors.confirmPassword?.message}
+          />
+        </div>
+
+        <Controller
+          name="termStatus"
+          control={control}
+          render={({ field: { value, onChange, onBlur, name, ref } }) => (
+            <CheckBox
+              ref={ref}
+              name={name}
+              required
+              label={
+                <>
+                  {STRINGS.I_AGREE_TO_THE}{' '}
+                  <AppLink href={ROUTES.TERMS} className={styles.link}>
+                    {STRINGS.TERMS_OF_SERVICE}
+                  </AppLink>{' '}
+                  {STRINGS.AND}{' '}
+                  <AppLink href={ROUTES.PRIVACY} className={styles.link}>
+                    {STRINGS.PRIVACY_POLICY}
+                  </AppLink>
+                </>
+              }
+              labelClassName={styles.checkboxLabel}
+              checked={!!value}
+              onChange={onChange}
+              onBlur={onBlur}
+              error={errors.termStatus?.message}
+              disabled={isPending}
+            />
+          )}
+        />
+
+        <Button type="submit" loading={isPending} className={styles.submit}>
+          {STRINGS.CREATE_ACCOUNT}
+        </Button>
+      </form>
+
+      <Body className={styles.footer}>
+        {STRINGS.ALREADY_REGISTERED}{' '}
+        <AppLink href={ROUTES.LOGIN} className={styles.link}>
+          {STRINGS.SIGN_IN}
+        </AppLink>
+      </Body>
+    </div>
   );
 }
