@@ -1,92 +1,46 @@
+/**
+ * Forgot password form: work email and a link back to sign in. Validates with
+ * `forgotPasswordSchema`, then calls the `forgotPasswordAction` server action,
+ * confirms with a toast and returns the user to sign in.
+ *
+ * The page handles layout (AuthLayout).
+ */
 'use client';
 
 import { useTransition } from 'react';
-import DynamicForm from '@/components/DynamicForm';
-import { forgotPasswordSchema } from './ForgotPasswordSchema';
-import { Send, ArrowLeft } from 'lucide-react';
-import AppLink from '@/components/AppLink';
-import { NOTIFICATION_TYPES, ROUTES, STRINGS } from '@/constants/strings';
-import { forgotPassword } from '@/constants/types';
-import { forgotPasswordAction } from '@/actions/auth';
-import { useNotification } from '@/providers/NotificationProvider';
 import { useRouter } from 'next/navigation';
-import { FieldConfig, FieldWidth } from '@/components/DynamicForm/DynamicForm';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { forgotPasswordAction } from '@/actions/auth';
+import AppLink from '@/components/AppLink';
+import Button from '@/components/Button';
+import InputField from '@/components/InputField';
+import { Body, BodyLg, Heading2 } from '@/components/Typography';
+import { NOTIFICATION_TYPES, ROUTES, STRINGS } from '@/constants/strings';
+import { useNotification } from '@/providers/NotificationProvider';
+import { forgotPasswordSchema, type ForgotPasswordFormValues } from './ForgotPasswordSchema';
 import styles from './ForgotPassword.module.scss';
 
-export const forgotPasswordFormConfig: FieldConfig[] = [
-  {
-    name: 'title',
-    label: STRINGS.FORGOT_PASSWORD,
-    type: 'label',
-    tag: 'h2',
-    textAlign: 'center',
-    children: null,
-    validationHints: [],
-    className: styles.title,
-  },
-  {
-    name: 'subTitle',
-    label: STRINGS.RESET_PASSWORD_INSTRUCTION,
-    type: 'label',
-    tag: 'h3',
-    textAlign: 'center',
-    validationHints: [],
-    className: styles.subTitle,
-  },
-  {
-    name: 'email',
-    label: STRINGS.EMAIL_ADDRESS,
-    type: 'input',
-    required: true,
-    placeholder: STRINGS.ENTER_EMAIL_ADDRESS,
-    maxLength: 50,
-    width: FieldWidth.FULL,
-    validationHints: [],
-  },
-  {
-    name: 'note',
-    label: STRINGS.RESET_PASSWORD_LABEL,
-    type: 'label',
-    tag: 'span',
-    textAlign: 'start',
-    validationHints: [],
-    className: styles.note,
-  },
-  {
-    name: 'submit',
-    label: STRINGS.SEND_RESET_LINK,
-    type: 'button',
-    buttonType: 'submit',
-    startIcon: Send,
-    iconColor: 'var(--color-white)',
-    className: styles.submitButton,
-  },
-  {
-    name: 'backToLogin',
-    label: (
-      <AppLink href={ROUTES.LOGIN} className={styles.backLink}>
-        <ArrowLeft className={styles.backIcon} />
-        <span className={styles.backText}>{STRINGS.BACK_TO_LOGIN}</span>
-      </AppLink>
-    ),
-    type: 'label',
-    tag: 'p',
-    textAlign: 'center',
-    validationHints: [],
-  },
-];
-
 export default function ForgotPasswordForm() {
-  const { showNotification } = useNotification();
-  const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const { showNotification } = useNotification();
 
-  const handleResetLink = (formData: forgotPassword) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ForgotPasswordFormValues>({
+    resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: { email: '' },
+  });
+
+  const onSubmit = (data: ForgotPasswordFormValues) => {
     startTransition(async () => {
-      const result = await forgotPasswordAction(formData);
+      const result = await forgotPasswordAction(data);
       if (!result.success) {
-        result.errors.forEach((errMsg) => {
-          showNotification(STRINGS.ERROR, errMsg, NOTIFICATION_TYPES.ERROR);
+        result.errors.forEach((message) => {
+          showNotification(STRINGS.ERROR, message, NOTIFICATION_TYPES.ERROR);
         });
         return;
       }
@@ -100,12 +54,43 @@ export default function ForgotPasswordForm() {
   };
 
   return (
-    <DynamicForm
-      fields={forgotPasswordFormConfig}
-      schema={forgotPasswordSchema}
-      className={styles.forgotPasswordContainer}
-      loading={isPending}
-      onSubmit={handleResetLink}
-    />
+    <div data-testid="ForgotPasswordFormTest" className={styles.forgotPasswordForm}>
+      <header className={styles.header}>
+        <Heading2 tag="h1" className={styles.title}>
+          {STRINGS.RESET_YOUR_PASSWORD}
+        </Heading2>
+        <BodyLg className={styles.description}>{STRINGS.RESET_YOUR_PASSWORD_DESCRIPTION}</BodyLg>
+      </header>
+
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+        aria-busy={isPending}
+      >
+        <InputField
+          {...register('email')}
+          label={STRINGS.WORK_EMAIL}
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          placeholder={STRINGS.AGENCY_EMAIL_PLACEHOLDER}
+          error={errors.email?.message}
+          disabled={isPending}
+          fieldClassName={styles.field}
+          inputClassName={styles.input}
+        />
+
+        <Button type="submit" loading={isPending} className={styles.submit}>
+          {STRINGS.SEND_RESET_LINK}
+        </Button>
+      </form>
+
+      <Body className={styles.footer}>
+        <AppLink href={ROUTES.LOGIN} className={styles.backLink}>
+          {STRINGS.BACK_TO_SIGN_IN}
+        </AppLink>
+      </Body>
+    </div>
   );
 }

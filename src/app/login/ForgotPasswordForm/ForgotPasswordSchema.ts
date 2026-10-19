@@ -1,9 +1,7 @@
 import { z } from 'zod';
+import { loginSchema } from '../LoginForm/LoginSchema';
 
-export const forgotPasswordSchema = z.object({
-  email: z
-    .string()
-    .min(1, 'Please enter email address')
-    .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Invalid email address')
-    .max(50),
-});
+// Same email rules and messages as sign in
+export const forgotPasswordSchema = loginSchema.pick({ email: true });
+
+export type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
