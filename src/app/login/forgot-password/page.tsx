@@ -1,36 +1,24 @@
-import Image from '@/components/Image';
-import ForgotPasswordForm from '../ForgotPasswordForm/ForgotPasswordForm';
-import AuthSideBanner from '@/components/AuthSideBanner';
+import type { Metadata } from 'next';
+import AuthLayout from '@/components/AuthLayout';
 import { STRINGS } from '@/constants/strings';
-import styles from './page.module.scss';
+import ForgotPasswordForm from '../ForgotPasswordForm/ForgotPasswordForm';
 
+export const metadata: Metadata = {
+  title: `Reset your password | ${STRINGS.APP_NAME}`,
+};
+
+/**
+ * Split-screen password recovery, same layout as sign in.
+ * Server component; only ForgotPasswordForm ships client JavaScript.
+ */
 export default function ForgotPasswordPage() {
   return (
-    <div className={styles.container}>
-      <Image
-        src={process.env.NEXT_PUBLIC_PLACEHOLDER_BG_URL as string}
-        fill
-        preload
-        alt="BackgroundImg"
-        className={styles.bgImg}
-        unoptimized
-      />
-      <div className={styles.overlay}></div>
-
-      <div className={styles.contentWrapper}>
-        <div className={styles.content}>
-          <div className={styles.imageContainer}>
-            <AuthSideBanner
-              header={STRINGS.RESET_PASSWORD_BANNER_HEADER}
-              subText={STRINGS.RESET_PASSWORD_BANNER_SUB_TEXT}
-            />
-          </div>
-
-          <div className={styles.formContainer}>
-            <ForgotPasswordForm />
-          </div>
-        </div>
-      </div>
-    </div>
+    <AuthLayout
+      subtitle={STRINGS.PASSWORD_RECOVERY}
+      bannerHeader={STRINGS.ACCOUNT_RECOVERY_BANNER_HEADER}
+      bannerSubText={STRINGS.ACCOUNT_RECOVERY_BANNER_SUB_TEXT}
+    >
+      <ForgotPasswordForm />
+    </AuthLayout>
   );
 }

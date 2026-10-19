@@ -103,9 +103,4 @@ left-aligned in its half from tablet up.
   @include respond-to(tablet) {
     display: flex;
   }
-
-  // Lifts the copy to where the design has it (the design fills the space below with stat cards)
-  @include respond-to(laptop) {
-    padding-bottom: clamp(var(--space-12), 24vh, 16rem);
-  }
 }
