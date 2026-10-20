@@ -1,0 +1,42 @@
+/**
+------------------------------------------------------
+styles specific to the StatusBadge component
+
+Each status only swaps the two custom properties; keep the
+list in sync with STATUS_TONES in StatusBadge.tsx.
+------------------------------------------------------
+**/
+
+$tones:
+  published, draft, archived, confirmed, pending, cancelled, completed, paid, refunded, available,
+  soldout, partial;
+
+.badge {
+  --badge-bg: var(--status-draft-bg);
+  --badge-text: var(--status-draft-text);
+
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.125rem var(--space-2);
+  border-radius: 999px;
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
+  white-space: nowrap;
+
+  &::before {
+    content: '';
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+    background-color: currentColor;
+  }
+}
+
+@each $tone in $tones {
+  .#{$tone} {
+    --badge-bg: var(--status-#{$tone}-bg);
+    --badge-text: var(--status-#{$tone}-text);
+  }
+}
