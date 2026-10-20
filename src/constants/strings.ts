@@ -1,4 +1,5 @@
 import type { NotificationType } from '@/providers/NotificationProvider';
+import type { TourStatus } from './types';
 
 export const STRINGS = {
   APP_NAME: 'TravelNinja',
@@ -178,6 +179,28 @@ export const SEARCH_INPUT = {
   PLACEHOLDER: 'Search tours or destinations...',
   CLEAR: 'Clear search',
   LOADING: 'Searching',
+};
+
+export const TOURS = {
+  LIST_LABEL: 'Tours',
+  EMPTY_TITLE: 'No tours yet',
+  EMPTY_DESCRIPTION: 'Tours you create will show up here.',
+  SHOWING: 'Showing',
+  OF: 'of',
+  DEPARTURE: 'Departure',
+  PRICE: 'Price',
+  CAPACITY: 'Capacity',
+  OCCUPANCY: 'Occupancy',
+  EDIT: 'Edit',
+  DUPLICATE: 'Duplicate',
+  // Shown for a value the API hasn't sent
+  NOT_AVAILABLE: '—',
+};
+
+export const TOUR_STATUS_LABEL: Record<TourStatus, string> = {
+  draft: 'Draft',
+  published: 'Published',
+  archived: 'Archived',
 };
 
 /**

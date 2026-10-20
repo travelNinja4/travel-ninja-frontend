@@ -59,6 +59,31 @@ export type PendingVerification = {
   phoneNumber?: string;
 };
 
+export type TourStatus = 'draft' | 'published' | 'archived';
+
+/** A tour as returned by the tours API. */
+export type Tour = {
+  id: number;
+  title: string;
+  /** Place and region, e.g. "Coorg, Karnataka" */
+  destination: string;
+  category: string;
+  durationDays: number;
+  /** Price per guest in rupees */
+  price: number;
+  /** Total seats */
+  capacity: number;
+  status: TourStatus;
+  /** "YYYY-MM-DD" */
+  departureDate: string;
+  /** "YYYY-MM-DD" */
+  returnDate: string;
+  coverImageUrl: string | null;
+  guide: string;
+  /** Seats already booked. Not sent by the API yet; until it is, occupancy shows as "—". */
+  bookedSeats?: number;
+};
+
 /**
  * Result returned by every server action. Actions never throw to the client, because Next.js hides
  * thrown error messages in production.
