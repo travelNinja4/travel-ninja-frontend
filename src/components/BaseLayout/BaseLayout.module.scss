@@ -7,7 +7,8 @@ styles specific to the BaseLayout component
   phone   rows:    top bar / content
   tablet+ columns: sidebar (sizes itself) / content
 
-Only the content area scrolls, so the sidebar never moves.
+content = header + main. Only main scrolls, so the sidebar
+and header never move.
 ------------------------------------------------------
 **/
 
@@ -26,8 +27,17 @@ Only the content area scrolls, so the sidebar never moves.
   }
 }
 
-.mainContent {
+.content {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
+  min-height: 0;
+}
+
+.mainContent {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
   padding: var(--space-4);
   overflow-y: auto;
 

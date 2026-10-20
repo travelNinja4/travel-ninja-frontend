@@ -1,0 +1,49 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the AppHeader component
+
+  breadcrumb (shrinks) ............ actions (fixed)
+
+From tablet up it matches the sidebar header's height, so
+their bottom borders line up; side padding follows <main>.
+------------------------------------------------------
+**/
+
+.header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-width: 0;
+  height: 3rem;
+  padding-inline: var(--space-4) var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+
+  @include respond-to(tablet) {
+    height: var(--topbar-height);
+    padding-inline: var(--space-6) var(--space-4);
+  }
+
+  @include respond-to(laptop) {
+    padding-inline: var(--space-8) var(--space-6);
+  }
+}
+
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-1);
+
+  @include respond-to(tablet) {
+    gap: var(--space-2);
+  }
+}
+
+.iconButton {
+  @include icon-button;
+}

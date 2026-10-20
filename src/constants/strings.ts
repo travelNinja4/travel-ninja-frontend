@@ -168,6 +168,22 @@ export const SIDEBAR = {
   AGENCY_PLAN: 'Professional plan',
 };
 
+export const APP_HEADER = {
+  BREADCRUMB: 'Breadcrumb',
+  TOGGLE_THEME: 'Toggle dark mode',
+  NOTIFICATIONS: 'Notifications',
+};
+
+/**
+ * The saved theme. With nothing saved, the app follows the OS preference.
+ * The key is also read by the inline script in app/layout.tsx.
+ */
+export const THEME = {
+  STORAGE_KEY: 'theme',
+  LIGHT: 'light',
+  DARK: 'dark',
+} as const;
+
 /**
  * Viewport ranges shared with the SCSS breakpoints in src/styles/_mixins.scss.
  */
@@ -176,4 +192,5 @@ export const MEDIA_QUERIES = {
   PHONE: '(max-width: 767.98px)',
   // 768–1023px: the sidebar starts collapsed to an icon rail here
   TABLET_ONLY: '(min-width: 768px) and (max-width: 1023.98px)',
+  PREFERS_DARK: '(prefers-color-scheme: dark)',
 } as const;

@@ -1,0 +1,104 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the Breadcrumb component
+
+  One line that never wraps: each crumb shrinks and ends
+  in an ellipsis, the current page shrinks last.
+  phone   first / … / current
+  tablet+ the full trail
+------------------------------------------------------
+**/
+
+.nav {
+  min-width: 0;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.item,
+.ellipsis {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+// The root never shrinks; other ancestors give up their space before the current page does.
+// Keep the current page at 1: factors summing below 1 only absorb part of the overflow.
+.item {
+  flex-shrink: 4;
+
+  &:first-child {
+    flex-shrink: 0;
+  }
+
+  &:last-child {
+    flex-shrink: 1;
+  }
+}
+
+.middle {
+  display: none;
+
+  @include respond-to(tablet) {
+    display: flex;
+  }
+}
+
+.ellipsis {
+  flex-shrink: 0;
+
+  @include respond-to(tablet) {
+    display: none;
+  }
+}
+
+.separator {
+  flex-shrink: 0;
+  padding-inline: var(--space-2);
+  color: var(--color-text-disabled);
+  user-select: none;
+}
+
+.crumb {
+  min-width: 0;
+  max-width: 16rem;
+  overflow: hidden;
+  border-radius: 4px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text,
+.link {
+  color: var(--color-text-secondary);
+  font-weight: var(--weight-regular);
+}
+
+.link {
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--color-text);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+}
+
+// Uses whatever room is left, truncating only when the header runs out
+.current {
+  max-width: none;
+  color: var(--color-text);
+  font-weight: var(--weight-medium);
+}

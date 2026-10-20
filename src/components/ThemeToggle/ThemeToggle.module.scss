@@ -1,0 +1,39 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the ThemeToggle component
+
+  Moon while the page is light, sun while it is dark.
+  Mirrors the theme rules in app/styleguide.scss: an explicit
+  data-theme wins, otherwise the OS preference decides.
+------------------------------------------------------
+**/
+
+.button {
+  @include icon-button;
+}
+
+.sun {
+  display: none;
+}
+
+@mixin show-sun {
+  .moon {
+    display: none;
+  }
+
+  .sun {
+    display: block;
+  }
+}
+
+:global(:root[data-theme='dark']) {
+  @include show-sun;
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme='light'])) {
+    @include show-sun;
+  }
+}
