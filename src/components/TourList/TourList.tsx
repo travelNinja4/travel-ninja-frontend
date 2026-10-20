@@ -18,6 +18,7 @@
  * ```
  */
 
+import type { ReactNode } from 'react';
 import Typography from '../Typography';
 import TourCard from '../TourCard';
 import { TOURS } from '@/constants/strings';
@@ -51,6 +52,25 @@ interface TourListProps {
    * don't re-render.
    */
   onDuplicate?: (tour: Tour) => void;
+
+  /**
+   * Heading of the empty state, e.g. a "no matches" message while filters are applied.
+   *
+   * @default "No tours yet"
+   */
+  emptyTitle?: string;
+
+  /**
+   * Text below the empty state heading.
+   *
+   * @default "Tours you create will show up here."
+   */
+  emptyDescription?: string;
+
+  /**
+   * Shown at the right of the footer, e.g. a Pagination.
+   */
+  pagination?: ReactNode;
 }
 
 export default function TourList({
@@ -58,6 +78,9 @@ export default function TourList({
   total = tours.length,
   preloadCount = 4,
   onDuplicate,
+  emptyTitle = TOURS.EMPTY_TITLE,
+  emptyDescription = TOURS.EMPTY_DESCRIPTION,
+  pagination,
 }: TourListProps) {
   return (
     <section data-testid="TourListTest" aria-label={TOURS.LIST_LABEL} className={styles.panel}>
@@ -72,10 +95,10 @@ export default function TourList({
       ) : (
         <div className={styles.empty}>
           <Typography variant="heading-4" tag="p">
-            {TOURS.EMPTY_TITLE}
+            {emptyTitle}
           </Typography>
           <Typography variant="body" className={styles.emptyDescription}>
-            {TOURS.EMPTY_DESCRIPTION}
+            {emptyDescription}
           </Typography>
         </div>
       )}
@@ -84,6 +107,7 @@ export default function TourList({
         <Typography variant="body" className={styles.count}>
           {`${TOURS.SHOWING} ${tours.length} ${TOURS.OF} ${total}`}
         </Typography>
+        {pagination}
       </div>
     </section>
   );

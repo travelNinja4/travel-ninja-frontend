@@ -1,0 +1,186 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the Tours component
+
+  page
+    header: title + description, New tour on the right
+            (New tour wraps below on narrow phones)
+    content (ToursContent)
+      toolbar
+        phone   search / status / category, stacked
+        tablet  search across the row, then the two filters side by side
+        laptop+ search (up to 27rem) and both filters on one row
+      tours grid (TourList)
+
+ToursSkeleton reuses .content and .toolbar so the loading state has
+the same shape as the loaded page.
+------------------------------------------------------
+**/
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 120rem;
+  margin-inline: auto;
+
+  @include respond-to(tablet) {
+    gap: var(--space-8);
+  }
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  color: var(--color-text);
+}
+
+.description {
+  color: var(--color-text-secondary);
+}
+
+// Link styled as the primary Button
+.newTour {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-5);
+  border-radius: 8px;
+  background-color: var(--color-brand);
+  color: var(--color-on-brand);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: var(--color-brand-hover);
+  }
+
+  &:active {
+    background-color: var(--color-brand-active);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  @include respond-to(tablet) {
+    gap: var(--space-6);
+  }
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+
+  @include respond-to(tablet) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    > :first-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @include respond-to(laptop) {
+    grid-template-columns: minmax(0, 27rem) repeat(2, minmax(10rem, 12rem));
+
+    > :first-child {
+      grid-column: auto;
+    }
+  }
+}
+
+// Same height and text size as the SearchInput beside them
+.filter {
+  min-height: 2.75rem;
+
+  input {
+    font-size: 0.9375rem;
+  }
+}
+
+// The current page while a status change loads the new one
+.pending {
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+/* -----------------------------
+  ToursSkeleton
+----------------------------- */
+
+.skeletonBlock {
+  border-radius: 8px;
+  background-color: var(--color-surface-muted);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.skeletonField {
+  height: 2.75rem;
+}
+
+.skeletonPanel {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background-color: var(--color-surface);
+}
+
+// Same columns as the TourList grid
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: var(--space-4);
+  padding: var(--space-4);
+
+  @include respond-to(tablet) {
+    gap: var(--space-6);
+    padding: var(--space-6);
+  }
+}
+
+.skeletonCard {
+  height: 25rem;
+  border-radius: 12px;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonBlock {
+    animation: none;
+  }
+}

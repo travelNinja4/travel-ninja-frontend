@@ -84,6 +84,18 @@ export type Tour = {
   bookedSeats?: number;
 };
 
+/** Statuses the tours API can filter by */
+export type TourStatusFilter = Extract<TourStatus, 'draft' | 'published'>;
+
+/** One page of the agency's tours. */
+export type TourPage = {
+  tours: Tour[];
+  /** 1-based */
+  page: number;
+  /** The API sends no total, so this is all that's known about later pages */
+  hasNextPage: boolean;
+};
+
 /**
  * Result returned by every server action. Actions never throw to the client, because Next.js hides
  * thrown error messages in production.

@@ -6,7 +6,7 @@ styles specific to the TourList component
 
   panel
     grid of cards (as many 16rem columns as fit)
-    footer: Showing X of Y
+    footer: Showing X of Y, pagination on the right
 
 Keep TOUR_COVER_SIZES in TourCard.tsx in step with the
 column count this produces.
@@ -51,6 +51,11 @@ column count this produces.
 }
 
 .footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
   padding: var(--space-4);
   border-top: 1px solid var(--color-border);
 

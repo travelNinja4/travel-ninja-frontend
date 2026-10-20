@@ -44,6 +44,16 @@ export const parseSetCookie = (header: string): ParsedCookie => {
   return { name, value, options };
 };
 
+/**
+ * Builds a Cookie header for the backend with the values exactly as the backend set them.
+ *
+ * Next.js's `cookies().toString()` percent-encodes values, which the backend doesn't decode: its
+ * access cookie is `"Bearer <jwt>"`, so it would receive `%22Bearer%20<jwt>%22` and reject it as an
+ * invalid token.
+ */
+export const toCookieHeader = (cookies: { name: string; value: string }[]) =>
+  cookies.map(({ name, value }) => `${name}=${value}`).join('; ');
+
 // Long enough for requests the browser sent with the old token (parallel navigations, prefetches) to
 // get the new cookies instead of reusing it
 const SHARED_RESULT_MS = 10_000;

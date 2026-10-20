@@ -116,6 +116,7 @@ export const ROUTES = {
   PRIVACY: '/privacy',
   DASHBOARD: '/dashboard',
   TOURS: '/tours',
+  NEW_TOUR: '/tours/new',
   BOOKINGS: '/bookings',
   CUSTOMERS: '/customers',
   CALENDAR: '/calendar',
@@ -182,6 +183,21 @@ export const SEARCH_INPUT = {
 };
 
 export const TOURS = {
+  PAGE_TITLE: 'Tours',
+  PAGE_DESCRIPTION: 'Publish, draft, and archive departures for',
+  NEW_TOUR: 'New tour',
+  ALL_STATUSES: 'All statuses',
+  ALL_CATEGORIES: 'All categories',
+  STATUS_FILTER: 'Filter by status',
+  CATEGORY_FILTER: 'Filter by category',
+  NO_MATCHES_TITLE: 'No tours match your filters',
+  NO_MATCHES_DESCRIPTION: 'Try a different search term, status or category.',
+  LOAD_ERROR_TITLE: 'We couldn’t load your tours',
+  LOAD_ERROR_DESCRIPTION: 'Check your connection and try again.',
+  TRY_AGAIN: 'Try again',
+  LOADING: 'Loading tours',
+  PAGE_EMPTY_TITLE: 'No tours on this page',
+  PAGE_EMPTY_DESCRIPTION: 'Go back to an earlier page to see your tours.',
   LIST_LABEL: 'Tours',
   EMPTY_TITLE: 'No tours yet',
   EMPTY_DESCRIPTION: 'Tours you create will show up here.',
@@ -195,6 +211,22 @@ export const TOURS = {
   DUPLICATE: 'Duplicate',
   // Shown for a value the API hasn't sent
   NOT_AVAILABLE: '—',
+};
+
+// Categories the tours API accepts
+export const TOUR_CATEGORIES = [
+  'Nature',
+  'Relaxation',
+  'Heritage',
+  'Cultural',
+  'Adventure',
+  'Beach',
+] as const;
+
+export const PAGINATION = {
+  LABEL: 'Pagination',
+  PAGE: 'Page',
+  MORE_PAGES: 'More pages',
 };
 
 export const TOUR_STATUS_LABEL: Record<TourStatus, string> = {
