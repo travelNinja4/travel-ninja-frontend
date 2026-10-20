@@ -174,6 +174,12 @@ export const APP_HEADER = {
   NOTIFICATIONS: 'Notifications',
 };
 
+export const SEARCH_INPUT = {
+  PLACEHOLDER: 'Search tours or destinations...',
+  CLEAR: 'Clear search',
+  LOADING: 'Searching',
+};
+
 /**
  * The saved theme. With nothing saved, the app follows the OS preference.
  * The key is also read by the inline script in app/layout.tsx.
