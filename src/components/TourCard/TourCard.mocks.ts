@@ -39,7 +39,7 @@ export const MOCK_TOURS: Tour[] = [
     id: 4,
     title: 'Rajasthan Cultural Journey',
     destination: 'Jaipur–Jodhpur, Rajasthan',
-    category: 'Culture',
+    category: 'Cultural',
     durationDays: 6,
     price: 38500,
     capacity: 18,

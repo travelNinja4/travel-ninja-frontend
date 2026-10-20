@@ -50,6 +50,11 @@ export interface DropdownProps<T> {
   label?: ReactNode;
 
   /**
+   * Accessible name for a dropdown with no visible `label`, e.g. a toolbar filter.
+   */
+  'aria-label'?: string;
+
+  /**
    * Shows a required marker next to the label and sets `aria-required`.
    */
   required?: boolean;
@@ -126,6 +131,7 @@ export interface DropdownProps<T> {
 
 export default function Dropdown<T>({
   label,
+  'aria-label': ariaLabel,
   required,
   options,
   value,
@@ -256,6 +262,7 @@ export default function Dropdown<T>({
         placeholder={placeholder}
         value={selectedOption?.label ?? ''}
         role="combobox"
+        aria-label={ariaLabel}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-controls={listId}

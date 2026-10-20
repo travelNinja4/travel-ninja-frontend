@@ -1,0 +1,89 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the Pagination component
+
+  row of square page links, the current one filled with
+  the brand colour. 44px touch targets on phones, 36px
+  from tablet up.
+------------------------------------------------------
+**/
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  padding: 0 var(--space-2);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+
+  @include respond-to(tablet) {
+    min-width: 2.25rem;
+    height: 2.25rem;
+  }
+}
+
+a.page {
+  &:hover {
+    background-color: var(--color-surface-hover);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+}
+
+.current {
+  background-color: var(--color-brand);
+  color: var(--color-on-brand);
+  font-weight: 600;
+}
+
+.ellipsis {
+  min-width: 1.5rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+// The clicked page while it loads
+.pending {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    transition: none;
+  }
+
+  .pending {
+    animation: none;
+    opacity: 0.5;
+  }
+}
