@@ -1,80 +1,20 @@
 import { render, screen } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
 import BaseLayout from './BaseLayout';
 
-vi.mock('../MobileSidebar', () => ({
-  default: () => <div data-testid="MobileSidebarTest" />,
-}));
-vi.mock('../DesktopSidebar', () => ({
-  default: (props: any) => (
-    <div data-testid="DesktopSidebarTest">{props.collapsed ? 'Collapsed' : 'Expanded'}</div>
-  ),
+vi.mock('../Sidebar', () => ({
+  default: () => <aside data-testid="SidebarTest" />,
 }));
 
-describe('Home', () => {
-  /** Base props for BaseLayout **/
+describe('BaseLayout', () => {
   const baseProps = {
     children: <div data-testid="BaseLayoutChild">BaseLayout Test</div>,
   };
 
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
-  it('renders DesktopSidebar on large screens', () => {
-    // Mock desktop screen
-    Object.defineProperty(window, 'innerWidth', { writable: true, value: 1200 });
-
+  it('renders the sidebar and the page content inside main', () => {
     render(<BaseLayout {...baseProps} />);
 
-    expect(screen.getByTestId('DesktopSidebarTest')).toBeInTheDocument();
-    expect(screen.queryByTestId('MobileSidebarTest')).not.toBeInTheDocument();
-  });
-
-  it('renders MobileSidebar on small screens', () => {
-    // Mock mobile screen
-    Object.defineProperty(window, 'innerWidth', { writable: true, value: 500 });
-
-    render(<BaseLayout {...baseProps} />);
-
-    expect(screen.getByTestId('MobileSidebarTest')).toBeInTheDocument();
-    expect(screen.queryByTestId('DesktopSidebarTest')).not.toBeInTheDocument();
-  });
-
-  it('updates layout when window is resized', async () => {
-    Object.defineProperty(window, 'innerWidth', { writable: true, value: 1200 });
-    render(<BaseLayout {...baseProps} />);
-
-    expect(screen.getByTestId('DesktopSidebarTest')).toBeInTheDocument();
-
-    // Resize inside act()
-    await act(async () => {
-      window.innerWidth = 600;
-      window.dispatchEvent(new Event('resize'));
-    });
-
-    expect(screen.getByTestId('MobileSidebarTest')).toBeInTheDocument();
-  });
-  /**
-   * @test
-   * Renders the BaseLayout component without throwing an error
-   * and checks if the BaseLayoutTest text is present in the document.
-   *
-   * This ensures that the component loads correctly with the base props.
-   */
-  it('renders without crashing', () => {
-    render(<BaseLayout {...baseProps} />);
     expect(screen.getByTestId('BaseLayoutTest')).toBeInTheDocument();
-  });
-
-  /**
-   * @test
-   * Ensures that the BaseLayout component renders without throwing any runtime errors.
-   *
-   * This is a safety check to confirm that the component can mount successfully
-   * with the provided base props, even if it does not render any visible content.
-   */
-  it('renders without throwing', () => {
-    expect(() => render(<BaseLayout {...baseProps} />)).not.toThrow();
+    expect(screen.getByTestId('SidebarTest')).toBeInTheDocument();
+    expect(screen.getByRole('main')).toContainElement(screen.getByTestId('BaseLayoutChild'));
   });
 });

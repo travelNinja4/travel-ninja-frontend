@@ -19,7 +19,7 @@ styles specific to the Tooltip component
   font-size: 0.85rem;
   white-space: nowrap;
   z-index: 9999;
-  box-shadow: 0 2px 8px var(--color-black-alpha-150);
+  box-shadow: var(--shadow-md);
   opacity: 1;
   pointer-events: none;
 }
@@ -28,14 +28,14 @@ styles specific to the Tooltip component
    Variants
 ============================== */
 .dark {
-  background-color: var(--color-gray-750);
-  color: var(--color-white);
+  background-color: var(--color-text);
+  color: var(--color-surface);
 }
 
 .light {
-  background-color: var(--color-white);
-  color: #111;
-  border: 1px solid var(--color-gray-300);
+  background-color: var(--color-surface-raised);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
 }
 
 /* ==============================
@@ -112,15 +112,10 @@ styles specific to the Tooltip component
    Match Arrow Colors by Variant
 ============================== */
 .dark .arrow {
-  background-color: var(--color-gray-750);
+  background-color: var(--color-text);
 }
 
 .light .arrow {
-  background-color: var(--color-white);
-  border: 1px solid var(--color-gray-300);
-}
-
-/* Optional subtle shadow for more depth */
-.arrow {
-  filter: drop-shadow(0 1px 1px var(--color-black-alpha-150));
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
 }

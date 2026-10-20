@@ -1,5 +1,11 @@
 /**
- * BaseLayout is a reusable layout component that structures the page with a main content area and an optional responsive right-side navbar.
+ * BaseLayout is the app shell for signed-in pages: the sidebar and the page
+ * content, which scrolls independently of the sidebar.
+ *
+ * Breakpoints are handled in CSS (no resize listeners), so this stays a
+ * server component:
+ * - phone   < 768px   rows: Sidebar's top bar, then content
+ * - tablet  768px+    columns: Sidebar's rail, then content
  *
  * @example
  * ```tsx
@@ -14,11 +20,9 @@
  * }
  * ```
  */
-'use client';
 
-import { useState, useEffect, ReactNode } from 'react';
-import MobileSidebar from '../MobileSidebar';
-import DesktopSidebar from '../DesktopSidebar';
+import type { ReactNode } from 'react';
+import Sidebar from '../Sidebar';
 import styles from './BaseLayout.module.scss';
 
 /**
@@ -26,44 +30,15 @@ import styles from './BaseLayout.module.scss';
  */
 interface BaseLayoutProps {
   /**
-   * The main content to be rendered inside the layout.
-   *
-   * * This represents the page-specific content that appears
-   * beside the sidebar and within the main viewport area.
-   *
-   * Typically passed as:
-   *
-   * @example
-   * ```tsx
-   * <BaseLayout>
-   *   <DashboardPage />
-   * </BaseLayout>
-   * ```
+   * The page content rendered beside the sidebar.
    */
   children: ReactNode;
 }
 
 export default function BaseLayout({ children }: BaseLayoutProps) {
-  const [isMobile, setIsMobile] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 1024);
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
-    <div
-      data-testid="BaseLayoutTest"
-      className={`${styles.container} ${collapsed ? styles.collapsed : styles.expanded}`}
-    >
-      {isMobile ? (
-        <MobileSidebar />
-      ) : (
-        <DesktopSidebar collapsed={collapsed} setCollapsed={setCollapsed} />
-      )}
+    <div data-testid="BaseLayoutTest" className={styles.container}>
+      <Sidebar />
       <main className={styles.mainContent}>{children}</main>
     </div>
   );
