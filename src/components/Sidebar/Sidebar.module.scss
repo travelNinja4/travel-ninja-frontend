@@ -1,0 +1,308 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the Sidebar component
+
+  phone   top bar + panel as a fixed slide-in drawer
+  tablet+ panel as a rail beside the content
+
+Panel:
+  header  fixed, same height as the page top bar
+  nav     fills the rest and scrolls (SidebarNav)
+  footer  fixed, agency + sign out
+
+Collapsed rules come from the sidebar-collapsed mixin,
+driven by the panel's data-sidebar attribute.
+------------------------------------------------------
+**/
+
+.root {
+  min-width: 0;
+}
+
+/* ------------------------------------------
+   Phone top bar and overlay
+------------------------------------------ */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: var(--topbar-height);
+  padding-inline: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+
+  @include respond-to(tablet) {
+    display: none;
+  }
+}
+
+.menuBtn,
+.closeBtn {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-surface-hover);
+    color: var(--color-text);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+}
+
+.menuBtn {
+  color: var(--color-text);
+}
+
+.closeBtn {
+  @include respond-to(tablet) {
+    display: none;
+  }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3500;
+  background-color: var(--color-overlay);
+
+  @include respond-to(tablet) {
+    display: none;
+  }
+}
+
+/* ------------------------------------------
+   Panel: drawer on phones, rail from tablet up
+------------------------------------------ */
+.panel {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 3600;
+  display: flex;
+  flex-direction: column;
+  width: min(18rem, 85vw);
+  height: 100vh;
+  height: 100dvh;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+  // Hidden drawers are also unfocusable and invisible to screen readers
+  visibility: hidden;
+  transform: translateX(-100%);
+  transition:
+    transform 0.25s ease,
+    visibility 0.25s;
+
+  @include respond-to(tablet) {
+    position: relative;
+    inset: auto;
+    z-index: auto;
+    width: var(--sidebar-width);
+    border-right: 1px solid var(--color-border);
+    box-shadow: none;
+    visibility: visible;
+    transform: none;
+    transition: width 0.2s ease;
+  }
+
+  @include sidebar-collapsed {
+    width: var(--sidebar-collapsed);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// Visible at once when opening, so the close button can take focus straight away;
+// closing keeps the base transition, hiding only after the slide-out
+.open {
+  visibility: visible;
+  transform: none;
+  transition:
+    transform 0.25s ease,
+    visibility 0s;
+}
+
+/* ------------------------------------------
+   Header
+------------------------------------------ */
+.header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-2);
+  height: var(--topbar-height);
+  padding-inline: var(--space-4) var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
+
+  @include respond-to(tablet) {
+    padding-inline: var(--space-4);
+  }
+
+  @include sidebar-collapsed {
+    justify-content: center;
+    padding-inline: var(--space-3);
+  }
+}
+
+.brand {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  border-radius: 8px;
+  color: var(--color-text);
+  text-decoration: none;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  @include sidebar-collapsed {
+    flex: 0 0 auto;
+  }
+}
+
+.brandMark {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-8);
+  height: var(--space-8);
+  border-radius: 8px;
+  background-color: var(--color-brand);
+  color: var(--color-on-brand);
+}
+
+.brandMarkSm {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 6px;
+}
+
+.brandText,
+.accountText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  @include sidebar-collapsed {
+    display: none;
+  }
+}
+
+.muted {
+  color: var(--color-text-secondary);
+}
+
+// Sits on the rail's right edge, centred on the header
+.toggle {
+  position: absolute;
+  top: calc(var(--topbar-height) / 2);
+  right: 0;
+  z-index: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-xs);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transform: translate(50%, -50%);
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover {
+    border-color: var(--color-border-hover);
+    color: var(--color-text);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  @include respond-to(tablet) {
+    display: inline-flex;
+  }
+}
+
+/* ------------------------------------------
+   Footer
+------------------------------------------ */
+.footer {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border-top: 1px solid var(--color-border);
+  overflow: hidden;
+
+  @include sidebar-collapsed {
+    align-items: center;
+  }
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-2);
+}
+
+.avatar {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-8);
+  height: var(--space-8);
+  border-radius: 8px;
+  background-color: var(--color-brand);
+  color: var(--color-on-brand);
+  font-size: 0.75rem;
+  font-weight: var(--weight-semibold);
+}
+
+.signOut {
+  @include sidebar-item;
+}
+
+.signOutIcon {
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+}
+
+.label {
+  white-space: nowrap;
+
+  @include sidebar-collapsed {
+    display: none;
+  }
+}

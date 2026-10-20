@@ -39,3 +39,112 @@ $breakpoints: (
     @content;
   }
 }
+
+/* -----------------------------
+  Sidebar collapsed state
+  Applies styles when the sidebar (the element carrying `data-sidebar`) or any
+  ancestor of it is collapsed: either explicitly, or `auto` on tablet widths.
+  Only from tablet up: on phones the sidebar is a drawer and always expanded.
+  Keeping this in CSS means the server render is already correct per device,
+  with no layout jump after hydration.
+  Usage: .navLabel { @include sidebar-collapsed { display: none; } }
+----------------------------- */
+@mixin sidebar-collapsed {
+  @media (min-width: $bp-tablet) {
+    [data-sidebar='collapsed'] &,
+    &[data-sidebar='collapsed'] {
+      @content;
+    }
+  }
+
+  @media (min-width: $bp-tablet) and (max-width: #{$bp-laptop - 0.02px}) {
+    [data-sidebar='auto'] &,
+    &[data-sidebar='auto'] {
+      @content;
+    }
+  }
+}
+
+/* -----------------------------
+  Square, borderless icon-only button, e.g. the header actions.
+  44px touch target on phones, 40px from tablet up.
+----------------------------- */
+@mixin icon-button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+
+  &:hover {
+    background-color: var(--color-surface-hover);
+    color: var(--color-text);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  @include respond-to(tablet) {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+/* -----------------------------
+  One row of the sidebar: nav links and the sign-out button
+----------------------------- */
+@mixin sidebar-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 2.25rem;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+
+  &:hover {
+    background-color: var(--color-surface-hover);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  // Phones only show the sidebar as the drawer: 44px touch targets, slightly larger text
+  @media (max-width: #{$bp-tablet - 0.02px}) {
+    min-height: 2.75rem;
+    font-size: 0.9375rem;
+  }
+
+  @include sidebar-collapsed {
+    justify-content: center;
+    width: 2.5rem;
+    padding-inline: 0;
+  }
+}
