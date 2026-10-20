@@ -114,6 +114,17 @@ export const ROUTES = {
   TERMS: '/terms',
   PRIVACY: '/privacy',
   DASHBOARD: '/dashboard',
+  TOURS: '/tours',
+  BOOKINGS: '/bookings',
+  CUSTOMERS: '/customers',
+  CALENDAR: '/calendar',
+  AVAILABILITY: '/availability',
+  MESSAGES: '/messages',
+  REVIEWS: '/reviews',
+  TOUR_PERFORMANCE: '/insights/tours',
+  REVENUE: '/insights/revenue',
+  SETTINGS: '/settings',
+  BILLING: '/billing',
 } as const;
 
 export const NOTIFICATION_TYPES: Record<string, NotificationType> = {
@@ -123,14 +134,46 @@ export const NOTIFICATION_TYPES: Record<string, NotificationType> = {
   INFO: 'info',
 };
 
+export const NAV_SECTION = {
+  OPERATIONS: 'Operations',
+  ENGAGE: 'Engage',
+  INSIGHTS: 'Insights',
+  ACCOUNT: 'Account',
+};
+
 export const NAV_ITEM = {
   DASHBOARD: 'Dashboard',
-  CALENDER: 'Calendar',
   TOURS: 'Tours',
   BOOKINGS: 'Bookings',
   CUSTOMERS: 'Customers',
-  TRAVELERS: 'Travelers',
-  INVOICES_AND_BILLING: 'Invoices & Billing',
-  PROFILE: 'Profile',
+  CALENDAR: 'Calendar',
+  AVAILABILITY: 'Availability',
+  MESSAGES: 'Messages',
+  REVIEWS: 'Reviews',
+  TOUR_PERFORMANCE: 'Tour performance',
+  REVENUE: 'Revenue',
   SETTINGS: 'Settings',
+  BILLING: 'Billing & payouts',
 };
+
+export const SIDEBAR = {
+  MAIN_NAVIGATION: 'Main navigation',
+  COLLAPSE: 'Collapse sidebar',
+  EXPAND: 'Expand sidebar',
+  OPEN_NAVIGATION: 'Open navigation',
+  CLOSE_NAVIGATION: 'Close navigation',
+  SIGN_OUT: 'Sign out',
+  // Placeholder agency until the session's agency is wired in
+  AGENCY_NAME: 'Wanderly Travels',
+  AGENCY_PLAN: 'Professional plan',
+};
+
+/**
+ * Viewport ranges shared with the SCSS breakpoints in src/styles/_mixins.scss.
+ */
+export const MEDIA_QUERIES = {
+  // < 768px: the sidebar is a slide-in drawer here
+  PHONE: '(max-width: 767.98px)',
+  // 768–1023px: the sidebar starts collapsed to an icon rail here
+  TABLET_ONLY: '(min-width: 768px) and (max-width: 1023.98px)',
+} as const;
