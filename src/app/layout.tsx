@@ -4,12 +4,17 @@ import './globals.css';
 import './styleguide.scss';
 import { NotificationProvider } from '@/providers/NotificationProvider';
 import ClientNetworkWrapper from '@/components/ClientNetworkWrapper';
+import { THEME } from '@/constants/strings';
 
 const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'], // matches the --weight-* tokens
   variable: '--font-inter',
 });
+
+// Applies the saved theme before first paint so pages never flash the other one.
+// With nothing saved, styleguide.scss follows the OS preference.
+const themeScript = `(function(){try{var t=localStorage.getItem(${JSON.stringify(THEME.STORAGE_KEY)});if(t===${JSON.stringify(THEME.LIGHT)}||t===${JSON.stringify(THEME.DARK)})document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,7 +27,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable} data-scroll-behavior="smooth">
+    // The theme script sets data-theme before React hydrates, so React must accept it
+    <html
+      lang="en"
+      className={inter.variable}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
         <ClientNetworkWrapper>
           <NotificationProvider>{children}</NotificationProvider>

@@ -1,6 +1,7 @@
 /**
- * BaseLayout is the app shell for signed-in pages: the sidebar and the page
- * content, which scrolls independently of the sidebar.
+ * BaseLayout is the app shell for signed-in pages: the sidebar, the header
+ * (breadcrumb and actions) and the page content. Only the content scrolls;
+ * the sidebar and header stay put.
  *
  * Breakpoints are handled in CSS (no resize listeners), so this stays a
  * server component:
@@ -22,6 +23,7 @@
  */
 
 import type { ReactNode } from 'react';
+import AppHeader from '../AppHeader';
 import Sidebar from '../Sidebar';
 import styles from './BaseLayout.module.scss';
 
@@ -39,7 +41,10 @@ export default function BaseLayout({ children }: BaseLayoutProps) {
   return (
     <div data-testid="BaseLayoutTest" className={styles.container}>
       <Sidebar />
-      <main className={styles.mainContent}>{children}</main>
+      <div className={styles.content}>
+        <AppHeader />
+        <main className={styles.mainContent}>{children}</main>
+      </div>
     </div>
   );
 }
