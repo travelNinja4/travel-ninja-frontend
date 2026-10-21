@@ -46,6 +46,16 @@ describe('Home', () => {
     expect(screen.getByTestId('ButtonTest')).toBeDisabled();
   });
 
+  it('is the primary (filled) variant by default', () => {
+    render(<Button {...baseProps} />);
+    expect(screen.getByTestId('ButtonTest')).not.toHaveClass('secondary');
+  });
+
+  it('renders the secondary variant', () => {
+    render(<Button {...baseProps} variant="secondary" />);
+    expect(screen.getByTestId('ButtonTest')).toHaveClass('button', 'secondary');
+  });
+
   it('triggers onClick when clicked', () => {
     render(<Button {...baseProps} />);
     screen.getByTestId('ButtonTest').click();
