@@ -2,15 +2,17 @@
  * The tours toolbar (search, status and category filters) above one page of
  * the tours grid, with pagination in its footer.
  *
- * It reads the page from the promise the page started, so it must render
- * inside a Suspense boundary (Tours provides one).
+ * It reads the page and the filter options from promises the page started in
+ * parallel, so it must render inside a Suspense boundary (Tours provides one).
  *
- * - Page and status live in the URL and are fetched on the server, one page
- *   at a time. While the next page loads the current one stays on screen
- *   (navigations are transitions), so the skeleton only shows on first load.
- * - Search and category have no API support yet, so they filter the loaded
- *   page in memory. Their state survives page changes. The filtered list keeps
- *   the original tour objects, so memoized cards that stay don't re-render.
+ * - Search, filters and page live in the URL and are applied by the API, so
+ *   only one page of tours is ever loaded. Any change goes back to page 1.
+ * - Navigations are transitions: the current page stays on screen (dimmed)
+ *   while the next one loads, so the skeleton only shows on first load, and a
+ *   newer navigation replaces an older one still in flight.
+ * - Dropdowns show the chosen value straight away (optimistic) and add a
+ *   history entry; searches replace the current entry, so Back doesn't step
+ *   through every term typed.
  */
 'use client';
 
@@ -22,8 +24,8 @@ import type { DropdownOption } from '../Dropdown/Dropdown';
 import Pagination from '../Pagination';
 import SearchInput from '../SearchInput';
 import TourList from '../TourList';
-import { TOURS, TOUR_CATEGORIES, TOUR_STATUS_LABEL } from '@/constants/strings';
-import type { TourPage, TourStatusFilter } from '@/constants/types';
+import { TOURS } from '@/constants/strings';
+import type { MetaOptions, TourPage, TourSearch, TourStatusFilter } from '@/constants/types';
 import { toursHref } from '@/utils/toursQuery';
 import styles from './Tours.module.scss';
 
@@ -31,17 +33,7 @@ import styles from './Tours.module.scss';
 const ALL = '';
 
 type StatusOption = TourStatusFilter | typeof ALL;
-
-const STATUS_OPTIONS: DropdownOption<StatusOption>[] = [
-  { value: ALL, label: TOURS.ALL_STATUSES },
-  { value: 'published', label: TOUR_STATUS_LABEL.published },
-  { value: 'draft', label: TOUR_STATUS_LABEL.draft },
-];
-
-const CATEGORY_OPTIONS: DropdownOption<string>[] = [
-  { value: ALL, label: TOURS.ALL_CATEGORIES },
-  ...TOUR_CATEGORIES.map((value) => ({ value, label: value })),
-];
+type CategoryOption = number | typeof ALL;
 
 /**
  * Define the props available for the ToursContent component.
@@ -54,79 +46,121 @@ interface ToursContentProps {
   toursPromise: Promise<TourPage>;
 
   /**
-   * The status filter from the URL, applied by the API.
+   * Options for the status and category filters, from POST /meta/options.
    */
-  status?: TourStatusFilter;
+  filterOptionsPromise: Promise<MetaOptions>;
+
+  /**
+   * The search and filters from the URL, applied by the API.
+   */
+  filters?: TourSearch;
 }
 
-export default function ToursContent({ toursPromise, status }: ToursContentProps) {
-  const { tours, page, hasNextPage } = use(toursPromise);
+export default function ToursContent({
+  toursPromise,
+  filterOptionsPromise,
+  filters = {},
+}: ToursContentProps) {
+  const { tours, page, total, pageCount } = use(toursPromise);
+  const filterOptions = use(filterOptionsPromise);
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  // Shows the chosen status straight away, while its tours load
-  const [selectedStatus, setSelectedStatus] = useOptimistic<StatusOption>(status ?? ALL);
-  const [term, setTerm] = useState('');
-  const [category, setCategory] = useState(ALL);
+  const [isSearching, startSearch] = useTransition();
+  // Shows the chosen filters straight away, while their tours load
+  const [selected, setSelected] = useOptimistic(filters);
 
-  const changeStatus = (next: StatusOption) => {
+  // The search box text. It is only reset from the URL when the search there
+  // changes to a term this box didn't ask for (Back, a link), so a navigation
+  // that lands mid-typing never overwrites what's being typed.
+  const urlSearch = filters.search ?? '';
+  const [text, setText] = useState(urlSearch);
+  const [requestedSearch, setRequestedSearch] = useState(urlSearch);
+  const [prevUrlSearch, setPrevUrlSearch] = useState(urlSearch);
+  if (urlSearch !== prevUrlSearch) {
+    setPrevUrlSearch(urlSearch);
+    if (urlSearch !== requestedSearch) {
+      setText(urlSearch);
+      setRequestedSearch(urlSearch);
+    }
+  }
+
+  const statusOptions = useMemo<DropdownOption<StatusOption>[]>(
+    () => [
+      { value: ALL, label: TOURS.ALL_STATUSES },
+      ...filterOptions.tour_status.map(({ value, label }) => ({ value, label })),
+    ],
+    [filterOptions],
+  );
+  const categoryOptions = useMemo<DropdownOption<CategoryOption>[]>(
+    () => [
+      { value: ALL, label: TOURS.ALL_CATEGORIES },
+      ...filterOptions.tour_category.map(({ id, label }) => ({ value: id, label })),
+    ],
+    [filterOptions],
+  );
+
+  // Builds on the optimistic filters, so a change made while another is
+  // loading keeps it. Leaving out `page` goes back to page 1.
+  const changeFilter = (change: TourSearch) => {
     startTransition(() => {
-      setSelectedStatus(next);
-      // Back to page 1: the old page number may not exist for the new status
-      router.push(toursHref({ status: next || undefined }), { scroll: false });
+      const next = { ...selected, ...change };
+      setSelected(next);
+      router.push(toursHref(next), { scroll: false });
     });
   };
 
-  const filteredTours = useMemo(() => {
-    const query = term.toLowerCase();
-    return tours.filter(
-      (tour) =>
-        (category === ALL || tour.category === category) &&
-        (!query ||
-          tour.title.toLowerCase().includes(query) ||
-          tour.destination.toLowerCase().includes(query)),
-    );
-  }, [tours, term, category]);
+  const search = (term: string) => {
+    setRequestedSearch(term);
+    startSearch(() => {
+      const next = { ...selected, search: term || undefined };
+      setSelected(next);
+      router.replace(toursHref(next), { scroll: false });
+    });
+  };
 
   let empty: { title?: string; description?: string } = {};
   if (tours.length === 0 && page > 1) {
     empty = { title: TOURS.PAGE_EMPTY_TITLE, description: TOURS.PAGE_EMPTY_DESCRIPTION };
-  } else if (tours.length > 0 || status) {
+  } else if (filters.search || filters.status || filters.categoryId) {
     empty = { title: TOURS.NO_MATCHES_TITLE, description: TOURS.NO_MATCHES_DESCRIPTION };
   }
+
+  const isBusy = isPending || isSearching;
 
   return (
     <div data-testid="ToursContentTest" className={styles.content}>
       <div className={styles.toolbar}>
-        {/* onSearch is debounced and trimmed, so filtering runs once typing pauses */}
-        <SearchInput onSearch={setTerm} />
+        {/* onSearch is debounced and trimmed, so the API is called once typing pauses */}
+        <SearchInput value={text} onChange={setText} onSearch={search} loading={isSearching} />
         <Dropdown
           aria-label={TOURS.STATUS_FILTER}
-          options={STATUS_OPTIONS}
+          options={statusOptions}
           fieldClassName={styles.filter}
-          value={selectedStatus}
-          onChange={changeStatus}
+          value={selected.status ?? ALL}
+          onChange={(status: StatusOption) => changeFilter({ status: status || undefined })}
         />
         <Dropdown
           aria-label={TOURS.CATEGORY_FILTER}
-          options={CATEGORY_OPTIONS}
+          options={categoryOptions}
           fieldClassName={styles.filter}
-          value={category}
-          onChange={setCategory}
+          value={selected.categoryId ?? ALL}
+          onChange={(categoryId: CategoryOption) =>
+            changeFilter({ categoryId: categoryId || undefined })
+          }
         />
       </div>
 
-      <div aria-busy={isPending || undefined} className={clsx({ [styles.pending]: isPending })}>
+      <div aria-busy={isBusy || undefined} className={clsx({ [styles.pending]: isBusy })}>
         <TourList
-          tours={filteredTours}
-          total={tours.length}
+          tours={tours}
+          total={total}
           emptyTitle={empty.title}
           emptyDescription={empty.description}
           pagination={
             <Pagination
               page={page}
-              // Without a total from the API, only the next page is known to exist
-              pageCount={hasNextPage ? page + 1 : page}
-              getHref={(target) => toursHref({ page: target, status })}
+              pageCount={Math.max(pageCount, 1)}
+              getHref={(target) => toursHref({ ...filters, page: target })}
             />
           }
         />

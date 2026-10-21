@@ -236,15 +236,6 @@ export const ITINERARY = {
 };
 
 // Categories the tours API accepts
-export const TOUR_CATEGORIES = [
-  'Nature',
-  'Relaxation',
-  'Heritage',
-  'Cultural',
-  'Adventure',
-  'Beach',
-] as const;
-
 export const PAGINATION = {
   LABEL: 'Pagination',
   PAGE: 'Page',

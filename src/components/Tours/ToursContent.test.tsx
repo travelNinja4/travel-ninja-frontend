@@ -2,26 +2,61 @@ import { Suspense } from 'react';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import ToursContent from './ToursContent';
 import { MOCK_TOURS } from '../TourCard/TourCard.mocks';
-import { TOURS, TOUR_CATEGORIES } from '@/constants/strings';
-import type { TourPage, TourStatusFilter } from '@/constants/types';
+import { MOCK_FILTER_OPTIONS } from './Tours.mocks';
+import { TOURS } from '@/constants/strings';
+import type { TourPage, TourSearch } from '@/constants/types';
 
 const push = vi.fn();
-vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }));
+const replace = vi.fn();
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push, replace }) }));
 
-// Resolves the tours promise inside act, so ToursContent has rendered when this returns
-const renderTours = async (tourPage: Partial<TourPage> = {}, status?: TourStatusFilter) => {
-  const value: TourPage = { tours: MOCK_TOURS, page: 1, hasNextPage: false, ...tourPage };
+const page = (overrides: Partial<TourPage> = {}): TourPage => ({
+  tours: MOCK_TOURS,
+  page: 1,
+  total: MOCK_TOURS.length,
+  pageCount: 1,
+  ...overrides,
+});
+
+// Resolves the promises inside act, so ToursContent has rendered when this returns
+const renderTours = async (tourPage: Partial<TourPage> = {}, filters?: TourSearch) => {
+  const props = {
+    filterOptionsPromise: Promise.resolve(MOCK_FILTER_OPTIONS),
+    filters,
+  };
+  let rerender: ReturnType<typeof render>['rerender'] = () => {};
   await act(async () => {
-    render(
+    ({ rerender } = render(
       <Suspense>
-        <ToursContent toursPromise={Promise.resolve(value)} status={status} />
+        <ToursContent toursPromise={Promise.resolve(page(tourPage))} {...props} />
       </Suspense>,
-    );
+    ));
   });
+  // Renders again as a navigation would, with new filters from the URL
+  return async (nextFilters: TourSearch) => {
+    await act(async () => {
+      rerender(
+        <Suspense>
+          <ToursContent
+            toursPromise={Promise.resolve(page(tourPage))}
+            {...props}
+            filters={nextFilters}
+          />
+        </Suspense>,
+      );
+    });
+  };
 };
 
 const cardTitles = () =>
   screen.queryAllByRole('heading', { level: 3 }).map((heading) => heading.textContent);
+
+const optionLabels = (filterLabel: string) => {
+  fireEvent.click(screen.getByRole('combobox', { name: filterLabel }));
+  return within(screen.getByRole('listbox'))
+    .getAllByRole('option')
+    .map((option) => option.textContent);
+};
 
 const choose = (filterLabel: string, optionLabel: string) => {
   fireEvent.click(screen.getByRole('combobox', { name: filterLabel }));
@@ -33,73 +68,104 @@ const pagination = () => screen.getByRole('navigation', { name: 'Pagination' });
 describe('ToursContent', () => {
   beforeEach(() => {
     push.mockClear();
+    replace.mockClear();
     vi.useFakeTimers();
   });
   afterEach(() => vi.useRealTimers());
 
-  it('shows every tour on the page with no filters', async () => {
-    await renderTours();
+  it('shows the page of tours against the total from the API', async () => {
+    await renderTours({ total: 23, pageCount: 3 });
 
     expect(cardTitles()).toEqual(MOCK_TOURS.map((tour) => tour.title));
-    expect(screen.getByText('Showing 8 of 8')).toBeInTheDocument();
+    expect(screen.getByText('Showing 8 of 23')).toBeInTheDocument();
   });
 
-  it('searches titles and destinations once typing pauses', async () => {
+  it('offers the API statuses and categories', async () => {
     await renderTours();
 
-    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'karnataka' } });
-    expect(cardTitles()).toHaveLength(MOCK_TOURS.length);
+    expect(optionLabels(TOURS.STATUS_FILTER)).toEqual([
+      TOURS.ALL_STATUSES,
+      ...MOCK_FILTER_OPTIONS.tour_status.map((option) => option.label),
+    ]);
+    fireEvent.keyDown(screen.getByRole('combobox', { name: TOURS.STATUS_FILTER }), {
+      key: 'Escape',
+    });
+    expect(optionLabels(TOURS.CATEGORY_FILTER)).toEqual([
+      TOURS.ALL_CATEGORIES,
+      ...MOCK_FILTER_OPTIONS.tour_category.map((option) => option.label),
+    ]);
+  });
+
+  it('searches from page 1 once typing pauses, keeping the filters', async () => {
+    await renderTours({ page: 3 }, { status: 'draft' });
+
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: ' goa ' } });
+    expect(replace).not.toHaveBeenCalled();
 
     act(() => vi.advanceTimersByTime(300));
-    expect(cardTitles()).toEqual(['Coorg Weekend Escape', 'Hampi Heritage Trail']);
-    expect(screen.getByText('Showing 2 of 8')).toBeInTheDocument();
+    expect(replace).toHaveBeenCalledWith('/tours?status=draft&q=goa', { scroll: false });
+    expect(push).not.toHaveBeenCalled();
   });
 
-  it('loads the chosen status from page 1', async () => {
-    await renderTours({ page: 3 });
+  it('loads the chosen status from page 1, keeping the search', async () => {
+    await renderTours({ page: 3 }, { search: 'goa' });
 
-    choose(TOURS.STATUS_FILTER, 'Draft');
-    expect(push).toHaveBeenCalledWith('/tours?status=draft', { scroll: false });
+    choose(TOURS.STATUS_FILTER, 'Archived');
+    expect(push).toHaveBeenCalledWith('/tours?status=archived&q=goa', { scroll: false });
 
     choose(TOURS.STATUS_FILTER, TOURS.ALL_STATUSES);
-    expect(push).toHaveBeenLastCalledWith('/tours', { scroll: false });
+    expect(push).toHaveBeenLastCalledWith('/tours?q=goa', { scroll: false });
   });
 
-  it('offers the API categories and filters the page by them', async () => {
-    await renderTours();
+  it('filters by category id', async () => {
+    await renderTours({}, { status: 'published' });
 
-    fireEvent.click(screen.getByRole('combobox', { name: TOURS.CATEGORY_FILTER }));
-    expect(
-      within(screen.getByRole('listbox'))
-        .getAllByRole('option')
-        .map((option) => option.textContent),
-    ).toEqual([TOURS.ALL_CATEGORIES, ...TOUR_CATEGORIES]);
-
-    fireEvent.click(screen.getByRole('option', { name: 'Beach' }));
-    expect(cardTitles()).toEqual(['Andaman Island Getaway', 'Goa Coastal Escape']);
+    choose(TOURS.CATEGORY_FILTER, 'Beach');
+    expect(push).toHaveBeenCalledWith('/tours?status=published&category=6', { scroll: false });
   });
 
-  it('shows a no-matches message when the filters hide every tour', async () => {
-    await renderTours();
+  it('shows the filters from the URL', async () => {
+    await renderTours({}, { search: 'goa', status: 'draft', categoryId: 6 });
 
-    choose(TOURS.CATEGORY_FILTER, 'Relaxation');
+    expect(screen.getByRole('searchbox')).toHaveValue('goa');
+    expect(screen.getByRole('combobox', { name: TOURS.STATUS_FILTER })).toHaveValue('Draft');
+    expect(screen.getByRole('combobox', { name: TOURS.CATEGORY_FILTER })).toHaveValue('Beach');
+  });
 
-    expect(cardTitles()).toEqual([]);
+  it('resets the search box when the URL search changes from elsewhere', async () => {
+    const navigate = await renderTours({}, { search: 'goa' });
+
+    await navigate({});
+    expect(screen.getByRole('searchbox')).toHaveValue('');
+  });
+
+  it('keeps typed text when its own search lands', async () => {
+    const navigate = await renderTours();
+
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'goa ' } });
+    act(() => vi.advanceTimersByTime(300));
+    await navigate({ search: 'goa' });
+
+    expect(screen.getByRole('searchbox')).toHaveValue('goa ');
+  });
+
+  it('shows a no-matches message when filters match nothing', async () => {
+    await renderTours({ tours: [], total: 0, pageCount: 0 }, { categoryId: 2 });
     expect(screen.getByText(TOURS.NO_MATCHES_TITLE)).toBeInTheDocument();
   });
 
-  it('links to the next page when there is one, keeping the status', async () => {
-    await renderTours({ hasNextPage: true }, 'published');
+  it('links to every page, keeping the filters', async () => {
+    await renderTours({ total: 23, pageCount: 3 }, { status: 'published', search: 'goa' });
 
     expect(within(pagination()).getByText('1')).toHaveAttribute('aria-current', 'page');
-    expect(within(pagination()).getByRole('link', { name: 'Page 2' })).toHaveAttribute(
+    expect(within(pagination()).getByRole('link', { name: 'Page 3' })).toHaveAttribute(
       'href',
-      '/tours?page=2&status=published',
+      '/tours?page=3&status=published&q=goa',
     );
   });
 
   it('links back to earlier pages from a later one', async () => {
-    await renderTours({ page: 2 });
+    await renderTours({ page: 2, total: 12, pageCount: 2 });
 
     expect(within(pagination()).getByText('2')).toHaveAttribute('aria-current', 'page');
     expect(within(pagination()).getByRole('link', { name: 'Page 1' })).toHaveAttribute(
@@ -110,12 +176,12 @@ describe('ToursContent', () => {
   });
 
   it('explains an empty page past the last one', async () => {
-    await renderTours({ tours: [], page: 4 });
+    await renderTours({ tours: [], page: 4, total: 12, pageCount: 2 });
     expect(screen.getByText(TOURS.PAGE_EMPTY_TITLE)).toBeInTheDocument();
   });
 
   it('shows the empty state when the agency has no tours', async () => {
-    await renderTours({ tours: [] });
+    await renderTours({ tours: [], total: 0, pageCount: 0 });
     expect(screen.getByText(TOURS.EMPTY_TITLE)).toBeInTheDocument();
   });
 });

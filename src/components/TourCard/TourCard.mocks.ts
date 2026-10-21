@@ -1,7 +1,13 @@
 import type { Tour } from '@/constants/types';
 
+/** A tour's category fields, with ids matching MOCK_FILTER_OPTIONS */
+const category = (id: number, name: string): Pick<Tour, 'categoryId' | 'category'> => ({
+  categoryId: id,
+  category: { id, value: name, label: name },
+});
+
 const tour = (overrides: Partial<Tour> & Pick<Tour, 'id' | 'title' | 'destination'>): Tour => ({
-  category: 'Nature',
+  ...category(1, 'Nature'),
   durationDays: 3,
   price: 12500,
   capacity: 16,
@@ -29,7 +35,7 @@ export const MOCK_TOURS: Tour[] = [
     id: 3,
     title: 'Hampi Heritage Trail',
     destination: 'Hampi, Karnataka',
-    category: 'Heritage',
+    ...category(3, 'Heritage'),
     price: 14900,
     capacity: 14,
     bookedSeats: 8,
@@ -39,7 +45,7 @@ export const MOCK_TOURS: Tour[] = [
     id: 4,
     title: 'Rajasthan Cultural Journey',
     destination: 'Jaipur–Jodhpur, Rajasthan',
-    category: 'Cultural',
+    ...category(4, 'Cultural'),
     durationDays: 6,
     price: 38500,
     capacity: 18,
@@ -59,7 +65,7 @@ export const MOCK_TOURS: Tour[] = [
     id: 6,
     title: 'Andaman Island Getaway',
     destination: 'Port Blair–Havelock, Andaman',
-    category: 'Beach',
+    ...category(6, 'Beach'),
     price: 42000,
     capacity: 10,
     bookedSeats: 3,
@@ -70,7 +76,7 @@ export const MOCK_TOURS: Tour[] = [
     id: 7,
     title: 'Goa Coastal Escape',
     destination: 'North Goa',
-    category: 'Beach',
+    ...category(6, 'Beach'),
     price: 18900,
     capacity: 16,
     bookedSeats: 9,
@@ -80,7 +86,7 @@ export const MOCK_TOURS: Tour[] = [
     id: 8,
     title: 'Ladakh High Passes',
     destination: 'Leh–Nubra, Ladakh',
-    category: 'Adventure',
+    ...category(5, 'Adventure'),
     durationDays: 8,
     price: 52000,
     capacity: 12,

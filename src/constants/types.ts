@@ -67,7 +67,8 @@ export type Tour = {
   title: string;
   /** Place and region, e.g. "Coorg, Karnataka" */
   destination: string;
-  category: string;
+  categoryId: number;
+  category: MetaOption;
   durationDays: number;
   /** Price per guest in rupees */
   price: number;
@@ -113,15 +114,42 @@ export type TourItinerary = {
 };
 
 /** Statuses the tours API can filter by */
-export type TourStatusFilter = Extract<TourStatus, 'draft' | 'published'>;
+export type TourStatusFilter = TourStatus;
 
-/** One page of the agency's tours. */
+/** Lookup lists POST /meta/options can return */
+export type MetaOptionKey = 'tour_status' | 'tour_category';
+
+/** One active lookup value, e.g. `{ id: 6, value: 'Beach', label: 'Beach' }` */
+export type MetaOption<T extends string = string> = {
+  /** Sent as `categoryId` when creating or searching tours */
+  id: number;
+  value: T;
+  label: string;
+};
+
+/** Response of POST /meta/options. Keys that weren't requested come back empty. */
+export type MetaOptions = {
+  tour_status: MetaOption<TourStatus>[];
+  tour_category: MetaOption[];
+};
+
+/** Filters of the tours screen, sent to POST /tours/search */
+export type TourSearch = {
+  /** Matches title or destination, case-insensitive */
+  search?: string;
+  status?: TourStatusFilter;
+  /** `id` of a `tour_category` meta option */
+  categoryId?: number;
+};
+
+/** One page of the agency's tours matching a TourSearch. */
 export type TourPage = {
   tours: Tour[];
   /** 1-based */
   page: number;
-  /** The API sends no total, so this is all that's known about later pages */
-  hasNextPage: boolean;
+  /** Tours matching the filters across all pages */
+  total: number;
+  pageCount: number;
 };
 
 /**

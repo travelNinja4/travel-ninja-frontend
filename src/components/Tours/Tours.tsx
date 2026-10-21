@@ -5,15 +5,16 @@
  * Pass the page of tours as a promise the page started without awaiting it:
  * the header paints straight away and the grid streams in behind a skeleton
  * when the tours arrive. It holds no state, so it stays a Server Component; only
- * ToursContent ships JavaScript for search and filtering.
+ * ToursContent ships JavaScript for the search and filter controls.
  *
  * @example
  * ```tsx
  * import Tours from '@/components/Tours'
  *
  * export default function ToursPage() {
- *   const tours = tourService.getToursPage({ page: 1 });
- *   return <Tours tours={tours} />;
+ *   const tours = tourService.searchTours({ page: 1 });
+ *   const filterOptions = commonService.getMetaOptions(['tour_status', 'tour_category']);
+ *   return <Tours tours={tours} filterOptions={filterOptions} />;
  * }
  * ```
  */
@@ -25,7 +26,7 @@ import Typography from '../Typography';
 import ToursContent from './ToursContent';
 import ToursSkeleton from './ToursSkeleton';
 import { ROUTES, SIDEBAR, TOURS } from '@/constants/strings';
-import type { TourPage, TourStatusFilter } from '@/constants/types';
+import type { MetaOptions, TourPage, TourSearch } from '@/constants/types';
 import styles from './Tours.module.scss';
 
 /**
@@ -38,12 +39,18 @@ interface ToursProps {
   tours: Promise<TourPage>;
 
   /**
-   * The status filter the tours were fetched with.
+   * Options for the status and category filters, still loading. Started alongside `tours`, so
+   * the toolbar waits for whichever arrives last.
    */
-  status?: TourStatusFilter;
+  filterOptions: Promise<MetaOptions>;
+
+  /**
+   * The search and filters the tours were fetched with, from the URL.
+   */
+  filters?: TourSearch;
 }
 
-export default function Tours({ tours, status }: ToursProps) {
+export default function Tours({ tours, filterOptions, filters }: ToursProps) {
   return (
     <div data-testid="ToursTest" className={styles.page}>
       <header className={styles.header}>
@@ -62,7 +69,7 @@ export default function Tours({ tours, status }: ToursProps) {
       </header>
 
       <Suspense fallback={<ToursSkeleton />}>
-        <ToursContent toursPromise={tours} status={status} />
+        <ToursContent toursPromise={tours} filterOptionsPromise={filterOptions} filters={filters} />
       </Suspense>
     </div>
   );
