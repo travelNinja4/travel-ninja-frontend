@@ -41,6 +41,22 @@ styles specific to the Button component
   }
 }
 
+// Outlined, for supporting actions; follows .button so its states win at equal specificity
+.secondary {
+  border: 1px solid var(--color-border-strong);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-border-hover);
+    background-color: var(--color-surface-hover);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--color-surface-muted);
+  }
+}
+
 // Inherits the button's colour and weight instead of the Typography defaults
 .label {
   color: inherit;

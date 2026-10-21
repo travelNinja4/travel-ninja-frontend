@@ -100,6 +100,18 @@ export type TourSchedule = {
   guide: string;
 };
 
+/** One day of a tour's itinerary */
+export type ItineraryDay = {
+  title: string;
+  location: string;
+  description: string;
+};
+
+/** The itinerary part of the tour form, one entry per day in order */
+export type TourItinerary = {
+  itinerary: ItineraryDay[];
+};
+
 /** Statuses the tours API can filter by */
 export type TourStatusFilter = Extract<TourStatus, 'draft' | 'published'>;
 

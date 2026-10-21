@@ -22,12 +22,14 @@ import {
   Path,
   Controller,
   UseFormReturn,
+  get,
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodSchema } from 'zod';
 import Typography from '../Typography';
 import { Tags, TextAlign } from '../Typography/Typography';
 import InputField from '../InputField';
+import TextArea from '../TextArea';
 import PasswordFeedback from '../PasswordFeedback';
 import { PasswordHint } from '../PasswordFeedback/PasswordFeedback';
 import CheckBox from '../CheckBox';
@@ -97,6 +99,8 @@ export interface FieldConfig {
   iconColor?: string;
   textAlign?: TextAlign;
   maxLength?: number;
+  /** Visible lines of a `textarea` field */
+  rows?: number;
   /** Country codes for a `MobileNumberInput` field */
   countries?: Country[];
   /** Choices for a `select` field */
@@ -147,11 +151,14 @@ export default function DynamicForm<T extends FieldValues>({
     formState: { errors },
   } = form;
 
+  // Looked up by path so nested names like `itinerary.0.title` find their error
+  const errorOf = (name: string) => get(errors, name)?.message as string | undefined;
+
   const renderField = (field: FieldConfig) => {
     const commonProps = {
       ...field,
       ...register(field.name as any),
-      error: errors[field.name]?.message as string,
+      error: errorOf(field.name),
     };
     switch (field.type) {
       case 'label':
@@ -192,9 +199,24 @@ export default function DynamicForm<T extends FieldValues>({
                 onChange={(checked: boolean) => onChange(checked)}
                 onBlur={onBlur}
                 className={field.className}
-                error={errors[field.name]?.message as string}
+                error={errorOf(field.name)}
               />
             )}
+          />
+        );
+
+      case 'textarea':
+        return (
+          <TextArea
+            label={field.label}
+            placeholder={field.placeholder}
+            rows={field.rows}
+            maxLength={field.maxLength}
+            required={field.required}
+            disabled={field.disabled}
+            className={field.className}
+            error={errorOf(field.name)}
+            {...register(field.name as Path<T>)}
           />
         );
 
@@ -210,7 +232,7 @@ export default function DynamicForm<T extends FieldValues>({
             required={field.required}
             disabled={field.disabled}
             className={field.className}
-            error={errors[field.name]?.message as string}
+            error={errorOf(field.name)}
             {...register(field.name as Path<T>, {
               valueAsNumber: field.type === 'number',
               onChange: field.onValueChange && (() => field.onValueChange?.(form)),
@@ -291,7 +313,7 @@ export default function DynamicForm<T extends FieldValues>({
         );
 
       default:
-        null;
+        return null;
     }
   };
 

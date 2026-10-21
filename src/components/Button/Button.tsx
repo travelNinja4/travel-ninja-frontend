@@ -19,6 +19,14 @@ import clsx from 'clsx';
 import styles from './Button.module.scss';
 
 /**
+ * Visual style of the button.
+ * - `primary`: filled with the brand colour, for the main action.
+ * - `secondary`: outlined on the surface colour, for supporting actions
+ *   such as "Add day" or "Remove".
+ */
+export type ButtonVariant = 'primary' | 'secondary';
+
+/**
  * Define the props available for the Button component.
  */
 interface ButtonProps {
@@ -37,6 +45,13 @@ interface ButtonProps {
    * @default "button"
    */
   type?: 'button' | 'submit' | 'reset';
+
+  /**
+   * Visual style of the button.
+   *
+   * @default "primary"
+   */
+  variant?: ButtonVariant;
 
   /**
    * If `true`, disables the button and prevents user interaction.
@@ -90,6 +105,7 @@ interface ButtonProps {
 export default function Button({
   children,
   type = 'button',
+  variant = 'primary',
   disabled = false,
   onClick,
   startIcon: StartIcon,
@@ -106,7 +122,7 @@ export default function Button({
       type={type}
       disabled={disabled || loading}
       onClick={onClick}
-      className={clsx(styles.button, className)}
+      className={clsx(styles.button, styles[variant], className)}
       {...rest}
     >
       {loading ? (

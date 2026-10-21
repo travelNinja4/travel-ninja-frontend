@@ -224,6 +224,17 @@ export const SCHEDULE_PRICING = {
   SELECT_GUIDE: 'Select guide',
 };
 
+export const ITINERARY = {
+  TITLE: 'Itinerary',
+  ADD_DAY: 'Add day',
+  REMOVE_DAY: 'Remove',
+  DAY: 'Day',
+  UNTITLED: 'Untitled',
+  DAY_TITLE: 'Title',
+  LOCATION: 'Location',
+  DESCRIPTION: 'Description',
+};
+
 // Categories the tours API accepts
 export const TOUR_CATEGORIES = [
   'Nature',
