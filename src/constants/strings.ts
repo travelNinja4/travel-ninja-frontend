@@ -213,6 +213,17 @@ export const TOURS = {
   NOT_AVAILABLE: '—',
 };
 
+export const SCHEDULE_PRICING = {
+  TITLE: 'Schedule & pricing',
+  DURATION: 'Duration (days)',
+  DEPARTURE_DATE: 'Departure date',
+  RETURN_DATE: 'Return date',
+  PRICE: 'Price per person (INR)',
+  CAPACITY: 'Capacity',
+  GUIDE: 'Guide label',
+  SELECT_GUIDE: 'Select guide',
+};
+
 // Categories the tours API accepts
 export const TOUR_CATEGORIES = [
   'Nature',

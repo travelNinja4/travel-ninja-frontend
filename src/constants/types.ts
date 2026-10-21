@@ -84,6 +84,22 @@ export type Tour = {
   bookedSeats?: number;
 };
 
+/**
+ * Fields of the "Schedule & pricing" section of the tour form. Number inputs are
+ * read with `valueAsNumber`, so an empty one is `NaN` until the schema rejects it.
+ */
+export type TourSchedule = {
+  durationDays: number;
+  /** "YYYY-MM-DD" */
+  departureDate: string;
+  /** "YYYY-MM-DD" */
+  returnDate: string;
+  /** Price per guest in rupees */
+  price: number;
+  capacity: number;
+  guide: string;
+};
+
 /** Statuses the tours API can filter by */
 export type TourStatusFilter = Extract<TourStatus, 'draft' | 'published'>;
 
