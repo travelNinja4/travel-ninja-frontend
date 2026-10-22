@@ -107,7 +107,9 @@ function TourCard({ tour, preload = false, onDuplicate, className }: TourCardPro
           >
             {title}
           </Typography>
-          <StatusBadge status={status}>{TOUR_STATUS_LABEL[status] ?? status}</StatusBadge>
+          <StatusBadge status={status} className={styles.status}>
+            {TOUR_STATUS_LABEL[status] ?? status}
+          </StatusBadge>
         </div>
 
         <Typography variant="body" className={styles.destination}>
