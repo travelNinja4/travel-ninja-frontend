@@ -85,6 +85,37 @@ export type Tour = {
   bookedSeats?: number;
 };
 
+/** One day of a saved tour's itinerary */
+export type TourItineraryDay = ItineraryDay & {
+  id: number;
+  /** 1-based */
+  day: number;
+};
+
+/** One saved photo of a tour */
+export type TourPhoto = {
+  id: number;
+  kind: 'cover' | 'gallery';
+  url: string;
+  storageKey: string;
+  sortOrder: number;
+  createdAt: string;
+};
+
+/** A single tour as returned by GET /tours/{id}, with everything the tour form edits */
+export type TourDetails = Tour & {
+  userId: number;
+  description: string;
+  inclusions: string[];
+  exclusions: string[];
+  cancellation: string;
+  itinerary: TourItineraryDay[];
+  /** Gallery photos only: the cover is `coverImageUrl` */
+  gallery: TourPhoto[];
+  createdAt: string;
+  updatedAt: string;
+};
+
 /** Fields of the "Basics" section of the tour form */
 export type TourBasics = {
   title: string;
@@ -130,15 +161,24 @@ export type TourPolicies = {
   cancellationPolicy: string;
 };
 
-/** Fields of the "Cover & gallery" section of the tour form: images picked on this device */
-export type TourMedia = {
-  coverImage: File | null;
-  /** In the order they were added */
-  gallery: File[];
+/** An image the tour already has. `id` is set for gallery photos; the cover only has a URL. */
+export type SavedImage = {
+  id?: number;
+  url: string;
 };
 
-/** Every field of the create tour form */
-export type CreateTourValues = TourBasics & TourMedia & TourSchedule & TourItinerary & TourPolicies;
+/** A tour image: picked on this device, or already saved with the tour */
+export type TourImage = File | SavedImage;
+
+/** Fields of the "Cover & gallery" section of the tour form */
+export type TourMedia = {
+  coverImage: TourImage | null;
+  /** In the order they were added */
+  gallery: TourImage[];
+};
+
+/** Every field of the tour form, used to create and edit tours */
+export type TourFormValues = TourBasics & TourMedia & TourSchedule & TourItinerary & TourPolicies;
 
 /** Statuses the tours API can filter by */
 export type TourStatusFilter = TourStatus;

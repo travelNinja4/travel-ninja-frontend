@@ -1,12 +1,15 @@
 /**
  * One tour in the tours grid: cover image with the place on it, title and
  * status, destination, the departure / price / capacity / occupancy stats,
- * and the Edit and Duplicate actions.
+ * and the footer actions: Delete on the left; Duplicate and Edit on the
+ * right. Only drafts can be edited, so other tours show View instead of Edit,
+ * and published tours (live for guests) can't be deleted.
  *
  * It holds no state, so it renders in Server Components too (only the image
- * and the Edit link ship JavaScript). It is memoized, so in a client list a
- * parent re-render (e.g. typing in a search box) skips cards whose `tour`
- * and `onDuplicate` didn't change — keep `onDuplicate` stable with useCallback.
+ * and the Edit / View link ship JavaScript). It is memoized, so in a client list
+ * a parent re-render (e.g. typing in a search box) skips cards whose `tour`,
+ * `onDuplicate` and `onDelete` didn't change — keep the callbacks stable with
+ * useCallback.
  *
  * @example
  * ```tsx
@@ -19,7 +22,7 @@
  */
 
 import { memo } from 'react';
-import { MapPin } from 'lucide-react';
+import { MapPin, Trash2 } from 'lucide-react';
 import clsx from 'clsx';
 import AppLink from '../AppLink';
 import Image from '../Image';
@@ -57,15 +60,26 @@ interface TourCardProps {
    */
   onDuplicate?: (tour: Tour) => void;
 
+  /**
+   * Called with the tour when the delete icon is clicked. The icon is hidden without it,
+   * and on published tours.
+   */
+  onDelete?: (tour: Tour) => void;
+
   className?: string;
 }
 
 /** `"Coorg, Karnataka"` -> `"Coorg"`, `"North Goa"` -> `"North Goa"` */
 const getPlace = (destination: string) => destination.split(',')[0].trim();
 
-function TourCard({ tour, preload = false, onDuplicate, className }: TourCardProps) {
+function TourCard({ tour, preload = false, onDuplicate, onDelete, className }: TourCardProps) {
   const { id, title, destination, status, departureDate, price, capacity, bookedSeats } = tour;
   const hasBookings = bookedSeats !== undefined;
+  // Published and archived tours are live or past, so they open read-only
+  const open =
+    status === 'draft'
+      ? { label: TOURS.EDIT, href: `${ROUTES.TOURS}/${id}/edit` }
+      : { label: TOURS.VIEW, href: `${ROUTES.TOURS}/${id}` };
 
   const stats = [
     { label: TOURS.DEPARTURE, value: formatDate(departureDate) },
@@ -131,25 +145,35 @@ function TourCard({ tour, preload = false, onDuplicate, className }: TourCardPro
         </dl>
       </div>
 
+      {/* The tour name is part of each action's accessible name, so a list of them stays distinguishable */}
       <div className={styles.footer}>
-        {/* The tour name is part of the accessible name, so a list of "Edit" links stays distinguishable */}
-        <AppLink
-          href={`${ROUTES.TOURS}/${id}/edit`}
-          aria-label={`${TOURS.EDIT} ${title}`}
-          className={styles.edit}
-        >
-          {TOURS.EDIT}
-        </AppLink>
-        {onDuplicate && (
+        {onDelete && status !== 'published' && (
           <button
             type="button"
-            aria-label={`${TOURS.DUPLICATE} ${title}`}
-            className={styles.duplicate}
-            onClick={() => onDuplicate(tour)}
+            aria-label={`${TOURS.DELETE} ${title}`}
+            title={TOURS.DELETE}
+            className={styles.delete}
+            onClick={() => onDelete(tour)}
           >
-            {TOURS.DUPLICATE}
+            <Trash2 size={18} strokeWidth={1.75} aria-hidden="true" />
           </button>
         )}
+
+        <div className={styles.actions}>
+          {onDuplicate && (
+            <button
+              type="button"
+              aria-label={`${TOURS.DUPLICATE} ${title}`}
+              className={styles.duplicate}
+              onClick={() => onDuplicate(tour)}
+            >
+              {TOURS.DUPLICATE}
+            </button>
+          )}
+          <AppLink href={open.href} aria-label={`${open.label} ${title}`} className={styles.edit}>
+            {open.label}
+          </AppLink>
+        </div>
       </div>
     </article>
   );

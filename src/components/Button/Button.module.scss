@@ -57,6 +57,17 @@ styles specific to the Button component
   }
 }
 
+// For destructive actions such as deleting; follows .button so its states win at equal specificity
+.danger {
+  background-color: var(--color-danger);
+  color: var(--color-on-danger);
+
+  &:hover:not(:disabled),
+  &:active:not(:disabled) {
+    background-color: var(--color-danger-hover);
+  }
+}
+
 // Inherits the button's colour and weight instead of the Typography defaults
 .label {
   color: inherit;

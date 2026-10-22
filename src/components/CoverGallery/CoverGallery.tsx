@@ -1,6 +1,7 @@
 /**
  * The "Cover & gallery" card of the tour form: one cover image and a gallery
- * of up to 10 photos, picked from the device and previewed locally.
+ * of up to 10 photos. Picked files are previewed locally; images the tour
+ * already has (when editing) show from their URL.
  *
  * The cover box is the picker itself: click it, press Enter / Space on it, or
  * drop an image on it. Once chosen it shows the image with Replace and Remove.
@@ -36,7 +37,7 @@ import { useController, useFormContext } from 'react-hook-form';
 import { ImagePlus, Plus, X } from 'lucide-react';
 import clsx from 'clsx';
 import { COVER_GALLERY } from '@/constants/strings';
-import type { TourMedia } from '@/constants/types';
+import type { TourImage, TourMedia } from '@/constants/types';
 import Typography from '../Typography';
 import Button from '../Button';
 import Image from '../Image';
@@ -45,8 +46,12 @@ import styles from './CoverGallery.module.scss';
 
 const ACCEPT = IMAGE_TYPES.join(',');
 
-/** A local URL for previewing `file`, released when the file changes or the preview unmounts */
-function useObjectUrl(file: File | null) {
+/**
+ * A URL for previewing `image`: its own for a saved image, or a local one for a
+ * picked file, released when the file changes or the preview unmounts
+ */
+function usePreviewUrl(image: TourImage | null) {
+  const file = image instanceof File ? image : null;
   const [url, setUrl] = useState<string>();
 
   useEffect(() => {
@@ -60,7 +65,7 @@ function useObjectUrl(file: File | null) {
     };
   }, [file]);
 
-  return url;
+  return image instanceof File ? url : image?.url;
 }
 
 /** Drag-and-drop handlers for a drop target, and whether files are being dragged over it */
@@ -89,24 +94,24 @@ function useFileDrop(onFiles: (files: FileList) => void, disabled: boolean) {
   };
 }
 
-// Files have no id, so give each one a stable key the first time it renders
-const fileKeys = new WeakMap<File, number>();
-let nextFileKey = 0;
-const keyOf = (file: File) => {
-  if (!fileKeys.has(file)) fileKeys.set(file, nextFileKey++);
-  return fileKeys.get(file)!;
+// Picked files have no id, so give each image a stable key the first time it renders
+const imageKeys = new WeakMap<TourImage, number>();
+let nextImageKey = 0;
+const keyOf = (image: TourImage) => {
+  if (!imageKeys.has(image)) imageKeys.set(image, nextImageKey++);
+  return imageKeys.get(image)!;
 };
 
 interface PhotoProps {
-  file: File;
+  image: TourImage;
   index: number;
   disabled: boolean;
   onRemove: (index: number) => void;
 }
 
-/** One gallery thumbnail. Keyed by file, so adding or removing a photo keeps the others' previews. */
-function Photo({ file, index, disabled, onRemove }: PhotoProps) {
-  const url = useObjectUrl(file);
+/** One gallery thumbnail. Keyed by image, so adding or removing a photo keeps the others' previews. */
+function Photo({ image, index, disabled, onRemove }: PhotoProps) {
+  const url = usePreviewUrl(image);
   const label = `${COVER_GALLERY.PHOTO} ${index + 1}`;
 
   return (
@@ -169,7 +174,7 @@ export default function CoverGallery({ disabled = false, className }: CoverGalle
   const cover = useController({ control, name: 'coverImage' });
   const gallery = useController({ control, name: 'gallery' });
   const photos = gallery.field.value ?? [];
-  const coverUrl = useObjectUrl(cover.field.value);
+  const coverUrl = usePreviewUrl(cover.field.value);
 
   // Files turned away when picked; the form's own errors show otherwise
   const [coverRejection, setCoverRejection] = useState<string>();
@@ -325,10 +330,10 @@ export default function CoverGallery({ disabled = false, className }: CoverGalle
           />
 
           <ul className={styles.grid} aria-labelledby={galleryLabelId}>
-            {photos.map((file, index) => (
+            {photos.map((image, index) => (
               <Photo
-                key={keyOf(file)}
-                file={file}
+                key={keyOf(image)}
+                image={image}
                 index={index}
                 disabled={disabled}
                 onRemove={removePhoto}

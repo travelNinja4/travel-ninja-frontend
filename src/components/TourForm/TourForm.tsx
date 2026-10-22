@@ -1,7 +1,11 @@
 /**
- * The create tour screen: title, description and the Save draft / Publish
- * buttons above the tour form. The form owns every card's fields, so both
- * buttons validate and submit them together.
+ * The create and edit tour screens: title, description and the action buttons
+ * above the tour form. The form owns every card's fields, so the buttons
+ * validate and submit them together.
+ *
+ *   create (no `tour`)  empty form, Save draft and Publish
+ *   edit (`tour`)       filled with the saved tour, a single Update that keeps
+ *                       the tour's status
  *
  *   phone / tablet  cards stacked, Schedule & pricing below the main cards
  *   desktop+        Basics, Cover & gallery, Itinerary and Inclusions & policy on the left,
@@ -14,21 +18,27 @@
  *
  * @example
  * ```tsx
- * import CreateTour from '@/components/CreateTour'
+ * import TourForm from '@/components/TourForm'
  *
  * export default async function NewTourPage() {
  *   const { tour_category } = await commonService.getMetaOptions(['tour_category']);
- *   return <CreateTour categories={tour_category} guides={TOUR_GUIDES} />;
+ *   return <TourForm categories={tour_category} guides={TOUR_GUIDES} />;
+ * }
+ *
+ * export default async function EditTourPage() {
+ *   const tour = await tourService.getTour(id);
+ *   return <TourForm tour={tour} categories={tour_category} guides={TOUR_GUIDES} />;
  * }
  * ```
  */
 'use client';
 
-import { useId, useMemo } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CREATE_TOUR, TOUR_BASICS, TOUR_POLICIES } from '@/constants/strings';
-import type { CreateTourValues, MetaOption, TourStatus } from '@/constants/types';
+import { TOUR_BASICS, TOUR_FORM, TOUR_POLICIES, TOUR_STATUS_LABEL } from '@/constants/strings';
+import type { MetaOption, TourDetails, TourFormValues, TourStatus } from '@/constants/types';
+import { toTourFormValues, withCategory, withGuide } from '@/utils/tourForm';
 import Typography from '../Typography';
 import Button from '../Button';
 import DynamicForm from '../DynamicForm';
@@ -37,11 +47,11 @@ import SchedulePricing from '../SchedulePricing';
 import CoverGallery from '../CoverGallery';
 import Itinerary, { EMPTY_DAY } from '../Itinerary/Itinerary';
 import { DropdownOption } from '../Dropdown/Dropdown';
-import { createTourSchema } from './CreateTourSchema';
-import styles from './CreateTour.module.scss';
+import { tourFormSchema } from './TourFormSchema';
+import styles from './TourForm.module.scss';
 
 // Number fields start empty: valueAsNumber reads an empty input as NaN, which the schema rejects
-const DEFAULT_VALUES: Partial<CreateTourValues> = {
+const DEFAULT_VALUES: Partial<TourFormValues> = {
   title: '',
   destination: '',
   categoryId: '',
@@ -58,9 +68,9 @@ const DEFAULT_VALUES: Partial<CreateTourValues> = {
 };
 
 /**
- * Define the props available for the CreateTour component.
+ * Define the props available for the TourForm component.
  */
-export interface CreateTourProps {
+export interface TourFormProps {
   /**
    * Active `tour_category` options for the Category field.
    */
@@ -72,18 +82,40 @@ export interface CreateTourProps {
   guides: DropdownOption<string>[];
 
   /**
-   * Called with the valid form values and the status the tour is saved with.
-   * The fields and buttons are disabled until the returned promise settles.
+   * The saved tour to edit. Fills the form and swaps the create actions for Update.
    */
-  onSave?: (values: CreateTourValues, status: TourStatus) => void | Promise<void>;
+  tour?: TourDetails;
+
+  /**
+   * Called with the valid form values and the status the tour is saved with
+   * (the tour's own status when editing). The fields and buttons are disabled
+   * until the returned promise settles.
+   */
+  onSave?: (values: TourFormValues, status: TourStatus) => void | Promise<void>;
 }
 
-export default function CreateTour({ categories, guides, onSave }: CreateTourProps) {
+export default function TourForm({ categories, guides, tour, onSave }: TourFormProps) {
   const basicsTitleId = useId();
   const policiesTitleId = useId();
-  const methods = useForm<CreateTourValues>({
-    resolver: zodResolver(createTourSchema),
-    defaultValues: DEFAULT_VALUES,
+
+  // A saved tour's guide or category may be missing from the lists; add it so its field isn't blank
+  const categoryOptions = useMemo(
+    () =>
+      withCategory(categories, tour?.category).map(({ id, label }) => ({
+        value: String(id),
+        label,
+      })),
+    [categories, tour?.category],
+  );
+  const guideOptions = useMemo(() => withGuide(guides, tour?.guide), [guides, tour?.guide]);
+
+  // Read once, like useForm's defaultValues
+  const [defaultValues] = useState(() =>
+    tour ? toTourFormValues(tour, guideOptions) : DEFAULT_VALUES,
+  );
+  const methods = useForm<TourFormValues>({
+    resolver: zodResolver(tourFormSchema),
+    defaultValues,
   });
   const { isSubmitting } = methods.formState;
 
@@ -111,7 +143,7 @@ export default function CreateTour({ categories, guides, onSave }: CreateTourPro
         label: TOUR_BASICS.CATEGORY,
         type: 'select',
         placeholder: TOUR_BASICS.SELECT_CATEGORY,
-        options: categories.map(({ id, label }) => ({ value: String(id), label })),
+        options: categoryOptions,
         required: true,
         width: FieldWidth.HALF,
         disabled: isSubmitting,
@@ -125,7 +157,7 @@ export default function CreateTour({ categories, guides, onSave }: CreateTourPro
         disabled: isSubmitting,
       },
     ],
-    [categories, isSubmitting],
+    [categoryOptions, isSubmitting],
   );
 
   const policiesFields = useMemo<FieldConfig[]>(
@@ -165,33 +197,43 @@ export default function CreateTour({ categories, guides, onSave }: CreateTourPro
   return (
     <FormProvider {...methods}>
       <form
-        data-testid="CreateTourTest"
+        data-testid="TourFormTest"
         noValidate
         className={styles.page}
-        onSubmit={save('published')}
+        onSubmit={save(tour?.status ?? 'published')}
       >
         <header className={styles.header}>
           <div className={styles.heading}>
             <Typography variant="heading-1" tag="h1">
-              {CREATE_TOUR.PAGE_TITLE}
+              {tour ? TOUR_FORM.EDIT_TITLE : TOUR_FORM.CREATE_TITLE}
             </Typography>
             <Typography variant="body-lg" className={styles.description}>
-              {CREATE_TOUR.PAGE_DESCRIPTION}
+              {tour
+                ? `${tour.title} · ${TOUR_STATUS_LABEL[tour.status]}`
+                : TOUR_FORM.CREATE_DESCRIPTION}
             </Typography>
           </div>
 
           <div className={styles.actions}>
-            <Button
-              variant="secondary"
-              className={styles.action}
-              disabled={isSubmitting}
-              onClick={save('draft')}
-            >
-              {CREATE_TOUR.SAVE_DRAFT}
-            </Button>
-            <Button type="submit" className={styles.action} disabled={isSubmitting}>
-              {CREATE_TOUR.PUBLISH}
-            </Button>
+            {tour ? (
+              <Button type="submit" className={styles.action} disabled={isSubmitting}>
+                {TOUR_FORM.UPDATE}
+              </Button>
+            ) : (
+              <>
+                <Button
+                  variant="secondary"
+                  className={styles.action}
+                  disabled={isSubmitting}
+                  onClick={save('draft')}
+                >
+                  {TOUR_FORM.SAVE_DRAFT}
+                </Button>
+                <Button type="submit" className={styles.action} disabled={isSubmitting}>
+                  {TOUR_FORM.PUBLISH}
+                </Button>
+              </>
+            )}
           </div>
         </header>
 
@@ -229,7 +271,7 @@ export default function CreateTour({ categories, guides, onSave }: CreateTourPro
           </div>
 
           <aside className={styles.aside}>
-            <SchedulePricing guides={guides} disabled={isSubmitting} />
+            <SchedulePricing guides={guideOptions} disabled={isSubmitting} />
           </aside>
         </div>
       </form>

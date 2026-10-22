@@ -6,6 +6,8 @@ import { ROUTES, TOURS } from '@/constants/strings';
 import type { TourPage } from '@/constants/types';
 
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }));
+// The real action reaches server-only code
+vi.mock('@/actions/tours', () => ({ deleteTourAction: vi.fn() }));
 
 const filterOptions = Promise.resolve(MOCK_FILTER_OPTIONS);
 

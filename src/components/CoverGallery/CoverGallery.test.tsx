@@ -19,10 +19,18 @@ describe('CoverGallery', () => {
     new File([new Uint8Array(size)], name, { type });
 
   /** The parent form CoverGallery registers on; submitting it reports the values **/
-  function Form({ children, onSubmit }: { children: ReactNode; onSubmit: (v: unknown) => void }) {
+  function Form({
+    children,
+    defaultValues = { coverImage: null, gallery: [] },
+    onSubmit,
+  }: {
+    children: ReactNode;
+    defaultValues?: TourMedia;
+    onSubmit: (v: unknown) => void;
+  }) {
     const methods = useForm<TourMedia>({
       resolver: zodResolver(coverGallerySchema),
-      defaultValues: { coverImage: null, gallery: [] },
+      defaultValues,
     });
     return (
       <FormProvider {...methods}>
@@ -34,10 +42,10 @@ describe('CoverGallery', () => {
     );
   }
 
-  const setup = (props = {}) => {
+  const setup = (props = {}, defaultValues?: TourMedia) => {
     const onSubmit = vi.fn();
     render(
-      <Form onSubmit={onSubmit}>
+      <Form defaultValues={defaultValues} onSubmit={onSubmit}>
         <CoverGallery {...props} />
       </Form>,
     );
@@ -125,6 +133,19 @@ describe('CoverGallery', () => {
     );
     expect(screen.getByRole('alert')).toHaveTextContent(COVER_GALLERY.GALLERY_FULL);
     expect(screen.queryByRole('button', { name: COVER_GALLERY.ADD_PHOTO })).not.toBeInTheDocument();
+  });
+
+  it('shows the tour’s saved images from their URLs and keeps them on submit', async () => {
+    const cover = { url: 'https://cdn.example.com/cover.jpg' };
+    const saved = { id: 7, url: 'https://cdn.example.com/day-1.jpg' };
+    const { submit } = setup({}, { coverImage: cover, gallery: [saved] });
+    expect(screen.getByAltText(COVER_GALLERY.COVER_PREVIEW)).toHaveAttribute('src', cover.url);
+    expect(screen.getByAltText(`${COVER_GALLERY.PHOTO} 1`)).toHaveAttribute('src', saved.url);
+    expect(URL.createObjectURL).not.toHaveBeenCalled();
+
+    const added = image('day-2.jpg');
+    addPhotos(added);
+    expect(await submit()).toMatchObject({ coverImage: cover, gallery: [saved, added] });
   });
 
   it('disables every control', () => {

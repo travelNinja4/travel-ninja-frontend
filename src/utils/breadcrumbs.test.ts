@@ -27,6 +27,14 @@ describe('getBreadcrumbs', () => {
     ]);
   });
 
+  it('leaves out numeric ids', () => {
+    expect(getBreadcrumbs('/tours/12/edit')).toEqual([
+      dashboard,
+      { label: NAV_ITEM.TOURS, href: ROUTES.TOURS },
+      { label: 'Edit' },
+    ]);
+  });
+
   it('labels nested sidebar routes and leaves their group unlinked', () => {
     expect(getBreadcrumbs(ROUTES.REVENUE)).toEqual([
       dashboard,

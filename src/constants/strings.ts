@@ -97,6 +97,7 @@ export const STRINGS = {
   LOGGED_IN_SUCCESSFUL: `You’ve logged in successfully!`,
   ACCOUNT_CREATED_SUCCESSFUL: 'Account created successfully',
   SOMETHING_WENT_WRONG: 'Something went wrong',
+  CANCEL: 'Cancel',
   VERIFICATION_SESSION_EXPIRED: 'Your verification session has expired. Please start again.',
 };
 
@@ -208,16 +209,25 @@ export const TOURS = {
   CAPACITY: 'Capacity',
   OCCUPANCY: 'Occupancy',
   EDIT: 'Edit',
+  VIEW: 'View',
   DUPLICATE: 'Duplicate',
+  DELETE: 'Delete',
+  DELETE_TITLE: 'Delete this tour?',
+  DELETE_DESCRIPTION: 'will be removed with its itinerary and photos. This can’t be undone.',
+  DELETE_CONFIRM: 'Delete tour',
+  DELETED: 'Tour deleted',
+  DELETE_FAILED: 'We couldn’t delete this tour',
   // Shown for a value the API hasn't sent
   NOT_AVAILABLE: '—',
 };
 
-export const CREATE_TOUR = {
-  PAGE_TITLE: 'Create tour',
-  PAGE_DESCRIPTION: 'Build a departure guests can discover and book.',
+export const TOUR_FORM = {
+  CREATE_TITLE: 'Create tour',
+  CREATE_DESCRIPTION: 'Build a departure guests can discover and book.',
+  EDIT_TITLE: 'Edit tour',
   SAVE_DRAFT: 'Save draft',
   PUBLISH: 'Publish',
+  UPDATE: 'Update',
 };
 
 // Placeholder guides until the guides API is wired in

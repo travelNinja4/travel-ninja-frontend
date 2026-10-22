@@ -2,14 +2,18 @@
 
 /**
 ------------------------------------------------------
-styles specific to the CreateTour component
+styles specific to the TourForm component (create and edit tour screens)
 
   page
-    header: title + description, Save draft / Publish on the right
+    header: title + description, the actions on the right
+            (Save draft / Publish when creating, Update when editing)
             phone: the buttons wrap below and share the row
     layout
       phone / tablet  side cards, then the main cards, stacked
-      desktop+        main cards | side column (18–24rem)
+      desktop         main cards | side column (18–24rem)
+      wide            main cards | side column (20–26rem), wider gaps
+      The side column stays in view while the main cards scroll, on
+      screens tall enough to show all of it.
 
 The main column holds Basics, Cover & gallery, Itinerary and
 Inclusions & policy. The side column holds Schedule & pricing.
@@ -44,14 +48,17 @@ Inclusions & policy. The side column holds Schedule & pricing.
 
 .heading {
   display: flex;
+  flex: 1 1 20rem;
   flex-direction: column;
   gap: var(--space-2);
   min-width: 0;
   color: var(--color-text);
 }
 
+// The edit screen shows the tour's title here, which may be one long word
 .description {
   color: var(--color-text-secondary);
+  overflow-wrap: anywhere;
 }
 
 .actions {
@@ -90,6 +97,11 @@ Inclusions & policy. The side column holds Schedule & pricing.
   @include respond-to(desktop) {
     grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
   }
+
+  @include respond-to(wide) {
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 26rem);
+    gap: var(--space-8);
+  }
 }
 
 .main,
@@ -111,6 +123,13 @@ Inclusions & policy. The side column holds Schedule & pricing.
 
   @include respond-to(desktop) {
     order: 0;
+
+    // Sticky only when the card fits: a taller one would hide its last fields until the page ends.
+    // The page scrolls inside the layout's main area, below the top bar, so the offset is only a gap.
+    @media (min-height: 48rem) {
+      position: sticky;
+      top: var(--space-6);
+    }
   }
 }
 

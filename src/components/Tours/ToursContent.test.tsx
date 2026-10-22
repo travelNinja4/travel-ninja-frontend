@@ -5,10 +5,18 @@ import { MOCK_TOURS } from '../TourCard/TourCard.mocks';
 import { MOCK_FILTER_OPTIONS } from './Tours.mocks';
 import { TOURS } from '@/constants/strings';
 import type { TourPage, TourSearch } from '@/constants/types';
+import { deleteTourAction } from '@/actions/tours';
 
 const push = vi.fn();
 const replace = vi.fn();
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push, replace }) }));
+
+vi.mock('@/actions/tours', () => ({ deleteTourAction: vi.fn() }));
+
+const showNotification = vi.fn();
+vi.mock('@/providers/NotificationProvider', () => ({
+  useNotification: () => ({ showNotification }),
+}));
 
 const page = (overrides: Partial<TourPage> = {}): TourPage => ({
   tours: MOCK_TOURS,
@@ -69,6 +77,8 @@ describe('ToursContent', () => {
   beforeEach(() => {
     push.mockClear();
     replace.mockClear();
+    showNotification.mockClear();
+    vi.mocked(deleteTourAction).mockReset();
     vi.useFakeTimers();
   });
   afterEach(() => vi.useRealTimers());
@@ -183,5 +193,63 @@ describe('ToursContent', () => {
   it('shows the empty state when the agency has no tours', async () => {
     await renderTours({ tours: [], total: 0, pageCount: 0 });
     expect(screen.getByText(TOURS.EMPTY_TITLE)).toBeInTheDocument();
+  });
+
+  describe('deleting a tour', () => {
+    // Published tours can't be deleted, so use a draft
+    const tour = MOCK_TOURS.find(({ status }) => status === 'draft')!;
+    const deleteIcon = () => screen.getByRole('button', { name: `${TOURS.DELETE} ${tour.title}` });
+    const dialog = () => screen.queryByRole('alertdialog', { name: TOURS.DELETE_TITLE });
+
+    it('asks for confirmation and keeps the tour on Cancel', async () => {
+      await renderTours();
+      fireEvent.click(deleteIcon());
+      expect(dialog()).toHaveTextContent(tour.title);
+
+      fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+      expect(dialog()).not.toBeInTheDocument();
+      expect(deleteTourAction).not.toHaveBeenCalled();
+    });
+
+    it('deletes the confirmed tour and reports it', async () => {
+      vi.mocked(deleteTourAction).mockResolvedValue({ success: true, data: undefined });
+      await renderTours();
+      fireEvent.click(deleteIcon());
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: TOURS.DELETE_CONFIRM }));
+      });
+
+      expect(deleteTourAction).toHaveBeenCalledWith(tour.id);
+      expect(showNotification).toHaveBeenCalledWith(TOURS.DELETED, tour.title, 'success');
+      expect(dialog()).not.toBeInTheDocument();
+      // Still on a page with other tours
+      expect(replace).not.toHaveBeenCalled();
+    });
+
+    it('shows the API’s error when the delete fails', async () => {
+      vi.mocked(deleteTourAction).mockResolvedValue({ success: false, errors: ['Tour not found'] });
+      await renderTours();
+      fireEvent.click(deleteIcon());
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: TOURS.DELETE_CONFIRM }));
+      });
+
+      expect(showNotification).toHaveBeenCalledWith('Error!', 'Tour not found', 'error');
+      expect(dialog()).not.toBeInTheDocument();
+    });
+
+    it('steps back a page after deleting the last tour on a later page', async () => {
+      vi.mocked(deleteTourAction).mockResolvedValue({ success: true, data: undefined });
+      await renderTours(
+        { tours: [tour], page: 3, total: 25, pageCount: 3 },
+        { status: 'published' },
+      );
+      fireEvent.click(deleteIcon());
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: TOURS.DELETE_CONFIRM }));
+      });
+
+      expect(replace).toHaveBeenCalledWith('/tours?page=2&status=published', { scroll: false });
+    });
   });
 });

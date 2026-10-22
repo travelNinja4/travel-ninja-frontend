@@ -62,12 +62,41 @@ describe('TourCard', () => {
     expect(screen.getByTestId('ImageTest')).toHaveAttribute('src', FALLBACK_IMAGE_SRC);
   });
 
-  it('links Edit to the tour edit page', () => {
-    render(<TourCard tour={tour} />);
-    expect(screen.getByRole('link', { name: `Edit ${tour.title}` })).toHaveAttribute(
+  it('links a draft’s Edit to the tour edit page', () => {
+    render(<TourCard tour={{ ...tour, status: 'draft' }} />);
+    expect(screen.getByRole('link', { name: `${TOURS.EDIT} ${tour.title}` })).toHaveAttribute(
       'href',
       '/tours/1/edit',
     );
+    expect(screen.queryByRole('link', { name: /^View/ })).not.toBeInTheDocument();
+  });
+
+  it.each(['published', 'archived'] as const)('shows View instead of Edit when %s', (status) => {
+    render(<TourCard tour={{ ...tour, status }} />);
+    expect(screen.getByRole('link', { name: `${TOURS.VIEW} ${tour.title}` })).toHaveAttribute(
+      'href',
+      '/tours/1',
+    );
+    expect(screen.queryByRole('link', { name: /^Edit/ })).not.toBeInTheDocument();
+  });
+
+  it('calls onDelete with the tour', () => {
+    const onDelete = vi.fn<(tour: Tour) => void>();
+    const draft = { ...tour, status: 'draft' as const };
+    render(<TourCard tour={draft} onDelete={onDelete} />);
+
+    fireEvent.click(screen.getByRole('button', { name: `${TOURS.DELETE} ${tour.title}` }));
+    expect(onDelete).toHaveBeenCalledWith(draft);
+  });
+
+  it('hides the delete icon on a published tour', () => {
+    render(<TourCard tour={{ ...tour, status: 'published' }} onDelete={vi.fn()} />);
+    expect(screen.queryByRole('button', { name: /^Delete/ })).not.toBeInTheDocument();
+  });
+
+  it('hides the delete icon without onDelete', () => {
+    render(<TourCard tour={tour} />);
+    expect(screen.queryByRole('button', { name: /^Delete/ })).not.toBeInTheDocument();
   });
 
   it('calls onDuplicate with the tour', () => {
