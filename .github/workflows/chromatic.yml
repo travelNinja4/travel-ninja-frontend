@@ -1,0 +1,48 @@
+name: Publish Storybook to Chromatic
+
+# A merged pull request lands on develop as a push, so this runs after every feature merge
+on:
+  push:
+    branches:
+      - develop
+
+# A newer merge makes an in-flight publish of the previous one pointless
+concurrency:
+  group: chromatic-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  chromatic:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_PLACEHOLDER_BG_URL: ${{ secrets.NEXT_PUBLIC_PLACEHOLDER_BG_URL }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Full history, so Chromatic can find the previous build to compare against
+          fetch-depth: 0
+
+      # Before Node, so setup-node can cache the pnpm store
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # The chromatic CLI needs Node 22+
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Builds Storybook with the build-storybook script and uploads it.
+      # develop is the baseline, so its changes are accepted rather than failing the run.
+      - name: Publish to Chromatic
+        run: pnpm exec chromatic --exit-zero-on-changes --auto-accept-changes
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
