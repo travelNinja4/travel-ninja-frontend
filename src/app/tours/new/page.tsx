@@ -1,4 +1,4 @@
-import CreateTour from '@/components/CreateTour';
+import TourForm from '@/components/TourForm';
 import { commonService } from '@/server/commonService';
 import { TOUR_GUIDES } from '@/constants/strings';
 
@@ -7,5 +7,5 @@ export default async function NewTourPage() {
   const { tour_category } = await commonService
     .getMetaOptions(['tour_category'])
     .catch(() => ({ tour_category: [] }));
-  return <CreateTour categories={tour_category} guides={TOUR_GUIDES} />;
+  return <TourForm categories={tour_category} guides={TOUR_GUIDES} />;
 }

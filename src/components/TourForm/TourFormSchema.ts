@@ -19,7 +19,7 @@ export const tourPoliciesSchema = z.object({
   cancellationPolicy: z.string().trim().max(2000),
 });
 
-export const createTourSchema = tourBasicsSchema
+export const tourFormSchema = tourBasicsSchema
   .extend(coverGallerySchema.shape)
   .extend(schedulePricingSchema.shape)
   .extend(itinerarySchema.shape)

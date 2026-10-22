@@ -1,21 +1,22 @@
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import {
-  CREATE_TOUR,
   ITINERARY,
   SCHEDULE_PRICING,
   TOUR_BASICS,
+  TOUR_FORM,
   TOUR_POLICIES,
 } from '@/constants/strings';
-import type { MetaOption } from '@/constants/types';
-import CreateTour from './CreateTour';
+import type { MetaOption, TourDetails } from '@/constants/types';
+import TourForm from './TourForm';
+import { MOCK_TOUR_DETAILS } from './TourForm.mocks';
 
-describe('CreateTour', () => {
+describe('TourForm', () => {
   const categories: MetaOption[] = [{ id: 6, value: 'Beach', label: 'Beach' }];
   const guides = [{ value: 'arjun', label: 'Arjun Mehta' }];
 
-  const setup = () => {
+  const setup = (tour?: TourDetails) => {
     const onSave = vi.fn();
-    render(<CreateTour categories={categories} guides={guides} onSave={onSave} />);
+    render(<TourForm categories={categories} guides={guides} tour={tour} onSave={onSave} />);
     return { onSave };
   };
 
@@ -53,11 +54,11 @@ describe('CreateTour', () => {
   it('renders the header, actions and every card', () => {
     setup();
     expect(
-      screen.getByRole('heading', { level: 1, name: CREATE_TOUR.PAGE_TITLE }),
+      screen.getByRole('heading', { level: 1, name: TOUR_FORM.CREATE_TITLE }),
     ).toBeInTheDocument();
-    expect(screen.getByText(CREATE_TOUR.PAGE_DESCRIPTION)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: CREATE_TOUR.SAVE_DRAFT })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: CREATE_TOUR.PUBLISH })).toBeInTheDocument();
+    expect(screen.getByText(TOUR_FORM.CREATE_DESCRIPTION)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: TOUR_FORM.SAVE_DRAFT })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: TOUR_FORM.PUBLISH })).toBeInTheDocument();
     [TOUR_BASICS.TITLE, ITINERARY.TITLE, TOUR_POLICIES.TITLE, SCHEDULE_PRICING.TITLE].forEach(
       (name) => expect(screen.getByRole('region', { name })).toBeInTheDocument(),
     );
@@ -74,7 +75,7 @@ describe('CreateTour', () => {
   it('publishes the tour with every card’s values', async () => {
     const { onSave } = setup();
     fillValidTour();
-    fireEvent.click(screen.getByRole('button', { name: CREATE_TOUR.PUBLISH }));
+    fireEvent.click(screen.getByRole('button', { name: TOUR_FORM.PUBLISH }));
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave).toHaveBeenCalledWith(
       {
@@ -104,14 +105,14 @@ describe('CreateTour', () => {
   it('saves a draft with the draft status', async () => {
     const { onSave } = setup();
     fillValidTour();
-    fireEvent.click(screen.getByRole('button', { name: CREATE_TOUR.SAVE_DRAFT }));
+    fireEvent.click(screen.getByRole('button', { name: TOUR_FORM.SAVE_DRAFT }));
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave.mock.calls[0][1]).toBe('draft');
   });
 
   it('shows the errors of every card and does not save an empty tour', async () => {
     const { onSave } = setup();
-    fireEvent.click(screen.getByRole('button', { name: CREATE_TOUR.PUBLISH }));
+    fireEvent.click(screen.getByRole('button', { name: TOUR_FORM.PUBLISH }));
     expect(await screen.findByText('Enter a tour title')).toBeInTheDocument();
     expect(screen.getByText('Enter a destination')).toBeInTheDocument();
     expect(screen.getByText('Pick a category')).toBeInTheDocument();
@@ -119,5 +120,51 @@ describe('CreateTour', () => {
     expect(screen.getByText('Pick a guide')).toBeInTheDocument();
     expect(screen.getByText('Enter a title for the day')).toBeInTheDocument();
     expect(onSave).not.toHaveBeenCalled();
+  });
+
+  describe('editing a saved tour', () => {
+    // MOCK_TOUR_DETAILS' category (Nature) isn't in `categories`, so it's added as an option
+    it('shows the edit header and a single Update button', () => {
+      setup(MOCK_TOUR_DETAILS);
+      expect(
+        screen.getByRole('heading', { level: 1, name: TOUR_FORM.EDIT_TITLE }),
+      ).toBeInTheDocument();
+      expect(screen.getByText('Coorg Weekend Escape · Published')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: TOUR_FORM.UPDATE })).toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: TOUR_FORM.SAVE_DRAFT })).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: TOUR_FORM.PUBLISH })).not.toBeInTheDocument();
+    });
+
+    it('fills every card with the saved tour', () => {
+      setup(MOCK_TOUR_DETAILS);
+      expect(
+        card(TOUR_BASICS.TITLE).getByLabelText(TOUR_BASICS.TOUR_TITLE, { exact: false }),
+      ).toHaveValue('Coorg Weekend Escape');
+      expect(screen.getByLabelText(TOUR_BASICS.CATEGORY, { exact: false })).toHaveValue('Nature');
+      expect(screen.getByLabelText(SCHEDULE_PRICING.GUIDE, { exact: false })).toHaveValue(
+        'Arjun Mehta',
+      );
+      expect(screen.getByLabelText(SCHEDULE_PRICING.PRICE)).toHaveValue(12500);
+      expect(
+        card(ITINERARY.TITLE).getAllByLabelText(ITINERARY.LOCATION, { exact: false }),
+      ).toHaveLength(2);
+      expect(screen.getByLabelText(TOUR_POLICIES.INCLUSIONS)).toHaveValue('Stay\nBreakfast');
+    });
+
+    it('updates the tour with its edits, keeping its status', async () => {
+      const { onSave } = setup({ ...MOCK_TOUR_DETAILS, status: 'draft' });
+      change(TOUR_BASICS.TITLE, TOUR_BASICS.TOUR_TITLE, 'Coorg Long Weekend');
+      fireEvent.click(screen.getByRole('button', { name: TOUR_FORM.UPDATE }));
+      await waitFor(() => expect(onSave).toHaveBeenCalled());
+      expect(onSave).toHaveBeenCalledWith(
+        expect.objectContaining({
+          title: 'Coorg Long Weekend',
+          categoryId: '1',
+          coverImage: { url: MOCK_TOUR_DETAILS.coverImageUrl },
+          guide: 'arjun',
+        }),
+        'draft',
+      );
+    });
   });
 });

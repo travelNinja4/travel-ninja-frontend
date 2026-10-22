@@ -5,7 +5,8 @@
  * The grid is pure CSS: it fits as many ~256px columns as the space allows,
  * so it reflows with the sidebar collapsing or expanding without any
  * JavaScript. Like TourCard it holds no state, so pass it the tours from a
- * Server Component; it only needs a Client Component parent for `onDuplicate`.
+ * Server Component; it only needs a Client Component parent for `onDuplicate`
+ * and `onDelete`.
  *
  * @example
  * ```tsx
@@ -54,6 +55,13 @@ interface TourListProps {
   onDuplicate?: (tour: Tour) => void;
 
   /**
+   * Called with the tour when a card's delete icon is clicked. The icon is
+   * hidden without it. Keep it stable (useCallback) so unchanged cards
+   * don't re-render.
+   */
+  onDelete?: (tour: Tour) => void;
+
+  /**
    * Heading of the empty state, e.g. a "no matches" message while filters are applied.
    *
    * @default "No tours yet"
@@ -78,6 +86,7 @@ export default function TourList({
   total = tours.length,
   preloadCount = 4,
   onDuplicate,
+  onDelete,
   emptyTitle = TOURS.EMPTY_TITLE,
   emptyDescription = TOURS.EMPTY_DESCRIPTION,
   pagination,
@@ -88,7 +97,12 @@ export default function TourList({
         <ul className={styles.grid}>
           {tours.map((tour, index) => (
             <li key={tour.id}>
-              <TourCard tour={tour} preload={index < preloadCount} onDuplicate={onDuplicate} />
+              <TourCard
+                tour={tour}
+                preload={index < preloadCount}
+                onDuplicate={onDuplicate}
+                onDelete={onDelete}
+              />
             </li>
           ))}
         </ul>
