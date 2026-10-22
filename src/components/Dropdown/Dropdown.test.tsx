@@ -186,4 +186,29 @@ describe('Dropdown', () => {
     expect(screen.getByRole('alert')).toHaveTextContent('Pick a status');
     expect(getCombobox()).toHaveAttribute('aria-invalid', 'true');
   });
+
+  describe('list placement', () => {
+    // Puts the bordered field `top` px down a 768px-tall window; the wrapper starts 20px above it
+    const placeField = (top: number) => {
+      const field = getCombobox().parentElement!;
+      const wrapper = screen.getByTestId('DropdownTest');
+      const rect = (t: number, height: number) => ({ top: t, bottom: t + height }) as DOMRect;
+      field.getBoundingClientRect = () => rect(top, 40);
+      wrapper.getBoundingClientRect = () => rect(top - 20, 60);
+    };
+
+    it('opens below the field when there is room', () => {
+      render(<Dropdown {...baseProps} />);
+      placeField(100);
+      fireEvent.click(getCombobox());
+      expect(screen.getByRole('listbox')).toHaveStyle({ top: '64px' });
+    });
+
+    it('opens above the field near the bottom of the window', () => {
+      render(<Dropdown {...baseProps} />);
+      placeField(700);
+      fireEvent.click(getCombobox());
+      expect(screen.getByRole('listbox')).toHaveStyle({ top: 'auto', bottom: '44px' });
+    });
+  });
 });

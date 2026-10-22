@@ -28,12 +28,35 @@
  */
 'use client';
 
-import { KeyboardEvent, ReactNode, useEffect, useId, useRef, useState } from 'react';
+import { CSSProperties, KeyboardEvent, ReactNode, useEffect, useId, useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import clsx from 'clsx';
 import { STRINGS } from '@/constants/strings';
 import InputField from '../InputField';
 import styles from './Dropdown.module.scss';
+
+// Matches .list's max-height (12rem) and the space between the field and the list
+const LIST_MAX_HEIGHT = 192;
+const LIST_GAP = 4;
+
+type ListPlacement = { above: boolean; style?: CSSProperties };
+
+/**
+ * Where the list opens, measured against the bordered field (not the label or
+ * hint around it): below it, or above it when the window has too little room
+ * below and more above, e.g. a field near the bottom of the screen.
+ */
+const placeList = (wrapper: HTMLElement | null, field: HTMLElement | null): ListPlacement => {
+  if (!wrapper || !field) return { above: false };
+  const outer = wrapper.getBoundingClientRect();
+  const box = field.getBoundingClientRect();
+  const spaceBelow = window.innerHeight - box.bottom;
+  const spaceAbove = box.top;
+  if (spaceBelow < LIST_MAX_HEIGHT + LIST_GAP && spaceAbove > spaceBelow) {
+    return { above: true, style: { top: 'auto', bottom: outer.bottom - box.top + LIST_GAP } };
+  }
+  return { above: false, style: { top: box.bottom - outer.top + LIST_GAP } };
+};
 
 export type DropdownOption<T> = {
   value: T;
@@ -153,6 +176,7 @@ export default function Dropdown<T>({
   const optionId = (index: number) => `${inputId}-option-${index}`;
 
   const [isOpen, setIsOpen] = useState(false);
+  const [placement, setPlacement] = useState<ListPlacement>({ above: false });
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [internalValue, setInternalValue] = useState<T | undefined>(defaultValue);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -166,6 +190,10 @@ export default function Dropdown<T>({
 
   const open = () => {
     if (disabled) return;
+    // The input's parent is InputField's bordered box
+    setPlacement(
+      placeList(dropdownRef.current, document.getElementById(inputId)?.parentElement ?? null),
+    );
     setIsOpen(true);
     setHighlightedIndex(selectedIndex >= 0 ? selectedIndex : 0);
   };
@@ -290,7 +318,8 @@ export default function Dropdown<T>({
           ref={listRef}
           id={listId}
           role="listbox"
-          className={styles.list}
+          className={clsx(styles.list, { [styles.listAbove]: placement.above })}
+          style={placement.style}
           // Keep focus on the input when clicking inside the list
           onMouseDown={(event) => event.preventDefault()}
         >

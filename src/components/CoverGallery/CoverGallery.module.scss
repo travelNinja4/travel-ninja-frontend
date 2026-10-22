@@ -1,0 +1,231 @@
+/**
+------------------------------------------------------
+styles specific to the CoverGallery component
+
+  header: title (bottom border)
+  body
+    cover:   a compact dashed drop zone (10rem tall) until an image is
+             picked, then the preview with Replace / Remove, cropped to
+             11:5 like the tour cards and at most 36rem wide
+    gallery: square-ish tiles, as many columns as fit
+             phone 2, tablet 3–4, desktop 4–6; "Add photo" is the last tile
+------------------------------------------------------
+**/
+
+@use '../../styles/mixins' as *;
+
+.card {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background-color: var(--color-surface);
+}
+
+.header {
+  margin: 0;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4) var(--space-5);
+  padding: var(--space-4) var(--space-5);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.labelRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.label {
+  color: var(--color-text);
+}
+
+.message {
+  color: var(--color-text-secondary);
+}
+
+.error {
+  color: var(--color-danger);
+}
+
+/* -----------------------------
+  Drop zones (empty cover, Add photo)
+----------------------------- */
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-4);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--color-surface-sage), var(--color-surface-muted));
+  color: var(--color-brand);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-brand);
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--color-brand);
+    box-shadow: var(--shadow-focus);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.dragging {
+  border-style: solid;
+  border-color: var(--color-brand);
+  background: var(--color-brand-subtle);
+}
+
+.invalid {
+  border-color: var(--color-danger);
+}
+
+.dropIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-xs);
+}
+
+.dropTitle {
+  color: var(--color-brand);
+}
+
+/* -----------------------------
+  Cover
+----------------------------- */
+
+.coverDropzone {
+  height: 10rem;
+}
+
+// Same crop as the TourCard image, so what's previewed is what guests see
+.cover {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 36rem;
+  aspect-ratio: 11 / 5;
+  border-radius: 10px;
+  background-color: var(--color-surface-muted);
+}
+
+.preview {
+  object-fit: cover;
+}
+
+.coverActions {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  display: flex;
+  gap: var(--space-2);
+}
+
+// Compact buttons over the image; scoped under .coverActions to outrank Button's padding
+.coverActions .coverAction {
+  min-height: 2.25rem;
+  padding: var(--space-1) var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+/* -----------------------------
+  Gallery
+----------------------------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 8.5rem), 1fr));
+  gap: var(--space-3);
+  list-style: none;
+
+  @include respond-to(tablet) {
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  }
+}
+
+.tile {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  background-color: var(--color-surface-muted);
+}
+
+.addPhoto {
+  height: 100%;
+}
+
+// Always visible, as touch screens have no hover
+.removePhoto {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--color-on-media-bg);
+  color: var(--color-on-media);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-danger);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropzone,
+  .removePhoto {
+    transition: none;
+  }
+}
