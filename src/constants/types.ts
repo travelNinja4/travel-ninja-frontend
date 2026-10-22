@@ -85,6 +85,16 @@ export type Tour = {
   bookedSeats?: number;
 };
 
+/** Fields of the "Basics" section of the tour form */
+export type TourBasics = {
+  title: string;
+  /** Place and region, e.g. "Coorg, Karnataka" */
+  destination: string;
+  /** `id` of a `tour_category` meta option as a string, since the dropdown holds strings */
+  categoryId: string;
+  description: string;
+};
+
 /**
  * Fields of the "Schedule & pricing" section of the tour form. Number inputs are
  * read with `valueAsNumber`, so an empty one is `NaN` until the schema rejects it.
@@ -112,6 +122,23 @@ export type ItineraryDay = {
 export type TourItinerary = {
   itinerary: ItineraryDay[];
 };
+
+/** Fields of the "Inclusions & policy" section of the tour form */
+export type TourPolicies = {
+  inclusions: string;
+  exclusions: string;
+  cancellationPolicy: string;
+};
+
+/** Fields of the "Cover & gallery" section of the tour form: images picked on this device */
+export type TourMedia = {
+  coverImage: File | null;
+  /** In the order they were added */
+  gallery: File[];
+};
+
+/** Every field of the create tour form */
+export type CreateTourValues = TourBasics & TourMedia & TourSchedule & TourItinerary & TourPolicies;
 
 /** Statuses the tours API can filter by */
 export type TourStatusFilter = TourStatus;

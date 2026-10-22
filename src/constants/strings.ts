@@ -213,6 +213,56 @@ export const TOURS = {
   NOT_AVAILABLE: '—',
 };
 
+export const CREATE_TOUR = {
+  PAGE_TITLE: 'Create tour',
+  PAGE_DESCRIPTION: 'Build a departure guests can discover and book.',
+  SAVE_DRAFT: 'Save draft',
+  PUBLISH: 'Publish',
+};
+
+// Placeholder guides until the guides API is wired in
+export const TOUR_GUIDES = [
+  { value: 'arjun', label: 'Arjun Mehta' },
+  { value: 'priya', label: 'Priya Nair' },
+  { value: 'rahul', label: 'Rahul Sharma' },
+];
+
+export const TOUR_BASICS = {
+  TITLE: 'Basics',
+  TOUR_TITLE: 'Tour title',
+  DESTINATION: 'Destination',
+  CATEGORY: 'Category',
+  SELECT_CATEGORY: 'Select category',
+  DESCRIPTION: 'Description',
+};
+
+export const COVER_GALLERY = {
+  TITLE: 'Cover & gallery',
+  COVER: 'Cover image',
+  COVER_PROMPT: 'Upload a cover image',
+  DROP_HINT: 'Drag and drop, or click to browse',
+  COVER_HINT:
+    'JPG, PNG or WebP up to 5 MB. Wide images work best; keep the subject centred, as tour cards crop to a wide banner.',
+  COVER_PREVIEW: 'Cover image preview',
+  REPLACE: 'Replace',
+  REMOVE: 'Remove',
+  GALLERY: 'Gallery',
+  GALLERY_HINT: 'Add photos of the stays, food and highlights. Pick several at once.',
+  ADD_PHOTO: 'Add photo',
+  PHOTO: 'Gallery photo',
+  REMOVE_PHOTO: 'Remove photo',
+  INVALID_TYPE: 'Use a JPG, PNG or WebP image',
+  TOO_LARGE: 'Images must be 5 MB or smaller',
+  GALLERY_FULL: 'The gallery holds up to 10 photos',
+};
+
+export const TOUR_POLICIES = {
+  TITLE: 'Inclusions & policy',
+  INCLUSIONS: 'Inclusions',
+  EXCLUSIONS: 'Exclusions',
+  CANCELLATION_POLICY: 'Cancellation policy',
+};
+
 export const SCHEDULE_PRICING = {
   TITLE: 'Schedule & pricing',
   DURATION: 'Duration (days)',
