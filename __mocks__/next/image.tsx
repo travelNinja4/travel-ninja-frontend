@@ -6,9 +6,23 @@ interface MockImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   alt: string;
 }
 
+// Props only next/image understands; dropped so React doesn't warn about them on <img>
+const NEXT_ONLY_PROPS = new Set([
+  'fill',
+  'preload',
+  'priority',
+  'quality',
+  'placeholder',
+  'blurDataURL',
+  'unoptimized',
+]);
+
 // Simple mock: Next.js <Image> behaves like a normal <img>
 const NextImage = ({ src, alt, ...props }: MockImageProps) => {
-  return <img src={src} alt={alt} {...props} />;
+  const imgProps = Object.fromEntries(
+    Object.entries(props).filter(([key]) => !NEXT_ONLY_PROPS.has(key)),
+  );
+  return <img src={src} alt={alt} {...imgProps} />;
 };
 
 export default NextImage;

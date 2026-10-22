@@ -1,0 +1,186 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the TourCard component
+
+  cover (fixed ratio, place chip bottom-left)
+  title ........................ status
+  destination
+  stats (2 x 2)
+  footer: Edit ............. Duplicate
+
+The body grows, so cards in the same grid row keep
+their footers aligned when a title wraps.
+------------------------------------------------------
+**/
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background-color: var(--color-surface);
+}
+
+// The ratio reserves the space before the image loads, so nothing shifts
+.media {
+  position: relative;
+  aspect-ratio: 11 / 5;
+  background-color: var(--color-placeholder-mid);
+}
+
+.cover {
+  object-fit: cover;
+}
+
+.place {
+  position: absolute;
+  bottom: var(--space-3);
+  left: var(--space-3);
+  max-width: calc(100% - var(--space-6));
+  overflow: hidden;
+  padding: var(--space-1) var(--space-3);
+  border-radius: 999px;
+  background-color: var(--color-on-media-bg);
+  color: var(--color-on-media);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+
+  @include respond-to(tablet) {
+    padding: var(--space-5) var(--space-6);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.title {
+  min-width: 0;
+  font-size: 0.9375rem;
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+}
+
+.status {
+  font-size: 0.6875rem;
+}
+
+.destination {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.pin {
+  flex-shrink: 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3) var(--space-4);
+  margin: 0;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.statValue {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface-sunken);
+
+  @include respond-to(tablet) {
+    padding-inline: var(--space-6);
+  }
+}
+
+%action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0 var(--space-4);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  // 44px touch targets on phones
+  @media (max-width: #{$bp-tablet - 0.02px}) {
+    min-height: 2.75rem;
+  }
+}
+
+.edit {
+  @extend %action;
+  padding: var(--space-2);
+  border: 1px solid var(--color-border-strong);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+
+  &:hover {
+    border-color: var(--color-border-hover);
+    background-color: var(--color-surface-hover);
+  }
+}
+
+.duplicate {
+  @extend %action;
+  border: 0;
+  background-color: transparent;
+  color: var(--color-text-secondary);
+
+  &:hover {
+    background-color: var(--color-surface-hover);
+    color: var(--color-text);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .edit,
+  .duplicate {
+    transition: none;
+  }
+}

@@ -1,0 +1,94 @@
+/**
+------------------------------------------------------
+styles specific to the Itinerary component
+
+  header: title + "Add day" (bottom border)
+  days:   one bordered section per day, stacked
+    day header: "Day N: <title>" on a muted band
+    day body:   title, location, description, one per row
+------------------------------------------------------
+**/
+
+@use '../../styles/mixins' as *;
+
+.card {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background-color: var(--color-surface);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+
+  @include respond-to(tablet) {
+    padding: var(--space-5) var(--space-6);
+  }
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text);
+}
+
+// Compact buttons in the card and day headers; scoped under .card to outrank Button's padding
+.card .headerAction {
+  flex-shrink: 0;
+  padding: var(--space-2) var(--space-4);
+}
+
+.days {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+
+  @include respond-to(tablet) {
+    padding: var(--space-6);
+  }
+}
+
+.day {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-surface);
+}
+
+.dayHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface-muted);
+
+  @include respond-to(tablet) {
+    padding: var(--space-3) var(--space-5);
+  }
+}
+
+// min-width: 0 lets a long title wrap instead of pushing the Remove button out
+.dayTitle {
+  min-width: 0;
+  margin: 0;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.dayBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-4);
+
+  @include respond-to(tablet) {
+    padding: var(--space-5);
+  }
+}

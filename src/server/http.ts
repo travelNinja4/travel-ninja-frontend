@@ -11,7 +11,7 @@
 
 import 'server-only';
 import { cookies } from 'next/headers';
-import { parseSetCookie } from './session';
+import { parseSetCookie, toCookieHeader } from './session';
 
 const API_BASE_URL = process.env.API_BASE_URL;
 
@@ -89,7 +89,7 @@ async function request<T>(
   options: RequestOptions = {},
 ): Promise<T> {
   const cookieStore = await cookies();
-  const res = await send(path, method, cookieStore.toString(), options);
+  const res = await send(path, method, toCookieHeader(cookieStore.getAll()), options);
 
   if (options.persistCookies) {
     res.headers
