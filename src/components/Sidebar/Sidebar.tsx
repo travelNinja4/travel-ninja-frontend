@@ -27,7 +27,7 @@
  */
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
 import clsx from 'clsx';
 import { ChevronLeft, ChevronRight, LogOut, MapIcon, Menu, X } from 'lucide-react';
 import AppLink from '../AppLink';
@@ -53,9 +53,9 @@ interface SidebarProps {
   planName?: string;
 
   /**
-   * Called when "Sign out" is clicked.
+   * Called when "Sign out" is clicked. The button stays disabled until it settles.
    */
-  onSignOut?: () => void;
+  onSignOut?: () => void | Promise<void>;
 }
 
 const PANEL_ID = 'app-sidebar';
@@ -79,6 +79,7 @@ export default function Sidebar({
   // null = follow the breakpoint until the user picks a state
   const [collapsedChoice, setCollapsedChoice] = useState<boolean | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isSigningOut, startSignOut] = useTransition();
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
   // The drawer only exists on phones; widening the window simply drops it
@@ -109,7 +110,10 @@ export default function Sidebar({
       type="button"
       className={styles.signOut}
       aria-label={collapsed ? SIDEBAR.SIGN_OUT : undefined}
-      onClick={onSignOut}
+      aria-busy={isSigningOut || undefined}
+      disabled={isSigningOut}
+      // A transition keeps the button disabled until the logout redirect lands, so it can't fire twice
+      onClick={() => onSignOut && startSignOut(onSignOut)}
     >
       <LogOut size={18} strokeWidth={1.75} className={styles.signOutIcon} aria-hidden="true" />
       <span className={styles.label}>{SIDEBAR.SIGN_OUT}</span>

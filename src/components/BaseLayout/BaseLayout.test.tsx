@@ -5,6 +5,10 @@ vi.mock('../Sidebar', () => ({
   default: () => <aside data-testid="SidebarTest" />,
 }));
 
+vi.mock('@/actions/auth', () => ({
+  logoutAction: vi.fn(),
+}));
+
 vi.mock('../AppHeader', () => ({
   default: () => <header data-testid="AppHeaderTest" />,
 }));

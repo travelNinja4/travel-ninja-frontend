@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Sidebar from './Sidebar';
 import { MEDIA_QUERIES, SIDEBAR, STRINGS } from '@/constants/strings';
 
@@ -55,6 +55,16 @@ describe('Sidebar', () => {
     const onSignOut = vi.fn();
     render(<Sidebar onSignOut={onSignOut} />);
 
+    fireEvent.click(panelButton(SIDEBAR.SIGN_OUT));
+    expect(onSignOut).toHaveBeenCalledTimes(1);
+  });
+
+  it('disables sign out while it is in progress', async () => {
+    const onSignOut = vi.fn(() => new Promise<void>(() => {}));
+    render(<Sidebar onSignOut={onSignOut} />);
+
+    fireEvent.click(panelButton(SIDEBAR.SIGN_OUT));
+    await waitFor(() => expect(panelButton(SIDEBAR.SIGN_OUT)).toBeDisabled());
     fireEvent.click(panelButton(SIDEBAR.SIGN_OUT));
     expect(onSignOut).toHaveBeenCalledTimes(1);
   });

@@ -23,6 +23,7 @@
  */
 
 import type { ReactNode } from 'react';
+import { logoutAction } from '@/actions/auth';
 import AppHeader from '../AppHeader';
 import Sidebar from '../Sidebar';
 import styles from './BaseLayout.module.scss';
@@ -40,7 +41,7 @@ interface BaseLayoutProps {
 export default function BaseLayout({ children }: BaseLayoutProps) {
   return (
     <div data-testid="BaseLayoutTest" className={styles.container}>
-      <Sidebar />
+      <Sidebar onSignOut={logoutAction} />
       <div className={styles.content}>
         <AppHeader />
         <main className={styles.mainContent}>{children}</main>
