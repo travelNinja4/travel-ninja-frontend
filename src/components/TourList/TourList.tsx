@@ -20,6 +20,8 @@
  */
 
 import type { ReactNode } from 'react';
+import { Compass } from 'lucide-react';
+import EmptyState from '../EmptyState';
 import Typography from '../Typography';
 import TourCard from '../TourCard';
 import { TOURS } from '@/constants/strings';
@@ -107,14 +109,7 @@ export default function TourList({
           ))}
         </ul>
       ) : (
-        <div className={styles.empty}>
-          <Typography variant="heading-4" tag="p">
-            {emptyTitle}
-          </Typography>
-          <Typography variant="body" className={styles.emptyDescription}>
-            {emptyDescription}
-          </Typography>
-        </div>
+        <EmptyState icon={Compass} title={emptyTitle} description={emptyDescription} />
       )}
 
       <div className={styles.footer}>

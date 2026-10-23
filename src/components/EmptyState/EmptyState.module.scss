@@ -1,0 +1,80 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the EmptyState component
+
+  container (centred column)
+    icon in a brand-tinted circle
+    title, description (kept to a readable width)
+    action
+
+Phones get tighter padding and a smaller icon; from tablet
+up the spacing, icon and text step up.
+------------------------------------------------------
+**/
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-10) var(--space-4);
+  color: var(--color-text);
+  text-align: center;
+
+  @include respond-to(tablet) {
+    gap: var(--space-2);
+    padding: var(--space-16) var(--space-6);
+  }
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: var(--space-2);
+  border-radius: 50%;
+  background-color: var(--color-brand-subtle);
+  color: var(--color-brand);
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  @include respond-to(tablet) {
+    width: 3.5rem;
+    height: 3.5rem;
+
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}
+
+.title {
+  @include respond-to(tablet) {
+    font-size: 1.125rem;
+  }
+}
+
+.description {
+  max-width: 32rem;
+  color: var(--color-text-secondary);
+
+  @include respond-to(tablet) {
+    font-size: 0.9375rem;
+  }
+}
+
+.action {
+  margin-top: var(--space-3);
+
+  @include respond-to(tablet) {
+    margin-top: var(--space-4);
+  }
+}

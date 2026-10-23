@@ -1,0 +1,212 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the DataTable component
+
+  panel
+    scroller (scrolls sideways when the table is wider)
+      table: uppercase header row, rows split by borders
+    footer: Showing X of Y, pagination on the right
+
+Text and padding step up at tablet and desktop. Keep the
+.hideBelow* classes in step with HIDE_BELOW in DataTable.tsx.
+------------------------------------------------------
+**/
+
+.panel {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-xs);
+}
+
+.scroller {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: inset var(--shadow-focus);
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+/* -----------------------------
+  Cells
+----------------------------- */
+
+.headerCell,
+.cell {
+  padding: var(--space-3) var(--space-4);
+  text-align: start;
+  white-space: nowrap;
+  vertical-align: middle;
+
+  @include respond-to(tablet) {
+    padding-inline: var(--space-5);
+  }
+
+  @include respond-to(desktop) {
+    padding-inline: var(--space-6);
+  }
+}
+
+.headerCell {
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface-sunken);
+  color: var(--color-text-secondary);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  @include respond-to(tablet) {
+    font-size: 0.75rem;
+  }
+
+  @include respond-to(desktop) {
+    padding-block: var(--space-4);
+    font-size: 0.8125rem;
+  }
+}
+
+.cell {
+  color: var(--color-text);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+
+  @include respond-to(tablet) {
+    padding-block: var(--space-4);
+    font-size: 0.875rem;
+  }
+
+  @include respond-to(desktop) {
+    padding-block: var(--space-5);
+    font-size: 0.9375rem;
+  }
+}
+
+.row {
+  transition: background-color 0.15s ease;
+
+  & + & {
+    border-top: 1px solid var(--color-border);
+  }
+
+  &:hover {
+    background-color: var(--color-surface-hover);
+  }
+}
+
+.center {
+  text-align: center;
+}
+
+.end {
+  text-align: end;
+}
+
+/* -----------------------------
+  Columns hidden on narrower screens
+----------------------------- */
+
+.hideBelowTablet {
+  display: none;
+
+  @include respond-to(tablet) {
+    display: table-cell;
+  }
+}
+
+.hideBelowLaptop {
+  display: none;
+
+  @include respond-to(laptop) {
+    display: table-cell;
+  }
+}
+
+.hideBelowDesktop {
+  display: none;
+
+  @include respond-to(desktop) {
+    display: table-cell;
+  }
+}
+
+/* -----------------------------
+  Loading and footer
+----------------------------- */
+
+.muted {
+  color: var(--color-text-secondary);
+}
+
+.skeleton {
+  display: block;
+  width: 60%;
+  min-width: 2rem;
+  height: 0.875rem;
+  border-radius: 4px;
+  background-color: var(--color-surface-muted);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.end .skeleton {
+  margin-inline-start: auto;
+}
+
+.center .skeleton {
+  margin-inline: auto;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--color-border);
+
+  @include respond-to(tablet) {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  @include respond-to(desktop) {
+    padding-inline: var(--space-6);
+  }
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row {
+    transition: none;
+  }
+
+  .skeleton {
+    animation: none;
+  }
+}
