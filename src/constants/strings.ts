@@ -97,6 +97,7 @@ export const STRINGS = {
   LOGGED_IN_SUCCESSFUL: `You’ve logged in successfully!`,
   ACCOUNT_CREATED_SUCCESSFUL: 'Account created successfully',
   SOMETHING_WENT_WRONG: 'Something went wrong',
+  CANCEL: 'Cancel',
   VERIFICATION_SESSION_EXPIRED: 'Your verification session has expired. Please start again.',
 };
 
@@ -208,9 +209,70 @@ export const TOURS = {
   CAPACITY: 'Capacity',
   OCCUPANCY: 'Occupancy',
   EDIT: 'Edit',
+  VIEW: 'View',
   DUPLICATE: 'Duplicate',
+  DELETE: 'Delete',
+  DELETE_TITLE: 'Delete this tour?',
+  DELETE_DESCRIPTION: 'will be removed with its itinerary and photos. This can’t be undone.',
+  DELETE_CONFIRM: 'Delete tour',
+  DELETED: 'Tour deleted',
+  DELETE_FAILED: 'We couldn’t delete this tour',
   // Shown for a value the API hasn't sent
   NOT_AVAILABLE: '—',
+};
+
+export const TOUR_FORM = {
+  CREATE_TITLE: 'Create tour',
+  CREATE_DESCRIPTION: 'Build a departure guests can discover and book.',
+  EDIT_TITLE: 'Edit tour',
+  SAVE_DRAFT: 'Save draft',
+  PUBLISH: 'Publish',
+  UPDATE: 'Update',
+  DRAFT_SAVED: 'Draft saved',
+  PUBLISHED: 'Tour published',
+};
+
+// Placeholder guides until the guides API is wired in
+export const TOUR_GUIDES = [
+  { value: 'arjun', label: 'Arjun Mehta' },
+  { value: 'priya', label: 'Priya Nair' },
+  { value: 'rahul', label: 'Rahul Sharma' },
+];
+
+export const TOUR_BASICS = {
+  TITLE: 'Basics',
+  TOUR_TITLE: 'Tour title',
+  DESTINATION: 'Destination',
+  CATEGORY: 'Category',
+  SELECT_CATEGORY: 'Select category',
+  DESCRIPTION: 'Description',
+};
+
+export const COVER_GALLERY = {
+  TITLE: 'Cover & gallery',
+  COVER: 'Cover image',
+  COVER_PROMPT: 'Upload a cover image',
+  DROP_HINT: 'Drag and drop, or click to browse',
+  COVER_HINT:
+    'JPG, PNG or WebP up to 5 MB. Wide images work best; keep the subject centred, as tour cards crop to a wide banner.',
+  COVER_PREVIEW: 'Cover image preview',
+  REPLACE: 'Replace',
+  REMOVE: 'Remove',
+  GALLERY: 'Gallery',
+  GALLERY_HINT: 'Add photos of the stays, food and highlights. Pick several at once.',
+  ADD_PHOTO: 'Add photo',
+  PHOTO: 'Gallery photo',
+  REMOVE_PHOTO: 'Remove photo',
+  INVALID_TYPE: 'Use a JPG, PNG or WebP image',
+  TOO_LARGE: 'Images must be 5 MB or smaller',
+  GALLERY_FULL: 'The gallery holds up to 10 photos',
+};
+
+export const TOUR_POLICIES = {
+  TITLE: 'Inclusions & policy',
+  INCLUSIONS: 'Inclusions',
+  EXCLUSIONS: 'Exclusions',
+  CANCELLATION_POLICY: 'Cancellation policy',
 };
 
 export const SCHEDULE_PRICING = {
@@ -240,6 +302,14 @@ export const PAGINATION = {
   LABEL: 'Pagination',
   PAGE: 'Page',
   MORE_PAGES: 'More pages',
+};
+
+export const TABLE = {
+  SHOWING: 'Showing',
+  OF: 'of',
+  LOADING: 'Loading',
+  EMPTY_TITLE: 'Nothing to show',
+  EMPTY_DESCRIPTION: 'Records will show up here once there are some.',
 };
 
 export const TOUR_STATUS_LABEL: Record<TourStatus, string> = {

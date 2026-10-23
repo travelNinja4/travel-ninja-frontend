@@ -85,6 +85,47 @@ export type Tour = {
   bookedSeats?: number;
 };
 
+/** One day of a saved tour's itinerary */
+export type TourItineraryDay = ItineraryDay & {
+  id: number;
+  /** 1-based */
+  day: number;
+};
+
+/** One saved photo of a tour */
+export type TourPhoto = {
+  id: number;
+  kind: 'cover' | 'gallery';
+  url: string;
+  storageKey: string;
+  sortOrder: number;
+  createdAt: string;
+};
+
+/** A single tour as returned by GET /tours/{id}, with everything the tour form edits */
+export type TourDetails = Tour & {
+  userId: number;
+  description: string;
+  inclusions: string[];
+  exclusions: string[];
+  cancellation: string;
+  itinerary: TourItineraryDay[];
+  /** Gallery photos only: the cover is `coverImageUrl` */
+  gallery: TourPhoto[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+/** Fields of the "Basics" section of the tour form */
+export type TourBasics = {
+  title: string;
+  /** Place and region, e.g. "Coorg, Karnataka" */
+  destination: string;
+  /** `id` of a `tour_category` meta option as a string, since the dropdown holds strings */
+  categoryId: string;
+  description: string;
+};
+
 /**
  * Fields of the "Schedule & pricing" section of the tour form. Number inputs are
  * read with `valueAsNumber`, so an empty one is `NaN` until the schema rejects it.
@@ -111,6 +152,55 @@ export type ItineraryDay = {
 /** The itinerary part of the tour form, one entry per day in order */
 export type TourItinerary = {
   itinerary: ItineraryDay[];
+};
+
+/** Fields of the "Inclusions & policy" section of the tour form */
+export type TourPolicies = {
+  inclusions: string;
+  exclusions: string;
+  cancellationPolicy: string;
+};
+
+/** An image the tour already has. `id` is set for gallery photos; the cover only has a URL. */
+export type SavedImage = {
+  id?: number;
+  url: string;
+};
+
+/** A tour image: picked on this device, or already saved with the tour */
+export type TourImage = File | SavedImage;
+
+/** Fields of the "Cover & gallery" section of the tour form */
+export type TourMedia = {
+  coverImage: TourImage | null;
+  /** In the order they were added */
+  gallery: TourImage[];
+};
+
+/** Every field of the tour form, used to create and edit tours */
+export type TourFormValues = TourBasics & TourMedia & TourSchedule & TourItinerary & TourPolicies;
+
+/** Body of POST /tours/create-tour. Optional text fields are left out when empty. */
+export type CreateTourPayload = {
+  title: string;
+  destination: string;
+  categoryId: number;
+  description?: string;
+  durationDays: number;
+  /** "YYYY-MM-DD" */
+  departureDate: string;
+  /** "YYYY-MM-DD" */
+  returnDate: string;
+  /** Price per guest in rupees */
+  price: number;
+  capacity: number;
+  /** Guide display name */
+  guide: string;
+  inclusions: string[];
+  exclusions: string[];
+  cancellation?: string;
+  status: TourStatus;
+  itinerary: (ItineraryDay & { day: number })[];
 };
 
 /** Statuses the tours API can filter by */

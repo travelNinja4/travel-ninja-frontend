@@ -6,8 +6,8 @@
  * `Dashboard / Tours / New`. Page names come from the sidebar navigation, so a
  * screen added there is labelled here too; other segments are turned into words.
  *
- * Only crumbs for known screens link anywhere: an unknown segment (an id, or a
- * group like `/insights`) may have no page of its own.
+ * Only crumbs for known screens link anywhere: an unknown segment (a group like
+ * `/insights`) may have no page of its own. Numeric ids are left out.
  *
  * @example
  * ```ts
@@ -52,8 +52,8 @@ export const getBreadcrumbs = (pathname: string): BreadcrumbItem[] => {
   for (const segment of pathname.split('/')) {
     if (!segment) continue;
     path += `/${segment}`;
-    // Already the root crumb
-    if (path === ROUTES.DASHBOARD) continue;
+    // Already the root crumb, or an id: `/tours/12/edit` reads `Tours / Edit`
+    if (path === ROUTES.DASHBOARD || /^\d+$/.test(segment)) continue;
 
     const label = ROUTE_LABELS.get(path);
     crumbs.push(label ? { label, href: path } : { label: humanize(segment) });

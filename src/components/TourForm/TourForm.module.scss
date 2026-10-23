@@ -1,0 +1,161 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the TourForm component (create and edit tour screens)
+
+  page
+    header: title + description, the actions on the right
+            (Save draft / Publish when creating, Update when editing)
+            phone: the buttons wrap below and share the row
+    layout
+      phone / tablet  side cards, then the main cards, stacked
+      desktop         main cards | side column (18–24rem)
+      wide            main cards | side column (20–26rem), wider gaps
+      The side column stays in view while the main cards scroll, on
+      screens tall enough to show all of it.
+
+The main column holds Basics, Cover & gallery, Itinerary and
+Inclusions & policy. The side column holds Schedule & pricing.
+
+  Basics and Inclusions & policy cards
+    header: title (bottom border)
+    body:   phone one field per row,
+            tablet+ half-width fields side by side
+            (destination + category, inclusions + exclusions)
+------------------------------------------------------
+**/
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 120rem;
+  margin-inline: auto;
+
+  @include respond-to(tablet) {
+    gap: var(--space-8);
+  }
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.heading {
+  display: flex;
+  flex: 1 1 20rem;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  color: var(--color-text);
+}
+
+// The edit screen shows the tour's title here, which may be one long word
+.description {
+  color: var(--color-text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+  width: 100%;
+
+  @include respond-to(tablet) {
+    width: auto;
+  }
+}
+
+// 44px touch targets that split the row on phones; Button's own width from tablet up.
+// Scoped under .actions to outrank Button's own styles
+.actions .action {
+  flex: 1;
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.9375rem;
+
+  @include respond-to(tablet) {
+    flex: none;
+  }
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-4);
+
+  @include respond-to(tablet) {
+    gap: var(--space-6);
+  }
+
+  @include respond-to(desktop) {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+  }
+
+  @include respond-to(wide) {
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 26rem);
+    gap: var(--space-8);
+  }
+}
+
+.main,
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+
+  @include respond-to(tablet) {
+    gap: var(--space-6);
+  }
+}
+
+// Schedule & pricing leads while the cards are stacked; the DOM keeps the desktop
+// order (main first) so keyboard focus follows the side-by-side layout
+.aside {
+  order: -1;
+
+  @include respond-to(desktop) {
+    order: 0;
+
+    // Sticky only when the card fits: a taller one would hide its last fields until the page ends.
+    // The page scrolls inside the layout's main area, below the top bar, so the offset is only a gap.
+    @media (min-height: 48rem) {
+      position: sticky;
+      top: var(--space-6);
+    }
+  }
+}
+
+/* -----------------------------
+  Basics and Inclusions & policy cards
+----------------------------- */
+
+// No overflow: hidden, so a dropdown's list can spill past the card
+.card {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background-color: var(--color-surface);
+}
+
+.cardHeader {
+  margin: 0;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+// Row-wrap so DynamicForm's half-width fields sit side by side, sized to this column gap
+.cardBody {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-5);
+  --field-column-gap: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+}

@@ -24,7 +24,7 @@ import styles from './Button.module.scss';
  * - `secondary`: outlined on the surface colour, for supporting actions
  *   such as "Add day" or "Remove".
  */
-export type ButtonVariant = 'primary' | 'secondary';
+export type ButtonVariant = 'primary' | 'secondary' | 'danger';
 
 /**
  * Define the props available for the Button component.

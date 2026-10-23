@@ -1,0 +1,112 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the ConfirmDialog component
+(the Modal atom provides the panel, its width and padding)
+
+  content: icon above the title and description, centred, on every screen
+  actions: Cancel, confirm
+    phone   side by side, sharing the row (one button fills it)
+    tablet+ their own width, centred under the text
+
+Text is a step smaller on phones: title 16px / 18px,
+description 14px / 15px from tablet up.
+------------------------------------------------------
+**/
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+
+  @include respond-to(tablet) {
+    gap: var(--space-4);
+  }
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+}
+
+.danger {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.warning {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.success {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.info {
+  background-color: var(--color-info-bg);
+  color: var(--color-info);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+// Scoped under .text to outrank the Typography variants
+.text .title {
+  color: var(--color-text);
+  font-size: 1rem;
+
+  @include respond-to(tablet) {
+    font-size: 1.125rem;
+  }
+}
+
+.text .description {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+
+  @include respond-to(tablet) {
+    font-size: 0.9375rem;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+
+  @include respond-to(tablet) {
+    justify-content: center;
+  }
+}
+
+// 44px touch targets that split the row on phones; their own width from tablet up.
+// Scoped under .actions to outrank Button's own styles
+.actions .action {
+  flex: 1;
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.9375rem;
+
+  @include respond-to(tablet) {
+    flex: none;
+    min-height: 2.5rem;
+    padding-inline: var(--space-5);
+    font-size: 0.875rem;
+  }
+}

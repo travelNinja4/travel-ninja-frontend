@@ -13,19 +13,26 @@
  * - Dropdowns show the chosen value straight away (optimistic) and add a
  *   history entry; searches replace the current entry, so Back doesn't step
  *   through every term typed.
+ * - A card's delete icon asks for confirmation first. The delete action
+ *   refreshes the page in the same response, so the list comes back without
+ *   the tour; deleting the last tour of a later page steps back a page.
  */
 'use client';
 
-import { use, useMemo, useOptimistic, useState, useTransition } from 'react';
+import { use, useCallback, useMemo, useOptimistic, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
+import { Trash2 } from 'lucide-react';
+import { deleteTourAction } from '@/actions/tours';
+import { useNotification } from '@/providers/NotificationProvider';
+import ConfirmDialog from '../ConfirmDialog';
 import Dropdown from '../Dropdown';
 import type { DropdownOption } from '../Dropdown/Dropdown';
 import Pagination from '../Pagination';
 import SearchInput from '../SearchInput';
 import TourList from '../TourList';
-import { TOURS } from '@/constants/strings';
-import type { MetaOptions, TourPage, TourSearch, TourStatusFilter } from '@/constants/types';
+import { NOTIFICATION_TYPES, STRINGS, TOURS } from '@/constants/strings';
+import type { MetaOptions, Tour, TourPage, TourSearch, TourStatusFilter } from '@/constants/types';
 import { toursHref } from '@/utils/toursQuery';
 import styles from './Tours.module.scss';
 
@@ -66,6 +73,10 @@ export default function ToursContent({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isSearching, startSearch] = useTransition();
+  const [isDeleting, startDelete] = useTransition();
+  const { showNotification } = useNotification();
+  // The tour waiting for the user to confirm its deletion
+  const [tourToDelete, setTourToDelete] = useState<Tour | null>(null);
   // Shows the chosen filters straight away, while their tours load
   const [selected, setSelected] = useOptimistic(filters);
 
@@ -118,6 +129,27 @@ export default function ToursContent({
     });
   };
 
+  // Stable, so the cards (memoized) don't re-render when this component does
+  const askToDelete = useCallback((tour: Tour) => setTourToDelete(tour), []);
+
+  const deleteTour = (tour: Tour) => {
+    startDelete(async () => {
+      const result = await deleteTourAction(tour.id);
+      setTourToDelete(null);
+      if (!result.success) {
+        result.errors.forEach((message) =>
+          showNotification(STRINGS.ERROR, message, NOTIFICATION_TYPES.ERROR),
+        );
+        return;
+      }
+      showNotification(TOURS.DELETED, tour.title, NOTIFICATION_TYPES.SUCCESS);
+      // That was the only tour on this page: show the one before rather than an empty page
+      if (tours.length === 1 && page > 1) {
+        router.replace(toursHref({ ...filters, page: page - 1 }), { scroll: false });
+      }
+    });
+  };
+
   let empty: { title?: string; description?: string } = {};
   if (tours.length === 0 && page > 1) {
     empty = { title: TOURS.PAGE_EMPTY_TITLE, description: TOURS.PAGE_EMPTY_DESCRIPTION };
@@ -154,6 +186,7 @@ export default function ToursContent({
         <TourList
           tours={tours}
           total={total}
+          onDelete={askToDelete}
           emptyTitle={empty.title}
           emptyDescription={empty.description}
           pagination={
@@ -165,6 +198,24 @@ export default function ToursContent({
           }
         />
       </div>
+
+      <ConfirmDialog
+        open={tourToDelete !== null}
+        tone="danger"
+        icon={Trash2}
+        title={TOURS.DELETE_TITLE}
+        description={
+          tourToDelete && (
+            <>
+              <strong>{tourToDelete.title}</strong> {TOURS.DELETE_DESCRIPTION}
+            </>
+          )
+        }
+        confirmLabel={TOURS.DELETE_CONFIRM}
+        loading={isDeleting}
+        onConfirm={() => tourToDelete && deleteTour(tourToDelete)}
+        onCancel={() => setTourToDelete(null)}
+      />
     </div>
   );
 }

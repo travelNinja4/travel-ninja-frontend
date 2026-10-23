@@ -8,7 +8,7 @@ styles specific to the TourCard component
   title ........................ status
   destination
   stats (2 x 2)
-  footer: Edit ............. Duplicate
+  footer: Delete ...... Duplicate  Edit / View
 
 The body grows, so cards in the same grid row keep
 their footers aligned when a title wraps.
@@ -166,6 +166,34 @@ their footers aligned when a title wraps.
   }
 }
 
+// Edit / View and Duplicate, kept together on the right even when Delete is hidden
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+// Icon only: the tour name is in its accessible name
+.delete {
+  @extend %action;
+  justify-content: center;
+  width: 2.25rem;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  color: var(--color-text-secondary);
+
+  &:hover {
+    background-color: var(--color-danger-bg);
+    color: var(--color-danger);
+  }
+
+  @media (max-width: #{$bp-tablet - 0.02px}) {
+    width: 2.75rem;
+  }
+}
+
 .duplicate {
   @extend %action;
   border: 0;
@@ -180,7 +208,8 @@ their footers aligned when a title wraps.
 
 @media (prefers-reduced-motion: reduce) {
   .edit,
-  .duplicate {
+  .duplicate,
+  .delete {
     transition: none;
   }
 }

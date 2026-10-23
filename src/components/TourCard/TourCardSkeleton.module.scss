@@ -1,0 +1,93 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the TourCardSkeleton component
+
+The layout and sizes come from TourCard.module.scss; these
+only paint each line of blank text as a pulsing bar and set
+how wide it is.
+------------------------------------------------------
+**/
+
+.pulse,
+.bar {
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.bar {
+  border-color: transparent;
+  border-radius: 4px;
+  // Only the middle of the line is painted, so stacked lines read as separate bars
+  background: linear-gradient(var(--color-surface-muted), var(--color-surface-muted)) center / 100%
+    70% no-repeat;
+  color: transparent;
+  pointer-events: none;
+}
+
+.title {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  .bar {
+    width: 85%;
+  }
+
+  // Cards are wide on phones, so most titles fit on one line there
+  .secondLine {
+    display: none;
+    width: 55%;
+
+    @include respond-to(tablet) {
+      display: block;
+    }
+  }
+}
+
+.badge {
+  background: var(--color-surface-muted);
+}
+
+// The footer is already the muted colour, so draw the button's outline like the real one
+.action {
+  border-color: var(--color-border);
+  background: var(--color-surface);
+}
+
+.badge {
+  display: inline-block;
+  width: 4.5rem;
+  padding: 0.125rem var(--space-2);
+  border-radius: 999px;
+}
+
+.destination {
+  width: 60%;
+}
+
+.statLabel {
+  width: 50%;
+}
+
+.statValue {
+  width: 70%;
+}
+
+.action {
+  width: 4rem;
+  margin-left: auto;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse,
+  .bar {
+    animation: none;
+  }
+}

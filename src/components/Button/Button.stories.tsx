@@ -13,7 +13,7 @@ const meta = {
   argTypes: {
     variant: {
       control: { type: 'inline-radio' },
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'danger'],
     },
     type: {
       control: { type: 'select' },
