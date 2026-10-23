@@ -5,6 +5,7 @@
  */
 
 import clsx from 'clsx';
+import TourCardSkeleton from '../TourCard/TourCardSkeleton';
 import { TOURS } from '@/constants/strings';
 import styles from './Tours.module.scss';
 
@@ -26,7 +27,7 @@ export default function ToursSkeleton() {
       <div className={styles.skeletonPanel}>
         <div className={styles.skeletonGrid}>
           {Array.from({ length: CARD_COUNT }, (_, index) => (
-            <div key={index} className={clsx(styles.skeletonBlock, styles.skeletonCard)} />
+            <TourCardSkeleton key={index} />
           ))}
         </div>
       </div>
