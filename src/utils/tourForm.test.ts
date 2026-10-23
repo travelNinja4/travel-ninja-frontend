@@ -1,5 +1,6 @@
 import { MOCK_TOUR_DETAILS } from '@/components/TourForm/TourForm.mocks';
-import { toTourFormValues, withCategory, withGuide } from './tourForm';
+import type { TourFormValues } from '@/constants/types';
+import { toTourFormValues, toTourPayload, withCategory, withGuide } from './tourForm';
 
 const guides = [
   { value: 'arjun', label: 'Arjun Mehta' },
@@ -95,5 +96,74 @@ describe('withCategory', () => {
 
   it('adds a category that is no longer active', () => {
     expect(withCategory([], nature)).toEqual([nature]);
+  });
+});
+
+describe('toTourPayload', () => {
+  const values: TourFormValues = {
+    title: 'Goa beach escape',
+    destination: 'Goa',
+    categoryId: '6',
+    description: '',
+    coverImage: null,
+    gallery: [],
+    durationDays: 3,
+    departureDate: '2026-11-20',
+    returnDate: '2026-11-22',
+    price: 15000,
+    capacity: 12,
+    guide: 'arjun',
+    itinerary: [
+      { title: 'Arrival', location: 'Panaji', description: 'Check in' },
+      { title: 'Beaches', location: 'Calangute', description: 'Sun and sand' },
+    ],
+    inclusions: 'Breakfast\n\n  Stay  \n',
+    exclusions: '',
+    cancellationPolicy: '',
+  };
+
+  it('builds the create tour body with the given status', () => {
+    expect(toTourPayload(values, 'published', guides)).toEqual({
+      title: 'Goa beach escape',
+      destination: 'Goa',
+      categoryId: 6,
+      description: undefined,
+      durationDays: 3,
+      departureDate: '2026-11-20',
+      returnDate: '2026-11-22',
+      price: 15000,
+      capacity: 12,
+      // By display name
+      guide: 'Arjun Mehta',
+      // One per non-blank line
+      inclusions: ['Breakfast', 'Stay'],
+      exclusions: [],
+      cancellation: undefined,
+      status: 'published',
+      // Numbered from 1
+      itinerary: [
+        { day: 1, title: 'Arrival', location: 'Panaji', description: 'Check in' },
+        { day: 2, title: 'Beaches', location: 'Calangute', description: 'Sun and sand' },
+      ],
+    });
+  });
+
+  it('keeps filled optional text and the draft status', () => {
+    const payload = toTourPayload(
+      { ...values, description: 'Sea and sand', cancellationPolicy: 'No refunds' },
+      'draft',
+      guides,
+    );
+    expect(payload).toMatchObject({
+      description: 'Sea and sand',
+      cancellation: 'No refunds',
+      status: 'draft',
+    });
+  });
+
+  it('sends a guide the list doesn’t have as it is', () => {
+    expect(toTourPayload({ ...values, guide: 'Kiran Rao' }, 'draft', guides).guide).toBe(
+      'Kiran Rao',
+    );
   });
 });

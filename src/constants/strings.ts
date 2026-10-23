@@ -228,6 +228,8 @@ export const TOUR_FORM = {
   SAVE_DRAFT: 'Save draft',
   PUBLISH: 'Publish',
   UPDATE: 'Update',
+  DRAFT_SAVED: 'Draft saved',
+  PUBLISHED: 'Tour published',
 };
 
 // Placeholder guides until the guides API is wired in
