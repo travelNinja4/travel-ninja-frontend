@@ -98,6 +98,7 @@ export const STRINGS = {
   ACCOUNT_CREATED_SUCCESSFUL: 'Account created successfully',
   SOMETHING_WENT_WRONG: 'Something went wrong',
   CANCEL: 'Cancel',
+  CLOSE: 'Close',
   VERIFICATION_SESSION_EXPIRED: 'Your verification session has expired. Please start again.',
 };
 

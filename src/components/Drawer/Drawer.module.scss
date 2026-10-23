@@ -1,0 +1,154 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the Drawer component
+
+  drawer (the <dialog>): pinned to the right edge, full height, over a dimmed backdrop
+    phone   the full screen
+    tablet+ the size's width: sm 24rem, md 28rem, lg 36rem
+    lg grows to 40rem from desktop
+  header: title and close button, stays put while the body scrolls
+  body: the content, scrolls on its own
+    padding phone 1rem, tablet 1.5rem, desktop 2rem
+  title: 16px on phone, 18px tablet, 20px desktop
+------------------------------------------------------
+**/
+
+.drawer {
+  --drawer-width: 28rem;
+  --drawer-padding: var(--space-4);
+
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+  color: var(--color-text);
+
+  // Only while open: a closed <dialog> must keep the browser's display: none
+  &[open] {
+    display: flex;
+    flex-direction: column;
+    animation: slide-in 0.22s cubic-bezier(0.32, 0.72, 0, 1);
+
+    &::backdrop {
+      animation: fade 0.22s ease-out;
+    }
+  }
+
+  &::backdrop {
+    background-color: var(--color-overlay);
+  }
+
+  @include respond-to(tablet) {
+    --drawer-padding: var(--space-6);
+
+    width: var(--drawer-width);
+    border-left: 1px solid var(--color-border);
+  }
+
+  @include respond-to(desktop) {
+    --drawer-padding: var(--space-8);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &[open],
+    &[open]::backdrop {
+      animation: none;
+    }
+  }
+}
+
+.sm {
+  --drawer-width: 24rem;
+}
+
+.md {
+  --drawer-width: 28rem;
+}
+
+.lg {
+  --drawer-width: 36rem;
+
+  @include respond-to(desktop) {
+    --drawer-width: 40rem;
+  }
+}
+
+.header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-2) var(--space-3) var(--drawer-padding);
+  border-bottom: 1px solid var(--color-border);
+
+  @include respond-to(tablet) {
+    padding-block: var(--space-4);
+  }
+
+  @include respond-to(desktop) {
+    padding-right: var(--space-4);
+  }
+}
+
+// Scoped under .header so it wins over the Typography variant's size
+.header .title {
+  min-width: 0;
+  font-size: 1rem;
+
+  @include respond-to(tablet) {
+    font-size: 1.125rem;
+  }
+
+  @include respond-to(desktop) {
+    font-size: 1.25rem;
+  }
+}
+
+// Just the icon: no background or ring, only the icon darkens on hover and focus
+.close {
+  @include icon-button;
+
+  &:hover,
+  &:focus-visible {
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--color-text);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  padding: var(--drawer-padding);
+  padding-bottom: max(var(--drawer-padding), env(safe-area-inset-bottom));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
