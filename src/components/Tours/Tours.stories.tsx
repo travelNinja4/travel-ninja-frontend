@@ -4,6 +4,7 @@ import { MOCK_TOURS } from '../TourCard/TourCard.mocks';
 import { MOCK_FILTER_OPTIONS } from './Tours.mocks';
 import type { TourPage } from '@/constants/types';
 import { withAppRouter } from '../../../.storybook/decorators/withAppRouter';
+import { NotificationProvider } from '@/providers/NotificationProvider';
 
 const tourPage = (overrides: Partial<TourPage> = {}): Promise<TourPage> =>
   Promise.resolve({
@@ -20,7 +21,15 @@ const meta = {
   parameters: {
     layout: 'padded',
   },
-  decorators: [withAppRouter],
+  decorators: [
+    withAppRouter,
+    // ToursContent shows a toast after a delete
+    (Story) => (
+      <NotificationProvider>
+        <Story />
+      </NotificationProvider>
+    ),
+  ],
   tags: ['autodocs'],
   argTypes: {
     // A promise can't be edited from the controls panel
