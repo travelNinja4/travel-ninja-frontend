@@ -203,6 +203,9 @@ export type CreateTourPayload = {
   itinerary: (ItineraryDay & { day: number })[];
 };
 
+/** Body of PATCH /tours/{id}: only the fields that change. `itinerary` replaces every day. */
+export type UpdateTourPayload = Partial<CreateTourPayload>;
+
 /** Statuses the tours API can filter by */
 export type TourStatusFilter = TourStatus;
 

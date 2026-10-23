@@ -8,11 +8,14 @@
 import { refresh } from 'next/cache';
 import { ApiError } from '@/server/http';
 import { tourService } from '@/server/tourService';
-import { STRINGS, TOURS } from '@/constants/strings';
-import { ActionResult, CreateTourPayload } from '@/constants/types';
+import { STRINGS, TOUR_FORM, TOURS } from '@/constants/strings';
+import { ActionResult, CreateTourPayload, UpdateTourPayload } from '@/constants/types';
 
 // Largest tour id the API accepts
 const MAX_TOUR_ID = 2147483647;
+
+// Actions can be called with anything, so check the id before it reaches the URL
+const isTourId = (id: number) => Number.isInteger(id) && id >= 1 && id <= MAX_TOUR_ID;
 
 const fail = (err: unknown): { success: false; errors: string[] } => {
   if (err instanceof ApiError) {
@@ -39,12 +42,31 @@ export async function createTourAction(
 }
 
 /**
+ * Updates only the fields in `payload`; the rest keep their saved values. Anything the API
+ * rejects comes back as `errors`.
+ */
+export async function updateTourAction(
+  id: number,
+  payload: UpdateTourPayload,
+): Promise<ActionResult> {
+  if (!isTourId(id)) {
+    return { success: false, errors: [TOUR_FORM.UPDATE_FAILED] };
+  }
+
+  try {
+    await tourService.updateTour(id, payload);
+    return { success: true, data: undefined };
+  } catch (err) {
+    return fail(err);
+  }
+}
+
+/**
  * Deletes the tour, then refreshes the current page in the same response, so the tours list
  * comes back without it (and with the next tour moved up from the following page).
  */
 export async function deleteTourAction(id: number): Promise<ActionResult> {
-  // Actions can be called with anything, so check the id before it reaches the URL
-  if (!Number.isInteger(id) || id < 1 || id > MAX_TOUR_ID) {
+  if (!isTourId(id)) {
     return { success: false, errors: [TOURS.DELETE_FAILED] };
   }
 

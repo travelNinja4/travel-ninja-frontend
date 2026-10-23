@@ -1,6 +1,12 @@
 import { MOCK_TOUR_DETAILS } from '@/components/TourForm/TourForm.mocks';
 import type { TourFormValues } from '@/constants/types';
-import { toTourFormValues, toTourPayload, withCategory, withGuide } from './tourForm';
+import {
+  toTourFormValues,
+  toTourPayload,
+  toTourUpdatePayload,
+  withCategory,
+  withGuide,
+} from './tourForm';
 
 const guides = [
   { value: 'arjun', label: 'Arjun Mehta' },
@@ -164,6 +170,47 @@ describe('toTourPayload', () => {
   it('sends a guide the list doesn’t have as it is', () => {
     expect(toTourPayload({ ...values, guide: 'Kiran Rao' }, 'draft', guides).guide).toBe(
       'Kiran Rao',
+    );
+  });
+});
+
+describe('toTourUpdatePayload', () => {
+  const tour = MOCK_TOUR_DETAILS;
+  const saved = toTourFormValues(tour, withGuide(guides, tour.guide));
+
+  it('is empty when nothing changed', () => {
+    expect(toTourUpdatePayload(saved, tour, guides)).toEqual({});
+  });
+
+  it('has only the changed fields', () => {
+    expect(
+      toTourUpdatePayload({ ...saved, title: 'Coorg Escape Updated', price: 13000 }, tour, guides),
+    ).toEqual({ title: 'Coorg Escape Updated', price: 13000 });
+  });
+
+  it('sends the whole itinerary when any day changes', () => {
+    const itinerary = [saved.itinerary[1], saved.itinerary[0]];
+    expect(toTourUpdatePayload({ ...saved, itinerary }, tour, guides)).toEqual({
+      itinerary: [
+        { day: 1, ...saved.itinerary[1] },
+        { day: 2, ...saved.itinerary[0] },
+      ],
+    });
+  });
+
+  it('clears emptied optional text and lists', () => {
+    expect(
+      toTourUpdatePayload(
+        { ...saved, description: '', cancellationPolicy: '', inclusions: '' },
+        tour,
+        guides,
+      ),
+    ).toEqual({ description: '', cancellation: '', inclusions: [] });
+  });
+
+  it('ignores the photos, which aren’t part of the body', () => {
+    expect(toTourUpdatePayload({ ...saved, gallery: [], coverImage: null }, tour, guides)).toEqual(
+      {},
     );
   });
 });

@@ -16,6 +16,7 @@ import type {
   TourDetails,
   TourFormValues,
   TourStatus,
+  UpdateTourPayload,
 } from '@/constants/types';
 
 const matchesGuide = (guide: string) => (option: DropdownOption<string>) =>
@@ -97,3 +98,25 @@ export const toTourPayload = (
   status,
   itinerary: values.itinerary.map((day, index) => ({ ...day, day: index + 1 })),
 });
+
+/**
+ * The PATCH /tours/{id} body for valid form values: only the fields that differ from the saved
+ * tour, so an untouched form gives `{}`. The saved tour goes through the same conversion first,
+ * so differences in how the API stores a value (guide by value or label, day order) don't count
+ * as changes. A cleared optional text field is sent as '' so the API clears it too.
+ */
+export const toTourUpdatePayload = (
+  values: TourFormValues,
+  tour: TourDetails,
+  guides: DropdownOption<string>[],
+): UpdateTourPayload => {
+  const saved = toTourPayload(toTourFormValues(tour, guides), tour.status, guides);
+  return Object.fromEntries(
+    Object.entries(toTourPayload(values, tour.status, guides))
+      .filter(
+        ([key, value]) =>
+          JSON.stringify(value) !== JSON.stringify(saved[key as keyof CreateTourPayload]),
+      )
+      .map(([key, value]) => [key, value ?? '']),
+  );
+};
