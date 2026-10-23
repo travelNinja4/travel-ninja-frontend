@@ -1,9 +1,9 @@
 import { notFound, redirect } from 'next/navigation';
-import TourForm from '@/components/TourForm';
 import { commonService } from '@/server/commonService';
 import { ApiError } from '@/server/http';
 import { tourService } from '@/server/tourService';
 import { ROUTES, TOUR_GUIDES } from '@/constants/strings';
+import EditTourForm from './EditTourForm';
 
 // Largest tour id the API accepts
 const MAX_TOUR_ID = 2147483647;
@@ -30,5 +30,5 @@ export default async function EditTourPage({ params }: { params: Promise<{ id: s
   if (tour.status !== 'draft') redirect(`${ROUTES.TOURS}/${tour.id}`);
 
   // Keyed so moving to another tour's edit screen starts a fresh form
-  return <TourForm key={tour.id} tour={tour} categories={tour_category} guides={TOUR_GUIDES} />;
+  return <EditTourForm key={tour.id} tour={tour} categories={tour_category} guides={TOUR_GUIDES} />;
 }
