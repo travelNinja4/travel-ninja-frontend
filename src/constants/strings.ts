@@ -230,6 +230,9 @@ export const TOUR_FORM = {
   UPDATE: 'Update',
   DRAFT_SAVED: 'Draft saved',
   PUBLISHED: 'Tour published',
+  UPDATED: 'Tour updated',
+  NO_CHANGES: 'No changes to save',
+  UPDATE_FAILED: 'We couldn’t update this tour',
 };
 
 // Placeholder guides until the guides API is wired in

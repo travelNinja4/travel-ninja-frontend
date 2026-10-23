@@ -5,7 +5,14 @@
 
 import 'server-only';
 import { http } from './http';
-import type { CreateTourPayload, Tour, TourDetails, TourPage, TourSearch } from '@/constants/types';
+import type {
+  CreateTourPayload,
+  Tour,
+  TourDetails,
+  TourPage,
+  TourSearch,
+  UpdateTourPayload,
+} from '@/constants/types';
 
 /** Tours shown per page on the tours screen */
 export const TOURS_PAGE_SIZE = 12;
@@ -64,6 +71,16 @@ export const tourService = {
    */
   async createTour(payload: CreateTourPayload): Promise<TourDetails> {
     const res = await http.post<{ data: TourDetails }>('/tours/create-tour', payload);
+    return res.data;
+  },
+
+  /**
+   * Updates the given fields of one of the signed-in agency's tours; fields left out keep their
+   * saved values. Throws an ApiError with status 404 when the tour doesn't exist or belongs to
+   * another agency and 422 when the API rejects a field.
+   */
+  async updateTour(id: number, payload: UpdateTourPayload): Promise<TourDetails> {
+    const res = await http.patch<{ data: TourDetails }>(`/tours/${id}`, payload);
     return res.data;
   },
 
