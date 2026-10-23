@@ -9,10 +9,34 @@ import { refresh } from 'next/cache';
 import { ApiError } from '@/server/http';
 import { tourService } from '@/server/tourService';
 import { STRINGS, TOURS } from '@/constants/strings';
-import { ActionResult } from '@/constants/types';
+import { ActionResult, CreateTourPayload } from '@/constants/types';
 
 // Largest tour id the API accepts
 const MAX_TOUR_ID = 2147483647;
+
+const fail = (err: unknown): { success: false; errors: string[] } => {
+  if (err instanceof ApiError) {
+    return { success: false, errors: err.messages };
+  }
+  // eslint-disable-next-line no-console -- unexpected errors are logged on the server only
+  console.error(err);
+  return { success: false, errors: [STRINGS.SOMETHING_WENT_WRONG] };
+};
+
+/**
+ * Creates a tour as a draft or published, depending on `payload.status`. The API validates the
+ * body, so anything it rejects comes back as `errors`. Returns the new tour's id.
+ */
+export async function createTourAction(
+  payload: CreateTourPayload,
+): Promise<ActionResult<{ id: number }>> {
+  try {
+    const tour = await tourService.createTour(payload);
+    return { success: true, data: { id: tour.id } };
+  } catch (err) {
+    return fail(err);
+  }
+}
 
 /**
  * Deletes the tour, then refreshes the current page in the same response, so the tours list
@@ -29,13 +53,8 @@ export async function deleteTourAction(id: number): Promise<ActionResult> {
     refresh();
     return { success: true, data: undefined };
   } catch (err) {
-    if (err instanceof ApiError) {
-      // Already gone, e.g. deleted in another tab: refresh so the list stops showing it
-      if (err.status === 404) refresh();
-      return { success: false, errors: err.messages };
-    }
-    // eslint-disable-next-line no-console -- unexpected errors are logged on the server only
-    console.error(err);
-    return { success: false, errors: [STRINGS.SOMETHING_WENT_WRONG] };
+    // Already gone, e.g. deleted in another tab: refresh so the list stops showing it
+    if (err instanceof ApiError && err.status === 404) refresh();
+    return fail(err);
   }
 }

@@ -5,7 +5,7 @@
 
 import 'server-only';
 import { http } from './http';
-import type { Tour, TourDetails, TourPage, TourSearch } from '@/constants/types';
+import type { CreateTourPayload, Tour, TourDetails, TourPage, TourSearch } from '@/constants/types';
 
 /** Tours shown per page on the tours screen */
 export const TOURS_PAGE_SIZE = 12;
@@ -54,6 +54,16 @@ export const tourService = {
    */
   async getTour(id: number): Promise<TourDetails> {
     const res = await http.get<{ data: TourDetails }>(`/tours/${id}`);
+    return res.data;
+  },
+
+  /**
+   * Creates a tour owned by the signed-in agency, as a draft or published depending on
+   * `payload.status`. Throws an ApiError with status 400 for an unknown or inactive category,
+   * 403 for a non-agency user and 422 when the API rejects a field.
+   */
+  async createTour(payload: CreateTourPayload): Promise<TourDetails> {
+    const res = await http.post<{ data: TourDetails }>('/tours/create-tour', payload);
     return res.data;
   },
 

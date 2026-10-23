@@ -180,6 +180,29 @@ export type TourMedia = {
 /** Every field of the tour form, used to create and edit tours */
 export type TourFormValues = TourBasics & TourMedia & TourSchedule & TourItinerary & TourPolicies;
 
+/** Body of POST /tours/create-tour. Optional text fields are left out when empty. */
+export type CreateTourPayload = {
+  title: string;
+  destination: string;
+  categoryId: number;
+  description?: string;
+  durationDays: number;
+  /** "YYYY-MM-DD" */
+  departureDate: string;
+  /** "YYYY-MM-DD" */
+  returnDate: string;
+  /** Price per guest in rupees */
+  price: number;
+  capacity: number;
+  /** Guide display name */
+  guide: string;
+  inclusions: string[];
+  exclusions: string[];
+  cancellation?: string;
+  status: TourStatus;
+  itinerary: (ItineraryDay & { day: number })[];
+};
+
 /** Statuses the tours API can filter by */
 export type TourStatusFilter = TourStatus;
 
