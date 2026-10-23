@@ -302,6 +302,14 @@ export const PAGINATION = {
   MORE_PAGES: 'More pages',
 };
 
+export const TABLE = {
+  SHOWING: 'Showing',
+  OF: 'of',
+  LOADING: 'Loading',
+  EMPTY_TITLE: 'Nothing to show',
+  EMPTY_DESCRIPTION: 'Records will show up here once there are some.',
+};
+
 export const TOUR_STATUS_LABEL: Record<TourStatus, string> = {
   draft: 'Draft',
   published: 'Published',

@@ -35,17 +35,6 @@ column count this produces.
   }
 }
 
-.empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-16) var(--space-4);
-  color: var(--color-text);
-  text-align: center;
-}
-
-.emptyDescription,
 .count {
   color: var(--color-text-secondary);
 }
