@@ -1,4 +1,32 @@
-import { addDays, daysBetween } from './date';
+import { addDays, daysBetween, parseIsoDate, toIsoDate } from './date';
+
+describe('toIsoDate', () => {
+  it('formats the local date, zero-padded', () => {
+    expect(toIsoDate(new Date(2026, 10, 14))).toBe('2026-11-14');
+    expect(toIsoDate(new Date(2026, 0, 5))).toBe('2026-01-05');
+  });
+
+  it('keeps the local day at midnight', () => {
+    expect(toIsoDate(new Date(2026, 10, 14, 0, 0))).toBe('2026-11-14');
+  });
+});
+
+describe('parseIsoDate', () => {
+  it('parses to local midnight', () => {
+    expect(parseIsoDate('2026-11-14')).toEqual(new Date(2026, 10, 14));
+  });
+
+  it.each(['', null, undefined, 'not-a-date', '2026-02-31', '2026-13-01'])(
+    'returns undefined for %s',
+    (value) => {
+      expect(parseIsoDate(value)).toBeUndefined();
+    },
+  );
+
+  it('round-trips with toIsoDate', () => {
+    expect(toIsoDate(parseIsoDate('2028-02-29')!)).toBe('2028-02-29');
+  });
+});
 
 describe('addDays', () => {
   it.each([

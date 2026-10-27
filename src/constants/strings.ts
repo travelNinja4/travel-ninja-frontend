@@ -184,6 +184,23 @@ export const SEARCH_INPUT = {
   LOADING: 'Searching',
 };
 
+export const DATE_PICKER = {
+  PLACEHOLDER: 'Select date',
+  CLEAR: 'Clear',
+  TODAY: 'Today',
+  DIALOG_LABEL: 'Choose date',
+  PREVIOUS_MONTH: 'Previous month',
+  NEXT_MONTH: 'Next month',
+  PREVIOUS_YEAR: 'Previous year',
+  NEXT_YEAR: 'Next year',
+  PREVIOUS_YEARS: 'Previous years',
+  NEXT_YEARS: 'Next years',
+  CHOOSE_MONTH: 'Choose month',
+  CHOOSE_YEAR: 'Choose year',
+  BACK_TO_DAYS: 'Back to days',
+  DATES_SELECTED: 'dates selected',
+};
+
 export const TOURS = {
   PAGE_TITLE: 'Tours',
   PAGE_DESCRIPTION: 'Publish, draft, and archive departures for',
