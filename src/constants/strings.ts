@@ -239,6 +239,40 @@ export const TOURS = {
   NOT_AVAILABLE: '—',
 };
 
+export const CUSTOMERS = {
+  PAGE_TITLE: 'Customers',
+  PAGE_DESCRIPTION: 'Guests who have booked',
+  TOURS: 'tours',
+  LIST_LABEL: 'Customers',
+  SEARCH_PLACEHOLDER: 'Search by name, email, or city...',
+  ALL_CITIES: 'All cities',
+  CITY_FILTER: 'Filter by city',
+  CUSTOMER: 'Customer',
+  CONTACT: 'Contact',
+  CITY: 'City',
+  BOOKINGS: 'Bookings',
+  TOTAL_SPEND: 'Total spend',
+  LAST_TRIP: 'Last trip',
+  ACTIONS: 'Actions',
+  VIEW: 'View',
+  DETAILS_TITLE: 'Customer details',
+  EMAIL: 'Email',
+  PHONE: 'Phone',
+  LAST_TRIP_DATE: 'Last trip date',
+  EMPTY_TITLE: 'No customers yet',
+  EMPTY_DESCRIPTION: 'Guests show up here once they book one of your tours.',
+  NO_MATCHES_TITLE: 'No customers match your search',
+  NO_MATCHES_DESCRIPTION: 'Try a different name, email or city.',
+  PAGE_EMPTY_TITLE: 'No customers on this page',
+  PAGE_EMPTY_DESCRIPTION: 'Go back to an earlier page to see your customers.',
+  LOADING: 'Loading customers',
+  LOAD_ERROR_TITLE: 'We couldn’t load your customers',
+  LOAD_ERROR_DESCRIPTION: 'Check your connection and try again.',
+  TRY_AGAIN: 'Try again',
+  // Shown for a value the customer hasn't entered
+  NOT_AVAILABLE: '—',
+};
+
 export const TOUR_FORM = {
   CREATE_TITLE: 'Create tour',
   CREATE_DESCRIPTION: 'Build a departure guests can discover and book.',

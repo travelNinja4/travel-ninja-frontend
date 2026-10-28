@@ -2,13 +2,13 @@
 ------------------------------------------------------
 styles specific to the SearchInput component
 
-Layered on InputField: a slightly taller box, and the browser's own
-search-field clear button hidden so only ours shows.
+Layered on InputField, at its 40px height so it lines up with the
+dropdowns beside it, with the browser's own search-field clear button
+hidden so only ours shows.
 ------------------------------------------------------
 **/
 
 .field {
-  min-height: 2.75rem;
   gap: var(--space-3);
 }
 
