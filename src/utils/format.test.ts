@@ -1,4 +1,18 @@
-import { formatCurrency, formatDate } from './format';
+import { formatCurrency, formatDate, formatPhone, getInitials } from './format';
+
+describe('getInitials', () => {
+  it.each([
+    ['Sneha Krishnan', 'SK'],
+    ['Sneha Lakshmi Krishnan', 'SK'],
+    ['  meera   patel ', 'MP'],
+    ['Sneha', 'SN'],
+    ['a', 'A'],
+    ['', ''],
+    ['   ', ''],
+  ])('gives %j the initials %j', (input, expected) => {
+    expect(getInitials(input)).toBe(expected);
+  });
+});
 
 describe('formatDate', () => {
   it.each([
@@ -23,4 +37,21 @@ describe('formatCurrency', () => {
   ])('formats %d as %s', (input, expected) => {
     expect(formatCurrency(input)).toBe(expected);
   });
+});
+
+describe('formatPhone', () => {
+  it.each([
+    ['+91-9811122334', '+91 98111 22334'],
+    ['+1-4155550100', '+1 4155550100'],
+    ['+971-501234567', '+971 501234567'],
+  ])('formats %s as %s', (input, expected) => {
+    expect(formatPhone(input)).toBe(expected);
+  });
+
+  it.each(['', '9811122334', '+91 98111 22334', '+91-98111-22334'])(
+    'returns %j unchanged when it is not +<code>-<number>',
+    (input) => {
+      expect(formatPhone(input)).toBe(input);
+    },
+  );
 });

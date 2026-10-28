@@ -1,0 +1,191 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the Customers component
+
+  page
+    heading: title + description
+    content (CustomersContent)
+      toolbar
+        phone   search / city, stacked
+        tablet  search filling the row, city beside it
+        laptop+ search (up to 27rem) and city on one row
+      customers table (CustomerTable, on DataTable): every
+      column on every screen, scrolling sideways when squeezed
+
+Table cells are 13px on every screen (.table overrides
+DataTable's 13 -> 14 -> 15px steps), with 12px secondary lines.
+
+CustomersSkeleton reuses .content and .toolbar so the loading
+state has the same shape as the loaded page.
+------------------------------------------------------
+**/
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 120rem;
+  margin-inline: auto;
+
+  @include respond-to(tablet) {
+    gap: var(--space-8);
+  }
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  color: var(--color-text);
+}
+
+.description {
+  color: var(--color-text-secondary);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  @include respond-to(tablet) {
+    gap: var(--space-6);
+  }
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+
+  @include respond-to(tablet) {
+    grid-template-columns: minmax(0, 1fr) minmax(10rem, 14rem);
+  }
+
+  @include respond-to(laptop) {
+    grid-template-columns: minmax(0, 27rem) minmax(10rem, 14rem);
+  }
+}
+
+// Same text size as the SearchInput beside it (both are InputField's 40px tall)
+.filter {
+  input {
+    font-size: 0.9375rem;
+  }
+}
+
+// The current page while a search or city change loads the new one
+.pending {
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+/* -----------------------------
+  Table cells
+----------------------------- */
+
+// A main value with a secondary line below it
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+// On the DataTable panel. `.table td` outranks DataTable's `.cell` sizes at every breakpoint
+.table td {
+  font-size: 0.8125rem;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+}
+
+// Long emails and tour titles end in "…"; the full text is in the title tooltip
+.truncate {
+  max-width: 11rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @include respond-to(desktop) {
+    max-width: 14rem;
+  }
+
+  @include respond-to(wide) {
+    max-width: 18rem;
+  }
+}
+
+// A button that reads as a link: it opens the details drawer rather than a page
+.view {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0 var(--space-2);
+  margin-inline-end: calc(var(--space-2) * -1);
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text-link);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* -----------------------------
+  CustomersSkeleton
+----------------------------- */
+
+.skeletonBlock {
+  border-radius: 8px;
+  background-color: var(--color-surface-muted);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+// Same height as the search and city fields
+.skeletonField {
+  height: 2.5rem;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonBlock {
+    animation: none;
+  }
+}
