@@ -245,6 +245,49 @@ export type TourPage = {
   pageCount: number;
 };
 
+/** A customer's most recent booking that wasn't cancelled */
+export type CustomerTrip = {
+  bookingId: number;
+  tourId: number;
+  tourTitle: string;
+  /** "YYYY-MM-DD" */
+  tripDate: string;
+};
+
+/** A guest who has booked one of the agency's tours, as returned by POST /customers/search. */
+export type Customer = {
+  id: number;
+  fullName: string;
+  email: string;
+  /** Dial code and number, e.g. "+91-9811122334" */
+  phoneNumber: string;
+  /** Not every customer has entered one */
+  city: string | null;
+  /** Bookings that weren't cancelled */
+  bookingsCount: number;
+  /** Rupees across those bookings */
+  totalSpend: number;
+  lastTrip: CustomerTrip;
+};
+
+/** Filters of the customers screen, sent to POST /customers/search */
+export type CustomerSearch = {
+  /** Matches name, email or city, case-insensitive */
+  search?: string;
+  /** Exact city from GET /customers/cities, case-insensitive */
+  city?: string;
+};
+
+/** One page of the agency's customers matching a CustomerSearch, most recently booked first. */
+export type CustomerPage = {
+  customers: Customer[];
+  /** 1-based */
+  page: number;
+  /** Customers matching the filters across all pages */
+  total: number;
+  pageCount: number;
+};
+
 /**
  * Result returned by every server action. Actions never throw to the client, because Next.js hides
  * thrown error messages in production.

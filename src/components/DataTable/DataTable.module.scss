@@ -5,11 +5,13 @@
 styles specific to the DataTable component
 
   panel
-    scroller (scrolls sideways when the table is wider)
+    scroller (scrolls sideways when the table is wider, with
+              edge shadows on the sides there is more to see)
       table: uppercase header row, rows split by borders
     footer: Showing X of Y, pagination on the right
 
-Text and padding step up at tablet and desktop. Keep the
+Header labels stay 11px; cell text and padding step up at
+tablet and desktop. Keep the
 .hideBelow* classes in step with HIDE_BELOW in DataTable.tsx.
 ------------------------------------------------------
 **/
@@ -22,9 +24,24 @@ Text and padding step up at tablet and desktop. Keep the
   box-shadow: var(--shadow-xs);
 }
 
+// Scrolls sideways when the columns don't fit. A soft shadow shows on each
+// side that has more to scroll to, so a cut-off table reads as scrollable:
+// the surface-coloured covers scroll with the content (local) and hide the
+// shadows (fixed to the edges) once that end is reached. CSS only, no JS.
 .scroller {
+  --scroll-shadow: color-mix(in srgb, var(--color-text) 16%, transparent);
+
   overflow-x: auto;
   overscroll-behavior-x: contain;
+  background:
+    linear-gradient(to right, var(--color-surface) 30%, transparent) left / 2.5rem 100% no-repeat
+      local,
+    linear-gradient(to left, var(--color-surface) 30%, transparent) right / 2.5rem 100% no-repeat
+      local,
+    radial-gradient(farthest-side at 0 50%, var(--scroll-shadow), transparent) left / 0.875rem 100%
+      no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, var(--scroll-shadow), transparent) right / 0.875rem
+      100% no-repeat scroll;
 
   &:focus-visible {
     outline: none;
@@ -62,19 +79,15 @@ Text and padding step up at tablet and desktop. Keep the
   border-bottom: 1px solid var(--color-border);
   background-color: var(--color-surface-sunken);
   color: var(--color-text-secondary);
+  // 11px on every screen: uppercase labels read larger than their size
   font-size: 0.6875rem;
   font-weight: 500;
   line-height: 1.25;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 
-  @include respond-to(tablet) {
-    font-size: 0.75rem;
-  }
-
   @include respond-to(desktop) {
     padding-block: var(--space-4);
-    font-size: 0.8125rem;
   }
 }
 

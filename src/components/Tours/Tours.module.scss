@@ -119,10 +119,8 @@ the same shape as the loaded page.
   }
 }
 
-// Same height and text size as the SearchInput beside them
+// Same text size as the SearchInput beside them (both are InputField's 40px tall)
 .filter {
-  min-height: 2.75rem;
-
   input {
     font-size: 0.9375rem;
   }
@@ -145,8 +143,9 @@ the same shape as the loaded page.
   animation: pulse 1.4s ease-in-out infinite;
 }
 
+// Same height as the search and filter fields
 .skeletonField {
-  height: 2.75rem;
+  height: 2.5rem;
 }
 
 .skeletonPanel {
