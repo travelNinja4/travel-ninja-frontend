@@ -25,6 +25,12 @@ const config: Config = {
     locales: ['en'],
   },
 
+  // Flowcharts in ```mermaid code blocks
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
+
   presets: [
     [
       'classic',
@@ -63,7 +69,9 @@ const config: Config = {
         {
           title: 'Docs',
           items: [
-            { label: 'User guide', to: '/user-guide/customers' },
+            { label: 'Getting started', to: '/getting-started/create-account' },
+            { label: 'User guide', to: '/user-guide/navigation' },
+            { label: 'Glossary', to: '/glossary' },
             { label: 'Testing', to: '/testing/how-to-report-a-bug' },
             { label: 'Release notes', to: '/release-notes' },
           ],
