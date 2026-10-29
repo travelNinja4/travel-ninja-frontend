@@ -5,8 +5,13 @@
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const path = require('path');
 
-const buildEslintCommand = (filenames) =>
-  `eslint --fix ${filenames.map((f) => `"${path.relative(process.cwd(), f)}"`).join(' ')}`;
+// docs-site is a separate Docusaurus project, so the app's ESLint config doesn't apply to it
+const buildEslintCommand = (filenames) => {
+  const files = filenames
+    .map((f) => path.relative(process.cwd(), f))
+    .filter((f) => !f.startsWith(`docs-site${path.sep}`));
+  return files.length ? `eslint --fix ${files.map((f) => `"${f}"`).join(' ')}` : [];
+};
 
 module.exports = {
   '*.{js,jsx,ts,tsx,json,css,scss}': 'prettier --write',
