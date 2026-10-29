@@ -14,6 +14,7 @@
     "docs:install": "pnpm --dir docs-site install",
     "docs:dev": "pnpm --dir docs-site start",
     "docs:build": "pnpm --dir docs-site build",
+    "docs:screenshots": "node scripts/docs-screenshots.mjs",
     "test": "vitest run --project unit",
     "test:watch": "vitest --project unit",
     "test:coverage": "vitest run --project unit --coverage",
