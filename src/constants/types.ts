@@ -16,6 +16,12 @@ export type Country = {
   length: number;
 };
 
+/** A state, or a district within one, from GET /api/states and /api/states/{stateId}/districts */
+export type Region = {
+  id: number;
+  name: string;
+};
+
 /** Body of POST /auth/register. Only fullName, email, phoneNumber, password and termStatus are required by the API. */
 export type RegisterPayload = {
   fullName: string;
@@ -179,6 +185,27 @@ export type TourMedia = {
 
 /** Every field of the tour form, used to create and edit tours */
 export type TourFormValues = TourBasics & TourMedia & TourSchedule & TourItinerary & TourPolicies;
+
+/** Every field of the agency profile screen: its public identity, contact details and address */
+export type AgencyProfileValues = {
+  logo: TourImage | null;
+  banner: TourImage | null;
+  name: string;
+  tagline: string;
+  description: string;
+  /** States or places the agency runs trips to, as typed, e.g. `Karnataka, Kerala, Goa` */
+  destinations: string;
+  email: string;
+  phone: string;
+  website: string;
+  street: string;
+  /** Region id of the state, as a string for the dropdown; empty when none is picked */
+  state: string;
+  /** Region id of a district within `state`; empty when none is picked */
+  district: string;
+  city: string;
+  pin: string;
+};
 
 /** Body of POST /tours/create-tour. Optional text fields are left out when empty. */
 export type CreateTourPayload = {

@@ -41,6 +41,7 @@ import type { MetaOption, TourDetails, TourFormValues, TourStatus } from '@/cons
 import { toTourFormValues, withCategory, withGuide } from '@/utils/tourForm';
 import Typography from '../Typography';
 import Button from '../Button';
+import PageHeader from '../PageHeader';
 import DynamicForm from '../DynamicForm';
 import { FieldConfig, FieldWidth } from '../DynamicForm/DynamicForm';
 import SchedulePricing from '../SchedulePricing';
@@ -202,20 +203,15 @@ export default function TourForm({ categories, guides, tour, onSave }: TourFormP
         className={styles.page}
         onSubmit={save(tour?.status ?? 'published')}
       >
-        <header className={styles.header}>
-          <div className={styles.heading}>
-            <Typography variant="heading-1" tag="h1">
-              {tour ? TOUR_FORM.EDIT_TITLE : TOUR_FORM.CREATE_TITLE}
-            </Typography>
-            <Typography variant="body-lg" className={styles.description}>
-              {tour
-                ? `${tour.title} · ${TOUR_STATUS_LABEL[tour.status]}`
-                : TOUR_FORM.CREATE_DESCRIPTION}
-            </Typography>
-          </div>
-
-          <div className={styles.actions}>
-            {tour ? (
+        <PageHeader
+          title={tour ? TOUR_FORM.EDIT_TITLE : TOUR_FORM.CREATE_TITLE}
+          description={
+            tour
+              ? `${tour.title} · ${TOUR_STATUS_LABEL[tour.status]}`
+              : TOUR_FORM.CREATE_DESCRIPTION
+          }
+          actions={
+            tour ? (
               <Button type="submit" className={styles.action} disabled={isSubmitting}>
                 {TOUR_FORM.UPDATE}
               </Button>
@@ -233,9 +229,9 @@ export default function TourForm({ categories, guides, tour, onSave }: TourFormP
                   {TOUR_FORM.PUBLISH}
                 </Button>
               </>
-            )}
-          </div>
-        </header>
+            )
+          }
+        />
 
         <div className={styles.layout}>
           <div className={styles.main}>

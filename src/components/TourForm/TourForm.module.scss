@@ -5,9 +5,8 @@
 styles specific to the TourForm component (create and edit tour screens)
 
   page
-    header: title + description, the actions on the right
+    header (PageHeader): title + description, the actions on the right
             (Save draft / Publish when creating, Update when editing)
-            phone: the buttons wrap below and share the row
     layout
       phone / tablet  side cards, then the main cards, stacked
       desktop         main cards | side column (18–24rem)
@@ -38,50 +37,12 @@ Inclusions & policy. The side column holds Schedule & pricing.
   }
 }
 
-.header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-4);
-}
-
-.heading {
-  display: flex;
-  flex: 1 1 20rem;
-  flex-direction: column;
-  gap: var(--space-2);
-  min-width: 0;
-  color: var(--color-text);
-}
-
-// The edit screen shows the tour's title here, which may be one long word
-.description {
-  color: var(--color-text-secondary);
-  overflow-wrap: anywhere;
-}
-
-.actions {
-  display: flex;
-  gap: var(--space-3);
-  width: 100%;
-
-  @include respond-to(tablet) {
-    width: auto;
-  }
-}
-
-// 44px touch targets that split the row on phones; Button's own width from tablet up.
-// Scoped under .actions to outrank Button's own styles
-.actions .action {
-  flex: 1;
+// 44px touch targets; PageHeader splits the row between them on phones.
+// Scoped under .page to outrank Button's own styles
+.page .action {
   min-height: 2.75rem;
   padding: var(--space-2) var(--space-4);
   font-size: 0.9375rem;
-
-  @include respond-to(tablet) {
-    flex: none;
-  }
 }
 
 .layout {

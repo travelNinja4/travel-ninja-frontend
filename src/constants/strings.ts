@@ -129,6 +129,7 @@ export const ROUTES = {
   REVENUE: '/insights/revenue',
   SETTINGS: '/settings',
   BILLING: '/billing',
+  AGENCY_PROFILE: '/agency-profile',
 } as const;
 
 export const NOTIFICATION_TYPES: Record<string, NotificationType> = {
@@ -156,6 +157,7 @@ export const NAV_ITEM = {
   REVIEWS: 'Reviews',
   TOUR_PERFORMANCE: 'Tour performance',
   REVENUE: 'Revenue',
+  AGENCY_PROFILE: 'Agency profile',
   SETTINGS: 'Settings',
   BILLING: 'Billing & payouts',
 };
@@ -328,6 +330,73 @@ export const TOUR_POLICIES = {
   INCLUSIONS: 'Inclusions',
   EXCLUSIONS: 'Exclusions',
   CANCELLATION_POLICY: 'Cancellation policy',
+};
+
+export const AGENCY_PREVIEW = {
+  TITLE: 'Preview',
+  DEFAULT_BANNER: 'Banner preview',
+  NAME_PLACEHOLDER: 'Your agency name',
+  ADD_TAGLINE: 'Add a tagline',
+  ADD_DESCRIPTION: 'Add a description',
+  ADD_DESTINATIONS: 'Add destinations',
+  DESTINATIONS: 'Destinations',
+  BANNER: 'Profile banner',
+  LOGO: 'Agency logo',
+};
+
+export const AGENCY_PROFILE = {
+  TITLE: 'Agency profile',
+  DESCRIPTION: 'Public identity guests see when browsing your tours.',
+  SAVE: 'Save changes',
+  WELCOME: 'Welcome to TravelNinja',
+  WELCOME_HINT:
+    'Add a tagline, description and at least one destination so guests can find you. It takes about 5 minutes.',
+  PROFILE: 'Profile',
+  COMPLETE: 'complete',
+  OF: 'of',
+  IDENTITY: 'Identity',
+  LOGO: 'Logo',
+  UPLOAD_LOGO: 'Upload logo',
+  REPLACE_LOGO: 'Replace logo',
+  LOGO_PREVIEW: 'Agency logo',
+  LOGO_HINT: 'Using your initials for now. Square PNG or JPG, at least 256×256.',
+  LOGO_SET_HINT: 'Square PNG or JPG, at least 256×256.',
+  BANNER: 'Profile banner',
+  OPTIONAL: '(optional)',
+  BROWSE: 'Browse',
+  BANNER_PROMPT: 'or drag a wide image here',
+  BANNER_HINT: 'Recommended 1600×480. Until you add one, guests see a plain green banner.',
+  BANNER_PREVIEW: 'Profile banner preview',
+  REPLACE: 'Replace',
+  REMOVE: 'Remove',
+  AGENCY_NAME: 'Agency name',
+  TAGLINE: 'Tagline',
+  TAGLINE_PLACEHOLDER: 'e.g. Curated journeys across India',
+  TAGLINE_HINT: 'One short line under your name. Say what makes your trips different.',
+  DESCRIPTION_LABEL: 'Description',
+  DESCRIPTION_PLACEHOLDER:
+    'Tell guests who you are, the kind of trips you run and what they can expect — group size, guides, pricing.',
+  DESTINATIONS: 'Destinations served',
+  DESTINATIONS_PLACEHOLDER: 'e.g. Karnataka, Kerala, Goa',
+  CONTACT: 'Contact & address',
+  EMAIL: 'Email',
+  PHONE: 'Phone',
+  WEBSITE: 'Website',
+  STREET: 'Street address',
+  CITY: 'City',
+  STATE: 'State',
+  STATE_PLACEHOLDER: 'Select state',
+  DISTRICT: 'District',
+  DISTRICT_PLACEHOLDER: 'Select district',
+  PICK_STATE_FIRST: 'Pick a state first',
+  PIN: 'PIN',
+  SAVED: 'Profile saved',
+  // Validation
+  NAME_REQUIRED: 'Enter your agency name',
+  INVALID_EMAIL: 'Enter a valid email address',
+  INVALID_PHONE: 'Enter a valid phone number',
+  INVALID_WEBSITE: 'Enter a full link, starting with https://',
+  INVALID_PIN: 'Enter a 6-digit PIN code',
 };
 
 export const SCHEDULE_PRICING = {

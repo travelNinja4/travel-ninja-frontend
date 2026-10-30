@@ -27,7 +27,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodSchema } from 'zod';
 import Typography from '../Typography';
-import { Tags, TextAlign } from '../Typography/Typography';
+import type { TextTag } from '../Typography/Typography';
 import InputField from '../InputField';
 import TextArea from '../TextArea';
 import PasswordFeedback from '../PasswordFeedback';
@@ -87,7 +87,7 @@ export interface FieldConfig {
   label?: string | ReactNode;
   type?: FieldType;
   placeholder?: string;
-  tag?: Tags;
+  tag?: TextTag;
   className?: string;
   children?: ReactNode;
   width?: FieldWidth;
@@ -97,8 +97,16 @@ export interface FieldConfig {
   startIcon?: LucideIcon;
   endIcon?: LucideIcon;
   iconColor?: string;
-  textAlign?: TextAlign;
+  textAlign?: 'left' | 'center' | 'right';
   maxLength?: number;
+  /** Hint below a text, `textarea` or `select` field, replaced by its error when there is one */
+  helperText?: ReactNode;
+  /** Browser autofill hint for a text field, e.g. `email` or `postal-code` */
+  autoComplete?: string;
+  /** On-screen keyboard for a text field, e.g. `numeric` for a PIN */
+  inputMode?: 'text' | 'numeric' | 'decimal' | 'tel' | 'email' | 'url' | 'search';
+  /** Error from outside the form's schema, e.g. a list that failed to load. Shown ahead of the schema's own */
+  error?: string;
   /** Visible lines of a `textarea` field */
   rows?: number;
   /** Country codes for a `MobileNumberInput` field */
@@ -119,6 +127,7 @@ type FieldType =
   | 'input'
   | 'email'
   | 'tel'
+  | 'url'
   | 'password'
   | 'textarea'
   | 'checkbox'
@@ -152,31 +161,51 @@ export default function DynamicForm<T extends FieldValues>({
   } = form;
 
   // Looked up by path so nested names like `itinerary.0.title` find their error
-  const errorOf = (name: string) => get(errors, name)?.message as string | undefined;
+  const errorOf = (field: FieldConfig) =>
+    field.error ?? (get(errors, field.name)?.message as string | undefined);
+
+  // Only what an input understands: the rest of the config (width, onValueChange...) would land on the DOM
+  const inputProps = (field: FieldConfig, type: string) => ({
+    type,
+    label: field.label,
+    placeholder: field.placeholder,
+    required: field.required,
+    disabled: field.disabled,
+    maxLength: field.maxLength,
+    helperText: field.helperText,
+    autoComplete: field.autoComplete,
+    inputMode: field.inputMode,
+    className: field.className,
+    error: errorOf(field),
+    ...register(field.name as Path<T>),
+  });
 
   const renderField = (field: FieldConfig) => {
-    const commonProps = {
-      ...field,
-      ...register(field.name as any),
-      error: errorOf(field.name),
-    };
     switch (field.type) {
       case 'label':
         return (
-          <Typography tag={field.tag || 'p'} className={field.className} align={field.textAlign}>
+          <Typography
+            tag={field.tag || 'p'}
+            className={field.className}
+            style={field.textAlign && { textAlign: field.textAlign }}
+          >
             {field.label || field.children}
           </Typography>
         );
 
       case 'input':
-        return (
-          <InputField {...commonProps} className={field.className} maxLength={field.maxLength} />
-        );
+        return <InputField {...inputProps(field, 'text')} />;
+
+      // Their own types bring the matching keyboard and autofill on phones and tablets
+      case 'email':
+      case 'tel':
+      case 'url':
+        return <InputField {...inputProps(field, field.type)} />;
 
       case 'password':
         return (
           <>
-            <InputField {...commonProps} className={field.className} maxLength={field.maxLength} />
+            <InputField {...inputProps(field, 'password')} />
             <PasswordFeedback
               value={watch(field.name as Path<T>) || ''}
               hints={field.validationHints ?? []}
@@ -199,7 +228,7 @@ export default function DynamicForm<T extends FieldValues>({
                 onChange={(checked: boolean) => onChange(checked)}
                 onBlur={onBlur}
                 className={field.className}
-                error={errorOf(field.name)}
+                error={errorOf(field)}
               />
             )}
           />
@@ -214,8 +243,9 @@ export default function DynamicForm<T extends FieldValues>({
             maxLength={field.maxLength}
             required={field.required}
             disabled={field.disabled}
+            helperText={field.helperText}
             className={field.className}
-            error={errorOf(field.name)}
+            error={errorOf(field)}
             {...register(field.name as Path<T>)}
           />
         );
@@ -232,7 +262,7 @@ export default function DynamicForm<T extends FieldValues>({
             required={field.required}
             disabled={field.disabled}
             className={field.className}
-            error={errorOf(field.name)}
+            error={errorOf(field)}
             {...register(field.name as Path<T>, {
               valueAsNumber: field.type === 'number',
               onChange: field.onValueChange && (() => field.onValueChange?.(form)),
@@ -256,7 +286,8 @@ export default function DynamicForm<T extends FieldValues>({
                   onChange(selected);
                   field.onValueChange?.(form);
                 }}
-                error={fieldState.error?.message}
+                error={field.error ?? fieldState.error?.message}
+                helperText={field.helperText}
                 required={field.required}
                 disabled={field.disabled}
                 isLoading={field.isLoading}
@@ -304,8 +335,8 @@ export default function DynamicForm<T extends FieldValues>({
                   countries={field.countries}
                   onChange={onChange}
                   maxLength={field.maxLength}
-                  error={errors[field.name]?.number?.message as string}
-                  countryError={errors[field.name]?.country?.message as string}
+                  error={get(errors, `${field.name}.number`)?.message as string}
+                  countryError={get(errors, `${field.name}.country`)?.message as string}
                 />
               )}
             />
