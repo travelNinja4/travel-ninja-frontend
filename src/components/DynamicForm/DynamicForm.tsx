@@ -37,7 +37,6 @@ import Button from '../Button';
 import { LucideIcon } from 'lucide-react';
 import MobileNumberInput from '../MobileNumberInput';
 import Dropdown, { DropdownOption } from '../Dropdown/Dropdown';
-import { Country } from '@/constants/types';
 import clsx from 'clsx';
 import styles from './DynamicForm.module.scss';
 
@@ -109,8 +108,6 @@ export interface FieldConfig {
   error?: string;
   /** Visible lines of a `textarea` field */
   rows?: number;
-  /** Country codes for a `MobileNumberInput` field */
-  countries?: Country[];
   /** Choices for a `select` field */
   options?: DropdownOption<string>[];
   /** Lowest value of a `number` field, or earliest `"YYYY-MM-DD"` of a `date` field */
@@ -316,35 +313,9 @@ export default function DynamicForm<T extends FieldValues>({
           </Button>
         );
 
+      // Holds the national number only; the dial code is fixed
       case 'MobileNumberInput':
-        return (
-          <>
-            {field.label && (
-              <Typography tag="label" className={styles.label}>
-                {field.label}{' '}
-                {field.required && (
-                  <Typography tag="span" className={styles.label}>
-                    *
-                  </Typography>
-                )}
-              </Typography>
-            )}
-            <Controller
-              name={field.name as Path<T>}
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <MobileNumberInput
-                  value={value ?? { country: '+91 (IN)', number: '' }}
-                  countries={field.countries}
-                  onChange={onChange}
-                  maxLength={field.maxLength}
-                  error={get(errors, `${field.name}.number`)?.message as string}
-                  countryError={get(errors, `${field.name}.country`)?.message as string}
-                />
-              )}
-            />
-          </>
-        );
+        return <MobileNumberInput {...inputProps(field, 'tel')} />;
 
       default:
         return null;
