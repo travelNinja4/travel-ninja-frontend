@@ -391,8 +391,9 @@ export const AGENCY_PROFILE = {
   PICK_STATE_FIRST: 'Pick a state first',
   PIN: 'PIN',
   SAVED: 'Profile saved',
+  NO_CHANGES: 'No changes to save',
+  FROM_REGISTRATION: 'From your registration. Contact support to change it.',
   // Validation
-  NAME_REQUIRED: 'Enter your agency name',
   INVALID_EMAIL: 'Enter a valid email address',
   INVALID_PHONE: 'Enter a valid phone number',
   INVALID_WEBSITE: 'Enter a full link, starting with https://',

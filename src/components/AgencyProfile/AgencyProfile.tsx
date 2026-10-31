@@ -10,8 +10,8 @@
  *   preview          AgencyPreviewCard, live from the fields; its "Add"
  *                    prompts focus the matching empty field
  *
- * Only the agency name is needed to save; the other starred fields are needed
- * to go live, so a half-done profile can still be saved and finished later.
+ * No field is mandatory, so a half-done profile can still be saved and finished
+ * later. Email and phone come from the registration and are read-only.
  *
  * States come in as a prop; a state's districts load through `getDistricts`
  * once it is picked (and on load for a saved state).
@@ -214,8 +214,7 @@ export default function AgencyProfile({
       name: 'name',
       label: AGENCY_PROFILE.AGENCY_NAME,
       type: 'input',
-      required: true,
-      maxLength: 120,
+      maxLength: 100,
       autoComplete: 'organization',
       disabled: isSubmitting,
     },
@@ -226,7 +225,6 @@ export default function AgencyProfile({
       name: 'destinations',
       label: AGENCY_PROFILE.DESTINATIONS,
       type: 'input',
-      required: true,
       maxLength: DESTINATIONS_MAX,
       placeholder: AGENCY_PROFILE.DESTINATIONS_PLACEHOLDER,
       disabled: isSubmitting,
@@ -239,22 +237,23 @@ export default function AgencyProfile({
       name: 'email',
       label: AGENCY_PROFILE.EMAIL,
       type: 'email',
-      autoComplete: 'email',
+      readOnly: true,
+      helperText: AGENCY_PROFILE.FROM_REGISTRATION,
       width: FieldWidth.HALF,
-      disabled: isSubmitting,
     },
     {
       name: 'phone',
       label: AGENCY_PROFILE.PHONE,
       type: 'tel',
-      autoComplete: 'tel',
+      readOnly: true,
+      helperText: AGENCY_PROFILE.FROM_REGISTRATION,
       width: FieldWidth.HALF,
-      disabled: isSubmitting,
     },
     {
       name: 'website',
       label: AGENCY_PROFILE.WEBSITE,
       type: 'url',
+      maxLength: 255,
       autoComplete: 'url',
       disabled: isSubmitting,
     },
@@ -262,6 +261,7 @@ export default function AgencyProfile({
       name: 'street',
       label: AGENCY_PROFILE.STREET,
       type: 'input',
+      maxLength: 200,
       autoComplete: 'street-address',
       disabled: isSubmitting,
     },
@@ -290,6 +290,7 @@ export default function AgencyProfile({
       name: 'city',
       label: AGENCY_PROFILE.CITY,
       type: 'input',
+      maxLength: 50,
       autoComplete: 'address-level2',
       width: FieldWidth.HALF,
       disabled: isSubmitting,
@@ -531,7 +532,6 @@ export default function AgencyProfile({
                 <div className={styles.counted}>
                   <InputField
                     label={AGENCY_PROFILE.TAGLINE}
-                    required
                     maxLength={TAGLINE_MAX}
                     placeholder={AGENCY_PROFILE.TAGLINE_PLACEHOLDER}
                     helperText={AGENCY_PROFILE.TAGLINE_HINT}
@@ -547,7 +547,6 @@ export default function AgencyProfile({
                 <div className={styles.counted}>
                   <TextArea
                     label={AGENCY_PROFILE.DESCRIPTION_LABEL}
-                    required
                     rows={5}
                     maxLength={DESCRIPTION_MAX}
                     placeholder={AGENCY_PROFILE.DESCRIPTION_PLACEHOLDER}

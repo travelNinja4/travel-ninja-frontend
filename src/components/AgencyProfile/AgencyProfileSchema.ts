@@ -13,21 +13,25 @@ const profileImageSchema = z.union([imageSchema, z.object({ url: z.string().min(
 const optionalMatch = (pattern: RegExp, message: string) =>
   z.string().trim().regex(pattern, message).or(z.literal(''));
 
-// Tagline, description and destinations are needed to go live, not to save:
-// the profile can be saved half done and finished later
+// No field is mandatory: the profile can be saved half-done and finished later. Filled fields are
+// still checked. Limits are the API's, or tighter where the screen wants shorter text.
 export const agencyProfileSchema = z.object({
   logo: profileImageSchema,
   banner: profileImageSchema,
-  name: z.string().trim().min(1, AGENCY_PROFILE.NAME_REQUIRED).max(120),
+  name: z.string().trim().max(100),
   tagline: z.string().trim().max(TAGLINE_MAX),
   description: z.string().trim().max(DESCRIPTION_MAX),
   destinations: z.string().trim().max(DESTINATIONS_MAX),
-  email: z.email(AGENCY_PROFILE.INVALID_EMAIL).or(z.literal('')),
-  phone: optionalMatch(/^\+?[\d\s-]{7,16}$/, AGENCY_PROFILE.INVALID_PHONE),
-  website: optionalMatch(/^https?:\/\/[^\s.]+\.\S+$/, AGENCY_PROFILE.INVALID_WEBSITE),
+  // From the registration and read-only here, so not checked
+  email: z.string(),
+  phone: z.string(),
+  website: optionalMatch(/^https?:\/\/[^\s.]+\.\S+$/, AGENCY_PROFILE.INVALID_WEBSITE).pipe(
+    z.string().max(255),
+  ),
   street: z.string().trim().max(200),
   state: z.string(),
+  // Not saved by the API yet
   district: z.string(),
-  city: z.string().trim().max(80),
+  city: z.string().trim().max(50),
   pin: optionalMatch(/^\d{6}$/, AGENCY_PROFILE.INVALID_PIN),
 });

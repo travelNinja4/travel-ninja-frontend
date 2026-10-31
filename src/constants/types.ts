@@ -207,6 +207,45 @@ export type AgencyProfileValues = {
   pin: string;
 };
 
+/** The agency's saved profile, as returned by GET and PUT /agency/profile */
+export type AgencyProfile = {
+  id: number;
+  userId: number;
+  agencyName: string;
+  tagline: string | null;
+  description: string | null;
+  destinations: string[];
+  /** From the agency's registration; read-only on the profile screen */
+  email: string;
+  /** From the agency's registration; read-only on the profile screen */
+  phoneNumber: string | null;
+  website: string | null;
+  address: string | null;
+  city: string | null;
+  /** The state's name, e.g. `Karnataka` */
+  state: string | null;
+  pincode: string | null;
+  country: string | null;
+};
+
+/**
+ * Body of PUT /agency/profile. Replaces every editable field: an optional field left empty is
+ * cleared. Email, phone, country, logo and banner aren't part of it.
+ */
+export type UpdateAgencyProfilePayload = {
+  agencyName: string;
+  tagline: string;
+  description: string;
+  /** Comma-separated, as typed; the API trims it and drops blanks and duplicates */
+  destinations: string;
+  website: string;
+  address: string;
+  city: string;
+  /** The state's name, not its id */
+  state: string;
+  pincode: string;
+};
+
 /** Body of POST /tours/create-tour. Optional text fields are left out when empty. */
 export type CreateTourPayload = {
   title: string;

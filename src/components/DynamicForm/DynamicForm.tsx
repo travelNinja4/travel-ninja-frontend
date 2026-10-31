@@ -116,6 +116,8 @@ export interface FieldConfig {
   /** Lowest value of a `number` field, or earliest `"YYYY-MM-DD"` of a `date` field */
   min?: number | string;
   disabled?: boolean;
+  /** Shows a text field's value without letting it be changed, e.g. details owned elsewhere */
+  readOnly?: boolean;
   /** Shows a loading row in a `select` field's list */
   isLoading?: boolean;
   /** Runs after the user changes this field, e.g. to update a field that depends on it */
@@ -171,6 +173,7 @@ export default function DynamicForm<T extends FieldValues>({
     placeholder: field.placeholder,
     required: field.required,
     disabled: field.disabled,
+    readOnly: field.readOnly,
     maxLength: field.maxLength,
     helperText: field.helperText,
     autoComplete: field.autoComplete,

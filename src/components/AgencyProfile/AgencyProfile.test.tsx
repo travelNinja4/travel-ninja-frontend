@@ -5,7 +5,14 @@ import AgencyProfile from './AgencyProfile';
 import { MOCK_STATES, mockGetDistricts } from './AgencyProfile.mocks';
 
 describe('AgencyProfile', () => {
-  const setup = (profile: Partial<AgencyProfileValues> = { name: 'Wanderly Travels' }) => {
+  // A partly filled profile; the tests pick the state
+  const setup = (
+    profile: Partial<AgencyProfileValues> = {
+      name: 'Wanderly Travels',
+      street: '12 MG Road',
+      city: 'Bengaluru',
+    },
+  ) => {
     const onSave = vi.fn();
     const getDistricts = vi.fn(mockGetDistricts);
     render(
@@ -19,7 +26,6 @@ describe('AgencyProfile', () => {
     return { onSave, getDistricts };
   };
 
-  // Loose, to allow for the required marker
   const field = (label: string) => screen.getByLabelText(label, { exact: false });
   const save = () => fireEvent.click(screen.getByRole('button', { name: AGENCY_PROFILE.SAVE }));
   const pick = (label: string, option: string) => {
@@ -65,6 +71,7 @@ describe('AgencyProfile', () => {
     });
     expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '33');
 
+    pick(AGENCY_PROFILE.STATE, 'Karnataka');
     save();
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave).toHaveBeenCalledWith(
@@ -72,16 +79,29 @@ describe('AgencyProfile', () => {
     );
   });
 
-  it('needs an agency name and valid contact details to save', async () => {
+  it('saves with every field empty', async () => {
     const { onSave } = setup({});
-    fireEvent.change(field(AGENCY_PROFILE.EMAIL), { target: { value: 'not-an-email' } });
+    save();
+    await waitFor(() => expect(onSave).toHaveBeenCalled());
+  });
+
+  it('needs valid contact details to save', async () => {
+    const { onSave } = setup({});
+    fireEvent.change(field(AGENCY_PROFILE.WEBSITE), { target: { value: 'wandertrails' } });
     fireEvent.change(field(AGENCY_PROFILE.PIN), { target: { value: '5600' } });
     save();
 
-    expect(await screen.findByText(AGENCY_PROFILE.NAME_REQUIRED)).toBeInTheDocument();
-    expect(screen.getByText(AGENCY_PROFILE.INVALID_EMAIL)).toBeInTheDocument();
+    expect(await screen.findByText(AGENCY_PROFILE.INVALID_WEBSITE)).toBeInTheDocument();
     expect(screen.getByText(AGENCY_PROFILE.INVALID_PIN)).toBeInTheDocument();
     expect(onSave).not.toHaveBeenCalled();
+  });
+
+  it('shows the registered email and phone read-only', () => {
+    setup({ email: 'hello@wandertrails.in', phone: '+91-9876543210' });
+    expect(field(AGENCY_PROFILE.EMAIL)).toHaveAttribute('readonly');
+    expect(field(AGENCY_PROFILE.EMAIL)).toHaveValue('hello@wandertrails.in');
+    expect(field(AGENCY_PROFILE.PHONE)).toHaveAttribute('readonly');
+    expect(screen.getAllByText(AGENCY_PROFILE.FROM_REGISTRATION)).toHaveLength(2);
   });
 
   it('loads the picked state’s districts and clears the district when the state changes', async () => {
@@ -141,13 +161,20 @@ describe('AgencyProfile', () => {
 
   it('saves a half-done profile with the entered values', async () => {
     const { onSave } = setup();
-    fireEvent.change(field(AGENCY_PROFILE.CITY), { target: { value: 'Bengaluru' } });
+    pick(AGENCY_PROFILE.STATE, 'Karnataka');
+    fireEvent.change(field(AGENCY_PROFILE.CITY), { target: { value: ' Mysuru ' } });
     fireEvent.change(field(AGENCY_PROFILE.PIN), { target: { value: '560025' } });
     save();
 
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave).toHaveBeenCalledWith(
-      expect.objectContaining({ name: 'Wanderly Travels', city: 'Bengaluru', pin: '560025' }),
+      expect.objectContaining({
+        name: 'Wanderly Travels',
+        state: '1',
+        city: 'Mysuru',
+        pin: '560025',
+        tagline: '',
+      }),
     );
   });
 });
