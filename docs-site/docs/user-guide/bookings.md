@@ -16,7 +16,7 @@ The Bookings screen is a preview. It shows **sample bookings**, not the agency's
 ## What the preview shows
 
 - A search box (**Search bookings...**) and filters for **Status**, **Tour**, **Quick Date Filter** and **Date Range**
-- An **All Bookings** table with **Booking ID**, **Customer** (name and phone), **Tour**, **Date**, **Slots**, **Status** and **Amount**
+- An **All Bookings** table with **Booking ID**, **Customer** (name and mobile number), **Tour**, **Date**, **Slots**, **Status** and **Amount**
 - Statuses shown as coloured labels: **Confirmed**, **Pending** and **Cancelled**
 
 ## Known limitations

@@ -28,7 +28,7 @@ import {
   // Star,
   Ticket,
   Users,
-  Wallet,
+  // Wallet,
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
@@ -101,7 +101,8 @@ export const NAV_SECTIONS: NavSection[] = [
     items: [
       { label: NAV_ITEM.AGENCY_PROFILE, href: ROUTES.AGENCY_PROFILE, icon: Building },
       { label: NAV_ITEM.SETTINGS, href: ROUTES.SETTINGS, icon: Settings },
-      { label: NAV_ITEM.BILLING, href: ROUTES.BILLING, icon: Wallet },
+      // Hidden until the billing screen is built
+      // { label: NAV_ITEM.BILLING, href: ROUTES.BILLING, icon: Wallet },
     ],
   },
 ];

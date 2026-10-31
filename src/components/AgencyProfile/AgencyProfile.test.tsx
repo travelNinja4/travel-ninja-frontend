@@ -100,7 +100,10 @@ describe('AgencyProfile', () => {
     setup({ email: 'hello@wandertrails.in', phone: '+91-9876543210' });
     expect(field(AGENCY_PROFILE.EMAIL)).toHaveAttribute('readonly');
     expect(field(AGENCY_PROFILE.EMAIL)).toHaveValue('hello@wandertrails.in');
-    expect(field(AGENCY_PROFILE.PHONE)).toHaveAttribute('readonly');
+    expect(field(AGENCY_PROFILE.MOBILE_NUMBER)).toHaveAttribute('readonly');
+    // The dial code shows apart from the number
+    expect(field(AGENCY_PROFILE.MOBILE_NUMBER)).toHaveValue('9876543210');
+    expect(screen.getByText('+91')).toBeInTheDocument();
     expect(screen.getAllByText(AGENCY_PROFILE.FROM_REGISTRATION)).toHaveLength(2);
   });
 

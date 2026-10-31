@@ -259,7 +259,7 @@ export const CUSTOMERS = {
   VIEW: 'View',
   DETAILS_TITLE: 'Customer details',
   EMAIL: 'Email',
-  PHONE: 'Phone',
+  MOBILE_NUMBER: 'Mobile number',
   LAST_TRIP_DATE: 'Last trip date',
   EMPTY_TITLE: 'No customers yet',
   EMPTY_DESCRIPTION: 'Guests show up here once they book one of your tours.',
@@ -380,9 +380,9 @@ export const AGENCY_PROFILE = {
   DESTINATIONS_PLACEHOLDER: 'e.g. Karnataka, Kerala, Goa',
   CONTACT: 'Contact & address',
   EMAIL: 'Email',
-  PHONE: 'Phone',
+  MOBILE_NUMBER: 'Mobile number',
   WEBSITE: 'Website',
-  STREET: 'Street address',
+  ADDRESS: 'Address',
   CITY: 'City',
   STATE: 'State',
   STATE_PLACEHOLDER: 'Select state',
@@ -395,7 +395,6 @@ export const AGENCY_PROFILE = {
   FROM_REGISTRATION: 'From your registration. Contact support to change it.',
   // Validation
   INVALID_EMAIL: 'Enter a valid email address',
-  INVALID_PHONE: 'Enter a valid phone number',
   INVALID_WEBSITE: 'Enter a full link, starting with https://',
   INVALID_PIN: 'Enter a 6-digit PIN code',
 };

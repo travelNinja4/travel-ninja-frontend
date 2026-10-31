@@ -108,6 +108,8 @@ export interface FieldConfig {
   error?: string;
   /** Visible lines of a `textarea` field */
   rows?: number;
+  /** Fixed dial code of a `MobileNumberInput` field; +91 when left out */
+  dialCode?: string;
   /** Choices for a `select` field */
   options?: DropdownOption<string>[];
   /** Lowest value of a `number` field, or earliest `"YYYY-MM-DD"` of a `date` field */
@@ -315,7 +317,7 @@ export default function DynamicForm<T extends FieldValues>({
 
       // Holds the national number only; the dial code is fixed
       case 'MobileNumberInput':
-        return <MobileNumberInput {...inputProps(field, 'tel')} />;
+        return <MobileNumberInput {...inputProps(field, 'tel')} dialCode={field.dialCode} />;
 
       default:
         return null;

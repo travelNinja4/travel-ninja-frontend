@@ -44,7 +44,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ImageIcon, Star, Upload } from 'lucide-react';
 import clsx from 'clsx';
 import { AGENCY_PROFILE } from '@/constants/strings';
-import { getInitials } from '@/utils/format';
+import { getInitials, splitPhone } from '@/utils/format';
 import type { ActionResult, AgencyProfileValues, Region } from '@/constants/types';
 import Typography, { Caption } from '../Typography';
 import Button from '../Button';
@@ -128,9 +128,11 @@ export default function AgencyProfile({
   const logoInput = useRef<HTMLInputElement>(null);
   const bannerInput = useRef<HTMLInputElement>(null);
 
+  // The mobile number field shows the dial code apart, so it holds just the number
+  const phone = splitPhone(profile?.phone ?? '');
   const methods = useForm<AgencyProfileValues>({
     resolver: zodResolver(agencyProfileSchema),
-    defaultValues: { ...DEFAULT_VALUES, ...profile },
+    defaultValues: { ...DEFAULT_VALUES, ...profile, phone: phone.number },
   });
   const {
     control,
@@ -243,8 +245,9 @@ export default function AgencyProfile({
     },
     {
       name: 'phone',
-      label: AGENCY_PROFILE.PHONE,
-      type: 'tel',
+      label: AGENCY_PROFILE.MOBILE_NUMBER,
+      type: 'MobileNumberInput',
+      dialCode: phone.dialCode,
       readOnly: true,
       helperText: AGENCY_PROFILE.FROM_REGISTRATION,
       width: FieldWidth.HALF,
@@ -259,7 +262,7 @@ export default function AgencyProfile({
     },
     {
       name: 'street',
-      label: AGENCY_PROFILE.STREET,
+      label: AGENCY_PROFILE.ADDRESS,
       type: 'input',
       maxLength: 200,
       autoComplete: 'street-address',

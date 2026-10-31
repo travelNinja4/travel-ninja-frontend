@@ -38,7 +38,7 @@ export const Filled: Story = {
         'Small-group trips of 8–12 guests, led by local guides. Prices include stays, transfers and most meals.',
       destinations: 'Karnataka, Kerala',
       email: 'ops@wanderlytravels.example',
-      phone: '+91 98765 43210',
+      phone: '+91-9876543210',
       website: 'https://wanderlytravels.example',
       street: '42 Church Street, Ashok Nagar',
       state: '1',

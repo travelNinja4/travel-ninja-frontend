@@ -61,7 +61,7 @@ export default function CustomerDetails({ customer, onClose }: CustomerDetailsPr
           <dl className={styles.list}>
             {[
               [CUSTOMERS.EMAIL, customer.email],
-              [CUSTOMERS.PHONE, formatPhone(customer.phoneNumber)],
+              [CUSTOMERS.MOBILE_NUMBER, formatPhone(customer.phoneNumber)],
               [CUSTOMERS.CITY, customer.city ?? CUSTOMERS.NOT_AVAILABLE],
               [CUSTOMERS.BOOKINGS, customer.bookingsCount],
               [CUSTOMERS.TOTAL_SPEND, formatCurrency(customer.totalSpend)],
