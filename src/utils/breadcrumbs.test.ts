@@ -35,11 +35,19 @@ describe('getBreadcrumbs', () => {
     ]);
   });
 
-  it('labels nested sidebar routes and leaves their group unlinked', () => {
-    expect(getBreadcrumbs(ROUTES.REVENUE)).toEqual([
+  // Restore with the Insights section in SidebarNav
+  // it('labels nested sidebar routes and leaves their group unlinked', () => {
+  //   expect(getBreadcrumbs(ROUTES.REVENUE)).toEqual([
+  //     dashboard,
+  //     { label: 'Insights' },
+  //     { label: NAV_ITEM.REVENUE, href: ROUTES.REVENUE },
+  //   ]);
+  // });
+
+  it('labels the agency profile from the sidebar', () => {
+    expect(getBreadcrumbs(ROUTES.AGENCY_PROFILE)).toEqual([
       dashboard,
-      { label: 'Insights' },
-      { label: NAV_ITEM.REVENUE, href: ROUTES.REVENUE },
+      { label: NAV_ITEM.AGENCY_PROFILE, href: ROUTES.AGENCY_PROFILE },
     ]);
   });
 

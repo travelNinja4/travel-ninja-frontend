@@ -22,7 +22,7 @@
 import { Suspense } from 'react';
 import { Plus } from 'lucide-react';
 import AppLink from '../AppLink';
-import Typography from '../Typography';
+import PageHeader from '../PageHeader';
 import ToursContent from './ToursContent';
 import ToursSkeleton from './ToursSkeleton';
 import { ROUTES, SIDEBAR, TOURS } from '@/constants/strings';
@@ -53,20 +53,16 @@ interface ToursProps {
 export default function Tours({ tours, filterOptions, filters }: ToursProps) {
   return (
     <div data-testid="ToursTest" className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.heading}>
-          <Typography variant="heading-1" tag="h1">
-            {TOURS.PAGE_TITLE}
-          </Typography>
-          <Typography variant="body-lg" className={styles.description}>
-            {`${TOURS.PAGE_DESCRIPTION} ${SIDEBAR.AGENCY_NAME}.`}
-          </Typography>
-        </div>
-        <AppLink href={ROUTES.NEW_TOUR} className={styles.newTour}>
-          <Plus size={18} aria-hidden="true" />
-          {TOURS.NEW_TOUR}
-        </AppLink>
-      </header>
+      <PageHeader
+        title={TOURS.PAGE_TITLE}
+        description={`${TOURS.PAGE_DESCRIPTION} ${SIDEBAR.AGENCY_NAME}.`}
+        actions={
+          <AppLink href={ROUTES.NEW_TOUR} className={styles.newTour}>
+            <Plus size={18} aria-hidden="true" />
+            {TOURS.NEW_TOUR}
+          </AppLink>
+        }
+      />
 
       <Suspense fallback={<ToursSkeleton />}>
         <ToursContent toursPromise={tours} filterOptionsPromise={filterOptions} filters={filters} />

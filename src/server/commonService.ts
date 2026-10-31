@@ -4,7 +4,7 @@
 
 import 'server-only';
 import { http } from './http';
-import { Country, MetaOptionKey, MetaOptions } from '@/constants/types';
+import { Country, MetaOptionKey, MetaOptions, Region } from '@/constants/types';
 
 const ONE_HOUR = 60 * 60;
 const ONE_DAY = ONE_HOUR * 24;
@@ -15,6 +15,22 @@ export const META_OPTIONS_TAG = 'meta-options';
 export const commonService = {
   async getCountries(): Promise<Country[]> {
     const res = await http.get<{ data: Country[] }>('/api/countries', {
+      next: { revalidate: ONE_DAY },
+    });
+    return res?.data ?? [];
+  },
+
+  /** Indian states and union territories for address fields. They rarely change, so cached for a day. */
+  async getStates(): Promise<Region[]> {
+    const res = await http.get<{ data: Region[] }>('/api/states', {
+      next: { revalidate: ONE_DAY },
+    });
+    return res?.data ?? [];
+  },
+
+  /** Districts of one state, for the District field once a state is picked. Cached for a day. */
+  async getDistricts(stateId: number): Promise<Region[]> {
+    const res = await http.get<{ data: Region[] }>(`/api/states/${stateId}/districts`, {
       next: { revalidate: ONE_DAY },
     });
     return res?.data ?? [];

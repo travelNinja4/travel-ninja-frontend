@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import SidebarNav, { NAV_SECTIONS } from './SidebarNav';
-import { NAV_ITEM, NAV_SECTION } from '@/constants/strings';
+import { NAV_ITEM } from '@/constants/strings';
 
 vi.mock('../Tooltip', () => ({
   default: ({ children, content }: any) => (
@@ -21,7 +21,7 @@ describe('SidebarNav', () => {
   it('renders every section title and link', () => {
     render(<SidebarNav />);
 
-    Object.values(NAV_SECTION).forEach((title) => {
+    NAV_SECTIONS.forEach(({ title }) => {
       expect(screen.getByRole('heading', { name: title })).toBeInTheDocument();
     });
     expect(screen.getAllByRole('link')).toHaveLength(totalItems);
@@ -36,9 +36,18 @@ describe('SidebarNav', () => {
     expect(screen.getByRole('link', { name: NAV_ITEM.TOURS })).not.toHaveAttribute('aria-current');
   });
 
-  it('shows the messages badge', () => {
+  // Restore with the Engage section in SidebarNav
+  // it('shows the messages badge', () => {
+  //   render(<SidebarNav />);
+  //   expect(screen.getByRole('link', { name: `${NAV_ITEM.MESSAGES} 2` })).toBeInTheDocument();
+  // });
+
+  it('links to the agency profile under Account', () => {
     render(<SidebarNav />);
-    expect(screen.getByRole('link', { name: `${NAV_ITEM.MESSAGES} 2` })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: NAV_ITEM.AGENCY_PROFILE })).toHaveAttribute(
+      'href',
+      '/agency-profile',
+    );
   });
 
   it('wraps each link in a tooltip only when collapsed', () => {
@@ -47,7 +56,7 @@ describe('SidebarNav', () => {
 
     rerender(<SidebarNav collapsed />);
     expect(screen.getAllByTestId('TooltipMock')).toHaveLength(totalItems);
-    expect(screen.getByRole('link', { name: NAV_ITEM.REVENUE })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: NAV_ITEM.AGENCY_PROFILE })).toBeInTheDocument();
   });
 
   it('calls onNavigate when a link is clicked', () => {
@@ -56,7 +65,7 @@ describe('SidebarNav', () => {
     // jsdom can't navigate; stop the link's default action once the click has run
     document.addEventListener('click', (event) => event.preventDefault(), { once: true });
 
-    fireEvent.click(screen.getByRole('link', { name: NAV_ITEM.REVIEWS }));
+    fireEvent.click(screen.getByRole('link', { name: NAV_ITEM.CUSTOMERS }));
     expect(onNavigate).toHaveBeenCalledTimes(1);
   });
 });
