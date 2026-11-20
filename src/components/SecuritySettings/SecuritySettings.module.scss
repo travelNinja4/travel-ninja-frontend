@@ -1,0 +1,221 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the SecuritySettings component
+
+  container: the two cards stacked, capped at 64rem wide
+    card
+      header: title (bottom border)
+      Security
+        phone   every field on its own row
+        tablet+ current password on its own row,
+                new password + confirm side by side
+      Active sessions
+        table: uppercase header row, rows split by borders,
+               scrolls sideways if it doesn't fit
+
+Text, spacing and padding step up at tablet and desktop,
+matching DataTable.
+------------------------------------------------------
+**/
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+  max-width: 64rem;
+  margin-inline: auto;
+
+  @include respond-to(desktop) {
+    gap: var(--space-8);
+  }
+}
+
+/* -----------------------------
+  Card
+----------------------------- */
+
+.card {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-xs);
+}
+
+.cardHeader {
+  margin: 0;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+
+  @include respond-to(desktop) {
+    padding: var(--space-5) var(--space-6);
+    font-size: 1rem;
+  }
+}
+
+/* -----------------------------
+  Security: change password
+----------------------------- */
+
+.passwordForm {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5) var(--space-5);
+
+  @include respond-to(tablet) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-5);
+  }
+
+  @include respond-to(desktop) {
+    gap: var(--space-5) var(--space-6);
+    padding: var(--space-5) var(--space-6) var(--space-6);
+  }
+}
+
+.subtitle,
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--color-text);
+
+  @include respond-to(desktop) {
+    font-size: 0.9375rem;
+  }
+}
+
+// 44px touch target that fills the row on phones; Button's own width from tablet up
+.submit {
+  width: 100%;
+  min-height: 2.75rem;
+
+  @include respond-to(tablet) {
+    width: auto;
+  }
+
+  @include respond-to(desktop) {
+    font-size: 0.9375rem;
+  }
+}
+
+/* -----------------------------
+  Active sessions
+----------------------------- */
+
+.scroller {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: inset var(--shadow-focus);
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.headerCell,
+.cell {
+  padding: var(--space-3) var(--space-4);
+  text-align: start;
+  white-space: nowrap;
+  vertical-align: middle;
+
+  @include respond-to(tablet) {
+    padding-inline: var(--space-5);
+  }
+
+  @include respond-to(desktop) {
+    padding-inline: var(--space-6);
+  }
+}
+
+// Actions column hugs its button
+.headerCell:last-child,
+.cell:last-child {
+  width: 1%;
+}
+
+.headerCell {
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface-sunken);
+  color: var(--color-text-secondary);
+  // 11px on every screen: uppercase labels read larger than their size
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  @include respond-to(desktop) {
+    padding-block: var(--space-4);
+  }
+}
+
+.cell {
+  color: var(--color-text);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+
+  @include respond-to(tablet) {
+    padding-block: var(--space-4);
+    font-size: 0.875rem;
+  }
+
+  @include respond-to(desktop) {
+    padding-block: var(--space-5);
+    font-size: 0.9375rem;
+  }
+}
+
+.row + .row {
+  border-top: 1px solid var(--color-border);
+}
+
+.device {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.muted {
+  color: var(--color-text-secondary);
+}
+
+// Outlined in the danger colour; scoped under .cell to outrank Button's own styles
+.cell .revoke {
+  min-height: 2rem;
+  padding: var(--space-1) var(--space-4);
+  border-color: var(--color-danger-border);
+  color: var(--color-danger);
+  font-weight: 500;
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-danger);
+    background-color: var(--color-danger-bg);
+  }
+
+  @include respond-to(desktop) {
+    min-height: 2.25rem;
+  }
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

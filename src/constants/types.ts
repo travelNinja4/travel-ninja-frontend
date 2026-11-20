@@ -295,3 +295,15 @@ export type CustomerPage = {
 export type ActionResult<T = undefined> =
   | { success: true; data: T }
   | { success: false; errors: string[] };
+
+/** A signed-in device listed under Settings > Active sessions */
+export type ActiveSession = {
+  id: string;
+  /** Browser and OS, e.g. "Chrome on macOS" */
+  device: string;
+  location: string;
+  /** Already formatted, e.g. "2 hours ago" */
+  lastActive: string;
+  /** The session making this request; it can't revoke itself */
+  current?: boolean;
+};

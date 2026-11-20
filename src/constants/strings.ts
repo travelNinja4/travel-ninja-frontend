@@ -393,3 +393,20 @@ export const MEDIA_QUERIES = {
   TABLET_ONLY: '(min-width: 768px) and (max-width: 1023.98px)',
   PREFERS_DARK: '(prefers-color-scheme: dark)',
 } as const;
+
+export const SECURITY_SETTINGS = {
+  TITLE: 'Security',
+  CHANGE_PASSWORD: 'Change password',
+  CURRENT_PASSWORD: 'Current password',
+  NEW_PASSWORD: 'New password',
+  CONFIRM_PASSWORD: 'Confirm',
+  UPDATE_PASSWORD: 'Update password',
+  SESSIONS_TITLE: 'Active sessions',
+  DEVICE: 'Device',
+  LOCATION: 'Location',
+  LAST_ACTIVE: 'Last active',
+  ACTIONS: 'Actions',
+  CURRENT: 'Current',
+  REVOKE: 'Revoke',
+  NO_SESSIONS: 'No other devices are signed in.',
+};
