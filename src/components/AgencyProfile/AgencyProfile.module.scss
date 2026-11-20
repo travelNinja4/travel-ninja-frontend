@@ -1,0 +1,390 @@
+@use '../../styles/mixins' as *;
+
+/**
+------------------------------------------------------
+styles specific to the AgencyProfile component (agency profile screen)
+
+  page
+    header (PageHeader): title + description, Save changes on the right
+    welcome banner
+      phone / tablet  icon + text, the progress bar on its own row below
+      laptop+         icon + text | progress bar (16rem) on the right
+    layout
+      phone / tablet  form cards, then the preview, stacked
+      desktop         form cards | preview (16–19rem, sticky)
+      wide            form cards | preview (17–20rem), wider gaps
+    Identity card
+      header: title (bottom border)
+      body:   logo (initials until one is picked) + Upload logo,
+              banner drop zone (cropped to 10:3 once picked),
+              name, tagline and description (counters top right),
+              destinations served
+    Contact & address card
+      body: DynamicForm fields, row-wrapped
+            phone one field per row,
+            tablet+ email + phone, website, street, state + district
+                    (dropdowns, districts load for the picked state), city + PIN
+------------------------------------------------------
+**/
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 120rem;
+  margin-inline: auto;
+  color: var(--color-text);
+
+  @include respond-to(wide) {
+    gap: var(--space-8);
+  }
+}
+
+.muted {
+  color: var(--color-text-secondary);
+}
+
+.error {
+  color: var(--color-danger);
+}
+
+.brand {
+  color: var(--color-brand);
+}
+
+// 44px touch target; PageHeader stretches it across the row on phones.
+// Scoped under .page to outrank Button's own styles
+.page .save {
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-5);
+  font-size: 0.9375rem;
+}
+
+/* -----------------------------
+  Welcome banner
+----------------------------- */
+
+.welcome {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background-color: var(--color-surface);
+
+  @include respond-to(laptop) {
+    grid-template-columns: auto minmax(0, 1fr) 16rem;
+    gap: var(--space-4) var(--space-8);
+  }
+}
+
+.welcomeIcon {
+  display: inline-flex;
+  align-self: start;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 10px;
+  background-color: var(--color-surface-sage);
+  color: var(--color-brand);
+}
+
+.welcomeText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+// Below the text, lined up with it, until there's room on the right
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  grid-column: 2;
+
+  @include respond-to(laptop) {
+    grid-column: auto;
+  }
+}
+
+.progressLabel {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.track {
+  overflow: hidden;
+  height: 0.375rem;
+  border-radius: 999px;
+  background-color: var(--color-surface-muted);
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--color-brand);
+  transition: width 0.3s ease;
+}
+
+/* -----------------------------
+  Layout: form cards | preview
+----------------------------- */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-6);
+
+  @include respond-to(desktop) {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 19rem);
+  }
+
+  @include respond-to(wide) {
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, 20rem);
+    gap: var(--space-8);
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+
+  @include respond-to(wide) {
+    gap: var(--space-8);
+  }
+}
+
+// Below the cards while stacked, so the form comes first. Beside them on desktop, staying in
+// view while they scroll on screens tall enough to show it whole
+.aside {
+  min-width: 0;
+
+  @include respond-to(desktop) {
+    @media (min-height: 40rem) {
+      position: sticky;
+      top: var(--space-6);
+    }
+  }
+}
+
+/* -----------------------------
+  Cards
+----------------------------- */
+
+.card {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background-color: var(--color-surface);
+}
+
+.cardHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+
+  @include respond-to(tablet) {
+    padding: var(--space-5) var(--space-6);
+  }
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-5);
+
+  @include respond-to(tablet) {
+    padding: var(--space-6);
+  }
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+// Fills the space Image's `fill` lays the picture out in
+.cover {
+  object-fit: cover;
+}
+
+/* -----------------------------
+  Logo
+----------------------------- */
+
+.logoRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.logo {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 12px;
+  background-color: var(--color-brand);
+  color: var(--color-on-brand);
+  font-size: 1.75rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.02em;
+
+  @include respond-to(tablet) {
+    width: 6rem;
+    height: 6rem;
+    font-size: 2rem;
+  }
+}
+
+.logoActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* -----------------------------
+  Banner
+----------------------------- */
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 9rem;
+  padding: var(--space-6) var(--space-4);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: 10px;
+  background-color: var(--color-surface-sunken);
+  color: var(--color-text);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-brand);
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--color-brand);
+    box-shadow: var(--shadow-focus);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.dragging {
+  border-style: solid;
+  border-color: var(--color-brand);
+  background-color: var(--color-brand-subtle);
+}
+
+.invalid {
+  border-color: var(--color-danger);
+}
+
+.browse {
+  color: var(--color-link);
+  font-weight: var(--weight-semibold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+// Same 1600×480 crop guests see
+.banner {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 10 / 3;
+  border-radius: 10px;
+  background-color: var(--color-surface-muted);
+}
+
+.bannerActions {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  display: flex;
+  gap: var(--space-2);
+
+  button {
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+/* -----------------------------
+  Tagline and description counters
+----------------------------- */
+
+// The counter sits on the label's row, at the right
+.counted {
+  position: relative;
+}
+
+.count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* -----------------------------
+  Contact & address
+----------------------------- */
+
+// Row-wrap so DynamicForm's half-width fields sit side by side, sized to this column gap
+.contact {
+  flex-direction: row;
+  flex-wrap: wrap;
+  --field-column-gap: var(--space-6);
+
+  @include respond-to(tablet) {
+    gap: var(--space-5) var(--space-6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill,
+  .dropzone {
+    transition: none;
+  }
+}

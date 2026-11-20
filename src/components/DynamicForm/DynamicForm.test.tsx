@@ -55,4 +55,43 @@ describe('Home', () => {
   it('renders without throwing', () => {
     expect(() => render(<DynamicForm {...baseProps} />)).not.toThrow();
   });
+
+  it('gives email, phone and website fields their own input types and autofill hints', () => {
+    render(
+      <DynamicForm
+        fields={[
+          { name: 'email', label: 'Email', type: 'email', autoComplete: 'email' },
+          { name: 'phone', label: 'Phone', type: 'tel', autoComplete: 'tel' },
+          { name: 'website', label: 'Website', type: 'url' },
+          { name: 'pin', label: 'PIN', type: 'input', inputMode: 'numeric' },
+        ]}
+      />,
+    );
+    expect(screen.getByLabelText('Email')).toHaveAttribute('type', 'email');
+    expect(screen.getByLabelText('Email')).toHaveAttribute('autocomplete', 'email');
+    expect(screen.getByLabelText('Phone')).toHaveAttribute('type', 'tel');
+    expect(screen.getByLabelText('Website')).toHaveAttribute('type', 'url');
+    expect(screen.getByLabelText('PIN')).toHaveAttribute('type', 'text');
+    expect(screen.getByLabelText('PIN')).toHaveAttribute('inputmode', 'numeric');
+  });
+
+  it('keeps layout settings off the input and shows the hint and outside error', () => {
+    render(
+      <DynamicForm
+        fields={[
+          {
+            name: 'city',
+            label: 'City',
+            type: 'input',
+            width: FieldWidth.HALF,
+            helperText: 'Where your office is',
+          },
+          { name: 'state', label: 'State', type: 'input', error: 'States failed to load' },
+        ]}
+      />,
+    );
+    expect(screen.getByLabelText('City')).not.toHaveAttribute('width');
+    expect(screen.getByText('Where your office is')).toBeInTheDocument();
+    expect(screen.getByText('States failed to load')).toBeInTheDocument();
+  });
 });

@@ -1,207 +1,103 @@
 /**
- * A reusable input component for entering mobile numbers with a selectable country code and dynamic validation.
+ * Mobile number field with a fixed dial code (+91 by default) the user can't edit, followed by
+ * the national number. Built on `InputField`, so it takes every native input attribute plus `ref`
+ * and works with react-hook-form's `register()` out of the box.
+ *
+ * Typed or pasted values are cleaned before they reach `onChange`: anything but digits is
+ * dropped, as is a leading dial code or trunk `0`, so autofilled "+91 98765 43210" becomes
+ * "9876543210".
  *
  * @example
  * ```tsx
- * import MobileNumberInput from '@src/components/MobileNumberInput'
+ * import MobileNumberInput from '@/components/MobileNumberInput'
  *
- * export default function MobileNumberInput() {
- *  const [mobile, setMobile] = useState<{ country: string; number: string }>({
- *     country: 'IN',
- *     number: '',
- *   });
- *
+ * export default function ContactForm() {
  *   return (
  *     <MobileNumberInput
- *       value={mobile}
- *       onChange={setMobile}
- *       maxLength={10}
- *       error={mobile.number.length > 0 && mobile.number.length < 10 ? "Number too short" : ""}
- *       countryError={!mobile.country ? "Please select a country" : ""}
+ *       {...register('mobileNumber')}
+ *       label="Mobile number"
+ *       error={errors.mobileNumber?.message}
  *     />
+ *   );
  * }
  * ```
  */
 'use client';
 
-import { useMemo, useState } from 'react';
-import InputField from '../InputField';
-import Autocomplete from '../Autocomplete';
+import { ChangeEvent } from 'react';
+import InputField, { InputFieldProps } from '../InputField/InputField';
 import { STRINGS } from '@/constants/strings';
-import { Country } from '@/constants/types';
 import clsx from 'clsx';
 import styles from './MobileNumberInput.module.scss';
 
-// Stable default, so the effect below doesn't re-run on every render when no countries are passed
-const EMPTY_COUNTRIES: Country[] = [];
-
 /**
  * Define the props available for the MobileNumberInput component.
+ * Every other `InputField` prop is passed through.
  */
-interface MobileNumberInputProps {
+export interface MobileNumberInputProps extends Omit<InputFieldProps, 'leftIcon'> {
   /**
-   * The current value of the input.
+   * Dial code shown before the number. Not editable by the user.
    *
-   * Consists of a `country` (ISO code or dialing code)
-   * and the mobile `number`.
-   *
-   * @example
-   * ```ts
-   * { country: "IN", number: "9876543210" }
-   * ```
+   * @default "+91"
    */
-  value?: { country: string; number: string };
+  dialCode?: string;
 
   /**
-   * Callback fired when the user changes either the country code or the mobile number.
-   *
-   * Receives the updated `{ country, number }` object.
-   *
-   * @param val - Updated mobile number state.
+   * Class for the dial code, e.g. to match a larger `inputClassName` font size.
    */
-  onChange?: (val: { country: string; number: string }) => void;
+  dialCodeClassName?: string;
 
   /**
-   * Country codes to choose from. Fetched on the server by the page and passed down.
+   * Digits allowed in the national number, without the dial code.
    *
-   * @default []
-   */
-  countries?: Country[];
-
-  /**
-   * The maximum length allowed for the mobile number input.
-   *
-   * If the selected country provides its own `length`,
-   * that will override this value.
-   *
-   * @default undefined
+   * @default 10
    */
   maxLength?: number;
+}
 
-  /**
-   * Error message to display below the mobile number field.
-   *
-   * Useful for number-specific validation errors.
-   *
-   * @example "Invalid mobile number"
-   */
-  error?: string;
+/**
+ * Reduces a typed, pasted or autofilled value to the national number: keeps digits only, drops a
+ * leading dial code or trunk `0` when that leaves exactly `length` digits, and caps the rest.
+ */
+export function toNationalNumber(value: string, dialCode = '+91', length = 10): string {
+  let digits = value.replace(/\D/g, '');
+  const dialDigits = dialCode.replace(/\D/g, '');
 
-  /**
-   * Error message to display below the country code selector.
-   *
-   * Useful when the user must select a valid country code but hasn’t done so.
-   * @example "Please select a country"
-   */
-  countryError?: string;
+  if (dialDigits && digits.length === dialDigits.length + length && digits.startsWith(dialDigits)) {
+    digits = digits.slice(dialDigits.length);
+  } else if (digits.length === length + 1 && digits.startsWith('0')) {
+    digits = digits.slice(1);
+  }
+
+  return digits.slice(0, length);
 }
 
 export default function MobileNumberInput({
-  maxLength,
-  error,
-  countryError,
-  value,
+  dialCode = '+91',
+  dialCodeClassName,
+  maxLength = 10,
+  placeholder = STRINGS.ENTER_MOBILE_NUMBER,
   onChange,
-  countries = EMPTY_COUNTRIES,
+  ...rest
 }: MobileNumberInputProps) {
-  const [country, setCountry] = useState('');
-  const [search, setSearch] = useState('');
-  const [number, setNumber] = useState(value?.number ?? '');
-  const [length, setLength] = useState(
-    value?.country ? countries.find((c) => c.code === value.country)?.length : maxLength,
-  );
-
-  // Sync country and number from `value` once countries are loaded, and
-  // again whenever `value`, `countries` or `maxLength` change
-  const [synced, setSynced] = useState<{
-    countries: typeof countries;
-    value: typeof value;
-    maxLength: typeof maxLength;
-  } | null>(null);
-  if (
-    !synced ||
-    synced.countries !== countries ||
-    synced.value !== value ||
-    synced.maxLength !== maxLength
-  ) {
-    setSynced({ countries, value, maxLength });
-    if (countries.length > 0 && value) {
-      setCountry(value.country);
-      setNumber(value.number);
-      setLength(
-        value.country ? countries.find((c) => c.code === value.country)?.length : maxLength,
-      );
-    }
-  }
-
-  const filteredCountries = useMemo(() => {
-    if (!search) return countries;
-    return countries.filter(
-      (c) =>
-        c.code.toLowerCase().includes(search.toLowerCase()) ||
-        c.name.toLowerCase().includes(search.toLowerCase()),
-    );
-  }, [countries, search]);
-
-  const handleSelect = (
-    selected: { name: string; code: string; length: number } | string | undefined,
-  ) => {
-    if (!selected || typeof selected === 'string') {
-      // if undefined or a string, reset country
-      setCountry('');
-      setSearch('');
-      setNumber('');
-      setLength(maxLength);
-      onChange?.({ country: '', number: '' });
-      return;
-    }
-
-    // selected is the proper country object
-    setCountry(selected.code);
-    setSearch('');
-    setNumber('');
-    setLength(selected.length);
-    onChange?.({ country: selected.code, number: '' });
-  };
-
-  const handleSearch = (val: string) => {
-    setSearch(val);
-    if (!val) {
-      setCountry('');
-    }
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // Cleaned in place so register() and controlled parents both read the national number
+    event.target.value = toNationalNumber(event.target.value, dialCode, maxLength);
+    onChange?.(event);
   };
 
   return (
-    <>
-      <div data-testid="MobileNumberInputTest" className={styles.container}>
-        <div className={styles.dropdownWrapper}>
-          <Autocomplete
-            options={filteredCountries?.map((c) => ({ value: c, label: c.code }))}
-            placeholder={STRINGS.COUNTRY_CODE}
-            value={country}
-            searchValue={search}
-            onSearchChange={(val) => handleSearch(val)}
-            onChange={handleSelect}
-            dropdownContainerClassName={clsx(styles.dropdown)}
-            dropdownTextContainerClassName={styles.dropdownText}
-          />
-        </div>
-
-        <InputField
-          placeholder={STRINGS.ENTER_MOBILE_NUMBER}
-          className={clsx(styles.inputContainer)}
-          fieldClassName={styles.inputField}
-          value={number}
-          maxLength={length || maxLength}
-          onChange={(e) => {
-            const newNumber = e.target.value;
-            setNumber(newNumber);
-            onChange?.({ country, number: newNumber });
-          }}
-        />
-      </div>
-      {error && <p className={styles.errorText}>{error}</p>}
-      {countryError && <p className={styles.errorText}>{countryError}</p>}
-    </>
+    <div data-testid="MobileNumberInputTest" className={styles.container}>
+      <InputField
+        autoComplete="tel-national"
+        inputMode="numeric"
+        placeholder={placeholder}
+        {...rest}
+        // No native maxLength: it would cut "+91 98765 43210" short on paste before it's cleaned
+        type="tel"
+        leftIcon={<span className={clsx(styles.dialCode, dialCodeClassName)}>{dialCode}</span>}
+        onChange={handleChange}
+      />
+    </div>
   );
 }

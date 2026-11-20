@@ -18,6 +18,7 @@ import Button from '@/components/Button';
 import CheckBox from '@/components/CheckBox';
 import Dropdown from '@/components/Dropdown';
 import InputField from '@/components/InputField';
+import MobileNumberInput from '@/components/MobileNumberInput';
 import { Body, BodyLg, Heading2 } from '@/components/Typography';
 import { NOTIFICATION_TYPES, ROUTES, STRINGS } from '@/constants/strings';
 import { Country } from '@/constants/types';
@@ -170,20 +171,13 @@ export default function CreateAccountForm({ countries }: CreateAccountFormProps)
           error={errors.email?.message}
         />
 
-        <InputField
+        <MobileNumberInput
           {...register('mobileNumber')}
           {...fieldProps}
           label={STRINGS.MOBILE_NUMBER}
-          type="tel"
-          inputMode="numeric"
-          autoComplete="tel-national"
-          placeholder={STRINGS.ENTER_MOBILE_NUMBER}
+          dialCode={selectedCountry && dialCode(selectedCountry.code)}
+          dialCodeClassName={styles.input}
           maxLength={selectedCountry?.length}
-          leftIcon={
-            selectedCountry && (
-              <span className={styles.dialCode}>{dialCode(selectedCountry.code)}</span>
-            )
-          }
           error={errors.mobileNumber?.message}
         />
 

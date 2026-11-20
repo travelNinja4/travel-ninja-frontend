@@ -1,4 +1,4 @@
-import { formatCurrency, formatDate, formatPhone, getInitials } from './format';
+import { formatCurrency, formatDate, formatPhone, getInitials, splitPhone } from './format';
 
 describe('getInitials', () => {
   it.each([
@@ -52,6 +52,20 @@ describe('formatPhone', () => {
     'returns %j unchanged when it is not +<code>-<number>',
     (input) => {
       expect(formatPhone(input)).toBe(input);
+    },
+  );
+});
+
+describe('splitPhone', () => {
+  it('splits the dial code from the number', () => {
+    expect(splitPhone('+91-9811122334')).toEqual({ dialCode: '+91', number: '9811122334' });
+    expect(splitPhone('+971-501234567')).toEqual({ dialCode: '+971', number: '501234567' });
+  });
+
+  it.each(['', '9811122334', '+91 98111 22334'])(
+    'returns %j whole as the number when it is not +<code>-<number>',
+    (input) => {
+      expect(splitPhone(input)).toEqual({ number: input });
     },
   );
 });

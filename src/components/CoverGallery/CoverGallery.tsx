@@ -50,7 +50,7 @@ const ACCEPT = IMAGE_TYPES.join(',');
  * A URL for previewing `image`: its own for a saved image, or a local one for a
  * picked file, released when the file changes or the preview unmounts
  */
-function usePreviewUrl(image: TourImage | null) {
+export function usePreviewUrl(image: TourImage | null) {
   const file = image instanceof File ? image : null;
   const [url, setUrl] = useState<string>();
 
@@ -69,7 +69,7 @@ function usePreviewUrl(image: TourImage | null) {
 }
 
 /** Drag-and-drop handlers for a drop target, and whether files are being dragged over it */
-function useFileDrop(onFiles: (files: FileList) => void, disabled: boolean) {
+export function useFileDrop(onFiles: (files: FileList) => void, disabled: boolean) {
   const [isDragging, setIsDragging] = useState(false);
 
   const allowDrop = (event: DragEvent) => {

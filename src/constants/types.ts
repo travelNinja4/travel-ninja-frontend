@@ -16,6 +16,12 @@ export type Country = {
   length: number;
 };
 
+/** A state, or a district within one, from GET /api/states and /api/states/{stateId}/districts */
+export type Region = {
+  id: number;
+  name: string;
+};
+
 /** Body of POST /auth/register. Only fullName, email, phoneNumber, password and termStatus are required by the API. */
 export type RegisterPayload = {
   fullName: string;
@@ -179,6 +185,66 @@ export type TourMedia = {
 
 /** Every field of the tour form, used to create and edit tours */
 export type TourFormValues = TourBasics & TourMedia & TourSchedule & TourItinerary & TourPolicies;
+
+/** Every field of the agency profile screen: its public identity, contact details and address */
+export type AgencyProfileValues = {
+  logo: TourImage | null;
+  banner: TourImage | null;
+  name: string;
+  tagline: string;
+  description: string;
+  /** States or places the agency runs trips to, as typed, e.g. `Karnataka, Kerala, Goa` */
+  destinations: string;
+  email: string;
+  phone: string;
+  website: string;
+  street: string;
+  /** Region id of the state, as a string for the dropdown; empty when none is picked */
+  state: string;
+  /** Region id of a district within `state`; empty when none is picked */
+  district: string;
+  city: string;
+  pin: string;
+};
+
+/** The agency's saved profile, as returned by GET and PUT /agency/profile */
+export type AgencyProfile = {
+  id: number;
+  userId: number;
+  agencyName: string;
+  tagline: string | null;
+  description: string | null;
+  destinations: string[];
+  /** From the agency's registration; read-only on the profile screen */
+  email: string;
+  /** From the agency's registration; read-only on the profile screen */
+  phoneNumber: string | null;
+  website: string | null;
+  address: string | null;
+  city: string | null;
+  /** The state's name, e.g. `Karnataka` */
+  state: string | null;
+  pincode: string | null;
+  country: string | null;
+};
+
+/**
+ * Body of PUT /agency/profile. Replaces every editable field: an optional field left empty is
+ * cleared. Email, phone, country, logo and banner aren't part of it.
+ */
+export type UpdateAgencyProfilePayload = {
+  agencyName: string;
+  tagline: string;
+  description: string;
+  /** Comma-separated, as typed; the API trims it and drops blanks and duplicates */
+  destinations: string;
+  website: string;
+  address: string;
+  city: string;
+  /** The state's name, not its id */
+  state: string;
+  pincode: string;
+};
 
 /** Body of POST /tours/create-tour. Optional text fields are left out when empty. */
 export type CreateTourPayload = {

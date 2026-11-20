@@ -18,7 +18,7 @@ Each row is one guest:
 | Column          | What it shows                              |
 | --------------- | ------------------------------------------ |
 | **Customer**    | The guest's name                           |
-| **Contact**     | Their email and phone number               |
+| **Contact**     | Their email and mobile number              |
 | **City**        | The city they're from (`—` if not entered) |
 | **Bookings**    | How many tours they've booked              |
 | **Total spend** | How much they've spent across all bookings |
@@ -48,7 +48,7 @@ Your search, city and page are kept in the page address, so you can bookmark or 
 
 Click **View** at the end of a row. A panel opens on the right with:
 
-- Email and phone
+- Email and mobile number
 - City
 - Number of bookings and total spend
 - Last trip and its date
@@ -79,7 +79,7 @@ Close it with the **×** button, the **Esc** key, or by clicking outside the pan
 
 ## Things to check when testing
 
-- [ ] Each row shows the guest's name, email and phone, city (or **—**), bookings, total spend and last trip with its date.
+- [ ] Each row shows the guest's name, email and mobile number, city (or **—**), bookings, total spend and last trip with its date.
 - [ ] Search finds guests by name, email or city, once typing stops.
 - [ ] The city filter shows only guests from that city, and works together with search.
 - [ ] Searching or changing the city returns to page 1.

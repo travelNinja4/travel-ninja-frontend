@@ -20,7 +20,7 @@
  */
 
 import { Suspense } from 'react';
-import Typography from '../Typography';
+import PageHeader from '../PageHeader';
 import CustomersContent from './CustomersContent';
 import CustomersSkeleton from './CustomersSkeleton';
 import { CUSTOMERS, SIDEBAR } from '@/constants/strings';
@@ -51,14 +51,10 @@ interface CustomersProps {
 export default function Customers({ customers, cities, filters }: CustomersProps) {
   return (
     <div data-testid="CustomersTest" className={styles.page}>
-      <header className={styles.heading}>
-        <Typography variant="heading-1" tag="h1">
-          {CUSTOMERS.PAGE_TITLE}
-        </Typography>
-        <Typography variant="body-lg" className={styles.description}>
-          {`${CUSTOMERS.PAGE_DESCRIPTION} ${SIDEBAR.AGENCY_NAME} ${CUSTOMERS.TOURS}.`}
-        </Typography>
-      </header>
+      <PageHeader
+        title={CUSTOMERS.PAGE_TITLE}
+        description={`${CUSTOMERS.PAGE_DESCRIPTION} ${SIDEBAR.AGENCY_NAME} ${CUSTOMERS.TOURS}.`}
+      />
 
       <Suspense fallback={<CustomersSkeleton />}>
         <CustomersContent customersPromise={customers} citiesPromise={cities} filters={filters} />

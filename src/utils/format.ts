@@ -54,10 +54,19 @@ export function getInitials(fullName: string): string {
  * Anything not in the API's `+<code>-<number>` shape is returned unchanged.
  */
 export function formatPhone(phone: string): string {
+  const { dialCode, number } = splitPhone(phone);
+  if (!dialCode) return phone;
+  return dialCode === '+91' && number.length === 10
+    ? `${dialCode} ${number.slice(0, 5)} ${number.slice(5)}`
+    : `${dialCode} ${number}`;
+}
+
+/**
+ * `"+91-9811122334"` -> `{ dialCode: "+91", number: "9811122334" }`, e.g. for a
+ * `MobileNumberInput`, which shows the dial code apart from the number. Anything
+ * not in the API's `+<code>-<number>` shape comes back whole as the number.
+ */
+export function splitPhone(phone: string): { dialCode?: string; number: string } {
   const match = /^(\+\d{1,4})-(\d+)$/.exec(phone);
-  if (!match) return phone;
-  const [, code, number] = match;
-  return code === '+91' && number.length === 10
-    ? `${code} ${number.slice(0, 5)} ${number.slice(5)}`
-    : `${code} ${number}`;
+  return match ? { dialCode: match[1], number: match[2] } : { number: phone };
 }

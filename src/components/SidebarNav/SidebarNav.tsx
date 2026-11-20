@@ -16,18 +16,19 @@
 
 import type { LucideIcon } from 'lucide-react';
 import {
+  Building,
   CalendarCheck,
   CalendarDays,
-  ChartLine,
-  IndianRupee,
+  // ChartLine,
+  // IndianRupee,
   LayoutDashboard,
   Map,
-  MessageSquare,
+  // MessageSquare,
   Settings,
-  Star,
+  // Star,
   Ticket,
   Users,
-  Wallet,
+  // Wallet,
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
@@ -80,25 +81,28 @@ export const NAV_SECTIONS: NavSection[] = [
       { label: NAV_ITEM.AVAILABILITY, href: ROUTES.AVAILABILITY, icon: CalendarCheck },
     ],
   },
-  {
-    title: NAV_SECTION.ENGAGE,
-    items: [
-      { label: NAV_ITEM.MESSAGES, href: ROUTES.MESSAGES, icon: MessageSquare, badge: 2 },
-      { label: NAV_ITEM.REVIEWS, href: ROUTES.REVIEWS, icon: Star },
-    ],
-  },
-  {
-    title: NAV_SECTION.INSIGHTS,
-    items: [
-      { label: NAV_ITEM.TOUR_PERFORMANCE, href: ROUTES.TOUR_PERFORMANCE, icon: ChartLine },
-      { label: NAV_ITEM.REVENUE, href: ROUTES.REVENUE, icon: IndianRupee },
-    ],
-  },
+  // Engage and Insights are hidden until their screens are built
+  // {
+  //   title: NAV_SECTION.ENGAGE,
+  //   items: [
+  //     { label: NAV_ITEM.MESSAGES, href: ROUTES.MESSAGES, icon: MessageSquare, badge: 2 },
+  //     { label: NAV_ITEM.REVIEWS, href: ROUTES.REVIEWS, icon: Star },
+  //   ],
+  // },
+  // {
+  //   title: NAV_SECTION.INSIGHTS,
+  //   items: [
+  //     { label: NAV_ITEM.TOUR_PERFORMANCE, href: ROUTES.TOUR_PERFORMANCE, icon: ChartLine },
+  //     { label: NAV_ITEM.REVENUE, href: ROUTES.REVENUE, icon: IndianRupee },
+  //   ],
+  // },
   {
     title: NAV_SECTION.ACCOUNT,
     items: [
+      { label: NAV_ITEM.AGENCY_PROFILE, href: ROUTES.AGENCY_PROFILE, icon: Building },
       { label: NAV_ITEM.SETTINGS, href: ROUTES.SETTINGS, icon: Settings },
-      { label: NAV_ITEM.BILLING, href: ROUTES.BILLING, icon: Wallet },
+      // Hidden until the billing screen is built
+      // { label: NAV_ITEM.BILLING, href: ROUTES.BILLING, icon: Wallet },
     ],
   },
 ];
